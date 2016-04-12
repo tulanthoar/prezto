@@ -68,9 +68,6 @@ zstyle ':prezto:module:editor' dot-expansion 'yes'
 #
 # GNU Utility
 #
-zstyle ':prezto:module:history' INC_APPEND_HISTORY 'yes'
-zstyle ':prezto:module:history' SHARE_HISTORY 'yes'
-zstyle ':prezto:module:history' HIST_IGNORE_DUPS 'yes'
 # Set the command prefix on non-GNU systems.
 # zstyle ':prezto:module:gnu-utility' prefix 'g'
 

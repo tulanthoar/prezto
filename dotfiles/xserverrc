@@ -1,0 +1,5 @@
+if [ -z "$XDG_VTNR" ]; then
+  exec /usr/bin/X -nolisten tcp "$@" +accessx 0 0x1e 0 0xcef
+else
+  exec /usr/bin/X -nolisten tcp "$@" vt$XDG_VTNR +accessx 0 0x1e 0 0xcef
+fi
