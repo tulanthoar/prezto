@@ -9,5 +9,31 @@
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
+export KEYTIMEOUT=3
+setopt clobber
+export RANGER_LOAD_DEFAULT_RC=FALSE
+
+source $HOME/dotfiles/myrc.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_COMPLETION_TRIGGER=',,'
+_fzf_compgen_path() {
+  ag -g "" "$1"
+}
+eval "$(fasd --init auto)"
+source $HOME/dotfiles/dircycle.plugin.zsh
+[[ -f $HOME/.plugins.txt ]] && rm $HOME/.plugins.txt
+touch $HOME/.plugins.txt
+for p ('bric3/nice-exit-code' 'fcambus/ansiweather' 'djui/alias-tips' 'mollifier/anyframe')
+  do echo "$p" >> $HOME/.plugins.txt
+done
+source <(antibody init)
+antibody bundle < $HOME/.plugins.txt
+zstyle ":anyframe:selector:" use fzf
+source /usr/lib/python3.5/site-packages/powerline/bindings/zsh/powerline.zsh
+RPROMPT='$(nice_exit_code)'
+BKEYS
 
 # Customize to your needs...
+# antigen bundle tulanthoar/pretty-time-zsh
+# antigen bundle RobSis/zsh-completion-generator
+# antigen bundle srijanshetty/zsh-pip-completion
