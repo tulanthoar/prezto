@@ -1,7 +1,4 @@
-set -g default-terminal "screen-256color" 
-unbind p
-bind y run "tmux save-buffer - | xclip -i -sel clipboard > /dev/null"
-bind p run "tmux set-buffer \"$(xclip -o -sel clipboard)\"; tmux paste-buffer"
+unbind-key p
 unbind-key -n F1
 unbind-key -n F8
 unbind-key -n F5
@@ -26,7 +23,7 @@ unbind-key -n S-F9
 unbind-key -n S-F11
 unbind-key -n M-S-F8
 unbind-key -n C-S-F2
-nbind-key -n C-S-F3
+unbind-key -n C-S-F3
 unbind-key -n C-S-F4
 unbind-key -n C-S-F5
 unbind-key -n C-S-F8
@@ -58,17 +55,7 @@ unbind-key -n C-a
 
 unbind-key -n F3
 unbind-key -n F4
-bind-key -n C-F10 break-pane
 
 unbind-key -n F6
 unbind-key -n C-F6
-set -g prefix F12
-bind-key -n F11 new-window -c "#{pane_current_path}" \; rename-window -
-bind-key -n C-F11 detach-client
-bind-key -n S-F11 kill-pane
-bind-key -n F1 next-window
-bind-key -n C-F1 previous-window
-bind-key -n F3 copy-mode
-bind-key -n C-F3 paste-buffer
-bind-key -n F9 display-panes \; split-window -h -c "#{pane_current_path}"
-bind-key -n C-F9 display-panes \; split-window -v -c "#{pane_current_path}"
+unbind-key -n S-F12
