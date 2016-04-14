@@ -1,3 +1,10 @@
+function percol_select_history() {
+    local tac
+    exists gtac && tac="gtac" || { exists tac && tac="tac" || { tac="tail -r" } }
+    BUFFER=$(fc -l -n 1 | eval $tac | percol --query "$LBUFFER")
+    CURSOR=$#BUFFER         # move cursor
+    zle -R -c               # refresh
+}
 function fpp_pipe() {
   eval '`echo "$BUFFER"`|fpp'
   BUFFER=''
@@ -38,14 +45,15 @@ else;
   zle -N fuck-command-line
 fi
 zle -N fpp_pipe
+zle -N percol_select_history
 zle -N p-paste
 zle -N sudo-command-line
 
 alias Y="| yank"
 alias YL="| yank -l"
-alias v="sf -e nvim"
+alias v="fasd -f -i -e nvim"
 alias x="unarchive"
-alias zz="z ~"
+alias cdd="cd $HOME"
 alias bytmux="byobu-tmux"
 alias pyls="ls *.py|percol|xargs python3"
 alias xx="exit"
@@ -62,17 +70,17 @@ export JAVA_HOME="/usr/lib/jvm/default-jvm"
 export GOPATH="~/golang"
 export PATH="$PATH:$GOPATH/bin"
 
-bindkey -M viins "^[ " autosuggest-accept
-bindkey -M viins "^@" vi-forward-word
-bindkey -M viins "^[c" yank_pipe
-bindkey -M viins "^[p" fpp_pipe
-bindkey -M viins "^[h" anyframe-widget-execute-history
-bindkey -M viins "^[s" anyframe-widget-insert-filename
-bindkey -M viins "^[q" anyframe-widget-kill
-bindkey -M viins "^[v" p-paste
-bindkey -M viins "^[f" forward-word
-bindkey -M viins "^[b" backward-word
 function BKEYS() {
+  bindkey -M viins "^[ " autosuggest-accept
+  bindkey -M viins "^@" vi-forward-word
+  bindkey -M viins "^[c" yank_pipe
+  bindkey -M viins "^[p" fpp_pipe
+  bindkey -M viins "^[h" anyframe-widget-execute-history
+  bindkey -M viins "^[s" anyframe-widget-insert-filename
+  bindkey -M viins "^[q" anyframe-widget-kill
+  bindkey -M viins "^[v" p-paste
+  bindkey -M viins "^[f" forward-word
+  bindkey -M viins "^[b" backward-word
   bindkey -rM viins "^[";
   bindkey -M viins "\e" vi-cmd-mode;
   bindkey -M viins "^[[3~" vi-delete-char;
@@ -106,3 +114,24 @@ alias whereami=display_info
 alias rm='rm -I'
 alias cp='cp -i'
 alias mv='mv -i'
+
+insert-cycledleft () {
+  emulate -L zsh
+  setopt nopushdminus
+
+  builtin pushd -q +1 &>/dev/null || true
+  zle reset-prompt
+}
+zle -N insert-cycledleft
+
+insert-cycledright () {
+  emulate -L zsh
+  setopt nopushdminus
+
+  builtin pushd -q -0 &>/dev/null || true
+  zle reset-prompt
+}
+zle -N insert-cycledright
+
+bindkey -M viins "^B" insert-cycledleft
+bindkey -M viins "^F" insert-cycledright

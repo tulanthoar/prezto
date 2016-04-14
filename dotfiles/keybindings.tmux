@@ -64,11 +64,11 @@ unbind-key -n F6
 unbind-key -n C-F6
 set -g prefix F12
 bind-key -n F11 new-window -c "#{pane_current_path}" \; rename-window -
-bind-key -n S-F1 previous-window
-bind-key -n F1 next-window
 bind-key -n C-F11 detach-client
 bind-key -n S-F11 kill-pane
-bind-key -n F2 copy-mode
-bind-key -n S-F2 paste-buffer
-bind-key -n F10 display-panes \; split-window -h -c "#{pane_current_path}"
-bind-key -n S-F10 display-panes \; split-window -v -c "#{pane_current_path}"
+bind-key -n F1 next-window
+bind-key -n C-F1 previous-window
+bind-key -n F3 copy-mode
+bind-key -n C-F3 paste-buffer
+bind-key -n F9 display-panes \; split-window -h -c "#{pane_current_path}"
+bind-key -n C-F9 display-panes \; split-window -v -c "#{pane_current_path}"

@@ -29,8 +29,8 @@ if (( $+commands[$_pacman_frontend] )); then
   fi
 else
   _pacman_frontend='pacman'
-  _pacman_sudo='sudo '
 fi
+_pacman_sudo='sudo '
 
 #
 # Aliases

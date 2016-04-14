@@ -1,14 +1,14 @@
+let mapleader=","
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'junegunn/fzf'
 Plugin 'ascenator/L9'
 Plugin 'terryma/vim-expand-region'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'vim-scripts/YankRing.vim'
-let g:yankring_replace_n_pkey = '<F3>'
-let g:yankring_replace_n_nkey = '<F4>'
+let g:yankring_replace_n_pkey = '<F5>'
+let g:yankring_replace_n_nkey = '<S-F5>'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired.git'
@@ -25,18 +25,14 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ervandew/supertab'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'michaeljsmith/vim-indent-object'
-"Plugin 'tomtom/tlib_vim'
-"Plugin 'garbas/vim-snipmate'
-"Plugin 'honza/vim-snippets'
 Plugin 'ctrlpvim/ctrlp.vim'
 call vundle#end()
 filetype plugin indent on
-"colorscheme solarized
 color desert
 syntax enable
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=gray
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=gray
+" let g:indent_guides_color_change_percent = 10
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkred
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 let g:deoplete#enable_at_startup = 1
@@ -49,11 +45,10 @@ let g:airline#extensions#bufferline#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_section_b = '%{getcwd()}'
-"let g:airline_section_c = '%t'
-let g:python3_host_prog = '/bin/python3'
+let g:python3_host_prog = '/usr/bin/python3'
 let g:powerline_pycmd="py3"
 let NERDTreeIgnore=['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
-let NERDTreeQuitOnOpen=1
+let NERDTreeQuitOnOpen=0
 let NERDTreeCascadeOpenSingleChildDir=1
 let NERDTreeShowHidden=1
 let g:NERDTreeWinSize=35
@@ -62,8 +57,8 @@ let g:yankring_min_element_length = 2
 
 set cursorline
 set cursorcolumn
-let &l:colorcolumn=join(range(1,120,10),',')
-autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=lightgrey
+" let &l:colorcolumn=join(range(1,120,10),',')
+" autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=lightgrey
 autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=black
 set autoread
 set ai
@@ -85,7 +80,6 @@ set mat=2
 set mouse=a
 set number
 set nuw=2
-set relativenumber
 set ruler
 set scrolljump=5
 set showcmd
@@ -107,53 +101,52 @@ set wildignorecase
 set wildmenu
 set wrap
 
-let mapleader=","
-map css yss
-"map <F2> :tabnew<CR>
+nnoremap css yss
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark
 map <leader>nf :NERDTreeFind<cr>
-"map <leader>e :NERDTreeFind<CR>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
-"map Q gq
-"inoremap <C-U> <C-G>u<C-U>
-"nnoremap Y y$
 nmap  <Leader>p0  :YRGetElem 1<CR>
 nmap  <Leader>pp  :YRPop<CR>
 nmap  <Leader>f       <Plug>(easymotion-bd-fl)
 let g:EasyMotion_startofline = 0
-nmap <Leader>J <Plug>(easymotion-sol-j)
-nmap <Leader>K <Plug>(easymotion-sol-k)
-nmap <Leader>f       <Plug>(easymotion-bd-fl)
-nmap <Leader>t       <Plug>(easymotion-bd-tl)
-nmap <space> <Plug>(easymotion-bd-f2)
-nmap  <Leader>g       <Plug>(easymotion-bd-jk)
-nmap  <Leader>e       <Plug>(easymotion-bd-w)
+nmap <Leader>j  <Plug>(easymotion-sol-j)
+nmap <Leader>k  <Plug>(easymotion-sol-k)
+nmap <Leader>f  <Plug>(easymotion-bd-fl)
+nmap <Leader>t  <Plug>(easymotion-bd-tl)
+nmap <space>    <Plug>(easymotion-bd-f2)
+nmap <Leader><space>    <Plug>(easymotion-overwin-line)
+nmap  <Leader>g <Plug>(easymotion-bd-jk)
+nmap  <Leader>w <Plug>(easymotion-bd-wl)
+nmap  <Leader>e <Plug>(easymotion-bd-el)
 " Visual mode pressing * or # searches for the current selection
 vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
 
-"map <F6> "ky
-"map <S-F6> "kp
-"map <F5> "jy
-"map <S-F5> "jp
-"map <F4> ml
-"map <S-F4> 'l
-"map <F3> mk
-"map <S-F3> 'k
-"map <S-F2> 'j
-"map <Leader><space> /
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
-"map j gj
-"map k gk
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
-"nmap 0 ^
-
+nnoremap 0 ^
+nnoremap ^ 0
+map <F2> :tabnext<cr>
+map <S-F2> :tabprevious<cr>
+map <F4> :w<cr>
+map <S-F4> :x<cr>
+map <leader><F4> :q!<cr>
+map <F10> :tabnew<cr>:NERDTreeToggle<cr>
+map <S-F10> :tabclose<cr>
+map <leader><F10> :NERDTreeToggle<cr>
+map <F8> :vsp<cr>
+map <S-F8> :sp<cr>
+map <F7> :bnext<cr>
+map <S-F7> :bprevious<cr>
+map <F6> mq
+map <S-F6> 'q
+map <leader><F6> `q
 "map K <Plug>(expand_region_expand)
 "map J <Plug>(expand_region_shrink)
 
@@ -161,18 +154,14 @@ nmap <M-j> mz:m+<cr>`z
 nmap <M-k> mz:m-2<cr>`z
 vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-map <leader>q :e ~/buffer<cr>
-map <leader>w :w<cr>
+nmap <leader>q :e ~/buffer<cr>
+nnoremap <leader>' ``
 
 " Close the current buffer
-map <leader>bd :Bclose<cr>:tabclose<cr>gT
+nmap <leader>bq :Bclose<cr>:tabclose<cr>gT
 
-" Close all the buffers
-map <leader>ba :bufdo bd<cr>
-
-map <leader>l :bnext<cr>
-map <leader>h :bprevious<cr>
+map <leader>l :tabnext<cr>
+map <leader>h :tabprevious<cr>
 
 " Useful mappings for managing tabs
 map <leader>t<space> :tabnew<cr>
@@ -184,7 +173,7 @@ map <leader>tn :tabnext
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
 
-" Let 'tl' toggle between this and the last accessed tab
+" Let 'tt' toggle between this and the last accessed tab
 let g:lasttab = 1
 nmap <Leader>tt :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()

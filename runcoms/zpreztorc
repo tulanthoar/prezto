@@ -98,7 +98,8 @@ zstyle ':prezto:module:pacman' frontend 'pacman'
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':prezto:module:prompt' theme 'paradox'
+# zstyle ':prezto:module:prompt' theme 'random'
+zstyle ':prezto:module:prompt' theme 'damoekri'
 
 #
 # Ruby
@@ -141,8 +142,8 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
 # Set syntax highlighting styles.
 zstyle ':prezto:module:syntax-highlighting' styles \
   'builtin' 'bg=blue' \
-  'command' 'bg=blue' \
-  'function' 'bg=blue'
+  'command' 'fg=green' \
+  'function' 'fg=yellow'
 
 #
 # Terminal
