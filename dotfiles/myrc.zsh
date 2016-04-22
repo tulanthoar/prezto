@@ -1,6 +1,18 @@
+insert-cycledleft () {
+  emulate -L zsh
+  setopt nopushdminus
+  builtin pushd -q +1 &>/dev/null || true
+  zle reset-prompt
+}
+insert-cycledright () {
+  emulate -L zsh
+  setopt nopushdminus
+  builtin pushd -q -0 &>/dev/null || true
+  zle reset-prompt
+}
 function percol_select_history() {
     local tac
-    exists gtac && tac="gtac" || { exists tac && tac="tac" || { tac="tail -r" } }
+    tac="tac"
     BUFFER=$(fc -l -n 1 | eval $tac | percol --query "$LBUFFER")
     CURSOR=$#BUFFER         # move cursor
     zle -R -c               # refresh
@@ -20,11 +32,7 @@ function copyfile {
 }
 sudo-command-line() {
   [[ -z $BUFFER ]] && zle up-history
-  if [[ $BUFFER == sudo\ * ]]; then
-    LBUFFER="${LBUFFER#sudo }"
-  else
-    LBUFFER="sudo $LBUFFER"
-  fi
+  [[ $BUFFER == sudo\ * ]] && LBUFFER="${LBUFFER#sudo }" || LBUFFER="sudo $LBUFFER"
 }
 function p-paste() {
     OLDC=CURSOR
@@ -47,6 +55,13 @@ else;
   }
   zle -N fuck-command-line
 fi
+suggest-accept-return(){
+  zle vi-end-of-line
+  ~/PycharmProjects/tldr/press_return.py
+}
+zle -N insert-cycledleft
+zle -N insert-cycledright
+zle -N suggest-accept-return
 zle -N fpp_pipe
 zle -N percol_select_history
 zle -N p-paste
@@ -58,7 +73,7 @@ alias v="fasd -f -i -e nvim"
 alias x="unarchive"
 alias cdd="cd $HOME"
 alias bytmux="byobu-tmux"
-alias pyls="ls *.py|percol|xargs python3"
+alias pyls="fasd -f -i -e python3 .py$"
 alias xx="exit"
 alias xmo="xmodmap ~/xmo; setxkbmap -option altwin:alt_super_win -option shift:both_shiftlock; xmodmap ~/xmo;"
 alias cpf='copyfile'
@@ -74,7 +89,8 @@ export GOPATH="~/golang"
 export PATH="$PATH:$GOPATH/bin"
 
 function BKEYS() {
-  bindkey -M viins "^[ " autosuggest-accept
+  bindkey -M viins "^Z" vi-cmd-mode
+  bindkey -M viins "^[ " suggest-accept-return
   bindkey -M viins "^@" vi-forward-word
   bindkey -M viins "^[c" yank_pipe
   bindkey -M viins "^[p" fpp_pipe
@@ -84,6 +100,8 @@ function BKEYS() {
   bindkey -M viins "^[v" p-paste
   bindkey -M viins "^[f" forward-word
   bindkey -M viins "^[b" backward-word
+  bindkey -M viins "^B" insert-cycledleft
+  bindkey -M viins "^F" insert-cycledright
   bindkey -rM viins "^[";
   bindkey -M viins "\e" vi-cmd-mode;
   bindkey -M viins "^[[3~" vi-delete-char;
@@ -118,23 +136,3 @@ alias rm='rm -I'
 alias cp='cp -i'
 alias mv='mv -i'
 
-insert-cycledleft () {
-  emulate -L zsh
-  setopt nopushdminus
-
-  builtin pushd -q +1 &>/dev/null || true
-  zle reset-prompt
-}
-zle -N insert-cycledleft
-
-insert-cycledright () {
-  emulate -L zsh
-  setopt nopushdminus
-
-  builtin pushd -q -0 &>/dev/null || true
-  zle reset-prompt
-}
-zle -N insert-cycledright
-
-bindkey -M viins "^B" insert-cycledleft
-bindkey -M viins "^F" insert-cycledright

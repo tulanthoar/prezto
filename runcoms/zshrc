@@ -23,7 +23,6 @@ which fzf > /dev/null || sudo pacman -S community/fzf
 which fasd > /dev/null || wget -O- https://aur.archlinux.org/cgit/aur.git/snapshot/fasd.tar.gz | tar -xf - ~/tmp
 source <(antibody init) && antibody bundle < $HOME/.zprezto/.plugins.txt
 zstyle ":anyframe:selector:" use fzf
-# source /usr/lib/python3.5/site-packages/powerline/bindings/zsh/powerline.zsh
 [[ -d /home/ant/.vim/bundle/Vundle.vim ]] || git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 RPROMPT='$(nice_exit_code)'
 BKEYS
