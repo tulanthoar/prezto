@@ -19,6 +19,5 @@ _fzf_compgen_path() { ag -g "" "$1" }
 echo -e "bric3/nice-exit-code\nfcambus/ansiweather\ndjui/alias-tips\nmollifier/anyframe" > $HOME/.zprezto/.plugins.txt
 source <(antibody init) && antibody bundle < $HOME/.zprezto/.plugins.txt
 zstyle ":anyframe:selector:" use fzf
-# source /usr/lib/python3.5/site-packages/powerline/bindings/zsh/powerline.zsh
 RPROMPT='$(nice_exit_code)'
 BKEYS

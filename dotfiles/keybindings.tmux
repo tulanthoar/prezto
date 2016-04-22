@@ -59,3 +59,13 @@ unbind-key -n F4
 unbind-key -n F6
 unbind-key -n C-F6
 unbind-key -n S-F12
+bind-key -n S-F11 new-window -c "#{pane_current_path}"
+bind-key -n M-F11 kill-pane
+bind-key -n M-S-F11 detach-client
+bind-key -n S-F1 next-window
+bind-key -n M-F1 previous-window
+bind-key -n S-F3 copy-mode
+bind-key -n M-F3 paste-buffer
+bind-key -n S-F9 display-panes \; split-window -h -c "#{pane_current_path}"
+bind-key -n M-F9 display-panes \; split-window -v -c "#{pane_current_path}"
+bind-key -n M-S-F9 break-pane
