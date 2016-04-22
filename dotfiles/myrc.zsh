@@ -34,6 +34,9 @@ function p-paste() {
 }
 if [[ -z $commands[thefuck] ]]; then
   echo 'no fuck installed';
+  which pip > /dev/null || alias installthefuck="sudo pacman -S python-pip && sudo pip install thefuck"
+  which pip > /dev/null && alias installthefuck="sudo pip install thefuck"
+  echo 'alias added installthefuck'
 else;
   eval "$(thefuck --alias)"
   fuck-command-line() {
