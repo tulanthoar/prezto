@@ -19,3 +19,6 @@
 [submodule "modules/autosuggestions/external"]
 	path = modules/autosuggestions/external
 	url = https://github.com/tarruda/zsh-autosuggestions
+[submodule "modules/dwim"]
+	path = modules/dwim
+	url = https://github.com/oknowton/zsh-dwim.git

@@ -36,7 +36,7 @@ sudo-command-line() {
 }
 function p-paste() {
     OLDC=CURSOR
-    RBUFFER="`python3 ~/PycharmProjects/tldr/ppaste.py`${RBUFFER}"
+    RBUFFER="`python3 $HOME/pyproj/tldr/ppaste.py`${RBUFFER}"
     CURSOR=$CURSOR
     zle -R -c
 }
@@ -57,7 +57,7 @@ else;
 fi
 suggest-accept-return(){
   zle vi-end-of-line
-  ~/PycharmProjects/tldr/press_return.py
+  $HOME/pyproj/tldr/press_return.py
 }
 zle -N insert-cycledleft
 zle -N insert-cycledright
@@ -85,8 +85,8 @@ eval infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 export GHUB="https://github.com"
 export TUL="tulanthoar"
 export JAVA_HOME="/usr/lib/jvm/default-jvm"
-export GOPATH="~/golang"
-export PATH="$PATH:$GOPATH/bin"
+export GOPATH="$HOME/golang"
+[[ -d "$GOPATH" ]] && export PATH="$PATH:$GOPATH/bin"
 
 function BKEYS() {
   bindkey -M viins "^Z" vi-cmd-mode
