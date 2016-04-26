@@ -1,0 +1,40 @@
+conky.config = {
+  double_buffer = true,
+  minimum_width = 1020,
+  minimum_height = 50,
+  maximum_width = 1020,
+  no_buffers = true,
+  cpu_avg_samples = 2,
+  net_avg_samples = 2,
+  use_spacer = 'left',
+  draw_shades = false,
+  draw_outline = false,
+  draw_borders = false,
+  draw_graph_borders = false,
+  border_inner_margin = 0,
+  border_outer_margin = 0,
+  override_utf8_locale = true,
+  default_color = 'white',
+  alignment = 'top_left',
+  uppercase = false,
+  text_buffer_size = 2048,
+  imlib_cache_size = 0,
+  gap_x = 5,
+  gap_y = 0,
+  background = true,
+  use_xft = true,
+  font = 'DejaVu Sans Mono:size=8',
+  xftalpha = 0.2,
+  update_interval = 30,
+  total_run_times = 0,
+  own_window = true,
+  own_window_type = 'normal',
+  own_window_transparent = true,
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager'
+}
+conky.text = [[
+  $color${execpi 36000 ~/.conky/scripts/horical.sh}${color}
+  ${voffset 5}${goto 198}${color}${hr 1}
+  ${color 72A4DB}${voffset -54}${goto 46}${font Caviar Dreams:bold:size=18}${time %A}${font Caviar Dreams:bold:size=40}${goto 175} ${color}${voffset 0}${time %d}$color
+  ${color 72A4DB}${voffset -60}${font Caviar Dreams:bold:size=24}${goto 46}${time %b}${font Caviar Dreams:bold:size=16}${goto 128}${color}${voffset 4}${time %Y}$color
+]]
