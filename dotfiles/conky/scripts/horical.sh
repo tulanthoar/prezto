@@ -91,5 +91,5 @@ while [ $b -gt 0 ]; do
         y=1
     fi
 done
-echo '${goto 270}''${font mono:Bold:size=10}'$TOPLINE | sed 's/Su/${color red}Su${color}/g' | sed 's/Sa/${color red}Sa${color}/g'
-echo '${goto 270}''${font mono:bold:size=10}''${color C28C3A}'$OVER '${color 5BED1B}'$TODAY'${color}'$REST
+echo '${goto 270}''${font mono:size=14}'$TOPLINE | sed 's/Su/${color red}Su${color}/g' | sed 's/Sa/${color red}Sa${color}/g'
+echo '${goto 270}''${font mono:size=14}''${color C28C3A}'$OVER '${color 5BED1B}'$TODAY'${color}'$REST

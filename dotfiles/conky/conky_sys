@@ -50,7 +50,7 @@ conky.config={
   uppercase = false,                        -- Only capital letters
   use_spacer = 'right',                    -- Adds spaces around certain objects to stop them from moving other things around
   --
-  font = 'DejaVu Sans Mono:pixelsize=11',
+  font = 'DejaVu Sans Mono:pixelsize=13',
   --
   --default_bar_size = 82 3,               -- Specify a default width and height for bars
   stippled_borders = 3,                  -- Border dashing
@@ -80,33 +80,33 @@ conky.config={
 conky.text = [[
 ${color d7d7d7}${offset 56}${voffset -1}${cpugraph cpu6 17,1}${voffset -3}${hr 2}${color3}
 
-${voffset -19}${offset 110}${font neuropol:size=20}${time %H:%M}${font}  ${voffset -3}${font DejaVu Sans Mono:size=11}$uptime
+${voffset -19}${offset 110}${font neuropol:size=20}${time %H:%M}${font}  ${voffset -3}${font DejaVu Sans Mono:size=13}$uptime
 ${voffset -5}${offset 110}${cpubar cpu6 0, 200}${voffset 2}${color1}
-${font DejaVu Sans Mono:size=11}${color2}${alignr 80} ${exec date +%B\ %Y | sed 's/^.\| [a-z]/\U&/g'}
-${alignr 40}${color3}${execpi 60 JOUR=`date +%e`; cal | sed '1d' | sed 's/^/ /g' | sed /" $JOUR "/s/" $JOUR "/" "'${color 3273b5}'"$JOUR"'${color3}'" "/|sed -n 1p}
-${alignr 40}${color3}${execpi 60 JOUR=`date +%e`; cal | sed '1d' | sed 's/^/ /g' | sed /" $JOUR "/s/" $JOUR "/" "'${color 3273b5}'"$JOUR"'${color3}'" "/|sed -n 2p}
-${alignr 40}${color3}${execpi 60 JOUR=`date +%e`; cal | sed '1d' | sed 's/^/ /g' | sed /" $JOUR "/s/" $JOUR "/" "'${color 3273b5}'"$JOUR"'${color3}'" "/|sed -n 3p}
-${alignr 40}${color3}${execpi 60 JOUR=`date +%e`; cal | sed '1d' | sed 's/^/ /g' | sed /" $JOUR "/s/" $JOUR "/" "'${color 3273b5}'"$JOUR"'${color3}'" "/|sed -n 4p}
-${alignr 40}${color3}${execpi 60 JOUR=`date +%e`; cal | sed '1d' | sed 's/^/ /g' | sed /" $JOUR "/s/" $JOUR "/" "'${color 3273b5}'"$JOUR"'${color3}'" "/|sed -n 5p}
-${alignr 40}${color3}${execpi 60 JOUR=`date +%e`; cal | sed '1d' | sed 's/^/ /g' | sed /" $JOUR "/s/" $JOUR "/" "'${color 3273b5}'"$JOUR"'${color3}'" "/|sed -n 6p}
-${alignr 40}${color3}${execpi 60 JOUR=`date +%e`; cal | sed '1d' | sed 's/^/ /g' | sed /" $JOUR "/s/" $JOUR "/" "'${color 3273b5}'"$JOUR"'${color3}'" "/|sed -n 7p}
+${font DejaVu Sans Mono:size=13}${color2}${alignr 80} ${exec date +%B\ %Y | sed 's/^.\| [a-z]/\U&/g'}
+${alignr 20}${color3}${execpi 60 JOUR=`date +%e`; cal | sed '1d' | sed 's/^/ /g' | sed /" $JOUR "/s/" $JOUR "/" "'${color 3273b5}'"$JOUR"'${color3}'" "/|sed -n 1p}
+${alignr 20}${color3}${execpi 60 JOUR=`date +%e`; cal | sed '1d' | sed 's/^/ /g' | sed /" $JOUR "/s/" $JOUR "/" "'${color 3273b5}'"$JOUR"'${color3}'" "/|sed -n 2p}
+${alignr 20}${color3}${execpi 60 JOUR=`date +%e`; cal | sed '1d' | sed 's/^/ /g' | sed /" $JOUR "/s/" $JOUR "/" "'${color 3273b5}'"$JOUR"'${color3}'" "/|sed -n 3p}
+${alignr 20}${color3}${execpi 60 JOUR=`date +%e`; cal | sed '1d' | sed 's/^/ /g' | sed /" $JOUR "/s/" $JOUR "/" "'${color 3273b5}'"$JOUR"'${color3}'" "/|sed -n 4p}
+${alignr 20}${color3}${execpi 60 JOUR=`date +%e`; cal | sed '1d' | sed 's/^/ /g' | sed /" $JOUR "/s/" $JOUR "/" "'${color 3273b5}'"$JOUR"'${color3}'" "/|sed -n 5p}
+${alignr 20}${color3}${execpi 60 JOUR=`date +%e`; cal | sed '1d' | sed 's/^/ /g' | sed /" $JOUR "/s/" $JOUR "/" "'${color 3273b5}'"$JOUR"'${color3}'" "/|sed -n 6p}
+${alignr 20}${color3}${execpi 60 JOUR=`date +%e`; cal | sed '1d' | sed 's/^/ /g' | sed /" $JOUR "/s/" $JOUR "/" "'${color 3273b5}'"$JOUR"'${color3}'" "/|sed -n 7p}
 
 
 ${color d7d7d7}${offset 100}${voffset -8}${cpugraph cpu6 17,1}${voffset -3}${hr 2}${color3}
-${offset 150}${voffset -10} ${font neuropol:size=20}${battery_percent BAT1}%${font DejaVu Sans Mono:size=11}  Battery
+${offset 150}${voffset -10} ${font neuropol:size=20}${battery_percent BAT1}%${font DejaVu Sans Mono:size=13}  Battery
 ${offset 160}${voffset -5}${cpubar cpu6 0, 150}${voffset 2}${color1}
 ${offset 160}..:: ${acpiacadapter ACAD} ::..
 ${offset 160}${battery_time BAT1}
 
 ${color d7d7d7}${offset 150}${voffset 3}${cpugraph cpu6 17,1}${voffset -3}${hr 2}${color3}
-${offset 200}${voffset -7}${font neuropol:size=20}${cpu cpu1}% ${font DejaVu Sans Mono:size=11}Cpu
+${offset 200}${voffset -7}${font neuropol:size=20}${cpu cpu1}% ${font DejaVu Sans Mono:size=13}Cpu
 ${offset 200}${voffset -5}${cpubar cpu6 0, 110}${voffset 2}${color1}
-${offset 200}CpuT  ${execi 20 sensors | grep "Core" | cut -d "+" -f2 | cut -c1-4 | sort | tail -n1} °C
+${offset 200} ${execi 20 sensors | grep "Core" | cut -d "+" -f2 | cut -c1-4 | sort | tail -n1} °C
 
 
 ${color d7d7d7}${offset 100}${voffset 36}${cpugraph cpu6 17,1}${voffset -3}${hr 2}${color3}
-${offset 170}${font neuropol:size=20}$memperc% ${font DejaVu Sans Mono:size=11} Ram
+${offset 170}${font neuropol:size=20}$memperc% ${font DejaVu Sans Mono:size=13} Ram
 ${offset 170}${voffset -5}${cpubar cpu6 0, 110}${voffset 2}${color1}
-${offset 170}root   ${fs_free /} / ${fs_size /}
+${offset 170} ${fs_free /} / ${fs_size /}
 ]]
 --${offset 170}tHD    ${hddtemp /dev/sda}°C
