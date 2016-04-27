@@ -99,7 +99,7 @@ ${offset 160}..:: ${acpiacadapter ACAD} ::..
 ${offset 160}${battery_time BAT1}
 
 ${color d7d7d7}${offset 150}${voffset 3}${cpugraph cpu6 17,1}${voffset -3}${hr 2}${color3}
-${offset 200}${voffset -7}${font neuropol:size=20}${cpu cpu1}% ${font DejaVu Sans Mono:size=13}Cpu
+${offset 200}${voffset -7}${font neuropol:size=20}${cpu cpu0}% ${font DejaVu Sans Mono:size=13}Cpu
 ${offset 200}${voffset -5}${cpubar cpu6 0, 110}${voffset 2}${color1}
 ${offset 200} ${execi 20 sensors | grep "Core" | cut -d "+" -f2 | cut -c1-4 | sort | tail -n1} °C
 
