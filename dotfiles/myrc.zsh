@@ -67,6 +67,7 @@ zle -N percol_select_history
 zle -N p-paste
 zle -N sudo-command-line
 
+alias suspendnow="sudo pm-suspend"
 alias Y="| yank"
 alias YL="| yank -l"
 alias v="fasd -f -i -e nvim"

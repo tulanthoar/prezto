@@ -59,13 +59,20 @@ unbind-key -n F4
 unbind-key -n F6
 unbind-key -n C-F6
 unbind-key -n S-F12
-bind-key -n S-F11 new-window -c "#{pane_current_path}"
-bind-key -n M-F11 kill-pane
-bind-key -n M-S-F11 detach-client
-bind-key -n S-F1 next-window
-bind-key -n M-F1 previous-window
-bind-key -n S-F3 copy-mode
-bind-key -n M-F3 paste-buffer
-bind-key -n S-F9 display-panes \; split-window -h -c "#{pane_current_path}"
-bind-key -n M-F9 display-panes \; split-window -v -c "#{pane_current_path}"
-bind-key -n M-S-F9 break-pane
+unbind-key Space
+unbind-key q
+unbind-key l
+unbind-key k
+bind-key F1 list-keys
+bind-key F2 display-panes \; split-window -h -c "#{pane_current_path}"
+bind-key F3 display-panes \; split-window -v -c "#{pane_current_path}"
+bind-key F4 detach-client
+bind-key k switch-session -n
+bind-key j switch-session -p
+bind-key Space new-window -c "#{pane_current_path}"
+bind-key l next-window
+bind-key h previous-window
+bind-key q kill-window
+bind-key Tab last-window
+bind-key y copy-mode \; run-shell 'tmux save-buffer - | xclip -i -sel clipboard > /dev/null'
+bind-key p run-shell 'tmux set-buffer "$(xclip -o -sel clipboard)"' \; paste-buffer
