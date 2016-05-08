@@ -47,17 +47,17 @@ alias sftp='noglob sftp'
 
 # Define general aliases.
 alias _='sudo'
-alias b='${(z)BROWSER}'
-alias cp="${aliases[cp]:-cp} -i"
-alias e='${(z)VISUAL:-${(z)EDITOR}}'
+# alias b='${(z)BROWSER}'
+# alias cp="${aliases[cp]:-cp} -i"
+# alias e='${(z)VISUAL:-${(z)EDITOR}}'
 alias ln="${aliases[ln]:-ln} -i"
 alias mkdir="${aliases[mkdir]:-mkdir} -p"
-alias mv="${aliases[mv]:-mv} -i"
-alias p='${(z)PAGER}'
-alias po='popd'
-alias pu='pushd'
-alias rm="${aliases[rm]:-rm} -I"
-alias type='type -a'
+# alias mv="${aliases[mv]:-mv} -i"
+# alias p='${(z)PAGER}'
+# alias po='popd'
+# alias pu='pushd'
+# alias rm="${aliases[rm]:-rm} -I"
+# alias type='type -a'
 
 # ls
 if is-callable 'dircolors'; then
@@ -90,54 +90,54 @@ else
   fi
 fi
 
-alias l='ls -1A'         # Lists in one column, hidden files.
-alias ll='ls -lh'        # Lists human readable sizes.
-alias lr='ll -R'         # Lists human readable sizes, recursively.
-alias la='ll -A'         # Lists human readable sizes, hidden files.
-alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
-alias lx='ll -XB'        # Lists sorted by extension (GNU only).
-alias lk='ll -Sr'        # Lists sorted by size, largest last.
-alias lt='ll -tr'        # Lists sorted by date, most recent last.
-alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time.
-alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
-alias sl='ls'            # I often screw this up.
+# alias l='ls -1A'         # Lists in one column, hidden files.
+# alias ll='ls -lh'        # Lists human readable sizes.
+# alias lr='ll -R'         # Lists human readable sizes, recursively.
+# alias la='ll -A'         # Lists human readable sizes, hidden files.
+# alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
+# alias lx='ll -XB'        # Lists sorted by extension (GNU only).
+# alias lk='ll -Sr'        # Lists sorted by size, largest last.
+# alias lt='ll -tr'        # Lists sorted by date, most recent last.
+# alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time.
+# alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
+# alias sl='ls'            # I often screw this up.
 
 # Grep
 if zstyle -t ':prezto:module:utility:grep' color; then
   export GREP_COLOR='37;45'           # BSD.
   export GREP_COLORS="mt=$GREP_COLOR" # GNU.
 
-  alias grep="${aliases[grep]:-grep} --color=auto"
+  alias -g grep="${aliases[grep]:-grep} --color=auto"
 fi
 
-# Mac OS X Everywhere
-if [[ "$OSTYPE" == darwin* ]]; then
-  alias o='open'
-elif [[ "$OSTYPE" == cygwin* ]]; then
-  alias o='cygstart'
-  alias pbcopy='tee > /dev/clipboard'
-  alias pbpaste='cat /dev/clipboard'
-else
-  alias o='xdg-open'
+# # Mac OS X Everywhere
+# if [[ "$OSTYPE" == darwin* ]]; then
+#   alias o='open'
+# elif [[ "$OSTYPE" == cygwin* ]]; then
+#   alias o='cygstart'
+#   alias pbcopy='tee > /dev/clipboard'
+#   alias pbpaste='cat /dev/clipboard'
+# else
+#   alias o='xdg-open'
 
-  if (( $+commands[xclip] )); then
-    alias pbcopy='xclip -selection clipboard -in'
-    alias pbpaste='xclip -selection clipboard -out'
-  elif (( $+commands[xsel] )); then
-    alias pbcopy='xsel --clipboard --input'
-    alias pbpaste='xsel --clipboard --output'
-  fi
-fi
+#   if (( $+commands[xclip] )); then
+#     alias pbcopy='xclip -selection clipboard -in'
+#     alias pbpaste='xclip -selection clipboard -out'
+#   elif (( $+commands[xsel] )); then
+#     alias pbcopy='xsel --clipboard --input'
+#     alias pbpaste='xsel --clipboard --output'
+#   fi
+# fi
 
-alias pbc='pbcopy'
-alias pbp='pbpaste'
+# alias pbc='pbcopy'
+# alias pbp='pbpaste'
 
-# File Download
-if (( $+commands[curl] )); then
-  alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
-elif (( $+commands[wget] )); then
-  alias get='wget --continue --progress=bar --timestamping'
-fi
+# # File Download
+# if (( $+commands[curl] )); then
+#   alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
+# elif (( $+commands[wget] )); then
+#   alias get='wget --continue --progress=bar --timestamping'
+# fi
 
 # Resource Usage
 alias df='df -kh'
@@ -158,7 +158,7 @@ fi
 # Miscellaneous
 
 # Serves a directory via HTTP.
-alias http-serve='python -m SimpleHTTPServer'
+# alias http-serve='python -m SimpleHTTPServer'
 
 #
 # Functions

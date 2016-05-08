@@ -14,7 +14,7 @@
 
 # Color output (auto set to 'no' on dumb terminals).
 zstyle ':prezto:*:*' color 'yes'
-
+zstyle ':prezto:module:autosuggestions' color 'yes'
 # Set the Zsh modules to load (man zshmodules).
 # zstyle ':prezto:load' zmodule 'attr' 'stat'
 
@@ -25,22 +25,21 @@ zstyle ':prezto:*:*' color 'yes'
 # The order matters.
 zstyle ':prezto:load' pmodule \
   'environment' \
+  'helper' \
+  'spectrum' \
   'utility' \
   'terminal' \
   'editor' \
   'history' \
   'pacman' \
   'archive' \
-  'history' \
   'directory' \
-  'spectrum' \
   'completion' \
   'fasd' \
   'syntax-highlighting' \
   'history-substring-search' \
   'autosuggestions' \
-  'prompt' \
-  'dwim'
+  'prompt'
 
 #
 # Autosuggestions

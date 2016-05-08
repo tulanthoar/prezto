@@ -80,8 +80,8 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_default_mapping = 0
 let g:airline_powerline_fonts = 1
-" let g:airline_theme='molokai'
-let g:airline_theme='kalisi'
+let g:airline_theme='molokai'
+" let g:airline_theme='kalisi'
 let g:bufferline_modified = '**'
 let g:bufferline_echo = 0
 let g:SuperTabDefaultCompletionType = "context"
@@ -156,6 +156,8 @@ set whichwrap+=<,>,h,l
 set wildignore=*.o,*~,*.pyc
 set wildignorecase
 
+map <unique> ]P :<C-U>YRYankCount 'yy'<CR>gccp
+map <unique> [P :<C-U>YRYankCount 'yy'<CR>gccP
 nmap <unique> css yss
 vmap <unique> C <Plug>Commentary
 nnoremap 0 ^
@@ -225,6 +227,7 @@ nmap <unique> <leader>i dii
 nnoremap <silent><unique> <leader>p :YRShow<cr>
 nmap <unique> <leader>ta :TlistToggle<cr>
 nmap <unique> <leader>to <Plug>TaskList
+nmap <unique> <leader>nd :NERDTreeCWD<cr>
 nmap <unique> <leader>nh :NERDTreeToggle "$HOME"<cr>
 nmap <unique> <leader>nn :NERDTreeFind<cr>
 nmap <unique> <leader>nm :NERDTreeMirror<cr>

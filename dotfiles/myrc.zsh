@@ -67,22 +67,38 @@ zle -N percol_select_history
 zle -N p-paste
 zle -N sudo-command-line
 
+# alias grep='grep --color'
+alias -g H='| head'
+alias -g T='| tail'
+alias -g G='| grep'
+alias -g L="| less"
 alias suspendnow="sudo pm-suspend"
-alias Y="| yank"
-alias YL="| yank -l"
-alias v="fasd -f -i -e nvim"
-alias x="unarchive"
-alias cdd="cd $HOME"
-alias bytmux="byobu-tmux"
+alias -g Y="| yank"
+alias -g YL="| yank -l"
+alias V="fasd -f -i -e nvim"
+alias EX="unarchive"
+alias C="cd $HOME"
+alias BT="byobu-tmux"
 alias pyls="fasd -f -i -e python3 .py$"
-alias xx="exit"
-alias xmo="xmodmap ~/xmo; setxkbmap -option altwin:alt_super_win -option shift:both_shiftlock; xmodmap ~/xmo;"
+alias X="exit"
+alias xmo="xmodmap ~/xmo; setxkbmap -option altwin:alt_super_win -option shift:both_shiftlock; xmodmap ~/xmo; numlockx"
 alias cpf='copyfile'
 alias cpd='copydir'
-alias pycharm="cd $HOME/apps/pycharm/bin && ./pycharm.sh"
+alias L='ls -lFh'     #size,show type,human readable
+alias LA='ls -lAFh'   #long list,show almost all,show type,human readable
+alias LL='ls -l'      #long list
+alias LH='ls -ld .*'
+alias FD='fasd -d -i'
+alias FF='fasd -f -i'
+alias FA='fasd -a -i'
+alias help='man'
+alias unexport='unset'
+alias whereami=display_info
+alias rm='rm -I'
+alias cp='cp -i'
+alias mv='mv -i'
+# alias pycharm="cd $HOME/apps/pycharm/bin && ./pycharm.sh"
 
-#make ^H work [nvim]
-eval infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 export GHUB="https://github.com"
 export TUL="tulanthoar"
 export JAVA_HOME="/usr/lib/jvm/default-jvm"
@@ -112,30 +128,3 @@ function BKEYS() {
   bindkey -M vicmd "\t" fuck-command-line
   bindkey -M vicmd ":" percol_select_history
 }
-
-# ls, the common ones I use a lot shortened for rapid fire usage
-alias l='ls -lFh'     #size,show type,human readable
-alias la='ls -lAFh'   #long list,show almost all,show type,human readable
-alias ll='ls -l'      #long list
-alias ldots='ls -ld .*'
-
-alias grep='grep --color'
-
-# Command line head / tail shortcuts
-alias -g H='| head'
-alias -g T='| tail'
-alias -g G='| grep'
-alias -g L="| less"
-
-alias fd='find . -type d -name'
-alias ff='find . -type f -name'
-
-alias help='man'
-alias unexport='unset'
-
-alias whereami=display_info
-
-alias rm='rm -I'
-alias cp='cp -i'
-alias mv='mv -i'
-
