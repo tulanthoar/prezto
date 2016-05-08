@@ -4,22 +4,27 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ascenator/L9'
+Plugin 'klen/python-mode'
+let g:pymode_rope_completion = 0
+Plugin 'vim-scripts/TaskList.vim'
+Plugin 'vim-scripts/taglist.vim'
 Plugin 'terryma/vim-expand-region'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'vim-scripts/YankRing.vim'
-let g:yankring_replace_n_pkey = '<F5>'
-let g:yankring_replace_n_nkey = '<S-F5>'
+let g:yankring_replace_n_pkey = '--'
+let g:yankring_replace_n_nkey = '-='
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired.git'
+Plugin 'tpope/vim-repeat'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'scrooloose/syntastic'
+Plugin 'majutsushi/tagbar'
 Plugin 'bling/vim-airline'
 Plugin 'bling/vim-bufferline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -29,15 +34,43 @@ Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-textobj-line'
 Plugin 'kana/vim-textobj-entire'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'tpope/vim-vividchalk'
+Plugin 'vim-scripts/summerfruit256.vim'
+Plugin 'vim-scripts/buttercream.vim'
+Plugin 'Lokaltog/vim-distinguished'
+Plugin 'lisposter/vim-blackboard'
+Plugin 'freeo/vim-kalisi'
+Plugin 'nielsmadan/harlequin'
 call vundle#end()
 filetype plugin indent on
-color desert
+" color vividchalk
+set t_Co=256  " make use of 256 terminal colors
+" color summerfruit256
+color distinguished
+" color blackboard
+" color harlequin
 syntax enable
-" let g:indent_guides_color_change_percent = 10
+let g:indent_guides_color_change_percent = 50
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkred
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+let g:ctrlp_by_filename = 1
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_max_files = 100000
+let g:ctrlp_max_depth = 400
+let g:ctrlp_follow_symlinks = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_enable_signs = 1
+let g:jedi#use_tabs_not_buffers = 1
+let g:multi_cursor_visual_maps = {'i':1, 'a':1, 'f':1, 'F':1, 't':1, 'T':1, 'S':1}
+let g:SuperTabLongestEnhanced = 1
+let g:SuperTabCrMapping = 1
+let g:Tlist_Use_SingleClick=1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#enable_refresh_always = 1
@@ -45,118 +78,31 @@ let g:deoplete#auto_complete_start_length = 1
 let g:indent_guides_start_level=2
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
+let g:indent_guides_default_mapping = 0
 let g:airline_powerline_fonts = 1
-let g:airline_theme='molokai'
+" let g:airline_theme='molokai'
+let g:airline_theme='kalisi'
+let g:bufferline_modified = '**'
+let g:bufferline_echo = 0
+let g:SuperTabDefaultCompletionType = "context"
+let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
+let g:airline#extensions#quickfix#location_text = 'Location'
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_section_b = '%{getcwd()}'
+" let g:airline_section_b = airline#section#create(['%{getcwd()}', '  ', '%{strftime("%c")}'])
+let g:airline_section_b ='%{getcwd()}'
 let g:python3_host_prog = '/usr/bin/python3'
-let g:powerline_pycmd="py3"
 let g:NERDTreeIgnore=['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
 let g:NERDTreeQuitOnOpen=0
 let g:NERDTreeCascadeOpenSingleChildDir=1
 let g:NERDTreeShowHidden=1
 let g:NERDTreeWinSize=35
+let g:NERDTreeShowFiles = 0
+let g:NERDTreeMinimalUI=1
 let g:multi_cursor_next_key="\<C-s>"
 let g:yankring_min_element_length = 2
-
-set cursorline
-set cursorcolumn
-" let &l:colorcolumn=join(range(1,120,10),',')
-" autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=lightgrey
-autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=black
-set autoread
-set ai
-set background=dark
-set backup
-set cmdheight=2
-set encoding=utf8
-set eol
-set expandtab
-set ffs=unix,dos,mac
-set foldcolumn=1
-set hidden
-set ignorecase
-set lbr
-set lcs+=extends:&,precedes:&
-set list
-set magic
-set mat=2
-set mouse=a
-set number
-set nuw=2
-set ruler
-set scrolljump=5
-set showcmd
-set showmatch
-set showmode
-set showtabline=0
-set si
-set smartcase
-set smarttab
-set so=5 "ensure 5 lines are above/below cursor when scrolling
-set splitright
-set timeoutlen=1200
-set ts=2 sw=2 et
-set undofile
-set viminfo^=% " Remember info about open buffers on close
-set whichwrap+=<,>,h,l
-set wildignore=*.o,*~,*.pyc
-set wildignorecase
-set wildmenu
-set wrap
-
-nnoremap css yss
-map <leader>nn :NERDTreeToggle<cr>
-map <leader>nb :NERDTreeFromBookmark
-map <leader>nf :NERDTreeFind<cr>
-
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! w !sudo tee > /dev/null %
-nmap  <Leader>p0  :YRGetElem 1<CR>
-nmap  <Leader>pp  :YRPop<CR>
-nmap  <Leader>f       <Plug>(easymotion-bd-fl)
-let g:EasyMotion_startofline = 0
-nmap <Leader>j  <Plug>(easymotion-sol-j)
-nmap <Leader>k  <Plug>(easymotion-sol-k)
-nmap <Leader>f  <Plug>(easymotion-bd-fl)
-nmap <Leader>t  <Plug>(easymotion-bd-tl)
-nmap <space>    <Plug>(easymotion-bd-f2)
-nmap <Leader><space>    <Plug>(easymotion-overwin-line)
-nmap  <Leader>g <Plug>(easymotion-bd-jk)
-nmap  <Leader>w <Plug>(easymotion-bd-wl)
-nmap  <Leader>e <Plug>(easymotion-bd-el)
-" Visual mode pressing * or # searches for the current selection
-vnoremap <silent> * :call VisualSelection('f')<CR>
-vnoremap <silent> # :call VisualSelection('b')<CR>
-
-noremap <C-j> <C-W>j
-noremap <C-k> <C-W>k
-noremap <C-h> <C-W>h
-noremap <C-l> <C-W>l
-noremap <leader>; :TmuxNavigatePrevious<cr>
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
-nnoremap 0 ^
-nnoremap ^ 0
-map <F2> :tabnext<cr>
-map <S-F2> :tabprevious<cr>
-map <F4> :w<cr>
-map <S-F4> :x<cr>
-map <leader><F4> :q!<cr>
-map <F10> :tabnew<cr>:NERDTreeToggle<cr>
-map <S-F10> :tabclose<cr>
-map <leader><F10> :NERDTreeToggle<cr>
-map <F8> :vsp<cr>
-map <S-F8> :sp<cr>
-map <F7> :bnext<cr>
-map <S-F7> :bprevious<cr>
-map <F6> mq
-map <S-F6> 'q
-map <leader><F6> `q
-map <leader>v <Plug>(expand_region_expand)
-map <leader>V <Plug>(expand_region_shrink)
-" Default settings. (NOTE: Remove comments in dictionary before sourcing)
+let g:yankring_window_height = 12
 let g:expand_region_text_objects = {
       \ 'iw'  :0,
       \ 'iW'  :0,
@@ -170,34 +116,124 @@ let g:expand_region_text_objects = {
       \ 'ip'  :0,
       \ 'ie'  :0,
       \ }
+let g:EasyMotion_startofline = 0
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_use_upper = 1
+let g:EasyMotion_keys = 'ASDFGHJKLQWERUIO;'
+
+set cursorline
+set cursorcolumn
+autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=27
+autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=10
+set background=dark
+set cmdheight=2
+set encoding=utf8
+set expandtab
+set ffs=unix,dos,mac
+set foldcolumn=1
+set hidden
+set ignorecase
+set linebreak
+set listchars+=extends:&,precedes:&
+set list
+set mouse=v
+set number
+set numberwidth=2
+set scrolljump=2
+set scrolloff=5 "ensure 5 lines are above/below cursor when scrolling
+set showcmd
+set showmatch
+set noshowmode
+set showtabline=0
+set smartcase
+set smartindent
+set smarttab
+set splitright
+set ts=2
+set undofile
+set viminfo^=% " Remember info about open buffers on close
+set whichwrap+=<,>,h,l
+set wildignore=*.o,*~,*.pyc
+set wildignorecase
+
+nmap <unique> css yss
+vmap <unique> C <Plug>Commentary
+nnoremap 0 ^
+nnoremap ^ 0
+cmap <unique> w!! w !sudo tee > /dev/null %
+noremap <unique> <C-j> <C-W>j
+noremap <unique> <C-k> <C-W>k
+noremap <unique> <C-h> <C-W>h
+noremap <unique> <C-l> <C-W>l
+noremap <unique> <leader>; :TmuxNavigatePrevious<cr>
 nmap <M-j> mz:m+<cr>`z
 nmap <M-k> mz:m-2<cr>`z
 vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-nmap <leader>q :e ~/buffer<cr>
-nnoremap <leader>' ``
 
-" Close the current buffer
-nmap <leader>bq :Bclose<cr>:tabclose<cr>gT
+map <unique> <leader>j  <Plug>(easymotion-sol-j)
+map <unique> <leader>k  <Plug>(easymotion-sol-k)
+map <unique> <leader>0  <Plug>(easymotion-sol-bd-jk)
+map <unique> <leader>$  <Plug>(easymotion-eol-bd-jk)
+map <unique> <leader>f  <Plug>(easymotion-bd-fl)
+"nmap <leader>t <Plug>(easymotion-bd-tl)
+map <space>    <Plug>(easymotion-bd-f2)
+map <unique> <leader><space>    <Plug>(easymotion-overwin-f2)
+map <unique> <leader>G <Plug>(easymotion-bd-jk)
+map <unique> <leader>w <Plug>(easymotion-bd-wl)
+map <unique> <leader>e <Plug>(easymotion-bd-el)
+map <unique> <leader>n <Plug>(easymotion-bd-n)
+" Visual mode pressing * or # searches for the current selection
+vnoremap <silent> * :call VisualSelection('f')<cr>
+vnoremap <silent> # :call VisualSelection('b')<cr>
 
-map <leader>l :tabnext<cr>
-map <leader>h :tabprevious<cr>
+map <unique> <leader>v <Plug>(expand_region_expand)
+map <unique> <leader>V <Plug>(expand_region_shrink)
+nmap <unique> <leader>l :tabnext<cr>
+nmap <unique> <leader>h :tabprevious<cr>
+nmap <unique> <leader><Tab> :exe "tabn ".g:lasttab<cr>
+nmap <unique> <leader>sp :setlocal spell!<cr>
+map <unique> <leader>cd :cd %:p:h<cr>:pwd<cr>
+nmap <unique> <leader>bq :Bclose<cr>:tabclose<cr>gT
+nmap <unique> <leader>q :q<cr>
+map <unique> <F2> mq
+map <unique> <S-F2> 'q
+map <unique> <leader><F2> `q
+nmap <unique> <F4> :w<cr>
+nmap <unique> <S-F4> :x<cr>
+nmap <unique> <leader><F4> :qall<cr>
+" map <F10> :tabnew<cr>:NERDTreeToggle<cr>
+" map <S-F10> :tabclose<cr>
+" map <leader><F10> :NERDTreeToggle<cr>
+" map <F8> :vsp<cr>
+" map <S-F8> :sp<cr>
+" map <F7> :bnext<cr>
+" map <S-F7> :bprevious<cr>
+let mapleader="-"
+nmap <unique> <leader>ff :CtrlP<cr>
+nmap <unique> <leader>fb :CtrlPBuffer<cr>
+nmap <unique> <leader>fr :CtrlPMRU<cr>
+nmap <unique> <leader>fd :CtrlPDir<cr>
+nmap <unique> <leader>fu :CtrlPUndo<cr>
+nmap <unique> <leader>fl :CtrlPLine<cr>
+nmap <unique> <leader>fc :CtrlPChange<cr>
+nmap <unique> <leader>c ciw
+nmap <unique> <leader>C ciW
+nmap <unique> <leader>d diw
+nmap <unique> <leader>D diW
+nmap <unique> <leader>i dii
+nnoremap <silent><unique> <leader>p :YRShow<cr>
+nmap <unique> <leader>ta :TlistToggle<cr>
+nmap <unique> <leader>to <Plug>TaskList
+nmap <unique> <leader>nh :NERDTreeToggle "$HOME"<cr>
+nmap <unique> <leader>nn :NERDTreeFind<cr>
+nmap <unique> <leader>nm :NERDTreeMirror<cr>
+nmap <unique> <leader>b :e ~/buffer<cr>
+nmap <unique> <leader><space> :tabnew<cr>
 
-" Useful mappings for managing tabs
-map <leader>t<space> :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <leader>tn :tabnext
-
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
-
-" Let 'tt' toggle between this and the last accessed tab
+let mapleader=","
 let g:lasttab = 1
-nmap <Leader>tt :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
-
 " Don't close window, when deleting a buffer
 command! Bclose call <SID>BufcloseCloseIt()
 function! <SID>BufcloseCloseIt()
@@ -231,7 +267,12 @@ func! DeleteTrailingWS()
   exe "normal `z"
 endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
-
+function g:Multiple_cursors_before()
+        let g:deoplete#disable_auto_complete = 1
+endfunction
+function g:Multiple_cursors_after()
+        let g:deoplete#disable_auto_complete = 0
+endfunction
 """"""""""""""""""""""""""""""
 " => Python section
 """"""""""""""""""""""""""""""

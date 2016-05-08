@@ -93,6 +93,8 @@ function BKEYS() {
   bindkey -M viins "^Z" vi-cmd-mode
   bindkey -M viins "^[ " suggest-accept-return
   bindkey -M viins "^@" vi-forward-word
+  bindkey -M viins "^[d" insert-cycledright
+  bindkey -M viins "^[u" insert-cycledleft
   bindkey -M viins "^[c" yank_pipe
   bindkey -M viins "^[p" fpp_pipe
   bindkey -M viins "^[h" anyframe-widget-execute-history
