@@ -33,7 +33,7 @@ conky.config = {
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager'
 }
 conky.text = [[
-  $color${execpi 36000 ~/.conky/scripts/horical.sh}${color}
+  $color${execpi 36000 ~/.zprezto/dotfiles/scripts/horical.sh}${color}
   ${color 72A4DB}${voffset -44}${goto 36}${font Caviar Dreams:bold:size=18}${time %A}${font Caviar Dreams:bold:size=40}${goto 175} ${color}${voffset 0}${time %d}$color
   ${color 72A4DB}${voffset -55}${font Caviar Dreams:bold:size=24}${goto 36}${time %b}${font Caviar Dreams:bold:size=16}${goto 120}${color}${voffset 0}${time %Y}$color
 ]]

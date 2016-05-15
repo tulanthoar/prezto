@@ -1,21 +1,28 @@
+# disable flow control
+stty -ixon
+export ZPREZD=${ZDOTDIR:-$HOME}/.zprezto
 # Source Prezto.
-[[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]] && source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-
-export KEYTIMEOUT=3
+[[ -s "$ZPREZD/init.zsh" ]] && source "$ZPREZD/init.zsh"
 setopt clobber
+which antibody > /dev/null || curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
+plugs=('robertzk/hipchat.zsh' 'willghatch/zsh-snippets' 'uvaes/fzf-marks' 'bric3/nice-exit-code' \
+        'fcambus/ansiweather' 'djui/alias-tips' 'mollifier/anyframe')
+for p in $plugs; do plist="${plist}\n${p}"; done;
+source <(antibody init) && antibody bundle <<< $(echo $plist)
+unset plugs; unset plist;
+export KEYTIMEOUT=3
 export RANGER_LOAD_DEFAULT_RC=FALSE
+export TERMCMD=$(which st)
 
-[[ -f $HOME/.zprezto/dotfiles/myrc.zsh ]] && source $HOME/.zprezto/dotfiles/myrc.zsh
+[[ -f $ZPREZD/dotfiles/myrc.zsh ]] && source $ZPREZD/dotfiles/myrc.zsh
 #make ^H work [nvim]
 eval infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 [[ -d ~/.fzf ]] || git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-which fzf > /dev/null || ~/.fzf/install
-which antibody > /dev/null || curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
+[[ -f ~/.fzf/.fzf.zsh ]] && source ~/.fzf/.fzf.zsh
+which fzf > /dev/null || (~/.fzf/install && mv ~/.fzf.zsh ~/.fzf/.fzf.zsh)
 which ag > /dev/null || sudo pacman -S community/the_silver_searcher
 # which fasd > /dev/null || wget -O- https://aur.archlinux.org/cgit/aur.git/snapshot/fasd.tar.gz | tar -xf - ~/tmp
-[[ -d $HOME/.vim/bundle/Vundle.vim ]] || git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-source <(antibody init) && antibody bundle <<< $(echo "robertzk/hipchat.zsh\nwillghatch/zsh-snippets\nuvaes/fzf-marks\nbric3/nice-exit-code\nfcambus/ansiweather\ndjui/alias-tips\nmollifier/anyframe")
+[[ -d $HOME/.config/nvim/bundle/Vundle.vim ]] || git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
 export FZF_COMPLETION_TRIGGER=',,'
 zstyle ":anyframe:selector:" use fzf
 _fzf_compgen_path() { ag -g "" "$1" }

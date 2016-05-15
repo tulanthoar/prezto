@@ -59,6 +59,9 @@ suggest-accept-return(){
   zle vi-end-of-line
   $HOME/pyproj/tldr/press_return.py
 }
+fasd-nvim(){
+  nvim `fasd -f -i $1`
+}
 zle -N insert-cycledleft
 zle -N insert-cycledright
 zle -N suggest-accept-return
@@ -74,23 +77,26 @@ alias -g G='| grep'
 alias -g L="| less"
 alias suspendnow="sudo pm-suspend"
 alias -g Y="| yank"
-alias -g YL="| yank -l"
-alias V="fasd -f -i -e nvim"
-alias EX="unarchive"
+alias -g Yl="| yank -l"
+alias V="fasd-nvim"
+alias vim="nvim"
+alias vi="nvim"
+alias Ex="unarchive"
 alias C="cd $HOME"
-alias BT="byobu-tmux"
+alias Bt="byobu-tmux"
+alias Btns="byobu-tmux new-session; tmux set -g status-left '#{pane_current_command} #{pane_pid} #{scroll_position} >>>>'"
 alias pyls="fasd -f -i -e python3 .py$"
 alias X="exit"
-alias xmo="xmodmap ~/xmo; setxkbmap -option altwin:alt_super_win -option shift:both_shiftlock; xmodmap ~/xmo; numlockx"
+alias xmo="xmodmap "$ZPREZD/dotfiles/xmodm" ; setxkbmap -option altwin:alt_super_win -option shift:both_shiftlock; xmodmap "$ZPREZD/dotfiles/xmodm" ; numlockx"
 alias cpf='copyfile'
 alias cpd='copydir'
 alias L='ls -lFh'     #size,show type,human readable
-alias LA='ls -lAFh'   #long list,show almost all,show type,human readable
-alias LL='ls -l'      #long list
-alias LH='ls -ld .*'
-alias FD='fasd -d -i'
-alias FF='fasd -f -i'
-alias FA='fasd -a -i'
+alias La='ls -lAFh'   #long list,show almost all,show type,human readable
+alias Ll='ls -l'      #long list
+alias Lh='ls -ld .*'
+alias Fd='fasd -d -i'
+alias Ff='fasd -f -i'
+alias Fa='fasd -a -i'
 alias help='man'
 alias unexport='unset'
 alias whereami=display_info
@@ -107,6 +113,7 @@ export GOPATH="$HOME/golang"
 
 function BKEYS() {
   bindkey -M viins "^Z" vi-cmd-mode
+  bindkey -M viins "^A" beginning-of-line
   bindkey -M viins "^[ " suggest-accept-return
   bindkey -M viins "^@" vi-forward-word
   bindkey -M viins "^[d" insert-cycledright
