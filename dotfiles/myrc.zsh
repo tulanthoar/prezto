@@ -11,11 +11,11 @@ insert-cycledright () {
   zle reset-prompt
 }
 function percol_select_history() {
-    local tac
-    tac="tac"
-    BUFFER=$(fc -l -n 1 | eval $tac | percol --query "$LBUFFER")
-    CURSOR=$#BUFFER         # move cursor
-    zle -R -c               # refresh
+  local tac
+  tac="tac"
+  BUFFER=$(fc -l -n 1 | eval $tac | percol --query "$LBUFFER")
+  CURSOR=$#BUFFER         # move cursor
+  zle -R -c               # refresh
 }
 function fpp_pipe() {
   eval '`echo "$BUFFER"`|fpp'
@@ -35,26 +35,19 @@ sudo-command-line() {
   [[ $BUFFER == sudo\ * ]] && LBUFFER="${LBUFFER#sudo }" || LBUFFER="sudo $LBUFFER"
 }
 function p-paste() {
-    OLDC=CURSOR
-    RBUFFER="`python3 $HOME/pyproj/tldr/ppaste.py`${RBUFFER}"
-    CURSOR=$CURSOR
-    zle -R -c
+  OLDC=CURSOR
+  RBUFFER="`python3 $HOME/pyproj/tldr/ppaste.py`${RBUFFER}"
+  CURSOR=$CURSOR
+  zle -R -c
 }
-if [[ -z $commands[thefuck] ]]; then
-  echo 'no fuck installed';
-  which pip > /dev/null || alias installthefuck="sudo pacman -S python-pip && sudo pip install thefuck"
-  which pip > /dev/null && alias installthefuck="sudo pip install thefuck"
-  echo 'alias added installthefuck'
-else;
-  eval "$(thefuck --alias)"
-  fuck-command-line() {
-    local FUCK="$(THEFUCK_REQUIRE_CONFIRMATION=0 thefuck $(fc -ln -1 | tail -n 1) 2> /dev/null)"
-    [[ -z $FUCK ]] && echo -n -e "\a" && return
-    BUFFER=$FUCK
-    zle end-of-line
-  }
-  zle -N fuck-command-line
-fi
+eval "$(thefuck --alias)"
+fuck-command-line() {
+  local FUCK="$(THEFUCK_REQUIRE_CONFIRMATION=0 thefuck $(fc -ln -1 | tail -n 1) 2> /dev/null)"
+  [[ -z $FUCK ]] && echo -n -e "\a" && return
+  BUFFER=$FUCK
+  zle end-of-line
+}
+zle -N fuck-command-line
 suggest-accept-return(){
   zle vi-end-of-line
   $HOME/pyproj/tldr/press_return.py
@@ -84,13 +77,12 @@ alias vi="nvim"
 alias Ex="unarchive"
 alias C="cd $HOME"
 alias Bt="byobu-tmux"
-alias Btns="byobu-tmux new-session; tmux set -g status-left '#{pane_current_command} #{pane_pid} #{scroll_position} >>>>'"
+alias Btns="byobu-tmux new-session"
 alias pyls="fasd -f -i -e python3 .py$"
 alias X="exit"
 alias xmo="xmodmap "$ZPREZD/dotfiles/xmodm" ; setxkbmap -option altwin:alt_super_win -option shift:both_shiftlock; xmodmap "$ZPREZD/dotfiles/xmodm" ; numlockx"
 alias cpf='copyfile'
 alias cpd='copydir'
-alias L='ls -lFh'     #size,show type,human readable
 alias La='ls -lAFh'   #long list,show almost all,show type,human readable
 alias Ll='ls -l'      #long list
 alias Lh='ls -ld .*'

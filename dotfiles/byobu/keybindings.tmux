@@ -78,6 +78,6 @@ bind-key q kill-window
 bind-key Tab last-window
 bind-key y copy-mode \; run-shell 'tmux save-buffer - | xclip -i -sel clipboard > /dev/null'
 bind-key p run-shell 'tmux set-buffer "$(xclip -o -sel primary)" && tmux paste-buffer'
-bind-key F11 set window-active-style bg=colour35 \; copy-mode
+bind-key F11 set window-active-style bg=colour52 \; copy-mode
 bind-key m select-pane -m
 bind-key M swap-pane

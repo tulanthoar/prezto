@@ -1,10 +1,26 @@
+[[ -d ~/.fzf ]] || (git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install)
+# [[ -e ~/.fzf/install ]] && (~/.fzf/install && mv ~/.fzf.zsh ~/.fzf/fzf.zsh)
+which ag > /dev/null || sudo pacman -S community/the_silver_searcher
+which st > /dev/null || sudo pacman -S community/st
+which nvim > /dev/null || sudo pacman -S neovim
+which numlockx > /dev/null || sudo pacman -S numlockx
+which http > /dev/null || sudo pacman -S httpie
+which pip > /dev/null || sudo pacman -S python-pip
+which thefuck > /dev/null || sudo pip install thefuck
+which fasd > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/fasd.tar.gz > ~/tmp/fasd.tgz
+which byobu-tmux > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/byobu.tar.gz > ~/tmp/byobu.tgz
+which percol > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/percol.tar.gz > ~/tmp/percol.tgz
+which fpp > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/fpp-git.tar.gz > ~/tmp/fpp-git.tgz
+which yank > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/yank.tar.gz > ~/tmp/yank.tgz
+which antibody > /dev/null || curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
+for f in $(ls ~/tmp); do unarchive -r ~/tmp/$f; mv ${f:r} ~/apps; cd ~/apps/${f:r} && makepkg -sri; cd ; done;
+[[ -d $HOME/.config/nvim/bundle/Vundle.vim ]] || git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
 # disable flow control
 stty -ixon
 export ZPREZD=${ZDOTDIR:-$HOME}/.zprezto
 # Source Prezto.
 [[ -s "$ZPREZD/init.zsh" ]] && source "$ZPREZD/init.zsh"
 setopt clobber
-which antibody > /dev/null || curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
 plugs=('robertzk/hipchat.zsh' 'willghatch/zsh-snippets' 'uvaes/fzf-marks' 'bric3/nice-exit-code' \
         'fcambus/ansiweather' 'djui/alias-tips' 'mollifier/anyframe')
 for p in $plugs; do plist="${plist}\n${p}"; done;
@@ -14,15 +30,9 @@ export KEYTIMEOUT=3
 export RANGER_LOAD_DEFAULT_RC=FALSE
 export TERMCMD=$(which st)
 
-[[ -f $ZPREZD/dotfiles/myrc.zsh ]] && source $ZPREZD/dotfiles/myrc.zsh
-#make ^H work [nvim]
 eval infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
-[[ -d ~/.fzf ]] || git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-[[ -f ~/.fzf/.fzf.zsh ]] && source ~/.fzf/.fzf.zsh
-which fzf > /dev/null || (~/.fzf/install && mv ~/.fzf.zsh ~/.fzf/.fzf.zsh)
-which ag > /dev/null || sudo pacman -S community/the_silver_searcher
-# which fasd > /dev/null || wget -O- https://aur.archlinux.org/cgit/aur.git/snapshot/fasd.tar.gz | tar -xf - ~/tmp
-[[ -d $HOME/.config/nvim/bundle/Vundle.vim ]] || git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
+[[ -f $ZPREZD/dotfiles/myrc.zsh ]] && source $ZPREZD/dotfiles/myrc.zsh
+[[ -f ~/.fzf/fzf.zsh ]] && source ~/.fzf/fzf.zsh
 export FZF_COMPLETION_TRIGGER=',,'
 zstyle ":anyframe:selector:" use fzf
 _fzf_compgen_path() { ag -g "" "$1" }
