@@ -1,5 +1,6 @@
 #unbind-key -tvi-copy Enter
-bind-key -t vi-copy Enter copy-pipe "xsel -i -p > /dev/null ; tmux set window-active-style bg=default"
+bind-key -n PPage copy-mode -ue
+bind-key -t vi-copy Enter copy-pipe "xclip -i -sel primary > /dev/null ; tmux set window-active-style bg=default"
 unbind-key p
 unbind-key -n F1
 unbind-key -n F8
@@ -77,7 +78,9 @@ bind-key h previous-window
 bind-key q kill-window
 bind-key Tab last-window
 bind-key y copy-mode \; run-shell 'tmux save-buffer - | xclip -i -sel clipboard > /dev/null'
-bind-key p run-shell 'tmux set-buffer "$(xclip -o -sel primary)" && tmux paste-buffer'
+bind-key p if 'tmux set-buffer "$(xclip -o -sel primary)"' 'tmux paste-buffer'
+bind-key -n IC if 'tmux set-buffer "$(xclip -o -sel primary)"' 'tmux paste-buffer'
+bind-key -n S-IC if 'tmux set-buffer "$(xclip -o -sel clipboard)"' 'tmux paste-buffer'
 bind-key F11 set window-active-style bg=colour52 \; copy-mode
 bind-key m select-pane -m
 bind-key M swap-pane
