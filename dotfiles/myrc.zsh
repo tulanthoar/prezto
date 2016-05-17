@@ -63,7 +63,7 @@ zle -N percol_select_history
 zle -N p-paste
 zle -N sudo-command-line
 
-# alias grep='grep --color'
+alias grep='grep --color'
 alias -g H='| head'
 alias -g T='| tail'
 alias -g G='| grep'
@@ -71,21 +71,22 @@ alias -g L="| less"
 alias suspendnow="sudo pm-suspend"
 alias -g Y="| yank"
 alias -g Yl="| yank -l"
-alias V="fasd-nvim"
+alias -g FP="| fpp"
+alias v="fasd-nvim"
 alias vim="nvim"
 alias vi="nvim"
-alias Ex="unarchive"
-alias C="cd $HOME"
-alias Bt="byobu-tmux"
-alias Btns="byobu-tmux new-session"
+alias ex="unarchive"
+alias c="cd"
+alias btx="byobu-tmux"
+alias btxns="byobu-tmux new-session"
 alias pyls="fasd -f -i -e python3 .py$"
-alias X="exit"
-alias xmo="xmodmap "$ZPREZD/dotfiles/xmodm" ; setxkbmap -option altwin:alt_super_win -option shift:both_shiftlock; xmodmap "$ZPREZD/dotfiles/xmodm" ; numlockx"
+alias x="exit"
+alias xmo="mod_key_lay"
 alias cpf='copyfile'
 alias cpd='copydir'
-alias La='ls -lAFh'   #long list,show almost all,show type,human readable
-alias Ll='ls -l'      #long list
-alias Lh='ls -ld .*'
+alias la='ls -lAFh'   #long list,show almost all,show type,human readable
+alias l='ls -lhF'      #long list
+alias lh='ls -lhF .*'
 alias Fd='fasd -d -i'
 alias Ff='fasd -f -i'
 alias Fa='fasd -a -i'
@@ -103,7 +104,13 @@ export JAVA_HOME="/usr/lib/jvm/default-jvm"
 export GOPATH="$HOME/golang"
 [[ -d "$GOPATH" ]] && export PATH="$PATH:$GOPATH/bin"
 
-function BKEYS() {
+function mod_key_lay(){
+  xmodmap "$ZPREZD/dotfiles/xmodm" ;
+  setxkbmap -option altwin:alt_super_win -option shift:both_shiftlock;
+  xmodmap "$ZPREZD/dotfiles/xmodm" ;
+  numlockx
+}
+function bind_keys() {
   bindkey -M viins "^Z" vi-cmd-mode
   bindkey -M viins "^A" beginning-of-line
   bindkey -M viins "^[ " suggest-accept-return

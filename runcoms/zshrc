@@ -1,3 +1,6 @@
+function fs(){
+  [[ -f $1 && -s $1 ]]
+}
 [[ -d ~/.fzf ]] || (git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install)
 # [[ -e ~/.fzf/install ]] && (~/.fzf/install && mv ~/.fzf.zsh ~/.fzf/fzf.zsh)
 which ag > /dev/null || sudo pacman -S community/the_silver_searcher
@@ -19,10 +22,11 @@ for f in $(ls ~/tmp); do unarchive -r ~/tmp/$f; mv ${f:r} ~/apps; cd ~/apps/${f:
 stty -ixon
 export ZPREZD=${ZDOTDIR:-$HOME}/.zprezto
 # Source Prezto.
-[[ -s "$ZPREZD/init.zsh" ]] && source "$ZPREZD/init.zsh"
+fs "$ZPREZD/init.zsh" && source "$ZPREZD/init.zsh"
 setopt clobber
 plugs=('robertzk/hipchat.zsh' 'willghatch/zsh-snippets' 'uvaes/fzf-marks' 'bric3/nice-exit-code' \
         'fcambus/ansiweather' 'djui/alias-tips' 'mollifier/anyframe')
+plist=''
 for p in $plugs; do plist="${plist}\n${p}"; done;
 source <(antibody init) && antibody bundle <<< $(echo $plist)
 unset plugs; unset plist;
@@ -31,10 +35,11 @@ export RANGER_LOAD_DEFAULT_RC=FALSE
 export TERMCMD=$(which st)
 
 eval infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
-[[ -f $ZPREZD/dotfiles/myrc.zsh ]] && source $ZPREZD/dotfiles/myrc.zsh
-[[ -f ~/.fzf/fzf.zsh ]] && source ~/.fzf/fzf.zsh
+fs $ZPREZD/dotfiles/myrc.zsh && source $ZPREZD/dotfiles/myrc.zsh
+[[ -f ~/.fzf.zsh ]] && mv ~/.fzf.zsh ~/.fzf/fzf.zsh
+fs ~/.fzf/fzf.zsh && source ~/.fzf/fzf.zsh
 export FZF_COMPLETION_TRIGGER=',,'
 zstyle ":anyframe:selector:" use fzf
 _fzf_compgen_path() { ag -g "" "$1" }
 RPROMPT='$(nice_exit_code)'
-BKEYS
+bind_keys

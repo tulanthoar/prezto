@@ -146,6 +146,7 @@ set wildignorecase
 set wildignore=*.o,*~,*.pyc
 set writebackup
 
+imap <F1> <Delete>
 cnoremap <unique> w!! w !sudo tee > /dev/null %
 imap <unique> [C <esc>[C
 imap <unique> ]C <esc>]C
