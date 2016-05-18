@@ -1,14 +1,20 @@
-insert-cycledleft () {
-  emulate -L zsh
-  setopt nopushdminus
-  builtin pushd -q +1 &>/dev/null || true
-  zle reset-prompt
+cdParentKey() {
+  BUFFER=""
+  pushd .. > /dev/null
+  echo && ls -lhF
+  zle accept-line
 }
-insert-cycledright () {
-  emulate -L zsh
-  setopt nopushdminus
-  builtin pushd -q -0 &>/dev/null || true
-  zle reset-prompt
+cdUndoKey() {
+  BUFFER=""
+  pushd -q +1      > /dev/null
+  echo && ls -lhF
+  zle accept-line
+}
+cdRedoKey () {
+  BUFFER=""
+  pushd -q -0      > /dev/null
+  echo && ls -lhF
+  zle accept-line
 }
 function percol_select_history() {
   local tac
@@ -18,9 +24,8 @@ function percol_select_history() {
   zle -R -c               # refresh
 }
 function fpp_pipe() {
-  eval '`echo "$BUFFER"`|fpp'
-  BUFFER=''
-  zle -R -c               # refresh
+  BUFFER="$BUFFER | fpp"
+  zle accept-line
 }
 function copydir {
   emulate -L zsh
@@ -47,14 +52,16 @@ fuck-command-line() {
   BUFFER=$FUCK
   zle end-of-line
 }
-zle -N fuck-command-line
 suggest-accept-return(){
   zle vi-end-of-line
-  $HOME/pyproj/tldr/press_return.py
+  zle accept-line
 }
 fasd-nvim(){
   nvim `fasd -f -i $1`
 }
+zle -N fuck-command-line
+zle -N cdParentKey
+zle -N cdUndoKey
 zle -N insert-cycledleft
 zle -N insert-cycledright
 zle -N suggest-accept-return
@@ -125,8 +132,9 @@ function bind_keys() {
   bindkey -M viins "^[v" p-paste
   bindkey -M viins "^[f" forward-word
   bindkey -M viins "^[b" backward-word
-  bindkey -M viins "^B" insert-cycledleft
-  bindkey -M viins "^F" insert-cycledright
+  bindkey -M viins "^B" cdUndoKey
+  bindkey -M viins "^F" cdRedoKey
+  bindkey -M viins "^P" cdParentKey
   bindkey -rM viins "^[";
   bindkey -M viins "\e" vi-cmd-mode;
   bindkey -M viins "^[[3~" vi-delete-char;

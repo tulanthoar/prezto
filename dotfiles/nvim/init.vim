@@ -134,9 +134,11 @@ set showtabline=0
 set smartcase
 set smartindent
 set smarttab
+set softtabstop=2
 set splitright
+set shiftwidth=2
 set tildeop
-set ts=2
+set tabstop=2
 set undodir     =$HOME/.config/nvim/files/undo/
 set undofile
 set viminfo     ='100,n$HOME/.config/nvim/files/info/viminfo
@@ -146,7 +148,7 @@ set wildignorecase
 set wildignore=*.o,*~,*.pyc
 set writebackup
 
-imap <F1> <Delete>
+inoremap <unique> <F1> <Delete>
 cnoremap <unique> w!! w !sudo tee > /dev/null %
 imap <unique> [C <esc>[C
 imap <unique> ]C <esc>]C
@@ -221,6 +223,7 @@ nnoremap <unique> <leader>c ciw
 nnoremap <unique> <leader>C ciW
 nnoremap <unique> <leader>d diw
 nnoremap <unique> <leader>D diW
+nnoremap <unique> <leader>i dii
 nnoremap <unique> <leader>fb :CtrlPBuffer<cr>
 nnoremap <unique> <leader>fc :CtrlPChange<cr>
 nnoremap <unique> <leader>fd :CtrlPDir<cr>
@@ -228,8 +231,8 @@ nnoremap <unique> <leader>ff :CtrlP<cr>
 nnoremap <unique> <leader>fl :CtrlPLine<cr>
 nnoremap <unique> <leader>fr :CtrlPMRU<cr>
 nnoremap <unique> <leader>fu :CtrlPUndo<cr>
-nnoremap <unique> <leader>i dii
 nnoremap <unique> <leader>nd :NERDTreeCWD<cr>
+nnoremap <unique> <leader>o  :tabnew<cr>:NERDTreeCWD<cr>
 nnoremap <unique> <leader>nh :NERDTreeToggle "$HOME"<cr>
 nnoremap <unique> <leader>nm :NERDTreeMirror<cr>
 nnoremap <unique> <leader>nn :NERDTreeFind<cr>
