@@ -1,11 +1,19 @@
 let mapleader=","
 filetype off
+let &path='/usr/include,/usr/include/c++/6.1.1,/usr/include/boost,'
 set rtp+=/home/ant/.config/nvim/bundle/Vundle.vim
 call vundle#begin('/home/ant/.config/nvim/bundle')
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ascenator/L9'
 Plugin 'ervandew/supertab'
 Plugin 'bling/vim-airline'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'mbbill/undotree'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
 Plugin 'bling/vim-bufferline'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -13,9 +21,9 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'freeo/vim-kalisi'
 Plugin 'junegunn/seoul256.vim'
-Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-textobj-entire'
 Plugin 'kana/vim-textobj-line'
+Plugin 'kana/vim-textobj-user'
 Plugin 'klen/python-mode'
 Plugin 'lisposter/vim-blackboard'
 Plugin 'Lokaltog/vim-distinguished'
@@ -35,6 +43,7 @@ Plugin 'tpope/vim-unimpaired.git'
 Plugin 'tpope/vim-vividchalk'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/buttercream.vim'
+Plugin 'vim-scripts/c.vim'
 Plugin 'vim-scripts/summerfruit256.vim'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/TaskList.vim'
@@ -82,8 +91,9 @@ let g:NERDTreeIgnore=['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycac
 let g:NERDTreeMinimalUI=1
 let g:NERDTreeQuitOnOpen=0
 let g:NERDTreeShowFiles = 0
-let g:NERDTreeShowHidden=1
+let g:NERDTreeShowHidden=0
 let g:NERDTreeWinSize=35
+let g:NERDTreeShowLineNumbers=1
 let g:pymode_rope_completion = 0
 let g:python3_host_prog = '/usr/bin/python3'
 let g:SuperTabCrMapping = 1
@@ -116,7 +126,7 @@ set directory   =$HOME/.config/nvim/files/swap/
 set encoding=utf8
 set expandtab
 set ffs=unix,dos,mac
-set foldcolumn=1
+" set foldcolumn=1
 set hidden
 set ignorecase
 set linebreak
@@ -130,7 +140,7 @@ set scrolljump=2
 set scrolloff=5 "ensure 5 lines are above/below cursor when scrolling
 set showcmd
 set showmatch
-set showtabline=0
+set showtabline=2
 set smartcase
 set smartindent
 set smarttab
@@ -148,6 +158,36 @@ set wildignorecase
 set wildignore=*.o,*~,*.pyc
 set writebackup
 
+inoremap <unique> <leader>cd      <esc>:cd %:p:h<cr>:pwd<cr>i
+inoremap <unique> <leader><F2>    <esc>`qi
+inoremap <unique> <leader><F4>    <esc>:qall<cr>
+inoremap <unique> <leader>R       <esc>:nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>i
+map      <unique> <leader>0       <Plug>(easymotion-sol-bd-jk)
+map      <unique> <leader>e       <Plug>(easymotion-bd-el)
+map      <unique> <leader>f       <Plug>(easymotion-bd-fl)
+map      <unique> <leader>g       <Plug>(easymotion-bd-jk)
+map      <unique> <leader>j       <Plug>(easymotion-sol-j)
+map      <unique> <leader>k       <Plug>(easymotion-sol-k)
+map      <unique> <leader>n       <Plug>(easymotion-bd-n)
+map      <unique> <leader>$       <Plug>(easymotion-eol-bd-jk)
+map      <unique> <leader><space> <Plug>(easymotion-overwin-f2)
+map      <unique> <leader>t       <Plug>(easymotion-bd-tl)
+map      <unique> <leader>v       <Plug>(expand_region_expand)
+map      <unique> <leader>V       <Plug>(expand_region_shrink)
+map      <unique> <leader>w       <Plug>(easymotion-bd-wl)
+nnoremap <unique> <leader>cd      :cd %:p:h<cr>:pwd<cr>
+nnoremap <unique> <leader><F4>    :qall<cr>
+nnoremap <unique> <leader>h       :tabprevious<cr>
+nnoremap <unique> <leader>l       :tabnext<cr>
+nnoremap <unique> <leader>q       :q<cr>
+nnoremap <unique> <leader>sp      :setlocal spell!<cr>
+nnoremap <unique> <leader><Tab>   :exe "tabn ".g:lasttab<cr>
+nnoremap <unique> <leader>;       :TmuxNavigatePrevious<cr>
+noremap  <unique> <leader><F2>    `q
+noremap  <unique> <leader>H       H
+noremap  <unique> <leader>L       L
+nnoremap <unique> <leader>R       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+
 inoremap <unique> <F1> <Delete>
 cnoremap <unique> w!! w !sudo tee > /dev/null %
 imap <unique> [C <esc>[C
@@ -155,61 +195,31 @@ imap <unique> ]C <esc>]C
 inoremap <unique> <F2> <esc>mqi
 inoremap <unique> <F4> <esc>:w<cr>
 inoremap <unique> jf           <esc>
-inoremap <unique> <leader>cd <esc>:cd %:p:h<cr>:pwd<cr>i
-inoremap <unique> <leader><F2> <esc>`qi
-inoremap <unique> <leader><F4> <esc>:qall<cr>
-inoremap <unique> <leader>R <esc>:nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>i
 inoremap <unique> ]P <esc>:<C-U>YRYankCount 'yy'<CR>p
 inoremap <unique> [P <esc>:<C-U>YRYankCount 'yy'<CR>P
 inoremap <unique> <S-F2> <esc>'qi
 inoremap <unique> <S-F4> <esc>:x<cr>
 map <space>    <Plug>(easymotion-bd-f2)
-map <unique> <leader>0  <Plug>(easymotion-sol-bd-jk)
-map <unique> <leader>e <Plug>(easymotion-bd-el)
-map <unique> <leader>f  <Plug>(easymotion-bd-fl)
-map <unique> <leader>g <Plug>(easymotion-bd-jk)
-map <unique> <leader>j  <Plug>(easymotion-sol-j)
-map <unique> <leader>k  <Plug>(easymotion-sol-k)
-map <unique> <leader>n <Plug>(easymotion-bd-n)
-map <unique> <leader>$  <Plug>(easymotion-eol-bd-jk)
-map <unique> <leader><space>    <Plug>(easymotion-overwin-f2)
-map <unique> <leader>t <Plug>(easymotion-bd-tl)
-map <unique> <leader>v <Plug>(expand_region_expand)
-map <unique> <leader>V <Plug>(expand_region_shrink)
-map <unique> <leader>w <Plug>(easymotion-bd-wl)
 nmap <M-j> mz:m+<cr>`z
 nmap <M-k> mz:m-2<cr>`z
 nmap <unique> [C [Pj:Commentary<cr>`[
 nmap <unique> ]C ]Pk:Commentary<cr>`[
 nmap <unique> css yss
-nnoremap <leader>R :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 nnoremap <unique> <C-H> :TmuxNavigateLeft<cr>
 nnoremap <unique> <C-J> :TmuxNavigateDown<cr>
 nnoremap <unique> <C-K> :TmuxNavigateUp<cr>
 nnoremap <unique> <C-L> :TmuxNavigateRight<cr>
 nnoremap <unique> <F4> :w<cr>
-nnoremap <unique> <leader>cd :cd %:p:h<cr>:pwd<cr>
-nnoremap <unique> <leader><F4> :qall<cr>
-nnoremap <unique> <leader>h :tabprevious<cr>
-nnoremap <unique> <leader>l :tabnext<cr>
-nnoremap <unique> <leader>q :q<cr>
-nnoremap <unique> <leader>sp :setlocal spell!<cr>
-nnoremap <unique> <leader><Tab> :exe "tabn ".g:lasttab<cr>
-nnoremap <unique> <leader>; :TmuxNavigatePrevious<cr>
 nnoremap <unique> ]P :<C-U>YRYankCount 'yy'<CR>p
 nnoremap <unique> [P :<C-U>YRYankCount 'yy'<CR>P
 nnoremap <unique> <S-F4> :x<cr>
 noremap ^ 0
-noremap 0 ^
-noremap <Down> +
+noremap 0 ^ noremap <Down> +
 noremap H Hzz
 noremap <Left> ^
 noremap L Lzz
 noremap <Right> $
 noremap <unique> <F2> mq
-noremap <unique> <leader><F2> `q
-noremap <unique> <leader>H  H
-noremap <unique> <leader>L  L
 noremap <Up> -
 vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
@@ -238,19 +248,19 @@ nnoremap <unique> <leader>nm :NERDTreeMirror<cr>
 nnoremap <unique> <leader>nn :NERDTreeFind<cr>
 nnoremap <unique> <leader>ta :TlistToggle<cr>
 nnoremap <unique> <leader>to <Plug>TaskList
-noremap <unique>  <leader>0 :b0<cr>
-noremap <unique>  <leader>1 :b1<cr>
-noremap <unique>  <leader>2 :b2<cr>
-noremap <unique>  <leader>3 :b3<cr>
-noremap <unique>  <leader>4 :b4<cr>
-noremap <unique>  <leader>5 :b5<cr>
-noremap <unique>  <leader>6 :b6<cr>
-noremap <unique>  <leader>7 :b7<cr>
-noremap <unique>  <leader>8 :b8<cr>
-noremap <unique>  <leader>9 :b9<cr>
-noremap <unique>  <leader>b :e ~/buffer<cr>
-noremap <unique>  <leader>q :Bclose<cr>
-noremap <unique>  <leader><space> :tabnew<cr>
+noremap  <unique> <leader>0 :b0<cr>
+noremap  <unique> <leader>1 :b1<cr>
+noremap  <unique> <leader>2 :b2<cr>
+noremap  <unique> <leader>3 :b3<cr>
+noremap  <unique> <leader>4 :b4<cr>
+noremap  <unique> <leader>5 :b5<cr>
+noremap  <unique> <leader>6 :b6<cr>
+noremap  <unique> <leader>7 :b7<cr>
+noremap  <unique> <leader>8 :b8<cr>
+noremap  <unique> <leader>9 :b9<cr>
+noremap  <unique> <leader>b :e ~/buffer<cr>
+noremap  <unique> <leader>q :Bclose<cr>
+noremap  <unique> <leader><space> :tabnew<cr>
 vnoremap <unique> <leader>d <esc>diwgv`[
 vnoremap <unique> <leader>D <esc>diWgv`[
 vnoremap <unique> <leader>i <esc>diigv`[

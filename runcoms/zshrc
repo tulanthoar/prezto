@@ -10,13 +10,18 @@ which numlockx > /dev/null || sudo pacman -S numlockx
 which http > /dev/null || sudo pacman -S httpie
 which pip > /dev/null || sudo pacman -S python-pip
 which thefuck > /dev/null || sudo pip install thefuck
+[[ -d $HOME/tmp ]] || mkdir $HOME/tmp
 which fasd > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/fasd.tar.gz > ~/tmp/fasd.tgz
 which byobu-tmux > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/byobu.tar.gz > ~/tmp/byobu.tgz
 which percol > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/percol.tar.gz > ~/tmp/percol.tgz
 which fpp > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/fpp-git.tar.gz > ~/tmp/fpp-git.tgz
 which yank > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/yank.tar.gz > ~/tmp/yank.tgz
 which antibody > /dev/null || curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
-for f in $(ls ~/tmp); do unarchive -r ~/tmp/$f; mv ${f:r} ~/apps; cd ~/apps/${f:r} && makepkg -sri; cd ; done;
+xtract(){
+  tar -xzf $1
+  rm -f $1
+}
+for f in $(ls ~/tmp); do xtract ~/tmp/$f; mv ${f:r} ~/apps; cd ~/apps/${f:r} && makepkg -sri; cd ; done;
 [[ -d $HOME/.config/nvim/bundle/Vundle.vim ]] || git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
 # disable flow control
 stty -ixon
