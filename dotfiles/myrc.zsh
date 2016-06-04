@@ -6,20 +6,18 @@ cdParentKey() {
 }
 cdUndoKey() {
   BUFFER=""
-  pushd -q +1      > /dev/null
+  pushd -q +1 > /dev/null
   echo && ls -lhF
   zle accept-line
 }
 cdRedoKey () {
   BUFFER=""
-  pushd -q -0      > /dev/null
+  pushd -q -0 > /dev/null
   echo && ls -lhF
   zle accept-line
 }
 function percol_select_history() {
-  local tac
-  tac="tac"
-  BUFFER=$(fc -l -n 1 | eval $tac | percol --query "$LBUFFER")
+  BUFFER=$(fc -l -n 1 | eval tac | percol --query "$LBUFFER")
   CURSOR=$#BUFFER         # move cursor
   zle -R -c               # refresh
 }
@@ -28,24 +26,25 @@ function fpp_pipe() {
   zle accept-line
 }
 function copydir {
-  emulate -L zsh
-  print -n $PWD | clipcopy
+  print -n $PWD | xsel -i > /dev/null
 }
 function copyfile {
-  emulate -L zsh
-  clipcopy $1
+  cat $1 | xsel -i > /dev/null
 }
 sudo-command-line() {
   [[ -z $BUFFER ]] && zle up-history
   [[ $BUFFER == sudo\ * ]] && LBUFFER="${LBUFFER#sudo }" || LBUFFER="sudo $LBUFFER"
 }
 function p-paste() {
-  OLDC=CURSOR
-  RBUFFER="`python3 $HOME/pyproj/tldr/ppaste.py`${RBUFFER}"
-  CURSOR=$CURSOR
+  local words=$(xclip -o)
+  RBUFFER="$words${RBUFFER}"
   zle -R -c
 }
-eval "$(thefuck --alias)"
+function c-paste() {
+  local words=$(xclip -o -sel clip)
+  RBUFFER="$words${RBUFFER}"
+  zle -R -c
+}
 fuck-command-line() {
   local FUCK="$(THEFUCK_REQUIRE_CONFIRMATION=0 thefuck $(fc -ln -1 | tail -n 1) 2> /dev/null)"
   [[ -z $FUCK ]] && echo -n -e "\a" && return
@@ -68,6 +67,7 @@ zle -N suggest-accept-return
 zle -N fpp_pipe
 zle -N percol_select_history
 zle -N p-paste
+zle -N c-paste
 zle -N sudo-command-line
 
 alias grep='grep --color'
@@ -103,18 +103,20 @@ alias whereami=display_info
 alias rm='rm -I'
 alias cp='cp -i'
 alias mv='mv -i'
-# alias pycharm="cd $HOME/apps/pycharm/bin && ./pycharm.sh"
+alias blueconnect='dbus-send --system --type=method_call --dest=org.bluez /org/bluez/hci0/dev_1C_B7_2C_53_28_DA org.bluez.Network1.Connect string:"nap"'
+alias gparted='sudo gparted'
+alias usbdhcp='sudo dhcpcd'
+alias bluectl='sudo bluetoothctl'
 
-export GHUB="https://github.com"
-export TUL="tulanthoar"
+export LD_LIBRARY_PATH=/home/ant/apps/code/lib
 export JAVA_HOME="/usr/lib/jvm/default-jvm"
 export GOPATH="$HOME/golang"
 [[ -d "$GOPATH" ]] && export PATH="$PATH:$GOPATH/bin"
 
 function mod_key_lay(){
-  xmodmap "$ZPREZD/dotfiles/xmodm" ;
+  xmodmap "$ZPREZD/dotfiles/xmodm";
   setxkbmap -option altwin:alt_super_win -option shift:both_shiftlock;
-  xmodmap "$ZPREZD/dotfiles/xmodm" ;
+  xmodmap "$ZPREZD/dotfiles/xmodm";
   numlockx
 }
 function bind_keys() {
@@ -129,7 +131,7 @@ function bind_keys() {
   bindkey -M viins "^[h" anyframe-widget-execute-history
   bindkey -M viins "^[s" anyframe-widget-insert-filename
   bindkey -M viins "^[q" anyframe-widget-kill
-  bindkey -M viins "^[v" p-paste
+  bindkey -M viins "^[v" c-paste
   bindkey -M viins "^[f" forward-word
   bindkey -M viins "^[b" backward-word
   bindkey -M viins "^B" cdUndoKey
@@ -140,5 +142,6 @@ function bind_keys() {
   bindkey -M viins "^[[3~" vi-delete-char;
   bindkey -M vicmd "\e" sudo-command-line
   bindkey -M vicmd "\t" fuck-command-line
+  bindkey -M viins "?" percol_select_history
   bindkey -M vicmd ":" percol_select_history
 }

@@ -1,6 +1,7 @@
+"init on 2016-05-26
 let mapleader=","
 filetype off
-let &path='/usr/include,/usr/include/c++/6.1.1,/usr/include/boost,'
+let &path='/usr/include,/usr/include/c++/6.1.1,/home/ant/apps/code/include,'
 set rtp+=/home/ant/.config/nvim/bundle/Vundle.vim
 call vundle#begin('/home/ant/.config/nvim/bundle')
 Plugin 'VundleVim/Vundle.vim'
@@ -8,6 +9,8 @@ Plugin 'ascenator/L9'
 Plugin 'ervandew/supertab'
 Plugin 'bling/vim-airline'
 Plugin 'fholgado/minibufexpl.vim'
+Plugin 'vim-scripts/Superior-Haskell-Interaction-Mode-SHIM.git'
+Plugin 'lukerandall/haskellmode-vim'
 Plugin 'mbbill/undotree'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -54,6 +57,7 @@ set t_Co=256  " make use of 256 terminal colors
 let g:seoul256_background = 233
 color seoul256
 syntax enable
+let g:miniBufExplorerAutoStart = 0
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline#extensions#quickfix#location_text = 'Location'
 let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
@@ -79,12 +83,14 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_use_upper = 1
 let g:expand_region_text_objects = {'iw':0, 'iW':0, 'i"':0, 'i''':0, 'i]':1, 'ib':1, 'iB':1, 'il':0, 'ii':1, 'ip':0, 'ie':0}
+let g:haddock_browser="/usr/bin/qutebrowser"
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level=2
 let g:jedi#use_tabs_not_buffers = 1
-let g:multi_cursor_next_key="\<C-s>"
+let g:multi_cursor_next_key="<F2>"
 let g:multi_cursor_visual_maps = {'i':1, 'a':1, 'f':1, 'F':1, 't':1, 'T':1, 'S':1}
 let g:NERDTreeCascadeOpenSingleChildDir=1
 let g:NERDTreeIgnore=['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
@@ -105,11 +111,15 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
 let g:Tlist_Use_SingleClick=1
-let g:yankring_replace_n_nkey = '-='
-let g:yankring_replace_n_pkey = '--'
+let g:yankring_replace_n_nkey = ',]'
+let g:yankring_replace_n_pkey = ',['
 let g:yankring_min_element_length = 2
 let g:yankring_window_height = 12
+let g:miniBufExplCycleArround = 1
+let g:miniBufExplUseSingleClick = 1
+let g:miniBufExplCloseOnSelect = 1
 
+au BufEnter *.hs compiler ghc
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkred
 autocmd StdinReadPre * let s:std_in=1
@@ -158,14 +168,9 @@ set wildignorecase
 set wildignore=*.o,*~,*.pyc
 set writebackup
 
-inoremap <unique> <leader>cd      <esc>:cd %:p:h<cr>:pwd<cr>i
-inoremap <unique> <leader><F2>    <esc>`qi
-inoremap <unique> <leader><F4>    <esc>:qall<cr>
-inoremap <unique> <leader>R       <esc>:nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>i
 map      <unique> <leader>0       <Plug>(easymotion-sol-bd-jk)
 map      <unique> <leader>e       <Plug>(easymotion-bd-el)
 map      <unique> <leader>f       <Plug>(easymotion-bd-fl)
-map      <unique> <leader>g       <Plug>(easymotion-bd-jk)
 map      <unique> <leader>j       <Plug>(easymotion-sol-j)
 map      <unique> <leader>k       <Plug>(easymotion-sol-k)
 map      <unique> <leader>n       <Plug>(easymotion-bd-n)
@@ -175,65 +180,71 @@ map      <unique> <leader>t       <Plug>(easymotion-bd-tl)
 map      <unique> <leader>v       <Plug>(expand_region_expand)
 map      <unique> <leader>V       <Plug>(expand_region_shrink)
 map      <unique> <leader>w       <Plug>(easymotion-bd-wl)
-nnoremap <unique> <leader>cd      :cd %:p:h<cr>:pwd<cr>
-nnoremap <unique> <leader><F4>    :qall<cr>
 nnoremap <unique> <leader>h       :tabprevious<cr>
 nnoremap <unique> <leader>l       :tabnext<cr>
-nnoremap <unique> <leader>q       :q<cr>
 nnoremap <unique> <leader>sp      :setlocal spell!<cr>
-nnoremap <unique> <leader><Tab>   :exe "tabn ".g:lasttab<cr>
 nnoremap <unique> <leader>;       :TmuxNavigatePrevious<cr>
-noremap  <unique> <leader><F2>    `q
 noremap  <unique> <leader>H       H
 noremap  <unique> <leader>L       L
-nnoremap <unique> <leader>R       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+nnoremap <unique> <leader>q       :q<cr>
 
+:imap <F3> <Plug>snipMateNextOrTrigger
+:smap <F3> <Plug>snipMateNextOrTrigger
+noremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
+inoremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
 inoremap <unique> <F1> <Delete>
 cnoremap <unique> w!! w !sudo tee > /dev/null %
-imap <unique> [C <esc>[C
-imap <unique> ]C <esc>]C
-inoremap <unique> <F2> <esc>mqi
-inoremap <unique> <F4> <esc>:w<cr>
-inoremap <unique> jf           <esc>
+nnoremap <unique> ]P :<C-U>YRYankCount 'yy'<CR>p
+nnoremap <unique> [P :<C-U>YRYankCount 'yy'<CR>P
 inoremap <unique> ]P <esc>:<C-U>YRYankCount 'yy'<CR>p
 inoremap <unique> [P <esc>:<C-U>YRYankCount 'yy'<CR>P
-inoremap <unique> <S-F2> <esc>'qi
-inoremap <unique> <S-F4> <esc>:x<cr>
-map <space>    <Plug>(easymotion-bd-f2)
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
 nmap <unique> [C [Pj:Commentary<cr>`[
 nmap <unique> ]C ]Pk:Commentary<cr>`[
+imap <unique> [C <esc>[C
+imap <unique> ]C <esc>]C
+inoremap <unique> <F4> <esc>:w<cr>
+inoremap <unique> <S-F4> <esc>:x<cr>
+nnoremap <unique> <F4> :w<cr>
+noremap <unique> <S-F4> :x<cr>
+inoremap <unique> jf           <esc>
+inoremap <unique> fj           <esc>
+nnoremap <unique> \n i<cr><esc>
+nmap <space>    <Plug>(easymotion-bd-f2)
+nmap <M-j> mz:m+<cr>`z
+nmap <M-k> mz:m-2<cr>`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 nmap <unique> css yss
 nnoremap <unique> <C-H> :TmuxNavigateLeft<cr>
 nnoremap <unique> <C-J> :TmuxNavigateDown<cr>
 nnoremap <unique> <C-K> :TmuxNavigateUp<cr>
 nnoremap <unique> <C-L> :TmuxNavigateRight<cr>
-nnoremap <unique> <F4> :w<cr>
-nnoremap <unique> ]P :<C-U>YRYankCount 'yy'<CR>p
-nnoremap <unique> [P :<C-U>YRYankCount 'yy'<CR>P
-nnoremap <unique> <S-F4> :x<cr>
 noremap ^ 0
-noremap 0 ^ noremap <Down> +
-noremap H Hzz
-noremap <Left> ^
-noremap L Lzz
-noremap <Right> $
-noremap <unique> <F2> mq
+noremap 0 ^
+noremap <Down> +
+noremap <S-Down> +$
 noremap <Up> -
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+noremap <S-Up> -$
+noremap <Left> ^
+noremap <Right> $
+noremap H Hzz
+noremap L Lzz
 vnoremap <silent> # :call VisualSelection('b')<cr>
 vnoremap <silent> * :call VisualSelection('f')<cr>
 vnoremap <unique> C <Plug>Commentary
 
 let mapleader="-"
+inoremap <unique> <leader><F4>    <esc>:qall<cr>
+nnoremap <unique> <leader><F4>    :qall<cr>
+nnoremap <unique> <leader><Tab>   :exe "tabn ".g:lasttab<cr>
+inoremap <unique> <leader>R       <esc>:nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>i
+nnoremap <unique> <leader>R       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+noremap <unique> <leader>k :MBEbf<CR>
+noremap <unique> <leader>j :MBEbb<CR>
+noremap <leader>h :MBEbp<CR>
+noremap <leader>l :MBEbn<CR>
+noremap  <unique> <leader>0 <esc>:MBEOpen<cr>:MBEFocus<cr>
 nnoremap <silent><unique> <leader>p :YRShow<cr>
-nnoremap <unique> <leader>c ciw
-nnoremap <unique> <leader>C ciW
-nnoremap <unique> <leader>d diw
-nnoremap <unique> <leader>D diW
-nnoremap <unique> <leader>i dii
 nnoremap <unique> <leader>fb :CtrlPBuffer<cr>
 nnoremap <unique> <leader>fc :CtrlPChange<cr>
 nnoremap <unique> <leader>fd :CtrlPDir<cr>
@@ -242,13 +253,11 @@ nnoremap <unique> <leader>fl :CtrlPLine<cr>
 nnoremap <unique> <leader>fr :CtrlPMRU<cr>
 nnoremap <unique> <leader>fu :CtrlPUndo<cr>
 nnoremap <unique> <leader>nd :NERDTreeCWD<cr>
-nnoremap <unique> <leader>o  :tabnew<cr>:NERDTreeCWD<cr>
-nnoremap <unique> <leader>nh :NERDTreeToggle "$HOME"<cr>
+nnoremap <unique> <leader>nh :NERDTreeToggle ~<cr>
 nnoremap <unique> <leader>nm :NERDTreeMirror<cr>
 nnoremap <unique> <leader>nn :NERDTreeFind<cr>
 nnoremap <unique> <leader>ta :TlistToggle<cr>
 nnoremap <unique> <leader>to <Plug>TaskList
-noremap  <unique> <leader>0 :b0<cr>
 noremap  <unique> <leader>1 :b1<cr>
 noremap  <unique> <leader>2 :b2<cr>
 noremap  <unique> <leader>3 :b3<cr>
@@ -261,9 +270,6 @@ noremap  <unique> <leader>9 :b9<cr>
 noremap  <unique> <leader>b :e ~/buffer<cr>
 noremap  <unique> <leader>q :Bclose<cr>
 noremap  <unique> <leader><space> :tabnew<cr>
-vnoremap <unique> <leader>d <esc>diwgv`[
-vnoremap <unique> <leader>D <esc>diWgv`[
-vnoremap <unique> <leader>i <esc>diigv`[
 let mapleader=","
 function! RangeChooser()
     let temp = tempname()

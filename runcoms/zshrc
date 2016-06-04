@@ -1,14 +1,16 @@
 function fs(){
   [[ -f $1 && -s $1 ]]
 }
+function have_package(){
+  which $1 > /dev/null || sudo pacman -S $2;
+}
 [[ -d ~/.fzf ]] || (git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install)
-# [[ -e ~/.fzf/install ]] && (~/.fzf/install && mv ~/.fzf.zsh ~/.fzf/fzf.zsh)
-which ag > /dev/null || sudo pacman -S community/the_silver_searcher
-which st > /dev/null || sudo pacman -S community/st
-which nvim > /dev/null || sudo pacman -S neovim
-which numlockx > /dev/null || sudo pacman -S numlockx
-which http > /dev/null || sudo pacman -S httpie
-which pip > /dev/null || sudo pacman -S python-pip
+have_package ag "community/the_silver_searcher"
+have_package st "community/st"
+have_package nvim "neovim"
+have_package numlockx "numlockx"
+have_package http "httpie"
+have_package pip "python-pip"
 which thefuck > /dev/null || sudo pip install thefuck
 [[ -d $HOME/tmp ]] || mkdir $HOME/tmp
 which fasd > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/fasd.tar.gz > ~/tmp/fasd.tgz
@@ -17,29 +19,24 @@ which percol > /dev/null || http --download https://aur.archlinux.org/cgit/aur.g
 which fpp > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/fpp-git.tar.gz > ~/tmp/fpp-git.tgz
 which yank > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/yank.tar.gz > ~/tmp/yank.tgz
 which antibody > /dev/null || curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
-xtract(){
-  tar -xzf $1
-  rm -f $1
-}
-for f in $(ls ~/tmp); do xtract ~/tmp/$f; mv ${f:r} ~/apps; cd ~/apps/${f:r} && makepkg -sri; cd ; done;
 [[ -d $HOME/.config/nvim/bundle/Vundle.vim ]] || git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
 # disable flow control
 stty -ixon
+eval infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 export ZPREZD=${ZDOTDIR:-$HOME}/.zprezto
-# Source Prezto.
 fs "$ZPREZD/init.zsh" && source "$ZPREZD/init.zsh"
-setopt clobber
 plugs=('robertzk/hipchat.zsh' 'willghatch/zsh-snippets' 'uvaes/fzf-marks' 'bric3/nice-exit-code' \
         'fcambus/ansiweather' 'djui/alias-tips' 'mollifier/anyframe')
 plist=''
 for p in $plugs; do plist="${plist}\n${p}"; done;
+setopt clobber
 source <(antibody init) && antibody bundle <<< $(echo $plist)
 unset plugs; unset plist;
+eval "$(thefuck --alias)"
 export KEYTIMEOUT=3
 export RANGER_LOAD_DEFAULT_RC=FALSE
 export TERMCMD=$(which st)
 
-eval infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 fs $ZPREZD/dotfiles/myrc.zsh && source $ZPREZD/dotfiles/myrc.zsh
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs

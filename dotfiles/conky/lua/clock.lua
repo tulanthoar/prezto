@@ -48,20 +48,20 @@ settings_table = {
     end_angle=360
   },]]
   --Anneau des secondes
-  {
-    name='time',
-    arg='%S',
-    max=60,
-    bg_colour=0xffffff,
-    bg_alpha=0.1,
-    fg_colour=0xd7d7d7,
-    fg_alpha=0.6,
-    x=60, y=82,
-    radius=55,
-    thickness=3,
-    start_angle=0,
-    end_angle=360
-  },
+  --{
+  --  name='time',
+  --  arg='%S',
+  --  max=60,
+  --  bg_colour=0xffffff,
+  --  bg_alpha=0.1,
+  --  fg_colour=0xd7d7d7,
+  --  fg_alpha=0.6,
+  --  x=60, y=82,
+  --  radius=55,
+  --  thickness=3,
+  --  start_angle=0,
+  --  end_angle=360
+  --},
  {
     name='time',
     arg='%M.%S',
@@ -142,52 +142,52 @@ settings_table = {
     fg_alpha=0.6,
     x=103, y=610,
     radius=58,
-    thickness=3,
+    thickness=8,
     start_angle=0,
     end_angle=360
   },
-{
-    name='fs_used_perc',
-    arg='/',
-    max=100,
-    bg_colour=0xffffff,
-    bg_alpha=0.1,
-    fg_colour=0xd7d7d7,
-    fg_alpha=0.6,
-    x=103, y=610,
-    radius=50,
-    thickness=5,
-    start_angle=0,
-    end_angle=360
-  },
-{
-    name='fs_used_perc',
-    arg='/var',
-    max=100,
-    bg_colour=0xffffff,
-    bg_alpha=0.1,
-    fg_colour=0xd7d7d7,
-    fg_alpha=0.6,
-    x=103, y=610,
-    radius=43,
-    thickness=3,
-    start_angle=0,
-    end_angle=360
-  },
-{
-    name='fs_used_perc',
-    arg='/home',
-    max=100,
-    bg_colour=0xffffff,
-    bg_alpha=0.1,
-    fg_colour=0xd7d7d7,
-    fg_alpha=0.6,
-    x=103, y=610,
-    radius=36,
-    thickness=5,
-    start_angle=0,
-    end_angle=360
-  },
+  {
+   name='fs_used_perc',
+   arg='/',
+   max=100,
+   bg_colour=0xffffff,
+   bg_alpha=0.1,
+   fg_colour=0xd7d7d7,
+   fg_alpha=0.6,
+   x=103, y=610,
+   radius=48,
+   thickness=4,
+   start_angle=0,
+   end_angle=360
+ }
+--{
+--    name='fs_used_perc',
+--    arg='/var',
+--    max=100,
+--    bg_colour=0xffffff,
+--    bg_alpha=0.1,
+--    fg_colour=0xd7d7d7,
+--    fg_alpha=0.6,
+--    x=103, y=610,
+--    radius=43,
+--    thickness=3,
+--    start_angle=0,
+--    end_angle=360
+--  },
+--{
+--    name='fs_used_perc',
+--    arg='/home',
+--    max=100,
+--    bg_colour=0xffffff,
+--    bg_alpha=0.1,
+--    fg_colour=0xd7d7d7,
+--    fg_alpha=0.6,
+--    x=103, y=610,
+--    radius=36,
+--    thickness=5,
+--    start_angle=0,
+--    end_angle=360
+--  },
 }
 
 --Use these settings to define the origin and extent of your clock.
@@ -202,7 +202,7 @@ settings_table = {
   clock_alpha=0.6
 
 --Show the seconds hand ?
-  show_seconds=true
+  show_seconds=false
 
 require 'cairo'
 
@@ -308,7 +308,7 @@ end
   if conky_window==nil then return end
   local cs=cairo_xlib_surface_create(conky_window.display,conky_window.drawable,conky_window.visual, conky_window.width,conky_window.height)
 
-  local cr=cairo_create(cs)  
+  local cr=cairo_create(cs)
 
   local updates=conky_parse('${updates}')
   update_num=tonumber(updates)
