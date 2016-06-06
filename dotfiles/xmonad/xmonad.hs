@@ -38,7 +38,7 @@ myModMask = mod3Mask :: KeyMask
 myWorkspaces = map (\w -> "<"++w++">") ["web", "de", "V", "v", "t", "com", "music", "vm"] :: [String]
 myStatusBar = "dzen2 -x '0' -y '0' -h '18' -w '1920' -ta 'l' -bg '" ++ myDBGColor ++ "' -fn '" ++ myFont ++ "' -p" :: String
 myFont = "-*-liberation serif-bold-r-*-*-16-120-75-75-*-*-iso8859-*" :: String
-dmRun = "dmenu_run -w 300 -x 1600 -b -l 55 -fn '*-*-terminus-medium-*-*-*-16-*-*-*-*-*-*-*' "::String
+dmRun = "dmenu_run -w 300 -x 1600 -z -p 'run' -b -l 50 -fn '*-*-terminus-medium-*-*-*-16-*-*-*-*-*-*-*' "::String
 
 limeGreen = "#a3d930" :: String
 ltBlue = "#1793d1" :: String
