@@ -26,10 +26,10 @@ function fpp_pipe() {
   zle accept-line
 }
 function copydir {
-  print -n $PWD | xsel -i > /dev/null
+  print -n $PWD | xclip -i -sel p
 }
 function copyfile {
-  cat $1 | xsel -i > /dev/null
+  cat $1 | xclip -i -sel p
 }
 sudo-command-line() {
   [[ -z $BUFFER ]] && zle up-history
@@ -55,9 +55,6 @@ suggest-accept-return(){
   zle vi-end-of-line
   zle accept-line
 }
-fasd-nvim(){
-  nvim `fasd -f -i $1`
-}
 zle -N fuck-command-line
 zle -N cdParentKey
 zle -N cdUndoKey
@@ -69,31 +66,33 @@ zle -N percol_select_history
 zle -N p-paste
 zle -N c-paste
 zle -N sudo-command-line
-
+function fasd-vim(){ nvim $( fasd -flR $1 | grep -v "/nvim/files/undo/%" | percol ) }
+alias v='fasd-vim'
 alias grep='grep --color'
 alias -g H='| head'
 alias -g T='| tail'
 alias -g G='| grep'
 alias -g L="| less"
-alias suspendnow="sudo pm-suspend"
 alias -g Y="| yank"
-alias -g Yl="| yank -l"
-alias -g FP="| fpp"
-alias czpr="cd $ZPREZD"
-alias v="fasd-nvim"
+alias -g P="| fpp"
+alias suspendnow="sudo pm-suspend"
+alias czpr='cd $ZPREZD; la'
 alias vim="nvim"
 alias vi="nvim"
 alias ex="unarchive"
-alias c="cd"
+alias c='cd $(ls -1AFt | grep -E "./$" | percol); la'
 alias byt="byobu-tmux"
 alias bytns="byobu-tmux new-session"
+alias bytd="byobu-tmux detach"
 alias pyls="fasd -f -i -e python3 .py$"
 alias x="exit"
 alias xmo="mod_key_lay"
 alias cpf='copyfile'
 alias cpd='copydir'
-alias la='ls -lAFh'   #long list,show almost all,show type,human readable
-alias l='ls -lhF'      #long list
+alias la='ls -AFh'
+alias lla='ls -lAFh'
+alias l='ls -hF'
+alias ll='ls -lhF'      #long list
 alias lh='ls -lhF .*'
 alias Fd='fasd -d -i'
 alias Ff='fasd -f -i'
@@ -106,7 +105,7 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias blueconnect='dbus-send --system --type=method_call --dest=org.bluez /org/bluez/hci0/dev_1C_B7_2C_53_28_DA org.bluez.Network1.Connect string:"nap"'
 alias gparted='sudo gparted'
-alias usbdhcp='sudo dhcpcd'
+alias usbdhcp='sudo dhcpcd $(ip link | grep -oE "\<enp[0-9]s[0-9]{2}[f0-9]?[u0-9]+\>")'
 alias bluectl='sudo bluetoothctl'
 
 export LD_LIBRARY_PATH=/home/ant/apps/code/lib
@@ -115,10 +114,9 @@ export GOPATH="$HOME/golang"
 [[ -d "$GOPATH" ]] && export PATH="$PATH:$GOPATH/bin"
 
 function mod_key_lay(){
-  # xmodmap "$ZPREZD/dotfiles/xmodm";
   setxkbmap -option shift:both_shiftlock;
   xmodmap "$ZPREZD/dotfiles/xmodm";
-  numlockx
+  numlockx on
 }
 function bind_keys() {
   bindkey -M viins "^Z" vi-cmd-mode
@@ -143,6 +141,5 @@ function bind_keys() {
   bindkey -M viins "^[[3~" vi-delete-char;
   bindkey -M vicmd "\e" sudo-command-line
   bindkey -M vicmd "\t" fuck-command-line
-  bindkey -M viins "?" percol_select_history
   bindkey -M vicmd ":" percol_select_history
 }

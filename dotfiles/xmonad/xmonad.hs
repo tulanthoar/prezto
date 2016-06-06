@@ -89,7 +89,7 @@ xmConf p = def
   , focusedBorderColor = myFBorder
   , workspaces         = myWorkspaces
   , logHook            = myLogHook p
-  , handleEventHook = docksEventHook <+> minimizeEventHook<+> handleTimerEvent
+  , handleEventHook = docksEventHook <+> minimizeEventHook <+> handleTimerEvent
   , keys = \c -> fromList xkM
   }
 
@@ -100,12 +100,11 @@ main = do
     `additionalKeysP` myKeysP
 
 startSpawn :: X()
-startSpawn = mapM_ spawn [ "st", "/usr/local/bin/maybeclipmenud.sh", "/usr/local/bin/mayberedshift.sh" ]
+startSpawn = mapM_ spawn [ myTerminal, "/usr/local/bin/maybeclipmenud.sh", "/usr/local/bin/mayberedshift.sh" ]
 
 mylayoutHook = avoidStrutsOn [U] $ boringWindows $ minimize $ magnifiercz 1.2 $ smartBorders $
-  toggleLayouts Grid (Mirror tiled )
+  toggleLayouts Grid $ Mirror ( Tall nmaster delta ratio )
   where
-    tiled = Tall nmaster delta ratio
     nmaster = 1
     delta = 3 / 100
     ratio = 11 / 20
@@ -113,7 +112,7 @@ mylayoutHook = avoidStrutsOn [U] $ boringWindows $ minimize $ magnifiercz 1.2 $ 
 -- Scratchpads
 scratchpads =
   [ NS "htop" "st -e htop" (title =? "htop") (customFloating $ W.RationalRect 0 0 1 (5/12))
-  , NS "python" "st -e python" (title =? "python") (customFloating $ W.RationalRect 0 0 1 (5/12))
+  , NS "python" "st -e ptiython" (title =? "ptiython") (customFloating $ W.RationalRect 0 0 1 (5/12))
   ]
 -- Manage hook
 myManageHook = composeAll
@@ -142,14 +141,14 @@ myDzenPP p = defaultPP
 xkM =
   [ ((0, xK_Menu), flashText def 2 "run" >> spawn dmRun)
   , ((myModMask, xK_Menu),  flashText def 2 "search engine" >> spawn "search.sh")
-  , ((myModMask, xK_g), launchApp def "evince" )
   ] ++
   [((myModMask, k), focusNth i)
     | (i, k) <- zip [0 .. 8] [xK_1 ..]]
 
 -- Key Bindings
 myKeysP =
-  [ ("M-b",	spawnHere myBrowser)
+  [ ("M-b", spawn myBrowser)
+  , ("M-c", spawn "clipcopy")
   , ("M-t",  spawn myTerminal)
   , ("M4-t",  spawn myTerminal )
   , ("<Insert>", spawn "xdotool click 2")
@@ -161,10 +160,10 @@ myKeysP =
   , ("S-M-l", shiftTo Next EmptyWS)
   , ("S-M-h", shiftTo Prev EmptyWS)
   , ("M-<Tab>", toggleWS' ["NSP"])
-  , ("M-p",  submap . fromList $
-    [ ((0, xK_h),    namedScratchpadAction scratchpads "htop")
-    , ((0, xK_p),    namedScratchpadAction scratchpads "python")
-    ])
+  , ("M-p h",  namedScratchpadAction scratchpads "htop")
+  , ("M-p p",  namedScratchpadAction scratchpads "python")
+  , ("M-p d f", launchApp def "evince" )
+  , ("M-i m g", launchApp def "gimp" )
   , ("M-<Down>", withFocused minimizeWindow)
   , ("M-S-<Down>", withFocused (\w -> withAll minimizeWindow >> sendMessage (RestoreMinimizedWin w)))
   , ("M-<Up>", sendMessage RestoreNextMinimizedWin)
