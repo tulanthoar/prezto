@@ -12,10 +12,13 @@ import XMonad.Actions.FocusNth
 import XMonad.Actions.CycleWS
 import XMonad.Actions.OnScreen
 import XMonad.Actions.Search
+import XMonad.Actions.ShowText
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.Submap
 import XMonad.Actions.SwapWorkspaces
 import XMonad.Actions.UpdatePointer
+import XMonad.Actions.WithAll
+import XMonad.Hooks.Minimize
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ICCCMFocus
@@ -44,90 +47,94 @@ import XMonad.Prompt.XMonad
 import XMonad.Util.EZConfig(additionalKeysP, additionalKeys)
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.Loggers
 
 -- Simple configuration
-myBorderWidth = 3
+myBorderWidth = 2
 myBrowser = "qutebrowser"
 myTerminal = "st"
 myShell = "zsh"
 myModMask = mod3Mask
+myWorkspaces = map (\w -> "<"++w++">") ["web", "de", "V", "v", "t", "com", "music", "vm"]
 myIconDir = "/home/ant/.dzen/dzenIcons/"
-myStatusBar = "dzen2 -x '0' -y '0' -h '18' -w '750' -ta 'l' -bg '" ++ myDBGColor ++ "' -fn '" ++ myFont ++ "' -p"
-myLeft      = ".dzen/left.zsh | dzen2 -xs 2 -x '750' -y '0' -h '18' -w '530' -ta 'r' -bg '" ++ myDBGColor ++ "' -fg '" ++ myFontCol ++ "' -fn '" ++ myFont ++ "'"
-myFont = "-*-terminus-medium-*-*-*-12-120-75-75-*-*-iso8859-*"
-myFont2 = "-*-terminus-bold-*-*-*-16-160-72-72-*-*-iso8859-*"
+myStatusBar = "dzen2 -x '0' -y '0' -h '18' -w '1920' -ta 'l' -bg '" ++ myDBGColor ++ "' -fn '" ++ myFont ++ "' -p"
+myFont = "-*-liberation serif-bold-r-*-*-16-120-75-75-*-*-iso8859-*"
 
-myWorkspaces = ["web", "de", "V", "v", "t", "Φ", "com", "music", "vm"]
-color1 = "#262621"
-color2 = "#a3d930"
-color3 = "#fdfdfd"
-color4 = "#38a2d6"
-color5 = "#1793d1"
+limeGreen = "#a3d930"
+ltBlue = "#1793d1"
+cBlack = "#000000"
+cDkGray = "#1a1a1a"
+cOrange = "#ffbf00"
+cBlue = "#0066ff"
+cBlue2 = "#3399ff"
+cDkPurp = "#330033"
+cGreen = "#009900"
 
-myDFGColor = color4
-myDBGColor = color1
+myDFGColor = cOrange
+myDBGColor = cDkPurp
 
-myFFGColor = color3
-myFBGColor = color4
+myWFGColor = cGreen
+myWBGColor = myDBGColor
 
-myVFGColor = color3
-myVBGColor = color1
+myLFGColor = cBlue2
+myLBGColor = myDBGColor
 
-myUFGColor = color1
-myUBGColor = color2
+myFFGColor = myDBGColor
+myFBGColor = myDFGColor
 
-myIFGColor = color3
-myIBGColor = color1
+myVFGColor = myDBGColor
+myVBGColor = myDFGColor
 
-mySColor   = color5
+myUFGColor = myDBGColor
+myUBGColor = myDFGColor
+
+myIFGColor = myDBGColor
+myIBGColor = myDFGColor
+
+sepFGColor = cBlack
+mySColor   = ltBlue
 myBorder   = "#121212"
-myFBorder  = color2
-myFontCol  = color5
-
-main = do
-    dzen <- spawnPipe myStatusBar
-    other <- spawnPipe myLeft
-    xmonad $ withUrgencyHook dzenUrgencyHook {args = ["-bg", "green", "-xs", "0"] } $ defaultConfig
-      { manageHook         = manageHook defaultConfig <+> namedScratchpadManageHook scratchpads<+> myManageHook
+myFBorder  = limeGreen
+myFontCol  = ltBlue
+xmConf p = withUrgencyHook dzenUrgencyHook {args = ["-bg", "green", "-xs", "0"] } $ defaultConfig
+      { manageHook         = def <+> namedScratchpadManageHook scratchpads <+> myManageHook <+> manageDocks
       , layoutHook         = mylayoutHook
-      , startupHook        = startSpawn >> setWMName "LG3D"
+      , startupHook        = return() >> startSpawn >> setWMName "LG3D"
       , terminal           = myTerminal
       , modMask            = myModMask
       , borderWidth        = myBorderWidth
-      , focusFollowsMouse  = True
+      , focusFollowsMouse  = False
       , normalBorderColor  = myBorder
       , focusedBorderColor = myFBorder
       , workspaces         = myWorkspaces
-      , logHook            = myLogHook >> dynamicLogWithPP ( myDzenPP dzen )
-      } `additionalKeysP` myKeys
+      , logHook            = myLogHook >> dynamicLogWithPP ( myDzenPP p )
+      , handleEventHook = def <+> docksEventHook <+> minimizeEventHook<+> handleTimerEvent
+      , keys = \c -> M.fromList xkM
+      }
+main = do
+    dzen <- spawnPipe myStatusBar
+    xmonad $ xmConf dzen
+      `additionalKeysP` myKeys
 
 startSpawn = mapM_ spawn [ "st", "/usr/local/bin/maybeclipmenud.sh", "/usr/local/bin/mayberedshift.sh" ]
 
-mylayoutHook = avoidStrutsOn [U] $
-                  boringWindows $ minimize $ Mag.magnifierOff $
-                  smartBorders $ lessBorders (Combine Difference Screen OnlyFloat)
-                  (Tog.toggleLayouts Full (Mirror tiled ||| Grid ||| onWorkspace "web" tabbedLayout tiled))
+mylayoutHook = avoidStrutsOn [U] $ boringWindows $ minimize $ Mag.magnifiercz 1.2 $ smartBorders $
+  Tog.toggleLayouts Grid (Mirror tiled )
   where
-      fullscreenLayout = smartBorders Full
       tiled = Tall nmaster delta ratio
       nmaster = 1
       delta = 3 / 100
       ratio = 11 / 20
-      tabbedLayout = tabbed shrinkText myTabConfig
-      reflected =  reflectHoriz  tiled
 
 -- Scratchpads
 scratchpads = [
-    NS "htop" "urxvtc -e htop" (title =? "htop") (customFloating $ W.RationalRect 0 0 1 (5/12)),
-    NS "python" "urxvtc -e python" (title =? "python") (customFloating $ W.RationalRect 0 0 1 (5/12)),
-    NS "skynet" "urxvtc -title skynet -e ssh skynet -t screen -Dr" (title =? "skynet") (customFloating $ W.RationalRect 0 0 1 (5/12)),
-    NS "devmtp" "urxvtc -title devmtp -e ssh devmtp -t screen -Dr" (title =? "devmtp") (customFloating $ W.RationalRect 0 0 1 (5/12)),
-    NS "andromeda" "urxvtc -title andromeda -e ssh andromeda -t screen -Dr" (title =? "andromeda") (customFloating $ W.RationalRect 0 0 1 (5/12))
+    NS "htop" "st -e htop" (title =? "htop") (customFloating $ W.RationalRect 0 0 1 (5/12))
+    , NS "python" "st -e python" (title =? "python") (customFloating $ W.RationalRect 0 0 1 (5/12))
     ]
 -- Manage hook
 myManageHook = composeAll
     [  className =? "Xmessage"  --> doFloat
-      ,className =? "Dialogue"  --> doFloat
+    ,className =? "Dialogue"  --> doFloat
     ]
     <+> (fmap not isDialog --> doF avoidMaster)
     <+> composeOne [ isFullscreen -?> doFullFloat ]
@@ -136,23 +143,6 @@ myManageHook = composeAll
 myLogHook = takeTopFocus >> fadeInactiveLogHook fadeAmount >> updatePointer (0.5,0.5) (0.5,0.5)
     where fadeAmount = 0.90
 
--- XP Config
-myXPConfig :: XPConfig
-myXPConfig = defaultXPConfig { font = myFont
-                             , height = 22
-                             , bgColor = myDBGColor
-                             , fgColor = myDFGColor
-                             , fgHLight = myFFGColor
-                             , bgHLight = myFBGColor
-                             , historySize = 10 }
-
-myTabConfig = defaultTheme   { fontName = myFont
-                              , activeColor = myFBGColor
-                              , inactiveColor = myDBGColor
-                              , activeTextColor = myFFGColor
-                              , inactiveTextColor = myDFGColor }
-
-
 -- Pretty Printing
 myDzenPP h = defaultPP
      {  ppCurrent         = dzenColor myFFGColor myFBGColor . wrap ("^i(" ++ myIconDir ++ "/dzen_bitmaps/has_win.xbm)") ""
@@ -160,8 +150,8 @@ myDzenPP h = defaultPP
       , ppHidden          = dzenColor myDFGColor myDBGColor . wrap ("^i(" ++ myIconDir ++ "/dzen_bitmaps/has_win.xbm)") "" . filterNSP
       , ppHiddenNoWindows = dzenColor myDFGColor myDBGColor . wrap ("^i(" ++ myIconDir ++ "/dzen_bitmaps/has_win_nv.xbm)") ""  .filterNSP
       , ppUrgent          = dzenColor myUFGColor myUBGColor . wrap ("^i(" ++ myIconDir ++ "/info_03.xbm)") "" . dzenStrip
-      , ppTitle           = dzenColor myDFGColor myDBGColor . trim . shorten 20
-      , ppLayout          = dzenColor myDFGColor myDBGColor .
+      , ppTitle           = dzenColor myWFGColor myWBGColor . trim . shorten 100
+      , ppLayout          = dzenColor myLFGColor myLBGColor .
                             -- None of these match anymore, need to strip off Mag/Toggle/Reflect
                             (\x -> case x of
                             "Mirror Tall" -> "^fg(" ++ myIFGColor ++ ")^i(" ++ myIconDir ++ "/dzen_bitmaps/mtall.xbm)"
@@ -172,11 +162,16 @@ myDzenPP h = defaultPP
                             "TwoPane"	  -> "^fg(" ++ myIFGColor ++ ")^i(" ++ myIconDir ++ "/dzen_bitmaps/two_pane.xbm)"
                             _ -> x
                             )
-      , ppSep             = "||"
-      , ppOutput          = hPutStrLn h }
-      where
+     , ppSep             = dzenColor sepFGColor myDBGColor "  - || -  "
+     , ppExtras = [date "%a %b %d"]
+     , ppOutput          = hPutStrLn h }
+     where
         filterNSP ws = if ws /= "NSP" then ws else ""
 
+
+xkM = [ ((0, xK_Menu), flashText def 2 "run" >> spawn "dmenu_run -w 300 -x 1600 -b -l 55 -fn '*-*-terminus-medium-*-*-*-16-*-*-*-*-*-*-*' ")
+      , ((myModMask, xK_Menu),  flashText def 2 "search engine" >> spawn "search.sh")
+      ]
 
 -- Key Bindings
 myKeys = [ ("M-b",	spawnHere myBrowser)
@@ -184,30 +179,23 @@ myKeys = [ ("M-b",	spawnHere myBrowser)
          , ("M-t",  spawn myTerminal)
          , ("M4-t",  spawn myTerminal )
          , ("<Insert>", spawn "xdotool click 2")
-         , ("<Print>", spawn "dmenu_run")
-         , ("S-<Print>", spawn "search.sh")
+         , ("<Print>", flashText def 2 "run" >> spawn "dmenu_run -w 300 -x 1600 -b -l 55 -fn '*-*-terminus-medium-*-*-*-16-*-*-*-*-*-*-*' ")
+         , ("S-<Print>", flashText def 2 "search engine" >> spawn "search.sh")
          , ("M-<Space>", moveTo Next EmptyWS >> spawn "dmenu_run")
          , ("M-l", moveTo Next NonEmptyWS)
          , ("M-h", moveTo Prev NonEmptyWS)
          , ("S-M-l", shiftTo Next EmptyWS)
          , ("S-M-h", shiftTo Prev EmptyWS)
          , ("M-<Tab>", toggleWS' ["NSP"])
-        -- scratchpads
+          -- scratchpads
          , ("M-p",  submap . M.fromList $
             [ ((0, xK_h),    namedScratchpadAction scratchpads "htop")
             , ((0, xK_p),    namedScratchpadAction scratchpads "python")
-            , ((0, xK_n),    namedScratchpadAction scratchpads "skynet")
-            , ((0, xK_d),    namedScratchpadAction scratchpads "devmtp")
-            , ((0, xK_a),    namedScratchpadAction scratchpads "andromeda")
             ])
          -- minimize
-         , ("M-c",	withFocused minimizeWindow)
-         , ("M-g",	sendMessage RestoreNextMinimizedWin)
-
-         -- boring Windows
-         , ("M-j",	focusDown)
-         , ("M-k",	focusUp)
-         , ("M-m",	focusMaster)
+         , ("M-<Down>", withFocused minimizeWindow)
+         , ("M-S-<Down>", withFocused (\w -> withAll minimizeWindow >> sendMessage (RestoreMinimizedWin w)))
+         , ("M-<Up>", sendMessage RestoreNextMinimizedWin)
 
          -- toggleLayouts
          , ("M-n",     sendMessage Tog.ToggleLayout)
@@ -219,10 +207,11 @@ myKeys = [ ("M-b",	spawnHere myBrowser)
          , ("M-<F3>", focusNth 2)
          , ("M-<F4>", focusNth 3)
          , ("M-<F5>", focusNth 4)
+         , ("M-<F6>", focusNth 5)
+         , ("M-<F7>", focusNth 6)
          ]
 
-      -- Helper functions
-
+-- Helper functions
 -- Avoid changing master on new window creation
 avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
 avoidMaster = W.modify' $ \c -> case c of
@@ -230,5 +219,4 @@ avoidMaster = W.modify' $ \c -> case c of
   _                   -> c
 
 -- Kill zombie dzens before normal xmonad restart
-myRestart :: String
-myRestart = "for pid in `pgrep dzen2`; do kill -9 $pid; done && xmonad --recompile && xmonad --restart"
+myRestart = "for pid in `pgrep dzen2`; do kill -9 $pid; done && xmonad --recompile && xmonad --restart" :: String

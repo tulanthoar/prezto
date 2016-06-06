@@ -114,8 +114,8 @@ export GOPATH="$HOME/golang"
 [[ -d "$GOPATH" ]] && export PATH="$PATH:$GOPATH/bin"
 
 function mod_key_lay(){
-  xmodmap "$ZPREZD/dotfiles/xmodm";
-  setxkbmap -option altwin:alt_super_win -option shift:both_shiftlock;
+  # xmodmap "$ZPREZD/dotfiles/xmodm";
+  setxkbmap -option shift:both_shiftlock;
   xmodmap "$ZPREZD/dotfiles/xmodm";
   numlockx
 }

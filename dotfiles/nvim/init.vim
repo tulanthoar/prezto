@@ -120,7 +120,7 @@ let g:miniBufExplCycleArround = 1
 let g:miniBufExplUseSingleClick = 1
 let g:miniBufExplCloseOnSelect = 1
 
-au BufEnter *.hs compiler ghc
+" au BufEnter *.hs compiler ghc
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkred
 autocmd StdinReadPre * let s:std_in=1
