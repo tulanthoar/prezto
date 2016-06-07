@@ -1,3 +1,4 @@
+import Control.Monad(replicateM_)
 import Data.Map(fromList)
 import System.IO(hPutStrLn)
 import XMonad
@@ -37,8 +38,9 @@ myTerminal = "st" :: String
 myModMask = mod3Mask :: KeyMask
 myWorkspaces = map (\w -> "<"++w++">") ["web", "de", "V", "v", "t", "com", "music", "vm"] :: [String]
 myStatusBar = "dzen2 -x '0' -y '0' -h '18' -w '1920' -ta 'l' -bg '" ++ myDBGColor ++ "' -fn '" ++ myFont ++ "' -p" :: String
-myFont = "-*-liberation serif-bold-r-*-*-16-120-75-75-*-*-iso8859-*" :: String
-dmRun = "dmenu_run -w 300 -x 1600 -z -p 'run' -b -l 50 -fn '*-*-terminus-medium-*-*-*-16-*-*-*-*-*-*-*' "::String
+myFont = "-*-anonymous pro-medium-r-*-*-17-*-*-*-*-*-*-*" :: String
+dmRun = "dmenu_run -w 300 -y 20 -z -p 'launch' -l 60 -fn '-*-anonymous pro-medium-r-*-*-16-*-*-*-*-*-*-*' "::String
+dmSrch = "search.sh -w 600 -y 20 -z -p 'search' -l 60 -fn '-*-anonymous pro-medium-r-*-*-16-*-*-*-*-*-*-*' " :: String
 
 limeGreen = "#a3d930" :: String
 ltBlue = "#1793d1" :: String
@@ -111,8 +113,8 @@ mylayoutHook = avoidStrutsOn [U] $ boringWindows $ minimize $ magnifiercz 1.2 $ 
 
 -- Scratchpads
 scratchpads =
-  [ NS "htop" "st -e htop" (title =? "htop") (customFloating $ W.RationalRect 0 0 1 (5/12))
-  , NS "python" "st -e ptiython" (title =? "ptiython") (customFloating $ W.RationalRect 0 0 1 (5/12))
+  [ NS "htop" "st -e htop" (title =? "htop") nonFloating
+  , NS "python" "st -e ptipython" (title =? "IPython REPL (ptipython)") nonFloating
   ]
 -- Manage hook
 myManageHook = composeAll
@@ -129,18 +131,18 @@ myLogHook p = updatePointer (0.5,0.5) (0.5,0.5) >> dynamicLogWithPP ( myDzenPP p
 myDzenPP p = defaultPP
   { ppCurrent         = dzenColor myFFGColor myFBGColor
   , ppVisible         = dzenColor myVFGColor myVBGColor
-  , ppHidden          = dzenColor myDFGColor myDBGColor
+  , ppHidden          = dzenColor myDFGColor myDBGColor . (\w -> if w /= "NSP" then w else "")
   , ppHiddenNoWindows = dzenColor myDFGColor myDBGColor
   , ppUrgent          = dzenColor myUFGColor myUBGColor
   , ppTitle           = dzenColor myWFGColor myWBGColor . trim . shorten 100
   , ppLayout          = dzenColor myLFGColor myLBGColor
-  , ppSep             = dzenColor sepFGColor myDBGColor "  - || -  "
-  , ppExtras = [L.date "%a %b %d", L.loadAvg, L.battery]
+  , ppSep             = dzenColor sepFGColor myDBGColor " -||- "
+  , ppExtras = [L.date "%a %b %d", L.loadAvg, L.battery, L.logCmd "diskspace.sh"]
   , ppOutput          = hPutStrLn p }
 
 xkM =
-  [ ((0, xK_Menu), flashText def 2 "run" >> spawn dmRun)
-  , ((myModMask, xK_Menu),  flashText def 2 "search engine" >> spawn "search.sh")
+  [ ((0, xK_Menu), launchAct)
+  , ((myModMask, xK_Menu), srchAct)
   ] ++
   [((myModMask, k), focusNth i)
     | (i, k) <- zip [0 .. 8] [xK_1 ..]]
@@ -148,29 +150,32 @@ xkM =
 -- Key Bindings
 myKeysP =
   [ ("M-b", spawn myBrowser)
-  , ("M-c", spawn "clipcopy")
-  , ("M-t",  spawn myTerminal)
-  , ("M4-t",  spawn myTerminal )
   , ("<Insert>", spawn "xdotool click 2")
-  , ("<Print>", flashText def 2 "run" >> spawn dmRun)
-  , ("S-<Print>", flashText def 2 "search engine" >> spawn "search.sh")
-  , ("M-<Space>", moveTo Next EmptyWS >> spawn dmRun)
-  , ("M-l", moveTo Next NonEmptyWS)
-  , ("M-h", moveTo Prev NonEmptyWS)
-  , ("S-M-l", shiftTo Next EmptyWS)
-  , ("S-M-h", shiftTo Prev EmptyWS)
-  , ("M-<Tab>", toggleWS' ["NSP"])
+  , ("M4-t",  spawn myTerminal )
+  , ("M-c", spawn "keratin")
+  , ("M-<Down>", withFocused minimizeWindow)
+  , ("M-h", moveTo Prev NonEmptyWS >> avoidNSP)
+  , ("M-i m g", launchApp def "gimp" )
+  , ("M-l", moveTo Next NonEmptyWS >> avoidNSP)
+  , ("M-n",     sendMessage ToggleLayout)
+  , ("M-p d f", launchApp def "evince" )
   , ("M-p h",  namedScratchpadAction scratchpads "htop")
   , ("M-p p",  namedScratchpadAction scratchpads "python")
-  , ("M-p d f", launchApp def "evince" )
-  , ("M-i m g", launchApp def "gimp" )
-  , ("M-<Down>", withFocused minimizeWindow)
-  , ("M-S-<Down>", withFocused (\w -> withAll minimizeWindow >> sendMessage (RestoreMinimizedWin w)))
-  , ("M-<Up>", sendMessage RestoreNextMinimizedWin)
-  , ("M-n",     sendMessage ToggleLayout)
   , ("M-q",       spawn myRestart)
+  , ("M-r",       refresh)
+  , ("M-S-<Down>", withFocused (\w -> withAll minimizeWindow >> sendMessage (RestoreMinimizedWin w)))
+  , ("M-<Space>", moveTo Next EmptyWS >> avoidNSP >> spawn dmRun)
+  , ("M-<Tab>", toggleWS' ["NSP"])
+  , ("M-t",  spawn myTerminal)
+  , ("M-<Up>", sendMessage RestoreNextMinimizedWin)
+  , ("<Print>", launchAct)
+  , ("S-M-h", shiftTo Prev EmptyWS)
+  , ("S-M-l", shiftTo Next EmptyWS)
+  , ("S-<Print>", srchAct)
   ]
-
+launchAct = flashText def 4 "launch app" >> spawn dmRun :: X()
+avoidNSP = replicateM_ 2 ( toggleWS' ["NSP"] ) :: X()
+srchAct = flashText def 4 "search engine" >> spawn dmSrch :: X()
 -- Helper functions
 -- Avoid changing master on new window creation
 avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
