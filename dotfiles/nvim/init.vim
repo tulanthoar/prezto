@@ -122,10 +122,10 @@ let g:miniBufExplCloseOnSelect = 1
 
 " au BufEnter *.hs compiler ghc
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkred
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=33
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=88
+autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=130
 autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
 
 set background=dark
@@ -191,6 +191,7 @@ nnoremap <unique> <leader>q       :q<cr>
 
 :imap <F3> <Plug>snipMateNextOrTrigger
 :smap <F3> <Plug>snipMateNextOrTrigger
+noremap <unique> <F10>    <esc>:qall<cr>
 noremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
 inoremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
 inoremap <unique> <F1> <Delete>

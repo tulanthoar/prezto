@@ -79,8 +79,10 @@ bind-key q kill-window
 bind-key Tab last-window
 bind-key y copy-mode \; run-shell 'tmux save-buffer - | xclip -i -sel clipboard > /dev/null'
 bind-key p if 'tmux set-buffer "$(xclip -o -sel primary)"' 'tmux paste-buffer'
-bind-key -n IC if 'tmux set-buffer "$(xclip -o -sel primary)"' 'tmux paste-buffer'
-bind-key -n S-IC if 'tmux set-buffer "$(xclip -o -sel clipboard)"' 'tmux paste-buffer'
 bind-key F11 set window-active-style bg=colour235 \; copy-mode
+bind-key -n C-F11 set window-active-style bg=colour235 \; copy-mode
+# bind-key F10 run-shell "tmux capturep -p > /tmp/nvimbuffer" \; new-window "nvim /tmp/nvimbuffer"
+bind-key -n C-S-F11 run-shell "tmux capturep -p > /tmp/nvimbuffer" \; new-window "nvim /tmp/nvimbuffer"
+bind-key -n C-F8 run-shell "tmux capturep -p > /tmp/nvimbuffer" \; new-window "nvim /tmp/nvimbuffer"
 bind-key m select-pane -m
 bind-key M swap-pane

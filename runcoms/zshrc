@@ -27,24 +27,9 @@ export ZPREZD=${ZDOTDIR:-$HOME}/.zprezto
 fs "$ZPREZD/init.zsh" && source "$ZPREZD/init.zsh"
 plugs=('robertzk/hipchat.zsh' 'willghatch/zsh-snippets' 'uvaes/fzf-marks' 'bric3/nice-exit-code' \
         'fcambus/ansiweather' 'djui/alias-tips' 'mollifier/anyframe')
-plist=''
-for p in $plugs; do plist="${plist}\n${p}"; done;
 setopt clobber
-source <(antibody init) && antibody bundle <<< $(echo $plist)
-unset plugs; unset plist;
-eval "$(thefuck --alias)"
-export KEYTIMEOUT=3
-export RANGER_LOAD_DEFAULT_RC=FALSE
-export TERMCMD=$(which st)
-
+source <(antibody init) && antibody bundle <<< $(printf '%s\n' $plugs[@])
+unset plugs
 fs $ZPREZD/dotfiles/myrc.zsh && source $ZPREZD/dotfiles/myrc.zsh
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
-add-zsh-hook chpwd chpwd_recent_dirs
-zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/chpwd-recent-dirs"
-[[ -f ~/.fzf.zsh ]] && mv ~/.fzf.zsh ~/.fzf/fzf.zsh
-fs ~/.fzf/fzf.zsh && source ~/.fzf/fzf.zsh
-export FZF_COMPLETION_TRIGGER=',,'
 zstyle ":anyframe:selector:" use fzf
-_fzf_compgen_path() { ag -g "" "$1" }
-RPROMPT='$(nice_exit_code)'
 bind_keys

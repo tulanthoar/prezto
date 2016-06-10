@@ -1,71 +1,54 @@
-cdParentKey() {
+function cdParentKey() {
   BUFFER=""
   pushd .. > /dev/null
   echo && ls -lhF
   zle accept-line
 }
-cdUndoKey() {
+function cdUndoKey() {
   BUFFER=""
   pushd -q +1 > /dev/null
   echo && ls -lhF
   zle accept-line
 }
-cdRedoKey () {
+function cdRedoKey () {
   BUFFER=""
   pushd -q -0 > /dev/null
   echo && ls -lhF
   zle accept-line
-}
-function percol_select_history() {
-  BUFFER=$(fc -l -n 1 | eval tac | percol --query "$LBUFFER")
-  CURSOR=$#BUFFER         # move cursor
-  zle -R -c               # refresh
 }
 function fpp_pipe() {
   BUFFER="$BUFFER | fpp"
   zle accept-line
 }
 function copydir {
-  print -n $PWD | xclip -i -sel p
+  print -n "$PWD" | xclip -i -sel p &> /dev/null
 }
 function copyfile {
-  cat $1 | xclip -i -sel p
+  cat "$1" | xclip -i -sel p &> /dev/null
 }
-sudo-command-line() {
-  [[ -z $BUFFER ]] && zle up-history
-  [[ $BUFFER == sudo\ * ]] && LBUFFER="${LBUFFER#sudo }" || LBUFFER="sudo $LBUFFER"
+function sudo-command-line() {
+  [[ -z "$BUFFER" ]] && zle up-history
+  [[ "$BUFFER" == sudo\ * ]] && LBUFFER="${LBUFFER#sudo }" || LBUFFER="sudo $LBUFFER"
 }
-function p-paste() {
-  local words=$(xclip -o)
-  RBUFFER="$words${RBUFFER}"
-  zle -R -c
-}
-function c-paste() {
-  local words=$(xclip -o -sel clip)
-  RBUFFER="$words${RBUFFER}"
-  zle -R -c
-}
-fuck-command-line() {
+function fuck-command-line() {
   local FUCK="$(THEFUCK_REQUIRE_CONFIRMATION=0 thefuck $(fc -ln -1 | tail -n 1) 2> /dev/null)"
-  [[ -z $FUCK ]] && echo -n -e "\a" && return
-  BUFFER=$FUCK
+  [[ -z "$FUCK" ]] && echo -n -e "\a" && return
+  BUFFER="$FUCK"
   zle end-of-line
 }
-suggest-accept-return(){
+function suggest-accept-return(){
   zle vi-end-of-line
   zle accept-line
 }
-zle -N fuck-command-line
 zle -N cdParentKey
 zle -N cdUndoKey
-zle -N insert-cycledleft
-zle -N insert-cycledright
-zle -N suggest-accept-return
+zle -N cdRedoKey
 zle -N fpp_pipe
-zle -N percol_select_history
-zle -N p-paste
-zle -N c-paste
 zle -N sudo-command-line
+zle -N fuck-command-line
+zle -N suggest-accept-return
+# eval "$(thefuck --alias)"
+alias fuck='TF_CMD=$(TF_ALIAS=fuck PYTHONIOENCODING=utf-8 TF_SHELL_ALIASES=$(alias) thefuck $(fc -ln -1 | tail -n 1)) && eval $TF_CMD && print -s $TF_CMD'
 function fasd-vim(){ nvim $( fasd -flR $1 | grep -v "/nvim/files/undo/%" | percol ) }
 alias v='fasd-vim'
 alias grep='grep --color'
@@ -75,7 +58,7 @@ alias -g G='| grep'
 alias -g L="| less"
 alias -g Y="| yank"
 alias -g P="| fpp"
-alias suspendnow="sudo pm-suspend"
+alias suspendnow="systemctl suspend"
 alias czpr='cd $ZPREZD; la'
 alias vim="nvim"
 alias vi="nvim"
@@ -108,6 +91,9 @@ alias gparted='sudo gparted'
 alias usbdhcp='sudo dhcpcd $(ip link | grep -oE "\<enp[0-9]s[0-9]{2}[f0-9]?[u0-9]+\>")'
 alias bluectl='sudo bluetoothctl'
 
+export KEYTIMEOUT=3
+export RANGER_LOAD_DEFAULT_RC=FALSE
+export TERMCMD=$(which st)
 export LD_LIBRARY_PATH=/home/ant/apps/code/lib
 export JAVA_HOME="/usr/lib/jvm/default-jvm"
 export GOPATH="$HOME/golang"
@@ -141,5 +127,13 @@ function bind_keys() {
   bindkey -M viins "^[[3~" vi-delete-char;
   bindkey -M vicmd "\e" sudo-command-line
   bindkey -M vicmd "\t" fuck-command-line
-  bindkey -M vicmd ":" percol_select_history
+  bindkey -M vicmd ":" anyframe-widget-execute-history
 }
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/chpwd-recent-dirs"
+[[ -f ~/.fzf.zsh ]] && mv ~/.fzf.zsh ~/.fzf/fzf.zsh
+fs ~/.fzf/fzf.zsh && source ~/.fzf/fzf.zsh
+export FZF_COMPLETION_TRIGGER=',,'
+_fzf_compgen_path() { ag -g "" "$1" }
+RPROMPT='$(nice_exit_code)'
