@@ -59,8 +59,8 @@ main = do
   xmonad $ xmConf dzP
     `additionalKeysP` myKeysP
 
-mylayoutHook = gaps [(U,18)] $ avoidStrutsOn [U] $ smartBorders $ magnifiercz 1.2 $
-  boringWindows $ minimize $ toggleLayouts Grid $ Mirror $ Tall 1 delta ratio
+mylayoutHook = gaps [(U,18)] $ smartBorders $ magnifiercz 1.2 $
+  boringAuto $ minimize $ toggleLayouts Grid $ Mirror $ Tall 1 delta ratio
   where
     delta = 3 / 100
     ratio = 11 / 20
@@ -77,20 +77,23 @@ myManageHook = namedScratchpadManageHook scratchpads
 
 xkM=
   [ ((0, xK_Menu), launchAct)
-  , ((0, raisevol), replicateM_ 5 $ sendKey noModMask xK_Down)
-  , ((0, lowvol), replicateM_ 5 $ sendKey noModMask xK_Up)
-  , ((myModMask, raisevol), moveTo Prev NonEmptyWS >> avoidNSP)
-  , ((myModMask, lowvol), moveTo Next NonEmptyWS >> avoidNSP)
-  , ((myModMask, xK_F1), dmenuchoose $ M.fromList mC)
-  , ((myModMask .|. controlMask, xK_y), defaultCommands >>= runCommand)
-  , ((0, xK_Print), sendKey controlMask xK_F10 )
-  , ((myModMask, xK_Menu), srchAct)
-  , ((myModMask, xK_y), sendKey noModMask xK_Return >> sendKey noModMask xK_F10)
-  , ((myModMask, xK_v), sendKey controlMask xK_F11 >> sendKey noModMask xK_space)
-  , ((0, 0xff9f), sendMessage ToggleLayout)
-  , ((0, 0xff9e), withFocused minimizeWindow)
-  , ((0, 0xffab), sendMessage RestoreNextMinimizedWin )
   , ((0, 0xff8d), withFocused $ \w -> withAll minimizeWindow >> (sendMessage . RestoreMinimizedWin ) w )
+  , ((0, 0xff9e), withFocused minimizeWindow)
+  , ((0, 0xff9f), sendMessage ToggleLayout)
+  , ((0, 0xffab), sendMessage RestoreNextMinimizedWin )
+  , ((0, 0x1008ff12), spawn "systemctl suspend")
+  , ((mod1Mask, lowvol), focusUp)
+  , ((mod1Mask, raisevol),  focusDown)
+  , ((0, lowvol), replicateM_ 5 $ sendKey noModMask xK_Up)
+  , ((0, raisevol), replicateM_ 5 $ sendKey noModMask xK_Down)
+  , ((0, xK_Print), sendKey controlMask xK_F10 )
+  , ((myModMask .|. controlMask, xK_y), defaultCommands >>= runCommand)
+  , ((myModMask, lowvol), moveTo Next NonEmptyWS >> avoidNSP)
+  , ((myModMask, raisevol), moveTo Prev NonEmptyWS >> avoidNSP)
+  , ((myModMask, xK_F1), dmenuchoose $ M.fromList mC)
+  , ((myModMask, xK_Menu), srchAct)
+  , ((myModMask, xK_v), sendKey controlMask xK_F11 >> sendKey noModMask xK_space)
+  , ((myModMask, xK_y), sendKey noModMask xK_Return >> sendKey noModMask xK_F10)
   ] ++
   [ ((0, l), focusNth m)
   | (m, l) <- zip [0 .. 8] [xK_KP_End, 0xff99, 0xff9b, 0xff96, 0xff9d, 0xff98, 0xff95, 0xff97, 0xff9a ]
@@ -100,28 +103,30 @@ raisevol=0x1008ff13
 lowvol=0x1008ff11
 
 myKeysP =
-  [ ("M-b", spawn myBrowser)
+  [ ("M4-t",  spawn myTerminal )
   , ("<Insert>", spawn "xdotool click 2")
-  , ("M4-t",  spawn myTerminal )
+  , ("M-b", namedScratchpadAction scratchpads myBrowser)
   , ("M-c", spawn $ "clipmenu -z -l 50 -p 'clip' -fn "++apFnmenu)
-  , ("M-j", withFocused minimizeWindow)
+  , ("M-<Down>", withFocused $ \w -> withAll minimizeWindow >> sendMessage (RestoreMinimizedWin w))
   , ("M-h", moveTo Prev NonEmptyWS >> avoidNSP)
-  , ("M-i m g", launchApp def "gimp" )
+  , ("M-j", withFocused minimizeWindow)
+  , ("M-k", sendMessage RestoreNextMinimizedWin)
+  , ("M-<Left>", shiftTo Prev EmptyWS)
   , ("M-l", moveTo Next NonEmptyWS >> avoidNSP)
   , ("M-n",     sendMessage ToggleLayout)
-  , ("M-p d f", launchApp def "evince" )
-  , ("M-p h",  namedScratchpadAction scratchpads "htop")
-  , ("M-p p",  namedScratchpadAction scratchpads "python")
+  , ("M-o i m g", launchApp def "gimp" )
+  , ("M-o p d f", launchApp def "evince" )
+  , ("M-p", spawn "xdotool click 2")
   , ("M-q",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
+  , ("M-<Right>", shiftTo Next EmptyWS)
   , ("M-r",       refresh)
-  , ("M-<Down>", withFocused $ \w -> withAll minimizeWindow >> sendMessage (RestoreMinimizedWin w))
   , ("M-<Space>", moveTo Next EmptyWS >> avoidNSP >> spawn dmRun)
   , ("M-<Tab>", toggleWS' ["NSP"])
   , ("M-t",  spawn myTerminal)
-  , ("M-k", sendMessage RestoreNextMinimizedWin)
-  , ("M-<Left>", shiftTo Prev EmptyWS)
-  , ("M-<Right>", shiftTo Next EmptyWS)
-  ] where myBrowser = "qutebrowser"
+  , ("M-x h",  namedScratchpadAction scratchpads "htop")
+  , ("M-x p",  namedScratchpadAction scratchpads "python")
+  ]
+myBrowser = "qutebrowser"
 
 mC =
   [ ("minone", withFocused minimizeWindow )
@@ -132,6 +137,7 @@ dmenuchoose m = dmenuMap m >>= fromMaybe (return ())
 scratchpads =
   [ NS "htop" "st -e htop" (title =? "htop") nonFloating
   , NS "python" "st -e ptipython" (title =? "IPython REPL (ptipython)") nonFloating
+  , NS myBrowser myBrowser (className =? "qutebrowser") nonFloating
   ]
 
 myDzenPP p = def

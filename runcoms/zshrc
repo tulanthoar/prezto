@@ -1,9 +1,5 @@
-function fs(){
-  [[ -f $1 && -s $1 ]]
-}
-function have_package(){
-  which $1 > /dev/null || sudo pacman -S $2;
-}
+function fs(){ [[ -f $1 && -s $1 ]] }
+function have_package(){ which $1 > /dev/null || sudo pacman -S $2; }
 [[ -d ~/.fzf ]] || (git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install)
 have_package ag "community/the_silver_searcher"
 have_package st "community/st"
@@ -12,7 +8,7 @@ have_package numlockx "numlockx"
 have_package http "httpie"
 have_package pip "python-pip"
 which thefuck > /dev/null || sudo pip install thefuck
-[[ -d $HOME/tmp ]] || mkdir $HOME/tmp
+[[ -d /tmp/${USER}zshrc ]] || mkdir /tmp/${USER}zshrc
 which fasd > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/fasd.tar.gz > ~/tmp/fasd.tgz
 which byobu-tmux > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/byobu.tar.gz > ~/tmp/byobu.tgz
 which percol > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/percol.tar.gz > ~/tmp/percol.tgz
@@ -25,11 +21,11 @@ stty -ixon
 eval infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 export ZPREZD=${ZDOTDIR:-$HOME}/.zprezto
 fs "$ZPREZD/init.zsh" && source "$ZPREZD/init.zsh"
-plugs=('robertzk/hipchat.zsh' 'willghatch/zsh-snippets' 'uvaes/fzf-marks' 'bric3/nice-exit-code' \
-        'fcambus/ansiweather' 'djui/alias-tips' 'mollifier/anyframe')
-setopt clobber
+setopt CLOBBER
+plugs=('willghatch/zsh-snippets' 'uvaes/fzf-marks' 'bric3/nice-exit-code' 'djui/alias-tips' 'mollifier/anyframe')
 source <(antibody init) && antibody bundle <<< $(printf '%s\n' $plugs[@])
 unset plugs
 fs $ZPREZD/dotfiles/myrc.zsh && source $ZPREZD/dotfiles/myrc.zsh
+fs $ZPREZD/dotfiles/mysnippets && source $ZPREZD/dotfiles/mysnippets
 zstyle ":anyframe:selector:" use fzf
 bind_keys

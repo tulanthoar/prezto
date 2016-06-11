@@ -50,25 +50,25 @@ zle -N suggest-accept-return
 # eval "$(thefuck --alias)"
 alias fuck='TF_CMD=$(TF_ALIAS=fuck PYTHONIOENCODING=utf-8 TF_SHELL_ALIASES=$(alias) thefuck $(fc -ln -1 | tail -n 1)) && eval $TF_CMD && print -s $TF_CMD'
 function fasd-vim(){ nvim $( fasd -flR $1 | grep -v "/nvim/files/undo/%" | percol ) }
-alias v='fasd-vim'
+# alias v='fasd-vim'
 alias grep='grep --color'
-alias -g H='| head'
-alias -g T='| tail'
-alias -g G='| grep'
-alias -g L="| less"
-alias -g Y="| yank"
-alias -g P="| fpp"
-alias suspendnow="systemctl suspend"
-alias czpr='cd $ZPREZD; la'
-alias vim="nvim"
-alias vi="nvim"
-alias ex="unarchive"
+# alias -g H='| head'
+# alias -g T='| tail'
+# alias -g G='| grep'
+# alias -g L="| less"
+# alias -g Y="| yank"
+# alias -g P="| fpp"
+# alias suspendnow="systemctl suspend"
+# alias czpr='cd $ZPREZD; la'
+# alias vim="nvim"
+# alias vi="nvim"
+# alias ex="unarchive"
 alias c='cd $(ls -1AFt | grep -E "./$" | percol); la'
-alias byt="byobu-tmux"
-alias bytns="byobu-tmux new-session"
-alias bytd="byobu-tmux detach"
-alias pyls="fasd -f -i -e python3 .py$"
-alias x="exit"
+# alias byt="byobu-tmux"
+# alias bytns="byobu-tmux new-session"
+# alias bytd="byobu-tmux detach"
+# alias pyls="fasd -f -i -e python3 .py$"
+# alias x="exit"
 alias xmo="mod_key_lay"
 alias cpf='copyfile'
 alias cpd='copydir'
@@ -77,12 +77,9 @@ alias lla='ls -lAFh'
 alias l='ls -hF'
 alias ll='ls -lhF'      #long list
 alias lh='ls -lhF .*'
-alias Fd='fasd -d -i'
-alias Ff='fasd -f -i'
-alias Fa='fasd -a -i'
-alias help='man'
-alias unexport='unset'
-alias whereami=display_info
+alias fd='fasd -d -i'
+alias ff='fasd -f -i'
+alias fa='fasd -a -i'
 alias rm='rm -I'
 alias cp='cp -i'
 alias mv='mv -i'
@@ -105,19 +102,19 @@ function mod_key_lay(){
   numlockx on
 }
 function bind_keys() {
+  bindkey -M viins "^@" snippet-expand
   bindkey -M viins "^Z" vi-cmd-mode
   bindkey -M viins "^A" beginning-of-line
   bindkey -M viins "^[ " suggest-accept-return
-  bindkey -M viins "^@" vi-forward-word
   bindkey -M viins "^[d" insert-cycledright
   bindkey -M viins "^[u" insert-cycledleft
-  bindkey -M viins "^[c" yank_pipe
+  bindkey -M viins "^[c" anyframe-widget-cdr
   bindkey -M viins "^[p" fpp_pipe
-  bindkey -M viins "^[h" anyframe-widget-execute-history
-  bindkey -M viins "^[s" anyframe-widget-insert-filename
-  bindkey -M viins "^[q" anyframe-widget-kill
+  bindkey -M viins "^[;" anyframe-widget-execute-history
+  bindkey -M viins "^[f" anyframe-widget-insert-filename
+  bindkey -M viins "^[k" anyframe-widget-kill
   bindkey -M viins "^[v" c-paste
-  bindkey -M viins "^[f" forward-word
+  bindkey -M viins "^[w" forward-word
   bindkey -M viins "^[b" backward-word
   bindkey -M viins "^B" cdUndoKey
   bindkey -M viins "^F" cdRedoKey
@@ -129,6 +126,7 @@ function bind_keys() {
   bindkey -M vicmd "\t" fuck-command-line
   bindkey -M vicmd ":" anyframe-widget-execute-history
 }
+
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/chpwd-recent-dirs"
