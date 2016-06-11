@@ -8,7 +8,7 @@ have_package numlockx "numlockx"
 have_package http "httpie"
 have_package pip "python-pip"
 which thefuck > /dev/null || sudo pip install thefuck
-[[ -d /tmp/${USER}zshrc ]] || mkdir /tmp/${USER}zshrc
+[[ -d "/tmp/${USER}zshrc" ]] || mkdir "/tmp/${USER}zshrc"
 which fasd > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/fasd.tar.gz > ~/tmp/fasd.tgz
 which byobu-tmux > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/byobu.tar.gz > ~/tmp/byobu.tgz
 which percol > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/percol.tar.gz > ~/tmp/percol.tgz
@@ -18,14 +18,17 @@ which antibody > /dev/null || curl -s https://raw.githubusercontent.com/getantib
 [[ -d $HOME/.config/nvim/bundle/Vundle.vim ]] || git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
 # disable flow control
 stty -ixon
-eval infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
+eval infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 export ZPREZD=${ZDOTDIR:-$HOME}/.zprezto
+export ZPDOTD=${ZDOTDIR:-$HOME}/.zprezto/dotfiles
 fs "$ZPREZD/init.zsh" && source "$ZPREZD/init.zsh"
 setopt CLOBBER
-plugs=('willghatch/zsh-snippets' 'uvaes/fzf-marks' 'bric3/nice-exit-code' 'djui/alias-tips' 'mollifier/anyframe')
-source <(antibody init) && antibody bundle <<< $(printf '%s\n' $plugs[@])
+plugs=('willghatch/zsh-snippets' 'uvaes/fzf-marks' 'bric3/nice-exit-code' 'djui/alias-tips')
+fs "${ZPDOTD}/anti_init.zsh" && source "${ZPDOTD}/anti_init.zsh"
+antibody_zsh bundle <<< $(printf '%s\n' ${plugs[@]})
+[[ -f ~/.fzf.zsh ]] && mv ~/.fzf.zsh ~/.fzf/fzf.zsh
+fs ~/.fzf/fzf.zsh && source ~/.fzf/fzf.zsh
 unset plugs
-fs $ZPREZD/dotfiles/myrc.zsh && source $ZPREZD/dotfiles/myrc.zsh
-fs $ZPREZD/dotfiles/mysnippets && source $ZPREZD/dotfiles/mysnippets
-zstyle ":anyframe:selector:" use fzf
+fs "${ZPDOTD}/mysnippets" && source "${ZPDOTD}/mysnippets"
+fs "${ZPDOTD}/myrc.zsh" && source "${ZPDOTD}/myrc.zsh"
 bind_keys
