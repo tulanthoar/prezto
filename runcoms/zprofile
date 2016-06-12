@@ -7,6 +7,7 @@
 
 [[ "$OSTYPE" == darwin* ]] && export BROWSER='open'
 
+export PATH="$PATH:$HOME/apps/bin"
 export EDITOR='nvim'
 export VISUAL='nvim'
 export PAGER='less'
@@ -48,3 +49,30 @@ if [[ ! -d "$TMPDIR" ]]; then
 fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
+
+[[ -f ~/.fzf.zsh ]] && mv ~/.fzf.zsh ~/.fzf/fzf.zsh
+export ZPREZD=${ZDOTDIR:-$HOME}/.zprezto
+export ZPDOTD=${ZDOTDIR:-$HOME}/.zprezto/dotfiles
+function fs(){ [[ -f $1 && -s $1 ]] }
+function have_package(){ which $1 > /dev/null || sudo pacman -S $2; }
+[[ -d ~/.fzf ]] || (git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install)
+have_package ag "community/the_silver_searcher"
+have_package st "community/st"
+have_package nvim "neovim"
+have_package numlockx "numlockx"
+have_package http "httpie"
+have_package pip "python-pip"
+which thefuck > /dev/null || sudo pip install thefuck
+[[ -d "/tmp/${USER}zshrc" ]] || mkdir "/tmp/${USER}zshrc"
+which fasd > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/fasd.tar.gz > ~/tmp/fasd.tgz
+which byobu-tmux > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/byobu.tar.gz > ~/tmp/byobu.tgz
+which percol > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/percol.tar.gz > ~/tmp/percol.tgz
+which fpp > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/fpp-git.tar.gz > ~/tmp/fpp-git.tgz
+which yank > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/yank.tar.gz > ~/tmp/yank.tgz
+which antibody > /dev/null || curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
+[[ -d $HOME/.config/nvim/bundle/Vundle.vim ]] || git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
+fs "$ZPREZD/init.zsh" || touch "$ZPREZD/init.zsh"
+fs "${ZPDOTD}/anti_init.zsh" || touch "${ZPDOTD}/anti_init.zsh"
+fs ~/.fzf/fzf.zsh || touch ~/.fzf/fzf.zsh
+fs "${ZPDOTD}/myrc.zsh" || touch "${ZPDOTD}/myrc.zsh"
+fs "${ZPDOTD}/mysnippets" || touch "${ZPDOTD}/mysnippets"
