@@ -1,0 +1,20 @@
+alias fuck='TF_CMD=$(TF_ALIAS=fuck PYTHONIOENCODING=utf-8 TF_SHELL_ALIASES=$(alias) thefuck $(fc -ln -1 | tail -n 1)) && eval $TF_CMD && print -s $TF_CMD'
+alias grep='grep --color'
+alias fzf='fzf-tmux'
+alias xmo="mod_key_lay"
+alias cpf='copyfile'
+alias cpd='copydir'
+alias la='ls -AFh'
+alias lla='ls -lAFh'
+alias l='ls -hF'
+alias ll='ls -lhF'      #long list
+alias lh='ls -lhF .*'
+alias rm='rm -I'
+alias cp='cp -i'
+alias mv='mv -i'
+alias blueconnect='dbus-send --system --type=method_call --dest=org.bluez /org/bluez/hci0/dev_1C_B7_2C_53_28_DA org.bluez.Network1.Connect string:"nap"'
+alias gparted='sudo gparted'
+alias usbdhcp='sudo dhcpcd $(ip link | grep -oE "\<enp[0-9]s[0-9]{2}[f0-9]?[u0-9]+\>")'
+alias bluectl='sudo bluetoothctl'
+alias suspendnow="systemctl suspend"
+alias czp='cd "${ZPREZD}"; la'

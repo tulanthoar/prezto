@@ -1,12 +1,25 @@
-zplugins=('willghatch/zsh-snippets' 'uvaes/fzf-marks' 'bric3/nice-exit-code' 'djui/alias-tips')
-# disable flow control
+python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
+ZPLUGINS=('willghatch/zsh-snippets' 'uvaes/fzf-marks' 'bric3/nice-exit-code' 'djui/alias-tips')
+#python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
 stty -ixon
+#python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
 eval infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
-source "$ZPREZD/init.zsh"
-setopt CLOBBER
+#python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
 source "${ZPDOTD}/anti_init.zsh"
-antibody_zsh bundle <<< $(printf '%s\n' ${zplugins[@]})
+source "$ZPREZD/init.zsh"
+#python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
+setopt CLOBBER
+#python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
+#python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
+antibody_zsh bundle <<< $(printf '%s\n' ${ZPLUGINS[@]})
+#python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
 source ~/.fzf/fzf.zsh
+#python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
 source "${ZPDOTD}/myrc.zsh"
-source "${ZPDOTD}/mysnippets"
+#python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
+source "${ZPDOTD}/mysnippets.zsh"
+#python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
+RPROMPT='$(nice_exit_code)'
+#python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
 bind_keys
+python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"

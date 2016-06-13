@@ -7,7 +7,7 @@
 #
 
 # Load dependencies.
-pmodload 'editor'
+# pmodload 'editor'
 
 # Return if requirements are not found.
 if (( ! $+commands[fasd] )); then

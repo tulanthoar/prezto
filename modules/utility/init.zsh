@@ -8,7 +8,7 @@
 #
 
 # Load dependencies.
-pmodload 'helper' 'spectrum'
+# pmodload 'helper' 'spectrum'
 
 # Correct commands.
 setopt CORRECT
