@@ -74,7 +74,7 @@ function ftpane() {
 }
 function V() {
   local file
-  file="$(fasd -Rfl "$1" | fzf-tmux --no-sort +m)" && nvim "${file}" || return 1
+  file="$(fasd -Rfl "$1" | fzf-tmux --tac --no-sort +m)" && nvim "${file}" || return 1
 }
 function z() {
   local dir
@@ -166,11 +166,6 @@ zle -N sudo-command-line
 zle -N fuck-command-line
 zle -N suggest-accept-return
 
-function mod_key_lay(){
-  setxkbmap -option shift:both_shiftlock;
-  xmodmap "${ZPDOTD}/xmodm";
-  numlockx on
-}
 function bind_keys() {
   bindkey -M viins "^@" snippet-expand
   bindkey -M viins "^Z" vi-cmd-mode

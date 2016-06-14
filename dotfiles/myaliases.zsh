@@ -1,7 +1,8 @@
 alias fuck='TF_CMD=$(TF_ALIAS=fuck PYTHONIOENCODING=utf-8 TF_SHELL_ALIASES=$(alias) thefuck $(fc -ln -1 | tail -n 1)) && eval $TF_CMD && print -s $TF_CMD'
 alias grep='grep --color'
 alias fzf='fzf-tmux'
-alias xmo="mod_key_lay"
+alias xmo='modkey'
+alias x='exit'
 alias cpf='copyfile'
 alias cpd='copydir'
 alias la='ls -AFh'
@@ -18,3 +19,4 @@ alias usbdhcp='sudo dhcpcd $(ip link | grep -oE "\<enp[0-9]s[0-9]{2}[f0-9]?[u0-9
 alias bluectl='sudo bluetoothctl'
 alias suspendnow="systemctl suspend"
 alias czp='cd "${ZPREZD}"; la'
+alias c='cd $(ls -cA1F | grep -E "./$"|fzf) && ls -cAF | grep -E "./$"'

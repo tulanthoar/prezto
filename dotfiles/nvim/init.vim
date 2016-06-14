@@ -10,7 +10,7 @@ Plugin 'ervandew/supertab'
 Plugin 'bling/vim-airline'
 Plugin 'fholgado/minibufexpl.vim'
 " Plugin 'vim-scripts/Superior-Haskell-Interaction-Mode-SHIM.git'
-" Plugin 'lukerandall/haskellmode-vim'
+Plugin 'lukerandall/haskellmode-vim'
 Plugin 'neovimhaskell/haskell-vim.git'
 Plugin 'mbbill/undotree'
 Plugin 'jiangmiao/auto-pairs'
@@ -85,6 +85,13 @@ let g:EasyMotion_startofline = 0
 let g:EasyMotion_use_upper = 1
 let g:expand_region_text_objects = {'iw':0, 'iW':0, 'i"':0, 'i''':0, 'i]':1, 'ib':1, 'iB':1, 'il':0, 'ii':1, 'ip':0, 'ie':0}
 let g:haddock_browser="/usr/bin/qutebrowser"
+let g:haskell_enable_quantification = 1
+let g:haskell_enable_recursivedo = 1
+let g:haskell_enable_arrowsyntax = 1
+let g:haskell_enable_pattern_synonyms = 1
+let g:haskell_enable_typeroles = 1
+let g:haskell_enable_static_pointers = 1
+" let haskell_classic_highlighting = 1
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_enable_on_vim_startup = 1
@@ -125,7 +132,7 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=33
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=130
+autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=52
 autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
 
 set background=dark
@@ -145,8 +152,8 @@ set list
 set listchars+=extends:&,precedes:&
 set mouse=v
 set noshowmode
-set number
-set numberwidth=2
+" set number
+" set numberwidth=2
 set scrolljump=2
 set scrolloff=5 "ensure 5 lines are above/below cursor when scrolling
 set showcmd
@@ -179,7 +186,7 @@ map      <unique> <leader>$       <Plug>(easymotion-eol-bd-jk)
 map      <unique> <leader><space> <Plug>(easymotion-overwin-f2)
 map      <unique> <leader>t       <Plug>(easymotion-bd-tl)
 map      <unique> <leader>v       <Plug>(expand_region_expand)
-map      <unique> <leader>V       <Plug>(expand_region_shrink)
+map      <unique> -v       <Plug>(expand_region_shrink)
 map      <unique> <leader>w       <Plug>(easymotion-bd-wl)
 nnoremap <unique> <leader>h       :tabprevious<cr>
 nnoremap <unique> <leader>l       :tabnext<cr>
@@ -245,7 +252,6 @@ noremap <unique> <leader>k :MBEbf<CR>
 noremap <unique> <leader>j :MBEbb<CR>
 noremap <leader>h :MBEbp<CR>
 noremap <leader>l :MBEbn<CR>
-noremap  <unique> <leader>0 <esc>:MBEOpen<cr>:MBEFocus<cr>
 nnoremap <silent><unique> <leader>p :YRShow<cr>
 nnoremap <unique> <leader>fb :CtrlPBuffer<cr>
 nnoremap <unique> <leader>fc :CtrlPChange<cr>
@@ -260,6 +266,7 @@ nnoremap <unique> <leader>nm :NERDTreeMirror<cr>
 nnoremap <unique> <leader>nn :NERDTreeFind<cr>
 nnoremap <unique> <leader>ta :TlistToggle<cr>
 nnoremap <unique> <leader>to <Plug>TaskList
+noremap  <unique> <leader>0 <esc>:MBEOpen<cr>:MBEFocus<cr>
 noremap  <unique> <leader>1 :b1<cr>
 noremap  <unique> <leader>2 :b2<cr>
 noremap  <unique> <leader>3 :b3<cr>

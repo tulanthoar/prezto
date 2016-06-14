@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "-*-Deja Vu Sans Mono-medium-r-*-*-12-*-*-*-*-*-*-*";
-static int borderpx = 2;
+static char font[] = "-*-Lucida Console-*-r-*-*-13-*-*-*-*-*-*-*";
+static int borderpx = 1;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -16,7 +16,7 @@ static int borderpx = 2;
  * 4: value of shell in /etc/passwd
  * 5: value of shell in config.h
  */
-static char shell[] = "/bin/sh";
+static char shell[] = "/bin/zsh";
 static char *utmp = NULL;
 static char stty_args[] = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
@@ -103,8 +103,8 @@ static const char *colorname[] = {
  */
 static unsigned int defaultfg = 117;
 static unsigned int defaultbg = 233;
-static unsigned int defaultcs = 256;
-static unsigned int defaultrcs = 257;
+static unsigned int defaultcs = 55;
+static unsigned int defaultrcs = 195;
 
 /*
  * Default shape of cursor
@@ -113,14 +113,14 @@ static unsigned int defaultrcs = 257;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 2;
+static unsigned int cursorshape = 6;
 
 /*
  * Default colour and shape of the mouse cursor
  */
 static unsigned int mouseshape = XC_xterm;
 static unsigned int mousefg = 7;
-static unsigned int mousebg = 0;
+static unsigned int mousebg = 2;
 
 /*
  * Colors used, when the specific fg == defaultfg. So in reverse mode this

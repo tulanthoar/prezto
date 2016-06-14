@@ -3,6 +3,7 @@ add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/chpwd-recent-dirs"
 source "${ZPDOTD}/myfunctions.zsh"
 source "${ZPDOTD}/myaliases.zsh"
+source "${ZPDOTD}/mysnippets.zsh"
 # alias vim="nvim"
 # alias vi="nvim"
 # alias ex="unarchive"

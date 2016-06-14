@@ -1,0 +1,4 @@
+#!/bin/env dash
+xmctl minone
+st -e byobu-tmux new-session nvim "${QUTE_TEXT}"
+xmctl rest
