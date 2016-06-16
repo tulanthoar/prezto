@@ -74,11 +74,11 @@ function ftpane() {
 }
 function V() {
   local file
-  file="$(fasd -Rfl "$1" | fzf-tmux --tac --no-sort +m)" && nvim "${file}" || return 1
+  file="$(locate -Ai "$1" | fzf-tmux --no-sort +m)" && nvim "${file}" || return 1
 }
 function z() {
   local dir
-  dir="$(fasd -Rdl "$1" | fzf-tmux --no-sort +m)" && cd "${dir}" || return 1
+  dir="$(locate -Ai "$1" | fzf-tmux --no-sort +m)" && cd "${dir}" || return 1
 }
 function fzfz-file-widget() {
   LBUFFER="${LBUFFER}$(__fzfz)"

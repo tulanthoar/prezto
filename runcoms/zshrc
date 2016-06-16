@@ -1,11 +1,23 @@
-ZPLUGINS=('willghatch/zsh-snippets' 'uvaes/fzf-marks' 'bric3/nice-exit-code' 'djui/alias-tips')
+# python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
+export PATH=$PATH:"/home/ant/.local/bin"
+ZPLUGINS=('willghatch/zsh-snippets' 'uvaes/fzf-marks' 'bric3/nice-exit-code' 'djui/alias-tips' 'zsh-users/zsh-autosuggestions.git')
 stty -ixon
 eval infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
-source "${ZPDOTD}/anti_init.zsh"
+source "${ZPDOTD}/antigen/ini.zsh"
 source "$ZPREZD/init.zsh"
 setopt CLOBBER
-antibody_zsh bundle <<< $(printf '%s\n' ${ZPLUGINS[@]})
 source ~/.fzf/fzf.zsh
-source "${ZPDOTD}/myrc.zsh"
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/chpwd-recent-dirs"
+antibody_zsh bundle <<< $(printf '%s\n' ${ZPLUGINS[@]})
+rcdir="${ZPDOTD}/rc"
+# wait $p1 $p2
+source "${rcdir}/myfunctions.zsh"
+source "${rcdir}/myaliases.zsh"
+source "${rcdir}/mysnippets.zsh"
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+unset rcdir
 RPROMPT='$(nice_exit_code)'
 bind_keys
+# python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
