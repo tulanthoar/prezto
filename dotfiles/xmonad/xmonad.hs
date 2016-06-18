@@ -1,3 +1,5 @@
+import XMonad.Prompt
+import XMonad.Prompt.AppendFile
 import Data.List
 import Control.Monad
 import Data.Maybe(fromMaybe)
@@ -57,7 +59,7 @@ testCfg = DzenCfg{x="0", y="300", h="20",w="400" }
 testArgs :: [String]
 testArgs = dzenArgs.dzenArgP $ testCfg
 
-myTerminal = "st" :: String
+myTerminal = "urxvtc" :: String
 myModMask = mod3Mask :: KeyMask
 
 xmConf p = def
@@ -102,6 +104,10 @@ myManageHook = namedScratchpadManageHook scratchpads
 terminus = "-*-monofur-*-*-*-*-22-*-*-*-*-*-*-*"
 xkM=
   [ ((0, xK_Menu), launchAct)
+  , ((0, 0x1008ff17), spawn "echo -n `xsel -o` > /tmp/urxvt.fifo")
+  , ((mod1Mask, 0x1008ff17), spawn "echo `xsel -o` > /tmp/urxvt.fifo")
+  , ((myModMask, 0x1008ff17), appendFilePrompt defaultXPConfig "/tmp/urxvt.fifo")
+  , ((0, 0x1008ff16), spawn "date >> /tmp/urxvt.fifo")
   , ((0, k_kp_enter), withFocused $ \w -> withAll minimizeWindow >> (sendMessage . RestoreMinimizedWin ) w )
   , ((0, k_kp_minus), withFocused minimizeWindow)
   , ((0, k_kp_zero), goToSelected defaultGSConfig)

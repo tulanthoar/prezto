@@ -36,9 +36,9 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'completion' \
   'history-substring-search' \
+  'autosuggestions' \
+  'syntax-highlighting' \
   'prompt'
-  # 'syntax-highlighting' \
-  # 'autosuggestions' \
 # completion = 60ms
 # syntax-highlight = 60 ms
 #

@@ -74,7 +74,7 @@ function ftpane() {
 }
 function V() {
   local file
-  file="$(locate -Ai "$1" | fzf-tmux --no-sort +m)" && nvim "${file}" || return 1
+  file="$(fasd -Rfl "$1" | fzf-tmux --no-sort +m)" && nvim "${file}" || return 1
 }
 function z() {
   local dir
