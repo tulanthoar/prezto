@@ -1,0 +1,84 @@
+Xft.dpi:                    96
+!!Xft.antialias:              false
+Xft.rgba:                   rgb
+Xft.hinting:                true
+Xft.hintstyle:              hintslight
+
+dzen2.font:-*-monofur-bold-r-*-*-13-*-*-*-*-*-*-*
+dzen2.background: #330033
+dzen2.foreground: #ff5f00
+
+URxvt.scrollBar: false
+URxvt.visualBell: true
+!!URxvt.borderLess: true
+URxvt.internalBorder: 0
+URxvt.externalBorder: 0
+!!URxvt.transparent:          false
+!!URxvt.fading:               0
+URxvt.saveLines:            80
+URxvt.letterSpace: 1
+URxvt.font: xft:inconsolata:pixelsize=14
+URxvt.boldFont: xft:inconsolata:pixelsize=14:weight=bold
+!!URxvt.font: xft:DejaVu Sans Mono Book
+!!URxvt.boldFont: xft:DejaVu Sans Mono Bold
+URxvt.depth: 32
+
+URxvt.modifier: alt
+URxvt.perl-ext-common: default,autocomplete-ALL-the-things,fifo,keyboard-select,digital-clock
+URxvt.bell-command: notify-send "Beep, Beep"
+URxvt.keysym.Mod4-v: perl:keyboard-select:activate
+URxvt.keysym.Mod4-s: perl:keyboard-select:search
+URxvt.keysym.Mod4-f: perl:fifo:start
+urxvt.fifo.file: /tmp/urxvt.fifo
+per.fifo.file: /tmp/urxvt-per.fifo
+ipython.fifo.file: /tmp/urxvt-python.fifo
+neovi.fifo.file: /tmp/urxvt-neovi.fifo
+URxvt.keysym.C-slash:  perl:aAtt:fuzzy-word-complete
+URxvt.keysym.C-backslash:  perl:aAtt:fuzzy-WORD-complete
+URxvt.keysym.C-apostrophe: perl:aAtt:fuzzy-complete
+URxvt.keysym.C-semicolon:  perl:aAtt:suffix-complete
+URxvt.keysym.C-period:  perl:aAtt:surround-complete
+
+URxvt.cursorBlink:          true
+URxvt.cursorUnderline:      false
+
+URxvt.pointerBlank:         false
+
+URxvt.background: #002b36
+URxvt.foreground: #bbff33
+!URxvt.fadeColor: #002b36
+URxvt.cursorColor: #ff5f00
+URxvt.pointerColorBackground: #586e75
+URxvt.pointerColorForeground: #93a1a1
+
+!! black dark/light
+URxvt.color0: #073642
+URxvt.color8: #002b36
+
+!! red dark/light
+URxvt.color1: #dc322f
+URxvt.color9: #cb4b16
+
+!! green dark/light
+URxvt.color2: #859900
+URxvt.color10: #586e75
+
+!! yellow dark/light
+URxvt.color3: #b58900
+URxvt.color11: #657b83
+
+!! blue dark/light
+URxvt.color4: #268bd2
+URxvt.color12: #839496
+
+!! magenta dark/light
+URxvt.color5: #d33682
+URxvt.color13: #6c71c4
+
+!! cyan dark/light
+URxvt.color6: #2aa198
+URxvt.color14: #93a1a1
+
+!! white dark/light
+URxvt.color7: #eee8d5
+URxvt.color15: #fdf6e3

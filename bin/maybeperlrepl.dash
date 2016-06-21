@@ -1,0 +1,8 @@
+#!/bin/env dash
+# ps aux | grep -E "\Wperl\W.*/bin/re2.pl$" || perlrepl
+sleep 4
+# ps aux | grep -E "\Wperl\W.*/bin/re2.pl$" || xmctl pespawn
+ps aux | grep -E "\Wre2.pl$" || xmctl pespawn
+sleep 4
+# ps aux | grep -E "\Wperl\W.*/bin/re2.pl$" && xmctl addpepipe
+ps aux | grep -E "\Wre2.pl$" && xmctl addpepipe

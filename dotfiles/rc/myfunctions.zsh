@@ -74,11 +74,11 @@ function ftpane() {
 }
 function V() {
   local file
-  file="$(fasd -Rfl "$1" | fzf-tmux --no-sort +m)" && nvim "${file}" || return 1
+  file="$( locate "$1" | fzf-tmux --no-sort +m)" && nvim "${file}" || return 1
 }
 function z() {
   local dir
-  dir="$(locate -Ai "$1" | fzf-tmux --no-sort +m)" && cd "${dir}" || return 1
+  dir="$(fasd -Rdl "$1" | fzf-tmux --no-sort +m)" && cd "${dir}" || return 1
 }
 function fzfz-file-widget() {
   LBUFFER="${LBUFFER}$(__fzfz)"
@@ -132,13 +132,6 @@ function cdRedoKey () {
   pushd -q -0 > /dev/null
   echo && ls -lhF
   zle accept-line
-}
-function fpp_pipe() {
-  BUFFER="$BUFFER | fpp"
-  zle accept-line
-}
-function copydir {
-  print -n "$PWD" | xclip -i -sel p &> /dev/null
 }
 function copyfile {
   cat "$1" | xclip -i -sel p &> /dev/null

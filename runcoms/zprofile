@@ -61,7 +61,8 @@ export LD_LIBRARY_PATH=/home/ant/apps/code/lib
 # [[ -d "$GOPATH" ]] && export PATH="$PATH:$GOPATH/bin"
 export ZPREZD=${ZDOTDIR:-$HOME}/.zprezto
 export ZPDOTD=${ZDOTDIR:-$HOME}/.zprezto/dotfiles
-function fs(){ [[ -f $1 && -s $1 ]] }
+export ZPRCD=${ZDOTDIR:-$HOME}/.zprezto/dotfiles/rc
+# function fs(){ [[ -f $1 && -s $1 ]] }
 #function have_package(){ which $1 > /dev/null || sudo pacman -S $2; }
 #[[ -d ~/.fzf ]] || (git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install)
 #have_package ag "community/the_silver_searcher"
@@ -72,18 +73,18 @@ function fs(){ [[ -f $1 && -s $1 ]] }
 #have_package pip "python-pip"
 #which thefuck > /dev/null || sudo pip install thefuck
 #[[ -d "/tmp/${USER}zshrc" ]] || mkdir "/tmp/${USER}zshrc"
-which fasd > /dev/null || git clone https://aur.archlinux.org/fasd.git "${HOME}/aur-git/fasd"
+# which fasd > /dev/null || git clone https://aur.archlinux.org/fasd.git "${HOME}/aur-git/fasd"
 #which byobu-tmux > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/byobu.tar.gz > ~/tmp/byobu.tgz
-which fpp > /dev/null || git clone https://aur.archlinux.org/fpp-git.git "${HOME}/aur-git/fpp-git"
+# which fpp > /dev/null || git clone https://aur.archlinux.org/fpp-git.git "${HOME}/aur-git/fpp-git"
 #which yank > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/yank.tar.gz > ~/tmp/yank.tgz
-which antibody > /dev/null || curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
-if [[ -d "${HOME}/.config/nvim/bundle/Vundle.vim" ]];
-  then sleep 0;
-  else mkdir -p "${HOME}/.config/nvim/bundle" && git clone https://github.com/VundleVim/Vundle.vim.git "${HOME}/.config/nvim/bundle/Vundle.vim";
-fi
-fs "$ZPREZD/init.zsh" || touch "$ZPREZD/init.zsh"
-fs "${ZPDOTD}/anti_init.zsh" || touch "${ZPDOTD}/anti_init.zsh"
-fs "${HOME}/.fzf/fzf.zsh" || touch "${HOME}/.fzf/fzf.zsh"
-fs "${ZPDOTD}/myrc.zsh" || touch "${ZPDOTD}/myrc.zsh"
-fs "${ZPDOTD}/mysnippets" || touch "${ZPDOTD}/mysnippets"
-[[ -f "${HOME}/.fzf.zsh" ]] && mv "${HOME}/.fzf.zsh" "${HOME}/.fzf/fzf.zsh"
+# which antibody > /dev/null || curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
+# if [[ -d "${HOME}/.config/nvim/bundle/Vundle.vim" ]];
+#   then sleep 0;
+#   else mkdir -p "${HOME}/.config/nvim/bundle" && git clone https://github.com/VundleVim/Vundle.vim.git "${HOME}/.config/nvim/bundle/Vundle.vim";
+# fi
+# fs "$ZPREZD/init.zsh" || touch "$ZPREZD/init.zsh"
+# fs "${ZPDOTD}/anti_init.zsh" || touch "${ZPDOTD}/anti_init.zsh"
+# fs "${HOME}/.fzf/fzf.zsh" || touch "${HOME}/.fzf/fzf.zsh"
+# fs "${ZPDOTD}/myrc.zsh" || touch "${ZPDOTD}/myrc.zsh"
+# fs "${ZPDOTD}/mysnippets" || touch "${ZPDOTD}/mysnippets"
+# [[ -f "${HOME}/.fzf.zsh" ]] && mv "${HOME}/.fzf.zsh" "${HOME}/.fzf/fzf.zsh"
