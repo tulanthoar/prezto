@@ -1,3 +1,4 @@
+import XMonad.Actions.TagWindows
 import XMonad.Actions.SpawnOn
 import XMonad.Prompt
 import XMonad.Prompt.AppendFile
@@ -42,44 +43,27 @@ import XMonad.Util.Paste
 import XMonad.Util.Run(safeSpawn,spawnPipe, runProcessWithInputAndWait)
 import XMonad.Util.SpawnOnce
 
-data DzenCfg = DzenCfg{ x :: String
-                      , y :: String
-                      , h :: String
-                      , w :: String
-                      -- , ta :: String
-                      -- , bg :: String
-                      -- , fn :: String
-                      } deriving( Show )
-
-dzenArgP :: DzenCfg -> [[String]]
-dzenArgP c = [["-x ","-y ","-h ","-w "],[x c, y c, h c, w c]]
-dzenArgs :: [[String]] -> [String]
-dzenArgs p = map concat $ transpose p
-testCfg :: DzenCfg
-testCfg = DzenCfg{x="0", y="300", h="20",w="400" }
-testArgs :: [String]
-testArgs = dzenArgs.dzenArgP $ testCfg
-
 myTerminal = "urxvtc" :: String
 myModMask = mod3Mask :: KeyMask
-
+wmName = "LG3D"
+uniqueInits = ["sudo updatedb", "modkey"]
+xInits = words "maybeclipmenud.sh mayberedshift.sh ipyterm nvterm maybeperlrepl"
+wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"]
 xmConf p = def
   { manageHook         = manageSpawn <+> myManageHook <+> def
   , layoutHook         = mylayoutHook
-  , startupHook        = return() >> mapM_ spawn ["sudo updatedb", "maybeclipmenud.sh", "mayberedshift.sh" ] >> setWMName "LG3D" >> spawnOnce "modkey" >> spawn "ipyterm" >> spawn "nvterm" >> spawn "maybeperlrepl"
+  , startupHook        = return()>>setWMName wmName >> mapM_ spawnOnce uniqueInits >> mapM_ spawn xInits
   , terminal           = myTerminal
   , modMask            = myModMask
   , borderWidth        = 0
   , focusFollowsMouse  = True
   , normalBorderColor  = cDkDkGray
   , focusedBorderColor = limeGreen
-  , workspaces         = map (\w -> "<"++w++">") ["W", "d", "t", "T"]
+  , workspaces         = wsList
   , logHook            = updatePointer (0.5,0.5) (0.5,0.5) >> dynamicLogWithPP ( myDzenPP p )
   , handleEventHook = docksEventHook <+> minimizeEventHook <+> handleTimerEvent <+> serverModeEventHook <+> serverModeEventHookCmd' xmC
   , keys = \c -> M.fromList xkM
   }
-
-dzenBarCfg = D.dzenConfig (D.addArgs ["-h 18", "-ta c", "-bg myDBGColor"] >=> D.timeout 10 >=> D.x 0 >=> D.y 299)
 
 main :: IO()
 main = do
@@ -97,8 +81,7 @@ mylayoutHook = G.gaps [(G.U,15)] $ smartBorders $ magnifiercz 1.4 $
 myManageHook = namedScratchpadManageHook scratchpads
   <+> composeAll
   [ className =? "Xmessage"  --> doFloat
-  ,className =? "Dialogue"  --> doFloat
-  ,icon =? "pyscratch" --> doShift "NSP"
+  , className =? "Dialogue"  --> doFloat
   ]
   <+> (fmap not isDialog --> doF avoidMaster)
   <+> composeOne [ isFullscreen -?> doFullFloat ]
@@ -118,17 +101,12 @@ xkM=
   , ((mod1Mask, raisevol),  focusDown)
   , ((0, lowvol), replicateM_ 5 $ sendKey noModMask xK_Up)
   , ((0, raisevol), replicateM_ 5 $ sendKey noModMask xK_Down)
-  , ((0, xK_Print), sendKey controlMask xK_F10 )
-  , ((myModMask .|. controlMask, xK_y), defaultCommands >>= runCommand)
+  , ((0, xK_Print), sendKey controlMask xK_F10)
   , ((myModMask, lowvol), moveTo Next NonEmptyWS >> avoidNSP)
   , ((myModMask, raisevol), moveTo Prev NonEmptyWS >> avoidNSP)
-  , ((myModMask, xK_F1), dmenuchoose $ M.fromList mC)
   , ((myModMask, xK_Menu), srchAct)
   , ((myModMask, xK_v), sendKey controlMask xK_F11 >> sendKey noModMask xK_space)
   , ((myModMask, xK_y), sendKey noModMask xK_Return >> sendKey noModMask xK_F10)
-  , ((mod4Mask.|.controlMask, xK_p), spawn (intercalate " " (["dzen2"]++testArgs++ ["-title-name","'hi'","-p ","10"]) ))
-  , ((mod4Mask, xK_p), D.dzenConfig (D.timeout 10) $ "xmessage " ++ (intercalate " " (["dzen2"]++testArgs++ ["-title-name","'hi'"]) ))
-  , ((0, 0x1008ff14), dzenBarCfg "testing123")
   ] ++
   [ ((0, k), focusNth w)
     | (w, k) <- zip [0 .. 8] [xK_KP_End, 0xff99, 0xff9b, 0xff96, 0xff9d, 0xff98, 0xff95, 0xff97, 0xff9a ]
@@ -154,42 +132,40 @@ myKeysP =
   , ("M-c", spawn $ "clipmenu -z -l 50 -p 'clip' -fn "++apFnmenu)
   , ("M-<Down>", withFocused $ \w -> withAll minimizeWindow >> sendMessage (RestoreMinimizedWin w))
   , ("M-h", moveTo Prev NonEmptyWS >> avoidNSP)
+  , ("M-l", moveTo Next NonEmptyWS >> avoidNSP)
   , ("M-j", withFocused minimizeWindow)
   , ("M-k", sendMessage RestoreNextMinimizedWin)
   , ("M-<Left>", shiftTo Prev EmptyWS)
-  , ("M-l", moveTo Next NonEmptyWS >> avoidNSP)
-  -- , ("M-n",     sendMessage ToggleLayout)
-  , ("M-o i m g", launchApp def "gimp" )
-  , ("M-o p d f", launchApp def "evince" )
-  , ("M-q",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
   , ("M-<Right>", shiftTo Next EmptyWS)
+  , ("M-q",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
   , ("M-r",       refresh)
   , ("M-<Space>", moveTo Next EmptyWS >> avoidNSP >> spawn dmRun)
   , ("M-<Tab>", toggleWS' ["NSP"])
   , ("M-t",  spawn myTerminal)
-  , ("M-x h",  namedScratchpadAction scratchpads "htop")
-  , ("M-x i",  namedScratchpadAction scratchpads "python")
-  , ("M-i i",  namedScratchpadAction scratchpads "python" >> sendKey noModMask xK_Return)
-  , ("M-i <Space>", appendFilePrompt defaultXPConfig "/tmp/urxvt-python.fifo")
-  , ("M-i <Insert>", spawn "echo `xsel -o` > /tmp/urxvt-python.fifo")
-  , ("M-x n",  namedScratchpadAction scratchpads "neovim")
-  , ("M-n n",  namedScratchpadAction scratchpads "neovim" >> sendKey noModMask xK_j >> sendKey noModMask xK_f)
-  , ("M-n <Space>", spawn "echo 'A' > /tmp/urxvt-neovi.fifo" >> appendFilePrompt defaultXPConfig "/tmp/urxvt-neovi.fifo" >> spawn "echo 'jf' > /tmp/urxvt-neovi.fifo")
-  , ("M-n <Insert>", spawn "echo A`xsel -o`jf > /tmp/urxvt-neovi.fifo")
-  , ("M-x p",  namedScratchpadAction scratchpads "perl")
-  , ("M-p p",  namedScratchpadAction scratchpads "perl")
-  , ("M-p <Space>", appendFilePrompt defaultXPConfig "/tmp/urxvt-per.fifo" )
-  , ("M-p <Insert>", spawn "echo `xsel -o` > /tmp/urxvt-per.fifo")
+  , ("M4-i i",  namedScratchpadAction scratchpads "python")
+  , ("M4-i <Space>", appendFilePrompt defaultXPConfig "/tmp/urxvt-python.fifo")
+  , ("M4-i <Insert>", spawn "echo `xsel -o` > /tmp/urxvt-python.fifo")
+  , ("M4-i <Return>", spawn "echo '\r' > /tmp/urxvt-python.fifo")
+  , ("M4-n n",  namedScratchpadAction scratchpads "neovim")
+  , ("M4-n <Space>", spawn "echo 'A' > /tmp/urxvt-neovi.fifo" >> appendFilePrompt defaultXPConfig "/tmp/urxvt-neovi.fifo" >> spawn "echo 'jf' > /tmp/urxvt-neovi.fifo")
+  , ("M4-n <Insert>", spawn "echo A`xsel -o`jf > /tmp/urxvt-neovi.fifo")
+  , ("M4-n <Return>", spawn "echo '\r' > /tmp/urxvt-python.fifo")
+  , ("M4-p p",  namedScratchpadAction scratchpads "perl")
+  , ("M4-p <Space>", appendFilePrompt defaultXPConfig "/tmp/urxvt-per.fifo" )
+  , ("M4-p <Insert>", spawn "echo `xsel -o` > /tmp/urxvt-per.fifo")
+  , ("M4-p <Return>", spawn "echo 'ojf' > /tmp/urxvt-python.fifo")
+  , ("M4-b b", withFocused $ \w -> hasTag "myterm" w >>= \b -> if b then withTaggedP "myterm" (W.shiftWin "NSP") else withTaggedGlobalP "myterm" shiftHere >> focusUpTaggedGlobal "myterm")
+  , ("M4-b x", withTaggedP "myterm" (W.shiftWin "NSP"))
   ]
 myBrowser = "qutebrowser"
 
 mC =
   [ ("minone", withFocused minimizeWindow )
+  , ("tagTerm", withFocused (addTag "myterm"))
   , ("rest",  sendMessage RestoreNextMinimizedWin )
-  , ("nspy", namedScratchpadAction scratchpads "python")
   , ("pyspawn", spawnOn "<t>" "urxvt -name ipython -n pyscratch -e ptipython")
   , ("nvspawn", spawnOn "<t>" "urxvt -name neovi -n neovi -e nvim ~/buffer")
-  , ("pespawn", spawnOn "<t>" "urxvt -name per -n per -e perl ~/bin/re2.pl")
+  , ("pespawn", spawnOn "<t>" "urxvt -name per -n per -e perl ~/bin/re.pl")
   , ("addpipe", sendKey mod4Mask xK_f )
   , ("addpypipe", namedScratchpadAction scratchpads "python" >> sendKey mod4Mask xK_f >> namedScratchpadAction scratchpads "python")
   , ("addnvpipe", namedScratchpadAction scratchpads "neovim" >> sendKey mod4Mask xK_f >> namedScratchpadAction scratchpads "neovim")
@@ -201,7 +177,7 @@ scratchpads =
   [ NS "htop" "urxvt -e htop" (title =? "htop") nonFloating
   , NS "python" "urxvt -name ipython -n pyscratch -e ptipython" (icon =? "pyscratch") nonFloating
   , NS "neovim" "urxvt -name neovi -n neovi -e nvim ~/buffer" (icon =? "neovi") nonFloating
-  , NS "perl" "urxvt -name per -n per -e perl ~/bin/re2.pl" (icon =? "per") nonFloating
+  , NS "perl" "urxvt -name per -n per -e perl ~/bin/re.pl" (icon =? "per") nonFloating
   , NS myBrowser myBrowser (className =? "qutebrowser") nonFloating
   ]
 icon = stringProperty "WM_ICON_NAME"
@@ -231,6 +207,23 @@ avoidMaster = W.modify' $ \c -> case c of
   W.Stack t [] (r:rs) -> W.Stack t [r] rs
   _ -> c
 
+data DzenCfg = DzenCfg{ x :: String
+                      , y :: String
+                      , h :: String
+                      , w :: String
+                      -- , ta :: String
+                      -- , bg :: String
+                      -- , fn :: String
+                      } deriving( Show )
+
+dzenArgP :: DzenCfg -> [[String]]
+dzenArgP c = [["-x ","-y ","-h ","-w "],[x c, y c, h c, w c]]
+dzenArgs :: [[String]] -> [String]
+dzenArgs p = map concat $ transpose p
+testCfg :: DzenCfg
+testCfg = DzenCfg{x="0", y="300", h="20",w="400" }
+testArgs :: [String]
+testArgs = dzenArgs.dzenArgP $ testCfg
 limeGreen = "#a3d930" :: String
 ltBlue = "#1793d1" :: String
 cBlack = "#000000" :: String
@@ -264,3 +257,10 @@ myLBGColor = myDBGColor :: String
 
 sepFGColor = cWhite :: String
 sepBGColor = myDBGColor :: String
+-- dzenBarCfg = D.dzenConfig (D.addArgs ["-h 18", "-ta c", "-bg myDBGColor"] >=> D.timeout 10 >=> D.x 0 >=> D.y 299)
+  -- , ((mod4Mask.|.controlMask, xK_p), spawn (intercalate " " (["dzen2"]++testArgs++ ["-title-name","'hi'","-p ","10"]) ))
+  -- , ((mod4Mask, xK_p), D.dzenConfig (D.timeout 10) $ "xmessage " ++ (intercalate " " (["dzen2"]++testArgs++ ["-title-name","'hi'"]) ))
+  -- , ((0, 0x1008ff14), dzenBarCfg "testing123")
+  -- , ((0, xK_Print), spawn "sleep 1 && xdotool key F12 F10")
+  -- , ((myModMask .|. controlMask, xK_y), defaultCommands >>= runCommand)
+  -- , ((myModMask, xK_F1), dmenuchoose $ M.fromList mC)
