@@ -83,6 +83,6 @@ bind-key F11 set window-active-style bg=colour235 \; copy-mode
 bind-key -n C-F11 set window-active-style bg=colour235 \; copy-mode
 # bind-key F10 run-shell "tmux capturep -p > /tmp/nvimbuffer" \; new-window "nvim /tmp/nvimbuffer"
 # bind-key -n Print run-shell "tmux capturep -p > /tmp/nvimbuffer" \; new-window "nvim /tmp/nvimbuffer"
-bind-key -n C-F10 run-shell "tmux capturep -p >! /tmp/nvimbuffer" \; new-window "nvim /tmp/nvimbuffer"
+bind-key -n C-F9 run-shell "tmux capturep -p > /tmp/nvimbuffer" \; new-window "nvim -RM /tmp/nvimbuffer"
 bind-key m select-pane -m
 bind-key M swap-pane

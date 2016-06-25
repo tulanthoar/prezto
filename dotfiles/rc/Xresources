@@ -1,10 +1,10 @@
 Xft.dpi:                    96
-!!Xft.antialias:              false
+Xft.antialias:              true
 Xft.rgba:                   rgb
 Xft.hinting:                true
-Xft.hintstyle:              hintslight
+Xft.hintstyle:              hintfull
 
-dzen2.font:-*-monofur-bold-r-*-*-13-*-*-*-*-*-*-*
+dzen2.font:-*-monofur-bold-r-*-*-17-*-*-*-*-*-*-*
 dzen2.background: #330033
 dzen2.foreground: #ff5f00
 
@@ -15,23 +15,24 @@ URxvt.internalBorder: 0
 URxvt.externalBorder: 0
 !!URxvt.transparent:          false
 !!URxvt.fading:               0
-URxvt.saveLines:            80
-URxvt.letterSpace: 1
-URxvt.font: xft:inconsolata:pixelsize=14
-URxvt.boldFont: xft:inconsolata:pixelsize=14:weight=bold
+URxvt.saveLines:            180
+URxvt.letterSpace: 0
+URxvt.font: xft:inconsolata:pixelsize=13
+URxvt.boldFont: xft:inconsolata:pixelsize=13:weight=bold
 !!URxvt.font: xft:DejaVu Sans Mono Book
 !!URxvt.boldFont: xft:DejaVu Sans Mono Bold
 URxvt.depth: 32
 
 URxvt.modifier: alt
-URxvt.perl-ext-common: default,autocomplete-ALL-the-things,fifo,keyboard-select,digital-clock
-URxvt.bell-command: notify-send "Beep, Beep"
+URxvt.perl-ext-common: autocomplete-ALL-the-things,fifo,keyboard-select,digital-clock,option-popup,readline
 URxvt.keysym.Mod4-v: perl:keyboard-select:activate
 URxvt.keysym.Mod4-s: perl:keyboard-select:search
+URxvt.keysym.C-0xffc7: perl:keyboard-select:search
 URxvt.keysym.Mod4-f: perl:fifo:start
 urxvt.fifo.file: /tmp/urxvt.fifo
+urxv.fifo.file: /tmp/urxv.fifo
 per.fifo.file: /tmp/urxvt-per.fifo
-ipython.fifo.file: /tmp/urxvt-python.fifo
+ip.fifo.file: /tmp/urxvt-python.fifo
 neovi.fifo.file: /tmp/urxvt-neovi.fifo
 URxvt.keysym.C-slash:  perl:aAtt:fuzzy-word-complete
 URxvt.keysym.C-backslash:  perl:aAtt:fuzzy-WORD-complete
@@ -46,7 +47,6 @@ URxvt.pointerBlank:         false
 
 URxvt.background: #002b36
 URxvt.foreground: #bbff33
-!URxvt.fadeColor: #002b36
 URxvt.cursorColor: #ff5f00
 URxvt.pointerColorBackground: #586e75
 URxvt.pointerColorForeground: #93a1a1

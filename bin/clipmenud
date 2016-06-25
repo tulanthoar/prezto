@@ -6,7 +6,7 @@ mkdir -p -m0700 "$cache_dir"
 declare -A last_data
 
 if type -p xsel >/dev/null; then
-  clipmenucmd="xsel --"
+  clipmenucmd="xsel -o --"
 else
   clipmenucmd="xclip -o -sel "
 fi
@@ -28,5 +28,5 @@ while sleep "${CLIPMENUD_SLEEP:-0.5}"; do
     md5="${md5%% *}"
 
     printf '%s' "$data" > "${cache_dir}/${md5}"
-  done
+  done &> /dev/null
 done

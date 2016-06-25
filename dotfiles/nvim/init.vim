@@ -260,6 +260,7 @@ nnoremap <unique> <leader>fd :CtrlPDir<cr>
 nnoremap <unique> <leader>ff :CtrlP<cr>
 nnoremap <unique> <leader>fl :CtrlPLine<cr>
 nnoremap <unique> <leader>fr :CtrlPMRU<cr>
+nnoremap <unique>       <F6> :CtrlPMRU<cr>
 nnoremap <unique> <leader>fu :CtrlPUndo<cr>
 nnoremap <unique> <leader>nd :NERDTreeCWD<cr>
 nnoremap <unique> <leader>nh :NERDTreeToggle ~<cr>

@@ -1,5 +1,5 @@
 #!/bin/env dash
-sleep 4
+sleep 2
 ps aux | grep -E "\Wre.pl$" || xmctl pespawn
 sleep 4
-ps aux | grep -E "\Wre.pl$" && xmctl addpepipe
+xmctl addpepipe

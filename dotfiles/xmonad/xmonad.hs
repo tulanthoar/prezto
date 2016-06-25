@@ -43,35 +43,15 @@ import XMonad.Util.Paste
 import XMonad.Util.Run(safeSpawn,spawnPipe, runProcessWithInputAndWait)
 import XMonad.Util.SpawnOnce
 
-myTerminal = "urxvtc" :: String
+myTerminal = "urxvt" :: String
 myModMask = mod3Mask :: KeyMask
 wmName = "LG3D"
 uniqueInits = ["sudo updatedb", "modkey"]
-xInits = words "maybeclipmenud.sh mayberedshift.sh ipyterm nvterm maybeperlrepl"
+xInits = words "maybeclipmenud.sh mayberedshift.sh"
 wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"]
-xmConf p = def
-  { manageHook         = manageSpawn <+> myManageHook <+> def
-  , layoutHook         = mylayoutHook
-  , startupHook        = return()>>setWMName wmName >> mapM_ spawnOnce uniqueInits >> mapM_ spawn xInits
-  , terminal           = myTerminal
-  , modMask            = myModMask
-  , borderWidth        = 0
-  , focusFollowsMouse  = True
-  , normalBorderColor  = cDkDkGray
-  , focusedBorderColor = limeGreen
-  , workspaces         = wsList
-  , logHook            = updatePointer (0.5,0.5) (0.5,0.5) >> dynamicLogWithPP ( myDzenPP p )
-  , handleEventHook = docksEventHook <+> minimizeEventHook <+> handleTimerEvent <+> serverModeEventHook <+> serverModeEventHookCmd' xmC
-  , keys = \c -> M.fromList xkM
-  }
+menuH=27
 
-main :: IO()
-main = do
-  dzP <- spawnPipe "dzen2 -h 15 -ta c -p"
-  xmonad $ xmConf dzP
-    `additionalKeysP` myKeysP
-
-mylayoutHook = G.gaps [(G.U,15)] $ smartBorders $ magnifiercz 1.4 $
+mylayoutHook = G.gaps [(G.U,menuH)] $ smartBorders $ magnifiercz 1.4 $
   boringAuto $ minimize $ toggleLayouts (GV.SplitGrid GV.T 1 2 (1%2) (16%10) delta) $ Tall 1 delta ratio
   where
     delta = 3 % 100
@@ -86,7 +66,30 @@ myManageHook = namedScratchpadManageHook scratchpads
   <+> (fmap not isDialog --> doF avoidMaster)
   <+> composeOne [ isFullscreen -?> doFullFloat ]
   <+> manageDocks
-terminus = "-*-monofur-*-*-*-*-22-*-*-*-*-*-*-*"
+
+xmConf p = def
+  { manageHook         = manageSpawn <+> myManageHook <+> def
+  , layoutHook         = mylayoutHook
+  -- , startupHook        = return()>>setWMName wmName >> mapM_ spawnOnce uniqueInits >> mapM_ spawn xInits
+  , startupHook        = return()>>setWMName wmName >> mapM_ spawnOnce (uniqueInits++xInits) >> mapM_ (namedScratchpadAction scratchpads) [iPad, pPad, nPad] >> moveTo Next EmptyWS
+  , terminal           = myTerminal
+  , modMask            = myModMask
+  , borderWidth        = 0
+  , focusFollowsMouse  = True
+  , normalBorderColor  = cDkDkGray
+  , focusedBorderColor = limeGreen
+  , workspaces         = wsList
+  , logHook            = dynamicLogWithPP ( myDzenPP p ) >> updatePointer (0.5, 0.5) (0, 0)
+  , handleEventHook = docksEventHook <+> minimizeEventHook <+> handleTimerEvent <+> serverModeEventHook <+> serverModeEventHookCmd' xmC
+  , keys = \c -> M.fromList xkM
+  }
+
+main :: IO()
+main = do
+  dzP <- spawnPipe $ "dzen2 -h "++show menuH++" -ta c -p"
+  xmonad $ xmConf dzP
+    `additionalKeysP` myKeysP
+
 xkM=
   [ ((0, xK_Menu), launchAct)
   , ((0, 0x1008ff17), spawn "echo `xsel -o` > /tmp/urxvt-python.fifo")
@@ -101,12 +104,10 @@ xkM=
   , ((mod1Mask, raisevol),  focusDown)
   , ((0, lowvol), replicateM_ 5 $ sendKey noModMask xK_Up)
   , ((0, raisevol), replicateM_ 5 $ sendKey noModMask xK_Down)
-  , ((0, xK_Print), sendKey controlMask xK_F10)
+  , ((0, xK_Print),withFocused $ \w -> (hasTag "myterm" w)>>= \b -> if b then sendKey controlMask xK_F9 else sendKey controlMask xK_F10)
   , ((myModMask, lowvol), moveTo Next NonEmptyWS >> avoidNSP)
   , ((myModMask, raisevol), moveTo Prev NonEmptyWS >> avoidNSP)
   , ((myModMask, xK_Menu), srchAct)
-  , ((myModMask, xK_v), sendKey controlMask xK_F11 >> sendKey noModMask xK_space)
-  , ((myModMask, xK_y), sendKey noModMask xK_Return >> sendKey noModMask xK_F10)
   ] ++
   [ ((0, k), focusNth w)
     | (w, k) <- zip [0 .. 8] [xK_KP_End, 0xff99, 0xff9b, 0xff96, 0xff9d, 0xff98, 0xff95, 0xff97, 0xff9a ]
@@ -125,10 +126,9 @@ k_mute=0x1008ff12
 k_kp_enter=0xff8d
 
 myKeysP =
-  [ ("M4-t",  spawn myTerminal )
+  [ ("M4-t",  spawn $ myTerminal ++ " -name " ++ myTerminal ++ " -n " ++ myTerminal)
   , ("M4-<Space>", spawn "touch ~/.pomodoro_session" >> spawn "/home/ant/.pymodoro/hooks/start-pomodoro.py")
   , ("<Insert>", spawn "xdotool click 2")
-  -- , ("M-b", namedScratchpadAction scratchpads myBrowser)
   , ("M-c", spawn $ "clipmenu -z -l 50 -p 'clip' -fn "++apFnmenu)
   , ("M-<Down>", withFocused $ \w -> withAll minimizeWindow >> sendMessage (RestoreMinimizedWin w))
   , ("M-h", moveTo Prev NonEmptyWS >> avoidNSP)
@@ -141,8 +141,8 @@ myKeysP =
   , ("M-r",       refresh)
   , ("M-<Space>", moveTo Next EmptyWS >> avoidNSP >> spawn dmRun)
   , ("M-<Tab>", toggleWS' ["NSP"])
-  , ("M-t",  spawn myTerminal)
-  , ("M4-i i",  namedScratchpadAction scratchpads "python")
+  , ("M-t",  spawn $ myTerminal ++ " -name " ++ init myTerminal ++ " -n " ++ init myTerminal)
+  , ("M4-i i",  namedScratchpadAction scratchpads iPad)
   , ("M4-i <Space>", appendFilePrompt defaultXPConfig "/tmp/urxvt-python.fifo")
   , ("M4-i <Insert>", spawn "echo `xsel -o` > /tmp/urxvt-python.fifo")
   , ("M4-i <Return>", spawn "echo '\r' > /tmp/urxvt-python.fifo")
@@ -150,36 +150,45 @@ myKeysP =
   , ("M4-n <Space>", spawn "echo 'A' > /tmp/urxvt-neovi.fifo" >> appendFilePrompt defaultXPConfig "/tmp/urxvt-neovi.fifo" >> spawn "echo 'jf' > /tmp/urxvt-neovi.fifo")
   , ("M4-n <Insert>", spawn "echo A`xsel -o`jf > /tmp/urxvt-neovi.fifo")
   , ("M4-n <Return>", spawn "echo '\r' > /tmp/urxvt-python.fifo")
-  , ("M4-p p",  namedScratchpadAction scratchpads "perl")
+  , ("M4-p p",  namedScratchpadAction scratchpads pPad)
   , ("M4-p <Space>", appendFilePrompt defaultXPConfig "/tmp/urxvt-per.fifo" )
   , ("M4-p <Insert>", spawn "echo `xsel -o` > /tmp/urxvt-per.fifo")
   , ("M4-p <Return>", spawn "echo 'ojf' > /tmp/urxvt-python.fifo")
-  , ("M4-b b", withFocused $ \w -> hasTag "myterm" w >>= \b -> if b then withTaggedP "myterm" (W.shiftWin "NSP") else withTaggedGlobalP "myterm" shiftHere >> focusUpTaggedGlobal "myterm")
+  , ("M4-b b", withTaggedGlobalP "myterm" shiftHere >> focusUpTaggedGlobal "myterm")
   , ("M4-b x", withTaggedP "myterm" (W.shiftWin "NSP"))
+  , ("M4-b <Insert>", spawn "echo `xsel -o` > /tmp/urxv.fifo")
+  , ("M4-b <Space>", appendFilePrompt defaultXPConfig "/tmp/urxv.fifo")
   ]
 myBrowser = "qutebrowser"
 
 mC =
   [ ("minone", withFocused minimizeWindow )
-  , ("tagTerm", withFocused (addTag "myterm"))
+  , ("tagterm", withFocused (addTag "myterm"))
   , ("rest",  sendMessage RestoreNextMinimizedWin )
-  , ("pyspawn", spawnOn "<t>" "urxvt -name ipython -n pyscratch -e ptipython")
-  , ("nvspawn", spawnOn "<t>" "urxvt -name neovi -n neovi -e nvim ~/buffer")
-  , ("pespawn", spawnOn "<t>" "urxvt -name per -n per -e perl ~/bin/re.pl")
+  , ("pyspawn", spawnOn "<t>" pyrepl )
+  , ("nvspawn", spawnOn "<t>" nRun)
+  , ("pespawn", spawnOn "<t>" prepl)
   , ("addpipe", sendKey mod4Mask xK_f )
-  , ("addpypipe", namedScratchpadAction scratchpads "python" >> sendKey mod4Mask xK_f >> namedScratchpadAction scratchpads "python")
-  , ("addnvpipe", namedScratchpadAction scratchpads "neovim" >> sendKey mod4Mask xK_f >> namedScratchpadAction scratchpads "neovim")
-  , ("addpepipe", namedScratchpadAction scratchpads "perl" >> sendKey mod4Mask xK_f >> namedScratchpadAction scratchpads "perl")
+  , ("addpypipe", moveTo Next EmptyWS >> namedScratchpadAction scratchpads iPad >> sendKey mod4Mask xK_f >> namedScratchpadAction scratchpads iPad)
+  , ("addnvpipe", moveTo Next EmptyWS >> namedScratchpadAction scratchpads nPad >> sendKey mod4Mask xK_f >> namedScratchpadAction scratchpads nPad)
+  , ("addpepipe", moveTo Next EmptyWS >> namedScratchpadAction scratchpads pPad >> sendKey mod4Mask xK_f >> namedScratchpadAction scratchpads pPad)
   ]
 xmC = return mC
-dmenuchoose m = dmenuMap m >>= fromMaybe (return ())
 scratchpads =
   [ NS "htop" "urxvt -e htop" (title =? "htop") nonFloating
-  , NS "python" "urxvt -name ipython -n pyscratch -e ptipython" (icon =? "pyscratch") nonFloating
-  , NS "neovim" "urxvt -name neovi -n neovi -e nvim ~/buffer" (icon =? "neovi") nonFloating
-  , NS "perl" "urxvt -name per -n per -e perl ~/bin/re.pl" (icon =? "per") nonFloating
+  , NS iPad pyrepl (icon =? init iPad) nonFloating
+  , NS nPad nRun (icon =? "neovi") nonFloating
+  , NS pPad prepl (icon =? init pPad) nonFloating
   , NS myBrowser myBrowser (className =? "qutebrowser") nonFloating
   ]
+iPad = "ipy"
+pPad = "perl"
+nPad = "neovim"
+-- nRun = "urxvt -name neovi -n neovi -e nvim ~/buffer"
+nRun = urtRun nPad "nvim ~/buffer"
+urtRun ex cmd = concat $ [myTerminal, " -name ", init ex," -n ", init ex, " -e ", cmd]
+prepl = urtRun pPad "perl ~/bin/re.pl"
+pyrepl= urtRun iPad "ptipython"
 icon = stringProperty "WM_ICON_NAME"
 myDzenPP p = def
   { ppCurrent         = dzenColor myFFGColor myFBGColor
@@ -188,14 +197,14 @@ myDzenPP p = def
   , ppHiddenNoWindows = dzenColor myHNFGColor myHNBGColor
   , ppUrgent          = dzenColor myUFGColor myUBGColor
   , ppTitle           = dzenColor myTFGColor myTBGColor . trim . shorten 100
-  , ppLayout          = dzenColor myLFGColor myLBGColor
+  , ppLayout          = dzenColor myLFGColor myLBGColor . shorten 0
   , ppSep             = dzenColor sepFGColor sepBGColor " -||- "
-  , ppExtras          = [L.date "%a %b %d", L.logCmd "mypymodoro",  L.logCmd "diskspace.sh", L.logCmd "coretemp"]
+  , ppExtras          = [L.date "%a %b %d", L.logCmd "diskspace.sh", L.logCmd "coretemp", L.logCmd "mypymodoro"]
   , ppOutput          = hPutStrLn p }
 
 launchAct = flashText def 4 "launch app" >> spawn dmRun :: X()
-avoidNSP = replicateM_ 2 $ toggleWS' ["NSP"] :: X()
 srchAct = flashText def 4 "search engine" >> spawn dmSrch :: X()
+avoidNSP = replicateM_ 2 $ toggleWS' ["NSP"] :: X()
 dmRun = "dmenu_run -w 300 -y 20 -z -p 'launch' -l 60 -fn "++apFnmenu++" "::String
 dmSrch = "search.sh -w 600 -y 20 -z -p 'search' -l 60 -fn "++apFnmenu++" "::String
 apFn pt = "-*-monofur-bold-r-*-*-"++pt++"-*-*-*-*-*-*-*" :: String
@@ -263,4 +272,3 @@ sepBGColor = myDBGColor :: String
   -- , ((0, 0x1008ff14), dzenBarCfg "testing123")
   -- , ((0, xK_Print), spawn "sleep 1 && xdotool key F12 F10")
   -- , ((myModMask .|. controlMask, xK_y), defaultCommands >>= runCommand)
-  -- , ((myModMask, xK_F1), dmenuchoose $ M.fromList mC)
