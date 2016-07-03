@@ -28,7 +28,7 @@ import XMonad.Hooks.SetWMName
 import XMonad.Layout.BoringWindows
 import qualified XMonad.Layout.Gaps as G
 import qualified XMonad.Layout.GridVariants as GV
-import XMonad.Layout.Magnifier
+import qualified XMonad.Layout.Magnifier as Mag
 import XMonad.Layout.Minimize
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Reflect
@@ -49,9 +49,9 @@ wmName = "LG3D"
 uniqueInits = ["sudo updatedb", "modkey"]
 xInits = words "maybeclipmenud.sh mayberedshift.sh"
 wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"]
-menuH=27
+menuH=15
 
-mylayoutHook = G.gaps [(G.U,menuH)] $ smartBorders $ magnifiercz 1.4 $
+mylayoutHook = G.gaps [(G.U,menuH)] $ smartBorders $ Mag.magnifiercz 1.4 $
   boringAuto $ minimize $ toggleLayouts (GV.SplitGrid GV.T 1 2 (1%2) (16%10) delta) $ Tall 1 delta ratio
   where
     delta = 3 % 100
@@ -70,8 +70,7 @@ myManageHook = namedScratchpadManageHook scratchpads
 xmConf p = def
   { manageHook         = manageSpawn <+> myManageHook <+> def
   , layoutHook         = mylayoutHook
-  -- , startupHook        = return()>>setWMName wmName >> mapM_ spawnOnce uniqueInits >> mapM_ spawn xInits
-  , startupHook        = return()>>setWMName wmName >> mapM_ spawnOnce (uniqueInits++xInits) >> mapM_ (namedScratchpadAction scratchpads) [iPad, pPad, nPad] >> moveTo Next EmptyWS
+  , startupHook        = return()>>setWMName wmName >> mapM_ spawnOnce (uniqueInits++xInits) >> mapM_ (namedScratchpadAction scratchpads) [iPad, pPad, nPad, rPad] >> replicateM_ 2 ( moveTo Next EmptyWS )
   , terminal           = myTerminal
   , modMask            = myModMask
   , borderWidth        = 0
@@ -115,16 +114,6 @@ xkM=
   [ ((myModMask, k), focusNth w)
     | (w, k) <- zip [9 .. 17] [xK_KP_End, 0xff99, 0xff9b, 0xff96, 0xff9d, 0xff98, 0xff95, 0xff97, 0xff9a ]
   ]
-
-k_kp_plus=0xffab
-k_kp_dot=0xff9f
-k_kp_zero=0xff9e
-k_kp_minus=0xffad
-raisevol=0x1008ff13
-lowvol=0x1008ff11
-k_mute=0x1008ff12
-k_kp_enter=0xff8d
-
 myKeysP =
   [ ("M4-t",  spawn $ myTerminal ++ " -name " ++ myTerminal ++ " -n " ++ myTerminal)
   , ("M4-<Space>", spawn "touch ~/.pomodoro_session" >> spawn "/home/ant/.pymodoro/hooks/start-pomodoro.py")
@@ -135,6 +124,7 @@ myKeysP =
   , ("M-l", moveTo Next NonEmptyWS >> avoidNSP)
   , ("M-j", withFocused minimizeWindow)
   , ("M-k", sendMessage RestoreNextMinimizedWin)
+  , ("M-m", sendMessage Mag.Toggle )
   , ("M-<Left>", shiftTo Prev EmptyWS)
   , ("M-<Right>", shiftTo Next EmptyWS)
   , ("M-q",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
@@ -149,17 +139,27 @@ myKeysP =
   , ("M4-n n",  namedScratchpadAction scratchpads "neovim")
   , ("M4-n <Space>", spawn "echo 'A' > /tmp/urxvt-neovi.fifo" >> appendFilePrompt defaultXPConfig "/tmp/urxvt-neovi.fifo" >> spawn "echo 'jf' > /tmp/urxvt-neovi.fifo")
   , ("M4-n <Insert>", spawn "echo A`xsel -o`jf > /tmp/urxvt-neovi.fifo")
-  , ("M4-n <Return>", spawn "echo '\r' > /tmp/urxvt-python.fifo")
+  , ("M4-n <Return>", spawn "echo '\r' > /tmp/urxvt-neovi.fifo")
   , ("M4-p p",  namedScratchpadAction scratchpads pPad)
   , ("M4-p <Space>", appendFilePrompt defaultXPConfig "/tmp/urxvt-per.fifo" )
   , ("M4-p <Insert>", spawn "echo `xsel -o` > /tmp/urxvt-per.fifo")
-  , ("M4-p <Return>", spawn "echo 'ojf' > /tmp/urxvt-python.fifo")
+  , ("M4-p <Return>", spawn "echo '\r' > /tmp/urxvt-per.fifo")
   , ("M4-b b", withTaggedGlobalP "myterm" shiftHere >> focusUpTaggedGlobal "myterm")
   , ("M4-b x", withTaggedP "myterm" (W.shiftWin "NSP"))
   , ("M4-b <Insert>", spawn "echo `xsel -o` > /tmp/urxv.fifo")
   , ("M4-b <Space>", appendFilePrompt defaultXPConfig "/tmp/urxv.fifo")
+  , ("M4-r r",  namedScratchpadAction scratchpads rPad)
+  , ("M4-r <Space>", appendFilePrompt defaultXPConfig "/tmp/urxvt-range.fifo")
+  , ("M4-n <Insert>", spawn "echo `xsel -o` > /tmp/urxvt-range.fifo")
+  , ("M4-n <Return>", spawn "echo '\r' > /tmp/urxvt-range.fifo")
   ]
+
 myBrowser = "qutebrowser"
+launchAct = flashText def 4 "launch app" >> spawn dmRun :: X()
+srchAct = flashText def 4 "search engine" >> spawn dmSrch :: X()
+avoidNSP = replicateM_ 2 $ toggleWS' ["NSP"] :: X()
+dmRun = "dmenu_run -w 300 -y 20 -z -p 'launch' -l 60 -fn "++apFnmenu++" "::String
+dmSrch = "search.sh -w 600 -y 20 -z -p 'search' -l 60 -fn "++apFnmenu++" "::String
 
 mC =
   [ ("minone", withFocused minimizeWindow )
@@ -177,15 +177,17 @@ xmC = return mC
 scratchpads =
   [ NS "htop" "urxvt -e htop" (title =? "htop") nonFloating
   , NS iPad pyrepl (icon =? init iPad) nonFloating
-  , NS nPad nRun (icon =? "neovi") nonFloating
+  , NS nPad nRun (icon =? init nPad) nonFloating
+  , NS rPad rRun (icon =? init rPad) nonFloating
   , NS pPad prepl (icon =? init pPad) nonFloating
   , NS myBrowser myBrowser (className =? "qutebrowser") nonFloating
   ]
 iPad = "ipy"
 pPad = "perl"
 nPad = "neovim"
--- nRun = "urxvt -name neovi -n neovi -e nvim ~/buffer"
+rPad = "ranger"
 nRun = urtRun nPad "nvim ~/buffer"
+rRun = urtRun rPad "ranger"
 urtRun ex cmd = concat $ [myTerminal, " -name ", init ex," -n ", init ex, " -e ", cmd]
 prepl = urtRun pPad "perl ~/bin/re.pl"
 pyrepl= urtRun iPad "ptipython"
@@ -202,11 +204,14 @@ myDzenPP p = def
   , ppExtras          = [L.date "%a %b %d", L.logCmd "diskspace.sh", L.logCmd "coretemp", L.logCmd "mypymodoro"]
   , ppOutput          = hPutStrLn p }
 
-launchAct = flashText def 4 "launch app" >> spawn dmRun :: X()
-srchAct = flashText def 4 "search engine" >> spawn dmSrch :: X()
-avoidNSP = replicateM_ 2 $ toggleWS' ["NSP"] :: X()
-dmRun = "dmenu_run -w 300 -y 20 -z -p 'launch' -l 60 -fn "++apFnmenu++" "::String
-dmSrch = "search.sh -w 600 -y 20 -z -p 'search' -l 60 -fn "++apFnmenu++" "::String
+k_kp_plus=0xffab
+k_kp_dot=0xff9f
+k_kp_zero=0xff9e
+k_kp_minus=0xffad
+raisevol=0x1008ff13
+lowvol=0x1008ff11
+k_mute=0x1008ff12
+k_kp_enter=0xff8d
 apFn pt = "-*-monofur-bold-r-*-*-"++pt++"-*-*-*-*-*-*-*" :: String
 apFnmenu = apFn "16"
 

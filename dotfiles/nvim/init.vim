@@ -45,7 +45,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired.git'
 Plugin 'tpope/vim-vividchalk'
-Plugin 'https://github.com/WolfgangMehner/perl-support'
+Plugin 'WolfgangMehner/perl-support'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/buttercream.vim'
 Plugin 'vim-scripts/c.vim'
@@ -56,7 +56,7 @@ Plugin 'vim-scripts/YankRing.vim'
 call vundle#end()
 filetype plugin indent on
 set t_Co=256  " make use of 256 terminal colors
-let g:seoul256_background = 233
+let g:seoul256_background = 234
 color seoul256
 syntax enable
 let g:miniBufExplorerAutoStart = 0
@@ -78,7 +78,6 @@ let g:ctrlp_max_files = 100000
 let g:ctrlp_show_hidden = 1
 let g:deoplete#auto_complete_start_length = 1
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_refresh_always = 1
 let g:deoplete#enable_smart_case = 1
 let g:EasyMotion_keys = 'ASDFGHJKLQWERUIO;'
 let g:EasyMotion_smartcase = 1
@@ -92,7 +91,6 @@ let g:haskell_enable_arrowsyntax = 1
 let g:haskell_enable_pattern_synonyms = 1
 let g:haskell_enable_typeroles = 1
 let g:haskell_enable_static_pointers = 1
-" let haskell_classic_highlighting = 1
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_enable_on_vim_startup = 1
@@ -106,7 +104,7 @@ let g:NERDTreeIgnore=['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycac
 let g:NERDTreeMinimalUI=1
 let g:NERDTreeQuitOnOpen=0
 let g:NERDTreeShowFiles = 0
-let g:NERDTreeShowHidden=0
+let g:NERDTreeShowHidden=1
 let g:NERDTreeWinSize=35
 let g:NERDTreeShowLineNumbers=1
 let g:pymode_rope_completion = 0
@@ -120,15 +118,14 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
 let g:Tlist_Use_SingleClick=1
-let g:yankring_replace_n_nkey = '<C-]>'
-let g:yankring_replace_n_pkey = ',<C-[>'
+let g:yankring_replace_n_nkey = '<C-n>'
+let g:yankring_replace_n_pkey = ',<C-b>'
 let g:yankring_min_element_length = 2
 let g:yankring_window_height = 12
 let g:miniBufExplCycleArround = 1
 let g:miniBufExplUseSingleClick = 1
 let g:miniBufExplCloseOnSelect = 1
 
-" au BufEnter *.hs compiler ghc
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=33
 autocmd StdinReadPre * let s:std_in=1
@@ -145,7 +142,6 @@ set directory   =$HOME/.config/nvim/files/swap/
 set encoding=utf8
 set expandtab
 set ffs=unix,dos,mac
-" set foldcolumn=1
 set hidden
 set ignorecase
 set linebreak
@@ -153,8 +149,6 @@ set list
 set listchars+=extends:&,precedes:&
 set mouse=v
 set noshowmode
-" set number
-" set numberwidth=2
 set scrolljump=2
 set scrolloff=5 "ensure 5 lines are above/below cursor when scrolling
 set showcmd
@@ -188,6 +182,8 @@ map      <unique> <leader><space> <Plug>(easymotion-overwin-f2)
 map      <unique> <leader>t       <Plug>(easymotion-bd-tl)
 map      <unique> <leader>v       <Plug>(expand_region_expand)
 map      <unique> -v       <Plug>(expand_region_shrink)
+vmap <unique> v <Plug>(expand_region_expand)
+vnoremap <unique> jf <esc>
 map      <unique> <leader>w       <Plug>(easymotion-bd-wl)
 nnoremap <unique> <leader>h       :tabprevious<cr>
 nnoremap <unique> <leader>l       :tabnext<cr>
@@ -196,12 +192,18 @@ nnoremap <unique> <leader>;       :TmuxNavigatePrevious<cr>
 noremap  <unique> <leader>H       H
 noremap  <unique> <leader>L       L
 nnoremap <unique> <leader>q       :q<cr>
+inoremap <unique> <leader>R       <esc>:nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>i
+nnoremap <unique> <leader>R       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
-:imap <F3> <Plug>snipMateNextOrTrigger
-:smap <F3> <Plug>snipMateNextOrTrigger
-noremap <unique> <F10>    <esc>:qall<cr>
+imap <F3> <Plug>snipMateNextOrTrigger
+smap <F3> <Plug>snipMateNextOrTrigger
+noremap <unique> <F10>    <esc>:x<cr>
+inoremap <unique> <F10>    <esc>:x<cr>
 noremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
 inoremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
+inoremap <unique> <F4> <esc>:w<cr>
+nnoremap <unique> <F4> :w<cr>
+nnoremap <unique> <F6> :CtrlPMRU<cr>
 inoremap <unique> <F1> <Delete>
 cnoremap <unique> w!! w !sudo tee > /dev/null %
 nnoremap <unique> ]P :<C-U>YRYankCount 'yy'<CR>p
@@ -212,10 +214,6 @@ nmap <unique> [C [Pj:Commentary<cr>`[
 nmap <unique> ]C ]Pk:Commentary<cr>`[
 imap <unique> [C <esc>[C
 imap <unique> ]C <esc>]C
-inoremap <unique> <F4> <esc>:w<cr>
-inoremap <unique> <S-F4> <esc>:x<cr>
-nnoremap <unique> <F4> :w<cr>
-noremap <unique> <S-F4> :x<cr>
 inoremap <unique> jf           <esc>
 inoremap <unique> fj           <esc>
 nnoremap <unique> \n i<cr><esc>
@@ -225,15 +223,19 @@ nmap <M-k> mz:m-2<cr>`z
 vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 nmap <unique> css yss
-nnoremap <unique> <C-H> :TmuxNavigateLeft<cr>
-nnoremap <unique> <C-J> :TmuxNavigateDown<cr>
-nnoremap <unique> <C-K> :TmuxNavigateUp<cr>
-nnoremap <unique> <C-L> :TmuxNavigateRight<cr>
+noremap <unique> <C-H> :TmuxNavigateLeft<cr>
+noremap <unique> <C-J> :TmuxNavigateDown<cr>
+noremap <unique> <C-K> :TmuxNavigateUp<cr>
+noremap <unique> <C-L> :TmuxNavigateRight<cr>
+inoremap <unique> <C-H> :TmuxNavigateLeft<cr>
+inoremap <unique> <C-J> :TmuxNavigateDown<cr>
+inoremap <unique> <C-K> :TmuxNavigateUp<cr>
+inoremap <unique> <C-L> :TmuxNavigateRight<cr>
 noremap ^ 0
 noremap 0 ^
 noremap <Down> +
 noremap <S-Down> +$
-noremap <Up> -
+noremap <up> -
 noremap <S-Up> -$
 noremap <Left> ^
 noremap <Right> $
@@ -247,27 +249,23 @@ let mapleader="-"
 inoremap <unique> <leader><F4>    <esc>:qall<cr>
 nnoremap <unique> <leader><F4>    :qall<cr>
 nnoremap <unique> <leader><Tab>   :exe "tabn ".g:lasttab<cr>
-inoremap <unique> <leader>R       <esc>:nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>i
-nnoremap <unique> <leader>R       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 noremap <unique> <leader>k :MBEbf<CR>
 noremap <unique> <leader>j :MBEbb<CR>
-noremap <leader>h :MBEbp<CR>
-noremap <leader>l :MBEbn<CR>
+noremap <unique> <leader>h :MBEbp<CR>
+noremap <unique> <leader>l :MBEbn<CR>
 nnoremap <silent><unique> <leader>p :YRShow<cr>
 nnoremap <unique> <leader>fb :CtrlPBuffer<cr>
 nnoremap <unique> <leader>fc :CtrlPChange<cr>
 nnoremap <unique> <leader>fd :CtrlPDir<cr>
 nnoremap <unique> <leader>ff :CtrlP<cr>
 nnoremap <unique> <leader>fl :CtrlPLine<cr>
-nnoremap <unique> <leader>fr :CtrlPMRU<cr>
-nnoremap <unique>       <F6> :CtrlPMRU<cr>
 nnoremap <unique> <leader>fu :CtrlPUndo<cr>
-nnoremap <unique> <leader>nd :NERDTreeCWD<cr>
-nnoremap <unique> <leader>nh :NERDTreeToggle ~<cr>
-nnoremap <unique> <leader>nm :NERDTreeMirror<cr>
-nnoremap <unique> <leader>nn :NERDTreeFind<cr>
-nnoremap <unique> <leader>ta :TlistToggle<cr>
-nnoremap <unique> <leader>to <Plug>TaskList
+" nnoremap <unique> <leader>nd :NERDTreeCWD<cr>
+" nnoremap <unique> <leader>nh :NERDTreeToggle ~<cr>
+" nnoremap <unique> <leader>nm :NERDTreeMirror<cr>
+nnoremap <unique> <leader>n :NERDTreeFind<cr>
+nnoremap <unique> <leader>t :TlistToggle<cr>
+nnoremap <unique> <leader>T <Plug>TaskList
 noremap  <unique> <leader>0 <esc>:MBEOpen<cr>:MBEFocus<cr>
 noremap  <unique> <leader>1 :b1<cr>
 noremap  <unique> <leader>2 :b2<cr>

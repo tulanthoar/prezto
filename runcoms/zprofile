@@ -11,6 +11,7 @@ export PATH="$PATH:$HOME/apps/bin"
 export EDITOR='nvim'
 export VISUAL='nvim'
 export PAGER='less'
+export PERLDOC_SRC_PAGER='nvim'
 
 [[ -z "$LANG" ]] && export LANG='en_US.UTF-8'
 
@@ -54,7 +55,7 @@ export FZF_COMPLETION_TRIGGER=',,'
 export FZF_DEFAULT_OPTS="--select-1 --exit-0 --inline-info --color fg:102,bg:233,hl:65,fg+:15,bg+:234,hl+:108,info:108,prompt:109,spinner:108,pointer:168,marker:168"
 export KEYTIMEOUT=3
 export RANGER_LOAD_DEFAULT_RC=FALSE
-export TERMCMD=$(which st)
+export TERMCMD=$(which urxvt)
 export LD_LIBRARY_PATH=/home/ant/apps/code/lib
 # export JAVA_HOME="/usr/lib/jvm/default-jvm"
 # export GOPATH="$HOME/golang"

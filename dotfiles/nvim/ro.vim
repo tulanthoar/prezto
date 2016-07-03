@@ -178,7 +178,7 @@ set wildignore=*.o,*~,*.pyc
 set writebackup
 
 vnoremap y "*y:q!<cr>
-nmap <leader><space>    <Plug>(easymotion-bd-f2)
+nmap <space>    <Plug>(easymotion-bd-f2)
 map      <unique> <leader>0       <Plug>(easymotion-sol-bd-jk)
 map      <unique> <leader>e       <Plug>(easymotion-bd-el)
 map      <unique> <leader>f       <Plug>(easymotion-bd-fl)
