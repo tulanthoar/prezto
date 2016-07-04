@@ -1,22 +1,17 @@
-import XMonad.Actions.TagWindows
-import XMonad.Actions.SpawnOn
-import XMonad.Prompt
-import XMonad.Prompt.AppendFile
-import Data.List
 import Control.Monad
+import Data.List
+import Data.Map(fromList)
 import Data.Maybe(fromMaybe)
 import Data.Ratio((%))
-import qualified Data.Map as M
 import System.IO(hPutStrLn)
 import XMonad
-import XMonad.ManageHook
-import XMonad.Prompt
-import qualified XMonad.StackSet as W
 import XMonad.Actions.Commands
 import XMonad.Actions.CycleWS
 import XMonad.Actions.FocusNth
 import XMonad.Actions.GridSelect
 import XMonad.Actions.ShowText
+import XMonad.Actions.SpawnOn
+import XMonad.Actions.TagWindows
 import XMonad.Actions.UpdatePointer
 import XMonad.Actions.WithAll
 import XMonad.Hooks.DynamicLog
@@ -26,18 +21,22 @@ import XMonad.Hooks.Minimize
 import XMonad.Hooks.ServerMode
 import XMonad.Hooks.SetWMName
 import XMonad.Layout.BoringWindows
-import qualified XMonad.Layout.Gaps as G
-import qualified XMonad.Layout.GridVariants as GV
-import qualified XMonad.Layout.Magnifier as Mag
 import XMonad.Layout.Minimize
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Reflect
 import XMonad.Layout.ToggleLayouts
+import qualified XMonad.Layout.Gaps as G
+import qualified XMonad.Layout.GridVariants as GV
+import qualified XMonad.Layout.Magnifier as Mag
+import XMonad.ManageHook
+import XMonad.Prompt
+import XMonad.Prompt.AppendFile
 import XMonad.Prompt.AppLauncher
-import XMonad.Util.Dmenu
+import qualified XMonad.StackSet as W
 import qualified XMonad.Util.Dzen as D
-import XMonad.Util.EZConfig(additionalKeysP, additionalKeys)
 import qualified XMonad.Util.Loggers as L
+import XMonad.Util.Dmenu
+import XMonad.Util.EZConfig(additionalKeysP, additionalKeys)
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Paste
 import XMonad.Util.Run(safeSpawn,spawnPipe, runProcessWithInputAndWait)
@@ -47,7 +46,7 @@ myTerminal = "urxvt" :: String
 myModMask = mod3Mask :: KeyMask
 wmName = "LG3D"
 uniqueInits = ["sudo updatedb", "modkey"]
-xInits = words "maybeclipmenud.sh mayberedshift.sh"
+xInits = words "maybeclipmenud mayberedshift"
 wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"]
 menuH=15
 
@@ -80,7 +79,7 @@ xmConf p = def
   , workspaces         = wsList
   , logHook            = dynamicLogWithPP ( myDzenPP p ) >> updatePointer (0.5, 0.5) (0, 0)
   , handleEventHook = docksEventHook <+> minimizeEventHook <+> handleTimerEvent <+> serverModeEventHook <+> serverModeEventHookCmd' xmC
-  , keys = \c -> M.fromList xkM
+  , keys = \c -> fromList xkM
   }
 
 main :: IO()
@@ -91,7 +90,7 @@ main = do
 
 xkM=
   [ ((0, xK_Menu), launchAct)
-  , ((0, 0x1008ff17), spawn "echo `xsel -o` > /tmp/urxvt-python.fifo")
+  , ((0, 0x1008ff17), spawn "echo `xsel -o` >> /tmp/urxvt-python.fifo")
   , ((0, 0x1008ff16), appendFilePrompt defaultXPConfig "/tmp/urxvt-python.fifo")
   , ((0, k_kp_enter), withFocused $ \w -> withAll minimizeWindow >> (sendMessage . RestoreMinimizedWin ) w )
   , ((0, k_kp_minus), withFocused minimizeWindow)
@@ -134,24 +133,24 @@ myKeysP =
   , ("M-t",  spawn $ myTerminal ++ " -name " ++ init myTerminal ++ " -n " ++ init myTerminal)
   , ("M4-i i",  namedScratchpadAction scratchpads iPad)
   , ("M4-i <Space>", appendFilePrompt defaultXPConfig "/tmp/urxvt-python.fifo")
-  , ("M4-i <Insert>", spawn "echo `xsel -o` > /tmp/urxvt-python.fifo")
-  , ("M4-i <Return>", spawn "echo '\r' > /tmp/urxvt-python.fifo")
+  , ("M4-i <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-python.fifo")
+  , ("M4-i <Return>", spawn "echo '\r' >> /tmp/urxvt-python.fifo")
   , ("M4-n n",  namedScratchpadAction scratchpads "neovim")
-  , ("M4-n <Space>", spawn "echo 'A' > /tmp/urxvt-neovi.fifo" >> appendFilePrompt defaultXPConfig "/tmp/urxvt-neovi.fifo" >> spawn "echo 'jf' > /tmp/urxvt-neovi.fifo")
-  , ("M4-n <Insert>", spawn "echo A`xsel -o`jf > /tmp/urxvt-neovi.fifo")
-  , ("M4-n <Return>", spawn "echo '\r' > /tmp/urxvt-neovi.fifo")
+  , ("M4-n <Space>", spawn "echo 'A' >> /tmp/urxvt-neovi.fifo" >> appendFilePrompt defaultXPConfig "/tmp/urxvt-neovi.fifo" >> spawn "echo 'jf' >> /tmp/urxvt-neovi.fifo")
+  , ("M4-n <Insert>", spawn "echo A`xsel -o`jf >> /tmp/urxvt-neovi.fifo")
+  , ("M4-n <Return>", spawn "echo '\r' >> /tmp/urxvt-neovi.fifo")
   , ("M4-p p",  namedScratchpadAction scratchpads pPad)
   , ("M4-p <Space>", appendFilePrompt defaultXPConfig "/tmp/urxvt-per.fifo" )
-  , ("M4-p <Insert>", spawn "echo `xsel -o` > /tmp/urxvt-per.fifo")
-  , ("M4-p <Return>", spawn "echo '\r' > /tmp/urxvt-per.fifo")
+  , ("M4-p <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-per.fifo")
+  , ("M4-p <Return>", spawn "echo '\r' >> /tmp/urxvt-per.fifo")
   , ("M4-b b", withTaggedGlobalP "myterm" shiftHere >> focusUpTaggedGlobal "myterm")
   , ("M4-b x", withTaggedP "myterm" (W.shiftWin "NSP"))
-  , ("M4-b <Insert>", spawn "echo `xsel -o` > /tmp/urxv.fifo")
+  , ("M4-b <Insert>", spawn "echo `xsel -o` >> /tmp/urxv.fifo")
   , ("M4-b <Space>", appendFilePrompt defaultXPConfig "/tmp/urxv.fifo")
   , ("M4-r r",  namedScratchpadAction scratchpads rPad)
   , ("M4-r <Space>", appendFilePrompt defaultXPConfig "/tmp/urxvt-range.fifo")
-  , ("M4-n <Insert>", spawn "echo `xsel -o` > /tmp/urxvt-range.fifo")
-  , ("M4-n <Return>", spawn "echo '\r' > /tmp/urxvt-range.fifo")
+  , ("M4-n <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-range.fifo")
+  , ("M4-n <Return>", spawn "echo '\r' >> /tmp/urxvt-range.fifo")
   ]
 
 myBrowser = "qutebrowser"
@@ -201,7 +200,7 @@ myDzenPP p = def
   , ppTitle           = dzenColor myTFGColor myTBGColor . trim . shorten 100
   , ppLayout          = dzenColor myLFGColor myLBGColor . shorten 0
   , ppSep             = dzenColor sepFGColor sepBGColor " -||- "
-  , ppExtras          = [L.date "%a %b %d", L.logCmd "diskspace.sh", L.logCmd "coretemp", L.logCmd "mypymodoro"]
+  , ppExtras          = [L.date "%a %b %d", L.logCmd "diskspace", L.logCmd "coretemp", L.logCmd "mypymodoro"]
   , ppOutput          = hPutStrLn p }
 
 k_kp_plus=0xffab
