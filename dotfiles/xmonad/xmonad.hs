@@ -157,8 +157,8 @@ myBrowser = "qutebrowser"
 launchAct = flashText def 4 "launch app" >> spawn dmRun :: X()
 srchAct = flashText def 4 "search engine" >> spawn dmSrch :: X()
 avoidNSP = replicateM_ 2 $ toggleWS' ["NSP"] :: X()
-dmRun = "dmenu_run -w 300 -y 20 -z -p 'launch' -l 60 -fn "++apFnmenu++" "::String
-dmSrch = "search.sh -w 600 -y 20 -z -p 'search' -l 60 -fn "++apFnmenu++" "::String
+dmRun = "dmenu_run -w 300 -y "++show menuH++" -z -p 'launch' -l 60 -fn "++apFnmenu++" "::String
+dmSrch = "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 60 -fn "++apFnmenu++" "::String
 
 mC =
   [ ("minone", withFocused minimizeWindow )
