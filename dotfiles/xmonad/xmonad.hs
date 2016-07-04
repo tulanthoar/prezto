@@ -44,11 +44,14 @@ import XMonad.Util.SpawnOnce
 
 myTerminal = "urxvt" :: String
 myModMask = mod3Mask :: KeyMask
-wmName = "LG3D"
-uniqueInits = ["sudo updatedb", "modkey"]
-xInits = words "maybeclipmenud mayberedshift"
-wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"]
-menuH=15
+wmNameM_ = setWMName "LG3D" :: X()
+uniqueInits = ["sudo updatedb", "modkey"] :: [String]
+xInits = words "maybeclipmenud mayberedshift" :: [String]
+xInitM_ = mapM_ spawnOnce (uniqueInits++xInits)
+wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"] :: [String]
+menuH=15 :: Int
+mvNEmpty = moveTo Next EmptyWS :: X()
+mvPEmpty = moveTo Prev EmptyWS :: X()
 
 mylayoutHook = G.gaps [(G.U,menuH)] $ smartBorders $ Mag.magnifiercz 1.4 $
   boringAuto $ minimize $ toggleLayouts (GV.SplitGrid GV.T 1 2 (1%2) (16%10) delta) $ Tall 1 delta ratio
@@ -69,7 +72,7 @@ myManageHook = namedScratchpadManageHook scratchpads
 xmConf p = def
   { manageHook         = manageSpawn <+> myManageHook <+> def
   , layoutHook         = mylayoutHook
-  , startupHook        = return()>>setWMName wmName >> mapM_ spawnOnce (uniqueInits++xInits) >> mapM_ (namedScratchpadAction scratchpads) [iPad, pPad, nPad, rPad] >> replicateM_ 2 ( moveTo Next EmptyWS )
+  , startupHook        = return()>>wmNameM_>> xInitM_ >> mapM_ (namedScratchpadAction scratchpads) [iPad, pPad, nPad, rPad] >> replicateM_ 2 mvNEmpty
   , terminal           = myTerminal
   , modMask            = myModMask
   , borderWidth        = 0
@@ -92,12 +95,12 @@ xkM=
   [ ((0, xK_Menu), launchAct)
   , ((0, 0x1008ff17), spawn "echo `xsel -o` >> /tmp/urxvt-python.fifo")
   , ((0, 0x1008ff16), appendFilePrompt defaultXPConfig "/tmp/urxvt-python.fifo")
-  , ((0, k_kp_enter), withFocused $ \w -> withAll minimizeWindow >> (sendMessage . RestoreMinimizedWin ) w )
-  , ((0, k_kp_minus), withFocused minimizeWindow)
-  , ((0, k_kp_zero), goToSelected defaultGSConfig)
-  , ((0, k_kp_dot), sendMessage ToggleLayout)
-  , ((0, k_kp_plus), sendMessage RestoreNextMinimizedWin )
-  , ((0, k_mute), spawn "systemctl suspend")
+  , ((0, kKPenter), withFocused $ \w -> withAll minimizeWindow >> (sendMessage . RestoreMinimizedWin ) w )
+  , ((0, kKPminus), withFocused minimizeWindow)
+  , ((0, kKPzero), goToSelected defaultGSConfig)
+  , ((0, kKPdot), sendMessage ToggleLayout)
+  , ((0, kKPplus), sendMessage RestoreNextMinimizedWin )
+  , ((0, kKPmute), spawn "systemctl suspend")
   , ((mod1Mask, lowvol), focusUp)
   , ((mod1Mask, raisevol),  focusDown)
   , ((0, lowvol), replicateM_ 5 $ sendKey noModMask xK_Up)
@@ -119,8 +122,8 @@ myKeysP =
   , ("<Insert>", spawn "xdotool click 2")
   , ("M-c", spawn $ "clipmenu -z -l 50 -p 'clip' -fn "++apFnmenu)
   , ("M-<Down>", withFocused $ \w -> withAll minimizeWindow >> sendMessage (RestoreMinimizedWin w))
-  , ("M-h", moveTo Prev NonEmptyWS >> avoidNSP)
-  , ("M-l", moveTo Next NonEmptyWS >> avoidNSP)
+  , ("M-h", mvPEmpty >> avoidNSP)
+  , ("M-l", mvNEmpty >> avoidNSP)
   , ("M-j", withFocused minimizeWindow)
   , ("M-k", sendMessage RestoreNextMinimizedWin)
   , ("M-m", sendMessage Mag.Toggle )
@@ -128,7 +131,7 @@ myKeysP =
   , ("M-<Right>", shiftTo Next EmptyWS)
   , ("M-q",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
   , ("M-r",       refresh)
-  , ("M-<Space>", moveTo Next EmptyWS >> avoidNSP >> spawn dmRun)
+  , ("M-<Space>", mvNEmpty >> avoidNSP >> spawn dmRun)
   , ("M-<Tab>", toggleWS' ["NSP"])
   , ("M-t",  spawn $ myTerminal ++ " -name " ++ init myTerminal ++ " -n " ++ init myTerminal)
   , ("M4-i i",  namedScratchpadAction scratchpads iPad)
