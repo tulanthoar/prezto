@@ -102,7 +102,7 @@ xkM=
   , ((mod1Mask, raisevol),  focusDown)
   , ((0, lowvol), replicateM_ 5 $ sendKey noModMask xK_Up)
   , ((0, raisevol), replicateM_ 5 $ sendKey noModMask xK_Down)
-  , ((0, xK_Print),withFocused $ \w -> hasTag "myterm" w >>= \b -> if b then sendKey controlMask xK_F9 else sendKey controlMask xK_F10)
+  , ((0, xK_Print),withFocused $ hasTag "myterm" >=> \b -> if b then sendKey controlMask xK_F9 else sendKey controlMask xK_F10)
   , ((myModMask, lowvol), moveTo Next NonEmptyWS >> avoidNSP)
   , ((myModMask, raisevol), moveTo Prev NonEmptyWS >> avoidNSP)
   , ((myModMask, xK_Menu), srchAct)
@@ -203,14 +203,14 @@ myDzenPP p = def
   , ppExtras          = [L.date "%a %b %d", L.logCmd "diskspace", L.logCmd "coretemp", L.logCmd "mypymodoro"]
   , ppOutput          = hPutStrLn p }
 
-k_kp_plus=0xffab
-k_kp_dot=0xff9f
-k_kp_zero=0xff9e
-k_kp_minus=0xffad
+kKPplus=0xffab
+kKPdot=0xff9f
+kKPzero=0xff9e
+kKPminus=0xffad
 raisevol=0x1008ff13
 lowvol=0x1008ff11
-k_mute=0x1008ff12
-k_kp_enter=0xff8d
+kKPmute=0x1008ff12
+kKPenter=0xff8d
 apFn pt = "-*-monofur-bold-r-*-*-"++pt++"-*-*-*-*-*-*-*" :: String
 apFnmenu = apFn "16"
 
