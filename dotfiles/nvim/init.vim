@@ -183,7 +183,7 @@ map      <unique> <leader>t       <Plug>(easymotion-bd-tl)
 map      <unique> <leader>v       <Plug>(expand_region_expand)
 map      <unique> -v       <Plug>(expand_region_shrink)
 vmap <unique> v <Plug>(expand_region_expand)
-vnoremap <unique> jf <esc>
+vnoremap <unique> J <esc>
 map      <unique> <leader>w       <Plug>(easymotion-bd-wl)
 nnoremap <unique> <leader>h       :tabprevious<cr>
 nnoremap <unique> <leader>l       :tabnext<cr>
