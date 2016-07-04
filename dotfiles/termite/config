@@ -17,7 +17,7 @@ geometry = 840x780
 cursor_blink = on
 
 # "block", "underline" or "ibeam"
-cursor_shape = ibeam
+cursor_shape = block
 
 # $BROWSER is used by default if set, with xdg-open as a fallback
 browser = copytext
@@ -63,7 +63,7 @@ color5 = #d33682
 color13 = #6c71c4
 # cyan
 color6 = #2aa198
-color14 = #93a1a1
+color14 = #2d9b92
 # white
 color7 = #eee8d5
 color15 = #fdf6e3
