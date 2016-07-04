@@ -102,7 +102,7 @@ xkM=
   , ((mod1Mask, raisevol),  focusDown)
   , ((0, lowvol), replicateM_ 5 $ sendKey noModMask xK_Up)
   , ((0, raisevol), replicateM_ 5 $ sendKey noModMask xK_Down)
-  , ((0, xK_Print),withFocused $ \w -> (hasTag "myterm" w)>>= \b -> if b then sendKey controlMask xK_F9 else sendKey controlMask xK_F10)
+  , ((0, xK_Print),withFocused $ \w -> hasTag "myterm" w >>= \b -> if b then sendKey controlMask xK_F9 else sendKey controlMask xK_F10)
   , ((myModMask, lowvol), moveTo Next NonEmptyWS >> avoidNSP)
   , ((myModMask, raisevol), moveTo Prev NonEmptyWS >> avoidNSP)
   , ((myModMask, xK_Menu), srchAct)
@@ -187,7 +187,7 @@ nPad = "neovim"
 rPad = "ranger"
 nRun = urtRun nPad "nvim ~/buffer"
 rRun = urtRun rPad "ranger"
-urtRun ex cmd = concat $ [myTerminal, " -name ", init ex," -n ", init ex, " -e ", cmd]
+urtRun ex cmd = concat [myTerminal, " -name ", init ex," -n ", init ex, " -e ", cmd]
 prepl = urtRun pPad "perl ~/bin/re.pl"
 pyrepl= urtRun iPad "ptipython"
 icon = stringProperty "WM_ICON_NAME"
