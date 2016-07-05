@@ -72,7 +72,7 @@ myManageHook = namedScratchpadManageHook scratchpads
 xmConf p = def
   { manageHook         = manageSpawn <+> myManageHook <+> def
   , layoutHook         = mylayoutHook
-  , startupHook        = return()>>wmNameM_>> xInitM_ >> mapM_ (namedScratchpadAction scratchpads) [iPad, pPad, nPad, rPad] >> replicateM_ 2 mvNEmpty
+  , startupHook        = return()>>wmNameM_>> xInitM_ >> mapM_ (namedScratchpadAction scratchpads) [iPad, pPad, nPad, rPad]
   , terminal           = myTerminal
   , modMask            = myModMask
   , borderWidth        = 0
@@ -134,6 +134,7 @@ myKeysP =
   , ("M-<Space>", mvNEmpty >> avoidNSP >> spawn dmRun)
   , ("M-<Tab>", toggleWS' ["NSP"])
   , ("M-t",  spawn $ myTerminal ++ " -name " ++ init myTerminal ++ " -n " ++ init myTerminal)
+  , ("M4-a a", mapM_ (namedScratchpadAction scratchpads) [iPad, pPad, nPad, rPad])
   , ("M4-i i",  namedScratchpadAction scratchpads iPad)
   , ("M4-i <Space>", appendFilePrompt defaultXPConfig "/tmp/urxvt-python.fifo")
   , ("M4-i <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-python.fifo")
