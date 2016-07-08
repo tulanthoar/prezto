@@ -18,7 +18,7 @@ function fh() {
 }
 # fkill - kill process
 function fkill() {
-  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}') 
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
   if [ "x$pid" != "x" ]
   then
     kill -${1:-9} $pid
@@ -149,6 +149,11 @@ function fuck-command-line() {
 function suggest-accept-return(){
   zle vi-end-of-line
   zle accept-line
+}
+function c(){
+local Q
+[[ -z "$1" ]] && Q="" || Q="$1"
+cd $(find . -maxdepth 2 -type d | grep -oE "/[\W^.]?\w.*$" | fzf -q "$Q"|grep -oE "[\W^.]?\w.*$") && find . -maxdepth 1 -type d | grep -oE "/[\W^.]?\w.*$"
 }
 zle -N fzf-locate-widget
 zle -N cdParentKey

@@ -3,17 +3,19 @@ export PATH="${PATH}:/home/ant/.local/bin"
 ZPLUGINS=('willghatch/zsh-snippets' 'uvaes/fzf-marks' 'bric3/nice-exit-code' 'djui/alias-tips')
 stty -ixon
 eval infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
-source "${ZPDOTD}/antigen/ini.zsh"
+source "${ZDOTD}/antigen/ini.zsh"
 setopt CLOBBER
 source ~/.fzf/fzf.zsh
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/chpwd-recent-dirs"
 antibody_zsh bundle <<< $(printf '%s\n' ${ZPLUGINS[@]})
+ZPRCD="${ZDOTD}/rc"
 source "${ZPRCD}/myfunctions.zsh"
 source "${ZPRCD}/myaliases.zsh"
 source "${ZPRCD}/mysnippets.zsh"
 source "${ZPRCD}/fasd_init"
+unset $ZPRCD
 source "${ZPREZD}/init.zsh"
 RPROMPT='$(nice_exit_code)'
 bind_keys

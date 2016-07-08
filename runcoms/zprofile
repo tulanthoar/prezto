@@ -7,7 +7,7 @@
 
 [[ "$OSTYPE" == darwin* ]] && export BROWSER='open'
 
-export PATH="$PATH:$HOME/apps/bin"
+export PATH="$PATH:$HOME/apps/bin:$HOME/.gem/ruby/2.3.0/bin"
 export EDITOR='nvim'
 export VISUAL='nvim'
 export PAGER='less'
@@ -57,12 +57,11 @@ export KEYTIMEOUT=3
 export RANGER_LOAD_DEFAULT_RC=FALSE
 export TERMCMD=$(which urxvt)
 export LD_LIBRARY_PATH=/home/ant/apps/code/lib
+export ZPREZD=${ZDOTDIR:-$HOME}/.zprezto
+export ZDOTD=${ZDOTDIR:-$HOME}/.zprezto/dotfiles
 # export JAVA_HOME="/usr/lib/jvm/default-jvm"
 # export GOPATH="$HOME/golang"
 # [[ -d "$GOPATH" ]] && export PATH="$PATH:$GOPATH/bin"
-export ZPREZD=${ZDOTDIR:-$HOME}/.zprezto
-export ZPDOTD=${ZDOTDIR:-$HOME}/.zprezto/dotfiles
-export ZPRCD=${ZDOTDIR:-$HOME}/.zprezto/dotfiles/rc
 # function fs(){ [[ -f $1 && -s $1 ]] }
 #function have_package(){ which $1 > /dev/null || sudo pacman -S $2; }
 #[[ -d ~/.fzf ]] || (git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install)

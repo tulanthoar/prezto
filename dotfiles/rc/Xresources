@@ -4,7 +4,8 @@ Xft.rgba:                   rgb
 Xft.hinting:                true
 Xft.hintstyle:              hintfull
 
-dzen2.font:-*-monofur-bold-r-*-*-13-*-*-*-*-*-*-*
+dmenu.font:-*-monofur-medium-r-*-*-18-*-*-*-*-*-*-*
+dzen2.font:-*-monofur-medium-r-*-*-13-*-*-*-*-*-*-*
 dzen2.background: #330033
 dzen2.foreground: #ff5f00
 

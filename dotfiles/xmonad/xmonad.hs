@@ -120,7 +120,7 @@ myKeysP =
   [ ("M4-t",  spawn $ myTerminal ++ " -name " ++ myTerminal ++ " -n " ++ myTerminal)
   , ("M4-<Space>", spawn "touch ~/.pomodoro_session" >> spawn "/home/ant/.pymodoro/hooks/start-pomodoro.py")
   , ("<Insert>", spawn "xdotool click 2")
-  , ("M-c", spawn $ "clipmenu -z -l 50 -p 'clip' -fn "++apFnmenu)
+  , ("M-c", spawn "clipmenu -z -w 800 -l 50 -p 'clip'")
   , ("M-<Down>", withFocused $ \w -> withAll minimizeWindow >> sendMessage (RestoreMinimizedWin w))
   , ("M-h", mvPEmpty >> avoidNSP)
   , ("M-l", mvNEmpty >> avoidNSP)
@@ -161,8 +161,8 @@ myBrowser = "qutebrowser"
 launchAct = flashText def 4 "launch app" >> spawn dmRun :: X()
 srchAct = flashText def 4 "search engine" >> spawn dmSrch :: X()
 avoidNSP = replicateM_ 2 $ toggleWS' ["NSP"] :: X()
-dmRun = "dmenu_run -w 300 -y "++show menuH++" -z -p 'launch' -l 60 -fn "++apFnmenu++" "::String
-dmSrch = "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 60 -fn "++apFnmenu++" "::String
+dmRun = "j4-dmenu-desktop --display-binary --term="++myTerminal++" --dmenu='dmenu -w 600 -y "++show menuH++" -z -p launch -l 50'"
+dmSrch = "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50"
 
 mC =
   [ ("minone", withFocused minimizeWindow )
@@ -215,7 +215,7 @@ raisevol=0x1008ff13
 lowvol=0x1008ff11
 kKPmute=0x1008ff12
 kKPenter=0xff8d
-apFn pt = "-*-monofur-bold-r-*-*-"++pt++"-*-*-*-*-*-*-*" :: String
+apFn pt = "-*-monofur-medium-r-*-*-"++pt++"-*-*-*-*-*-*-*" :: String
 apFnmenu = apFn "16"
 
 -- Avoid changing master on new window creation

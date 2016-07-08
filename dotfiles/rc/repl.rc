@@ -1,0 +1,29 @@
+use Modern::Perl '2015';
+use Moose;
+
+# do something here
+load_plugin('Timing');
+load_plugin('History');
+load_plugin('LexEnv');
+load_plugin('Colors');
+load_plugin('DDP');
+load_plugin('Packages');
+load_plugin('Commands');
+load_plugin('MultiLine::PPI');
+load_plugin('Completion');
+load_plugin('CompletionDriver::INC');
+load_plugin('CompletionDriver::LexEnv');
+load_plugin('CompletionDriver::Keywords');
+load_plugin('CompletionDriver::Methods');
+load_plugin('ModuleAutoLoader');
+load_plugin('ReadLineHistory');
+load_plugin('Editor');
+load_plugin('FancyPrompt');
+load_plugin('OutputCache');
+load_plugin('DumpHistory');
+eval('use Test::More;');
+eval('use Modern::Perl qw(2015);');
+eval('use utf8;');
+eval('$_REPL->fancy_prompt(sub {my $self = shift; sprintf "re.pl():%03d%s> ", $self->lines_read, $self->can(qw(line_depth)) ? qw(:) . $self->line_depth : ""; });');
+
+1;
