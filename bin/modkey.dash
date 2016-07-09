@@ -1,4 +1,4 @@
 #!/bin/env dash
 setxkbmap -option shift:both_shiftlock;
-xmodmap "${ZDOTD}/rc/xmodm";
+xmodmap "${ZRCD}/xmodm";
 numlockx on

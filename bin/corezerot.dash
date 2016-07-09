@@ -1,2 +1,2 @@
-#!/bin/dash
+#!/bin/env dash
 sensors | grep -Em 1 "^Core 0: " | grep -Ewo "\+\<[0-9]{2}.[0-9].[C^,]\>"|head -n1

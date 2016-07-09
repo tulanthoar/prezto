@@ -1,3 +1,2 @@
 #!/bin/env dash
-
-df -h | grep -E '/$' | grep -Eo '\<[0-9]{2}G\>' | tail -n1
+df -h | grep -Em1 ' /$'| grep -Eo "\<[0-9]+.[0-9]*[K,M,G]\>"|tail -n1 | perl -p -e "s/(K|M|G)/ \$1/g"

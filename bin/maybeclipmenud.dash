@@ -1,2 +1,4 @@
 #!/bin/env dash
-CLIPMENUD_SLEEP=1 ps -a --user "$USER" | grep -E "\<clipmenud$" || clipmenud 2&> /dev/null
+if [ -z $(ps -a --user "$USER" | grep -E "\bclipmenud$") ]; then
+  CLIPMENUD_SLEEP=1 clipmenud 2> /dev/null
+fi

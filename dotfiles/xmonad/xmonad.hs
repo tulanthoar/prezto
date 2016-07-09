@@ -169,13 +169,7 @@ mC =
   [ ("minone", withFocused minimizeWindow )
   , ("tagterm", withFocused (addTag "myterm"))
   , ("rest",  sendMessage RestoreNextMinimizedWin )
-  , ("pyspawn", spawnOn "<t>" pyrepl )
-  , ("nvspawn", spawnOn "<t>" nRun)
-  , ("pespawn", spawnOn "<t>" prepl)
   , ("addpipe", sendKey mod4Mask xK_f )
-  , ("addpypipe", moveTo Next EmptyWS >> namedScratchpadAction scratchpads iPad >> sendKey mod4Mask xK_f >> namedScratchpadAction scratchpads iPad)
-  , ("addnvpipe", moveTo Next EmptyWS >> namedScratchpadAction scratchpads nPad >> sendKey mod4Mask xK_f >> namedScratchpadAction scratchpads nPad)
-  , ("addpepipe", moveTo Next EmptyWS >> namedScratchpadAction scratchpads pPad >> sendKey mod4Mask xK_f >> namedScratchpadAction scratchpads pPad)
   ]
 xmC = return mC
 scratchpads =
@@ -206,7 +200,7 @@ myDzenPP p = def
   , ppTitle           = dzenColor myTFGColor myTBGColor . trim . shorten 100
   , ppLayout          = dzenColor myLFGColor myLBGColor . shorten 0
   , ppSep             = dzenColor sepFGColor sepBGColor " -||- "
-  , ppExtras          = [L.date "%a %b %d", L.logCmd "diskspace", L.logCmd "coretemp", L.logCmd "mypymodoro"]
+  , ppExtras          = [L.date "%a %b %d", L.logCmd "diskspace", L.logCmd "coretemp", L.logCmd "pymodoro-out"]
   , ppOutput          = hPutStrLn p }
 
 kKPplus=0xffab

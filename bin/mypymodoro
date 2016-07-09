@@ -1,3 +1,0 @@
-#!/bin/dash
-#pymodoro -l 150 -lrt -p '>' -b ']' -o
-pymodoro -p '>' -b '_' -e '|' -l 80 -ltr -o
