@@ -118,7 +118,7 @@ xkM=
   ]
 myKeysP =
   [ ("M4-t",  spawn $ myTerminal ++ " -name " ++ myTerminal ++ " -n " ++ myTerminal)
-  , ("M4-<Space>", spawn "touch ~/.pomodoro_session" >> spawn "/home/ant/.pymodoro/hooks/start-pomodoro.py")
+  , ("M4-<Space>", spawn "touch ~/.pomodoro_session" >> spawn "/home/ant/bin/start-pomodoro")
   , ("<Insert>", spawn "xdotool click 2")
   , ("M-c", spawn "clipmenu -z -w 800 -l 50 -p 'clip'")
   , ("M-<Down>", withFocused $ \w -> withAll minimizeWindow >> sendMessage (RestoreMinimizedWin w))
@@ -134,7 +134,8 @@ myKeysP =
   , ("M-<Space>", mvNEmpty >> avoidNSP >> spawn dmRun)
   , ("M-<Tab>", toggleWS' ["NSP"])
   , ("M-t",  spawn $ myTerminal ++ " -name " ++ init myTerminal ++ " -n " ++ init myTerminal)
-  , ("M4-a a", mapM_ (namedScratchpadAction scratchpads) [iPad, pPad, nPad, rPad])
+  , ("M4-h", namedScratchpadAction scratchpads hPad)
+  , ("M4-a", mapM_ (namedScratchpadAction scratchpads) [iPad, pPad, nPad, rPad])
   , ("M4-i i",  namedScratchpadAction scratchpads iPad)
   , ("M4-i <Space>", appendFilePrompt defaultXPConfig "/tmp/urxvt-python.fifo")
   , ("M4-i <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-python.fifo")
@@ -178,7 +179,7 @@ mC =
   ]
 xmC = return mC
 scratchpads =
-  [ NS "htop" "urxvt -e htop" (title =? "htop") nonFloating
+  [ NS hPad "urxvt -e htop" (title =? "htop") nonFloating
   , NS iPad pyrepl (icon =? init iPad) nonFloating
   , NS nPad nRun (icon =? init nPad) nonFloating
   , NS rPad rRun (icon =? init rPad) nonFloating
@@ -189,6 +190,7 @@ iPad = "ipy"
 pPad = "perl"
 nPad = "neovim"
 rPad = "ranger"
+hPad = "htop"
 nRun = urtRun nPad "nvim ~/buffer"
 rRun = urtRun rPad "ranger"
 urtRun ex cmd = concat [myTerminal, " -name ", init ex," -n ", init ex, " -e ", cmd]
