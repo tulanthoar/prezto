@@ -4,8 +4,8 @@ Xft.rgba:                   rgb
 Xft.hinting:                true
 Xft.hintstyle:              hintfull
 
-dmenu.font:-*-monofur-medium-r-*-*-18-*-*-*-*-*-*-*
-dzen2.font:-*-monofur-medium-r-*-*-13-*-*-*-*-*-*-*
+dmenu.font:-*-hack-*-r-*-*-18-*-*-*-*-*-*-*
+dzen2.font:-*-hack-*-r-*-*-13-*-*-*-*-*-*-*
 dzen2.background: #330033
 dzen2.foreground: #ff5f00
 
@@ -15,8 +15,8 @@ URxvt.internalBorder: 0
 URxvt.externalBorder: 0
 URxvt.saveLines:            180
 URxvt.letterSpace: 0
-URxvt.font: xft:inconsolata:pixelsize=14
-URxvt.boldFont: xft:inconsolata:pixelsize=14:weight=bold
+URxvt.font: xft:hack:pixelsize=12
+URxvt.boldFont: xft:hack:pixelsize=12:weight=bold
 URxvt.depth: 32
 
 URxvt.modifier: alt

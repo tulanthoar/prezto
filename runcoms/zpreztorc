@@ -36,6 +36,7 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'completion' \
   'fasd' \
+  'dwim' \
   'history-substring-search' \
   'autosuggestions' \
   'syntax-highlighting' \

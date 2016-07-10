@@ -19,7 +19,7 @@ setopt CORRECT
 
 # Disable correction.
 alias ack='nocorrect ack'
-alias cd='nocorrect cd'
+# alias cd='nocorrect cd'
 alias cp='nocorrect cp'
 alias ebuild='nocorrect ebuild'
 alias gcc='nocorrect gcc'
@@ -46,12 +46,12 @@ alias scp='noglob scp'
 alias sftp='noglob sftp'
 
 # Define general aliases.
-alias _='sudo '
+# alias _='sudo '
 # alias b='${(z)BROWSER}'
 # alias cp="${aliases[cp]:-cp} -i"
 # alias e='${(z)VISUAL:-${(z)EDITOR}}'
 alias ln="${aliases[ln]:-ln} -i"
-alias mkdir="${aliases[mkdir]:-mkdir} -p"
+# alias mkdir="${aliases[mkdir]:-mkdir} -p"
 # alias mv="${aliases[mv]:-mv} -i"
 # alias p='${(z)PAGER}'
 # alias po='popd'

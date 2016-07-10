@@ -85,8 +85,6 @@ zstyle -a ':prezto:load' zfunction 'zfunctions'
 for zfunction ("$zfunctions[@]") autoload -Uz "$zfunction"
 unset zfunction{s,}
 # Load Prezto modules.
-# python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
 zstyle -a ':prezto:load' pmodule 'pmodules'
 pmodload "$pmodules"
 unset pmodules
-# python -c "import time, datetime;then=datetime.datetime.now()+datetime.timedelta(days=3); print(time.mktime(then.timetuple())*1e3+then.microsecond/1e3)"
