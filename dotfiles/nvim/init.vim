@@ -9,8 +9,6 @@ Plugin 'ascenator/L9'
 Plugin 'ervandew/supertab'
 Plugin 'bling/vim-airline'
 Plugin 'fholgado/minibufexpl.vim'
-" Plugin 'vim-scripts/Superior-Haskell-Interaction-Mode-SHIM.git'
-" Plugin 'lukerandall/haskellmode-vim'
 Plugin 'neovimhaskell/haskell-vim.git'
 Plugin 'mbbill/undotree'
 Plugin 'jiangmiao/auto-pairs'
@@ -109,6 +107,7 @@ let g:NERDTreeWinSize=35
 let g:NERDTreeShowLineNumbers=1
 let g:pymode_rope_completion = 0
 let g:python3_host_prog = '/usr/bin/python3'
+let g:snips_author = 'Nathan Yonkee'
 let g:SuperTabCrMapping = 1
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabLongestEnhanced = 1
@@ -118,6 +117,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
 let g:Tlist_Use_SingleClick=1
+let g:undotree_SetFocusWhenToggle=1
 let g:yankring_replace_n_nkey = '<C-n>'
 let g:yankring_replace_n_pkey = ',<C-b>'
 let g:yankring_min_element_length = 2
@@ -180,13 +180,10 @@ map      <unique> <leader>n       <Plug>(easymotion-bd-n)
 map      <unique> <leader>$       <Plug>(easymotion-eol-bd-jk)
 map      <unique> <leader><space> <Plug>(easymotion-overwin-f2)
 map      <unique> <leader>t       <Plug>(easymotion-bd-tl)
-map      <unique> <leader>v       <Plug>(expand_region_expand)
-map      <unique> -v       <Plug>(expand_region_shrink)
-vmap <unique> v <Plug>(expand_region_expand)
-vnoremap <unique> J <esc>
 map      <unique> <leader>w       <Plug>(easymotion-bd-wl)
 nnoremap <unique> <leader>h       :tabprevious<cr>
 nnoremap <unique> <leader>l       :tabnext<cr>
+nnoremap <unique> <leader><Tab>   :exe "tabn ".g:lasttab<cr>
 nnoremap <unique> <leader>sp      :setlocal spell!<cr>
 nnoremap <unique> <leader>;       :TmuxNavigatePrevious<cr>
 noremap  <unique> <leader>H       H
@@ -195,8 +192,11 @@ nnoremap <unique> <leader>q       :q<cr>
 inoremap <unique> <leader>R       <esc>:nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>i
 nnoremap <unique> <leader>R       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
-imap <F3> <Plug>snipMateNextOrTrigger
-smap <F3> <Plug>snipMateNextOrTrigger
+vmap     <unique> v               <Plug>(expand_region_expand)
+vnoremap <unique> J               <esc>
+vmap     <unique> C gc
+" imap <F3> <Plug>snipMateNextOrTrigger
+" smap <F3> <Plug>snipMateNextOrTrigger
 noremap <unique> <F10>    <esc>:x<cr>
 inoremap <unique> <F10>    <esc>:x<cr>
 noremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
@@ -216,7 +216,7 @@ imap <unique> [C <esc>[C
 imap <unique> ]C <esc>]C
 inoremap <unique> jf           <esc>
 inoremap <unique> fj           <esc>
-nnoremap <unique> \n i<cr><esc>
+nnoremap <unique> \N i<cr><esc>
 nmap <space>    <Plug>(easymotion-bd-f2)
 nmap <M-j> mz:m+<cr>`z
 nmap <M-k> mz:m-2<cr>`z
@@ -243,29 +243,27 @@ noremap H Hzz
 noremap L Lzz
 vnoremap <silent> # :call VisualSelection('b')<cr>
 vnoremap <silent> * :call VisualSelection('f')<cr>
-vnoremap <unique> C <Plug>Commentary
+" vnoremap <unique> C <Plug>Commentary
 
 let mapleader="-"
 inoremap <unique> <leader><F4>    <esc>:qall<cr>
 nnoremap <unique> <leader><F4>    :qall<cr>
-nnoremap <unique> <leader><Tab>   :exe "tabn ".g:lasttab<cr>
 noremap <unique> <leader>k :MBEbf<CR>
 noremap <unique> <leader>j :MBEbb<CR>
 noremap <unique> <leader>h :MBEbp<CR>
 noremap <unique> <leader>l :MBEbn<CR>
 nnoremap <silent><unique> <leader>p :YRShow<cr>
-nnoremap <unique> <leader>fb :CtrlPBuffer<cr>
+nnoremap <unique> <leader>b :CtrlPBuffer<cr>
 nnoremap <unique> <leader>fc :CtrlPChange<cr>
 nnoremap <unique> <leader>fd :CtrlPDir<cr>
 nnoremap <unique> <leader>ff :CtrlP<cr>
 nnoremap <unique> <leader>fl :CtrlPLine<cr>
 nnoremap <unique> <leader>fu :CtrlPUndo<cr>
-" nnoremap <unique> <leader>nd :NERDTreeCWD<cr>
-" nnoremap <unique> <leader>nh :NERDTreeToggle ~<cr>
-" nnoremap <unique> <leader>nm :NERDTreeMirror<cr>
+nnoremap <unique> <leader>U :UndotreeToggle<cr>
 nnoremap <unique> <leader>n :NERDTreeFind<cr>
 nnoremap <unique> <leader>t :TlistToggle<cr>
 nnoremap <unique> <leader>T <Plug>TaskList
+nnoremap <unique> <leader><Tab>   :exe "b".g:lastbuff<cr>
 noremap  <unique> <leader>0 <esc>:MBEOpen<cr>:MBEFocus<cr>
 noremap  <unique> <leader>1 :b1<cr>
 noremap  <unique> <leader>2 :b2<cr>
@@ -276,7 +274,6 @@ noremap  <unique> <leader>6 :b6<cr>
 noremap  <unique> <leader>7 :b7<cr>
 noremap  <unique> <leader>8 :b8<cr>
 noremap  <unique> <leader>9 :b9<cr>
-noremap  <unique> <leader>b :e ~/buffer<cr>
 noremap  <unique> <leader>q :Bclose<cr>
 noremap  <unique> <leader><space> :tabnew<cr>
 let mapleader=","
@@ -342,7 +339,9 @@ function g:Multiple_cursors_after()
 endfunction
 
 let g:lasttab = 1
+let g:lastbuff = 1
 au TabLeave    * let g:lasttab = tabpagenr()
+au BufLeave    * let g:lastbuff = bufnr("%")
 au WinEnter    * :AirlineRefresh
 au WinEnter    * set cursorline
 au WinEnter    * set cursorcolumn
