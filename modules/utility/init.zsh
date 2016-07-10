@@ -50,7 +50,7 @@ alias sftp='noglob sftp'
 # alias b='${(z)BROWSER}'
 # alias cp="${aliases[cp]:-cp} -i"
 # alias e='${(z)VISUAL:-${(z)EDITOR}}'
-alias ln="${aliases[ln]:-ln} -i"
+# alias ln="${aliases[ln]:-ln} -i"
 # alias mkdir="${aliases[mkdir]:-mkdir} -p"
 # alias mv="${aliases[mv]:-mv} -i"
 # alias p='${(z)PAGER}'
@@ -140,20 +140,20 @@ fi
 # fi
 
 # Resource Usage
-alias df='df -kh'
-alias du='du -kh'
+# alias df='df -kh'
+# alias du='du -kh'
 
-if (( $+commands[htop] )); then
-  alias top=htop
-else
-  if [[ "$OSTYPE" == (darwin*|*bsd*) ]]; then
-    alias topc='top -o cpu'
-    alias topm='top -o vsize'
-  else
-    alias topc='top -o %CPU'
-    alias topm='top -o %MEM'
-  fi
-fi
+# if (( $+commands[htop] )); then
+#   alias top=htop
+# else
+#   if [[ "$OSTYPE" == (darwin*|*bsd*) ]]; then
+#     alias topc='top -o cpu'
+#     alias topm='top -o vsize'
+#   else
+#     alias topc='top -o %CPU'
+#     alias topm='top -o %MEM'
+#   fi
+# fi
 
 # Miscellaneous
 

@@ -53,31 +53,32 @@ function pmodload {
     #   print "$0: no such module: $pmodule" >&2
     #   continue
     # else
-      if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/modules/$pmodule/init.zsh" ]]; then
-        source "${ZDOTDIR:-$HOME}/.zprezto/modules/$pmodule/init.zsh"
-      fi
+      # if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/modules/$pmodule/init.zsh" ]]; then
+        # source "${ZDOTDIR:-$HOME}/.zprezto/modules/$pmodule/init.zsh"
+        [[ -s "${ZDOTDIR:-$HOME}/.zprezto/modules/$pmodule/init.zsh" ]] && source "${ZDOTDIR:-$HOME}/.zprezto/modules/$pmodule/init.zsh"
+      # fi
 
-      if (( $? == 0 )); then
-        zstyle ":prezto:module:$pmodule" loaded 'yes'
-      else
+      # if (( $? == 0 )); then
+      #   zstyle ":prezto:module:$pmodule" loaded 'yes'
+      # else
         # Remove the $fpath entry.
-        fpath[(r)${ZDOTDIR:-$HOME}/.zprezto/modules/${pmodule}/functions]=()
+        # fpath[(r)${ZDOTDIR:-$HOME}/.zprezto/modules/${pmodule}/functions]=()
 
-        function {
-          local pfunction
+        # function {
+        #   local pfunction
 
           # Extended globbing is needed for listing autoloadable function
           # directories.
-          setopt LOCAL_OPTIONS EXTENDED_GLOB
+          # setopt LOCAL_OPTIONS EXTENDED_GLOB
 
           # Unload Prezto functions.
-          for pfunction in ${ZDOTDIR:-$HOME}/.zprezto/modules/$pmodule/functions/$~pfunction_glob; do
-            unfunction "$pfunction"
-          done
-        }
+          # for pfunction in ${ZDOTDIR:-$HOME}/.zprezto/modules/$pmodule/functions/$~pfunction_glob; do
+          #   unfunction "$pfunction"
+          # done
+        # }
 
-        zstyle ":prezto:module:$pmodule" loaded 'no'
-      fi
+        # zstyle ":prezto:module:$pmodule" loaded 'no'
+      # fi
     # fi
   done
 }
@@ -87,9 +88,7 @@ function pmodload {
 #
 
 # Source the Prezto configuration file.
-if [[ -s "${ZDOTDIR:-$HOME}/.zpreztorc" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zpreztorc"
-fi
+[[ -s "${ZDOTDIR:-$HOME}/.zpreztorc" ]] && source "${ZDOTDIR:-$HOME}/.zpreztorc"
 
 # Disable color and theme in dumb terminals.
 if [[ "$TERM" == 'dumb' ]]; then

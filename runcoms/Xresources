@@ -43,7 +43,8 @@ URxvt.cursorUnderline:      false
 URxvt.pointerBlank:         false
 
 URxvt.background: #002b36
-URxvt.foreground: #bbff33
+/* URxvt.foreground: #bbff33 */
+URxvt.foreground: #de7a50
 URxvt.cursorColor: #ff5f00
 URxvt.pointerColorBackground: #586e75
 URxvt.pointerColorForeground: #93a1a1

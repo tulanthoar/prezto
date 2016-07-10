@@ -28,8 +28,4 @@ fi
 # Key Bindings
 #
 
-if [[ -n "$key_info" ]]; then
-  # vi
-  bindkey -M viins "$key_info[Control]E" vi-forward-word
-  # bindkey -M viins "$key_info[Control]E" vi-add-eol
-fi
+[[ -n "$key_info" ]] && bindkey -M viins "$key_info[Control]E" vi-forward-word

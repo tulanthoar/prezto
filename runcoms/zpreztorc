@@ -28,16 +28,16 @@ zstyle ':prezto:load' pmodule \
   'helper' \
   'spectrum' \
   'utility' \
-  'terminal' \
   'editor' \
   'history' \
   'pacman' \
   'archive' \
   'directory' \
   'completion' \
-  'autosuggestions' \
   'syntax-highlighting' \
+  'autosuggestions' \
   'prompt'
+  # 'terminal' \
   # 'history-substring-search' \
 # completion = 60ms
 # syntax-highlight = 60 ms
@@ -46,7 +46,7 @@ zstyle ':prezto:load' pmodule \
 #
 
 # Set the query found color.
-# zstyle ':prezto:module:autosuggestions:color' found ''
+zstyle ':prezto:module:autosuggestions:color' found 'fg=12'
 
 #
 # Editor
