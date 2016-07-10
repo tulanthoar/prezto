@@ -1,27 +1,25 @@
-export T1=$(date +%S%N)
-export ENHANCD_FILTER=fzf
-export ENHANCD_COMMAND="cd"
+# export T1=$(date +%S%N)
 ZPLUGINS=( 'MikeDacre/cdbk' 'AlexisBRENON/oh-my-zsh-reminder' 'Tarrasch/zsh-bd' 'RobSis/zsh-completion-generator' 'willghatch/zsh-snippets' 'bric3/nice-exit-code' 'djui/alias-tips' 'Tarrasch/zsh-colors'\
- 'willghatch/zsh-cdr' 'psprint/history-search-multi-word' 'willghatch/zsh-saneopt' 'chrissicool/zsh-256color' 'uvaes/fzf-marks' 'psprint/zsh-editing-workbench')
+ 'willghatch/zsh-cdr' 'willghatch/zsh-saneopt' 'chrissicool/zsh-256color' 'uvaes/fzf-marks' 'psprint/zsh-editing-workbench')
 setopt CLOBBER
 source "${ZDOTD}/antibody/ini.zsh"
 antibody_zsh bundle <<< $(printf '%s\n' ${ZPLUGINS[@]})
-export T2=$(date +%S%N)
+# export T2=$(date +%S%N)
 source "${ZPREZD}/init.zsh"
-export T3=$(date +%S%N)
+# export T3=$(date +%S%N)
 source "${HOME}/.fzf/fzf.zsh"
 source "${ZRCD}/myfunctions.zsh"
 source "${ZRCD}/myaliases.zsh"
 source "${ZRCD}/mysnippets.zsh"
 source "${HOME}/.enhancd/init.sh"
-export T4=$(date +%S%N)
+# export T4=$(date +%S%N)
 eval infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 stty -ixon
 RPROMPT='$(nice_exit_code)'
 bind_keys
-export T5=$(date +%S%N)
-perl -e 'my $num = int(($ENV{"T2"}-$ENV{"T1"})/1_000_000); print "$num" . "\n"'
-perl -e 'my $num = int(($ENV{"T3"}-$ENV{"T2"})/1_000_000); print "$num" . "\n"'
-perl -e 'my $num = int(($ENV{"T4"}-$ENV{"T3"})/1_000_000); print "$num" . "\n"'
-perl -e 'my $num = int(($ENV{"T5"}-$ENV{"T4"})/1_000_000); print "$num" . "\n"'
-perl -e 'my $num = int(($ENV{"T5"}-$ENV{"T1"})/1_000_000); print "$num" . "\n"'
+# export T5=$(date +%S%N)
+# perl -e 'my $num = int(($ENV{"T2"}-$ENV{"T1"})/1_000_000); print "$num" . "\n"'
+# perl -e 'my $num = int(($ENV{"T3"}-$ENV{"T2"})/1_000_000); print "$num" . "\n"'
+# perl -e 'my $num = int(($ENV{"T4"}-$ENV{"T3"})/1_000_000); print "$num" . "\n"'
+# perl -e 'my $num = int(($ENV{"T5"}-$ENV{"T4"})/1_000_000); print "$num" . "\n"'
+# perl -e 'my $num = int(($ENV{"T5"}-$ENV{"T1"})/1_000_000); print "$num" . "\n"'
