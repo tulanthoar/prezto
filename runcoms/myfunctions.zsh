@@ -1,12 +1,5 @@
 _fzf_compgen_path() { ag -g "" "$1" }
 # Based on https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh (MIT licensed, as of 2016-05-05).
-function __fzfz() {
-  local cmd=
-  z -l | awk '{print \$2}'| fzf-tmux -m | while read item; do
-    printf '%q ' "$item"
-  done
-  echo
-}
 function writecmd() {
   perl -e '$TIOCSTI = 0x5412; $l = <STDIN>; $lc = $ARGV[0] eq "-run" ? "\n" : ""; $l =~ s/\s*$/$lc/; map { ioctl STDOUT, $TIOCSTI, $_; } split "", $l;' -- $1
 }
@@ -16,30 +9,6 @@ function fhe() {
 function fh() {
   ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -re 's/^\s*[0-9]+\s*//' | writecmd
 }
-# fkill - kill process
-function fkill() {
-  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
-  if [ "x$pid" != "x" ]
-  then
-    kill -${1:-9} $pid
-  fi
-}
-# ALT-I - Paste the selected entry from locate output into the command line
-function fzf-locate-widget() {
-if [[ $- =~ i ]]; then
-  local selected
-  if selected=$(locate / | fzf -q "$LBUFFER"); then
-    LBUFFER=$selected
-  fi
-  zle redisplay
-fi
-}
-# cdf - cd into the directory of the selected file
-function cdf() {
-   local file
-   local dir
-   file=$(fzf-tmux +m -q "$1") && dir=${file:h} && cd "$dir"
- }
 # fss [FUZZY PATTERN] - Select selected tmux session
 function fss() {
   local session
@@ -72,54 +41,39 @@ function ftpane() {
     tmux select-window -t $target_window
   fi
 }
-function V() {
+function fkill() {
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+  if [ "x$pid" != "x" ]; then
+    kill -${1:-9} $pid
+  fi
+}
+function fzf-locate-widget() {
+  local selected
+  if selected=$(locate -0 / | fzf --read0); then
+    LBUFFER="$LBUFFER $selected"
+  fi
+  zle redisplay
+}
+function v() {
   local file
-  file="$( locate "$1" | fzf-tmux --no-sort +m)" && nvim "${file}" || return 1
+  file="$(fasd -Rfl "$1" | fzf-tmux --no-sort +m)" && nvim "${file}" || return 1
 }
 function z() {
   local dir
   dir="$(fasd -Rdl "$1" | fzf-tmux --no-sort +m)" && cd "${dir}" || return 1
 }
-function fzfz-file-widget() {
-  LBUFFER="${LBUFFER}$(__fzfz)"
-  zle redisplay
-}
-# zle     -N   fzfz-file-widget
-# bindkey '^G' fzfz-file-widget
-function fe() {
-  IFS='
-'
-  local declare files=($(fzf-tmux --query="$1"))
-  [[ -n "$files" ]] && ${EDITOR:-nvim} "${files[@]}"
-  unset IFS
-}
-# cf - fuzzy cd from anywhere
+# j - fuzzy cd from anywhere
 # ex: cf word1 word2 ... (even part of a file name)
-function cf() {
+function j() {
   local file
-
   file="$(locate -Ai -0 $@ | grep -z -vE '~$' | fzf-tmux --read0)"
-
-  if [[ -n $file ]]
-  then
-     if [[ -d $file ]]
-     then
+  if [[ -n $file ]]; then
+     if [[ -d $file ]]; then
         cd -- $file
      else
         cd -- ${file:h}
      fi
   fi
-}
-# fda - including hidden directories
-function fda() {
-  local dir
-  dir=$(find ${1:-.} -type d 2> /dev/null | fzf-tmux +m) && cd "$dir"
-}
-function cdParentKey() {
-  BUFFER=""
-  pushd .. > /dev/null
-  echo && ls -lhF
-  zle accept-line
 }
 function cdUndoKey() {
   BUFFER=""
@@ -151,18 +105,18 @@ function suggest-accept-return(){
   zle accept-line
 }
 function c(){
-local Q
-[[ -z "$1" ]] && Q="" || Q="$1"
-cd $(find . -maxdepth 2 -type d | grep -oE "/[\W^.]?\w.*$" | fzf -q "$Q"|grep -oE "[\W^.]?\w.*$") && find . -maxdepth 1 -type d | grep -oE "/[\W^.]?\w.*$"
+  cd $(find . -maxdepth 2 -type d | grep -oE "/[\W^.]?\w.*$" | fzf -q "$1"|grep -oE "[\W^.]?\w.*$") && find . -maxdepth 1 -type d | grep -oE "/[\W^.]?\w.*$"
 }
 zle -N fzf-locate-widget
-zle -N cdParentKey
 zle -N cdUndoKey
 zle -N cdRedoKey
 zle -N fpp_pipe
 zle -N sudo-command-line
 zle -N fuck-command-line
 zle -N suggest-accept-return
+zle -N fhe
+zle -N fh
+zle -N fkill
 
 function bind_keys() {
   bindkey -M viins "^@" snippet-expand
@@ -175,9 +129,10 @@ function bind_keys() {
   bindkey -M viins "^[v" c-paste
   bindkey -M viins "^[w" forward-word
   bindkey -M viins "^[b" backward-word
+  bindkey -M viins "^[q" fkill
+  bindkey -M viins "^[i" fzf-locate-widget
   bindkey -M viins "^B" cdUndoKey
   bindkey -M viins "^F" cdRedoKey
-  bindkey -M viins "^P" cdParentKey
   bindkey -rM viins "^[";
   bindkey -M viins "\e" vi-cmd-mode;
   bindkey -M viins "^[[3~" vi-delete-char;

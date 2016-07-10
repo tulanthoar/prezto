@@ -35,12 +35,10 @@ zstyle ':prezto:load' pmodule \
   'archive' \
   'directory' \
   'completion' \
-  'fasd' \
-  'dwim' \
-  'history-substring-search' \
   'autosuggestions' \
   'syntax-highlighting' \
   'prompt'
+  # 'history-substring-search' \
 # completion = 60ms
 # syntax-highlight = 60 ms
 #
