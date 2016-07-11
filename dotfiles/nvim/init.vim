@@ -78,6 +78,7 @@ let g:ctrlp_max_files = 0
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_user_command ='ag -i -t --hidden -g "" %s'
 let g:ctrlp_mruf_max = 2500
+let g:ctrlp_lazy_update = 10
 let g:deoplete#auto_complete_start_length = 1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1

@@ -1,0 +1,3 @@
+#!/bin/env dash
+git https://aur.archlinux.org/fasd.git "${GITAPPSD}/fasd"
+cd "${GITAPPSD}/fasd" && makepkg -sri
