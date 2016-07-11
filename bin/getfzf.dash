@@ -1,0 +1,4 @@
+#!/bin/env dash
+git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
+${HOME}/.fzf/install
+mv ${HOME}/.fzf.zsh ${HOME}/.fzf/fzf.zsh
