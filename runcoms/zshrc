@@ -1,6 +1,5 @@
 export T1=$(date +%S%N)
-ZPLUGINS=( 'MikeDacre/cdbk' 'AlexisBRENON/oh-my-zsh-reminder' 'Tarrasch/zsh-bd' 'RobSis/zsh-completion-generator' 'willghatch/zsh-snippets' 'bric3/nice-exit-code' 'djui/alias-tips' 'Tarrasch/zsh-colors'\
- 'willghatch/zsh-cdr' 'willghatch/zsh-saneopt' 'chrissicool/zsh-256color' 'uvaes/fzf-marks' 'psprint/zsh-editing-workbench')
+ZPLUGINS=( 'MikeDacre/cdbk' 'AlexisBRENON/oh-my-zsh-reminder' 'Tarrasch/zsh-bd' 'RobSis/zsh-completion-generator' 'willghatch/zsh-snippets' 'bric3/nice-exit-code' 'djui/alias-tips' 'Tarrasch/zsh-colors' 'uvaes/fzf-marks' 'psprint/zsh-editing-workbench')
 setopt CLOBBER
 source "${ZDOTD}/antibody/ini.zsh"
 antibody_zsh bundle <<< $(printf '%s\n' ${ZPLUGINS[@]})
