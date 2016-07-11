@@ -78,7 +78,7 @@ let g:ctrlp_max_files = 0
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_user_command ='ag -i -t --hidden -g "" %s'
 let g:ctrlp_mruf_max = 2500
-let g:ctrlp_lazy_update = 10
+let g:ctrlp_lazy_update = 20
 let g:deoplete#auto_complete_start_length = 1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
@@ -177,6 +177,9 @@ set wildignorecase
 set wildignore=*.o,*~,*.pyc
 set writebackup
 
+nmap <space>    <Plug>(easymotion-bd-f2)
+vmap     <unique> v               <Plug>(expand_region_expand)
+
 map      <unique> <leader>0       <Plug>(easymotion-sol-bd-jk)
 map      <unique> <leader>e       <Plug>(easymotion-bd-el)
 map      <unique> <leader>f       <Plug>(easymotion-bd-fl)
@@ -192,93 +195,87 @@ nnoremap <unique> <leader>l       :tabnext<cr>
 nnoremap <unique> <leader><Tab>   :exe "tabn ".g:lasttab<cr>
 nnoremap <unique> <leader>sp      :setlocal spell!<cr>
 nnoremap <unique> <leader>;       :TmuxNavigatePrevious<cr>
-noremap  <unique> <leader>H       H
-noremap  <unique> <leader>L       L
 nnoremap <unique> <leader>q       :q<cr>
 inoremap <unique> <leader>R       <esc>:nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>i
 nnoremap <unique> <leader>R       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
-vmap     <unique> v               <Plug>(expand_region_expand)
-vnoremap <unique> J               <esc>
-vmap     <unique> C gc
-noremap <unique> <F10>    <esc>:x<cr>
-inoremap <unique> <F10>    <esc>:x<cr>
-noremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
-inoremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
-inoremap <unique> <F4> <esc>:w<cr>
-nnoremap <unique> <F4> :w<cr>
-nnoremap <unique> <F6> :CtrlPMRU<cr>
-inoremap <unique> <F1> <Delete>
+inoremap <unique> <F1>  <Delete>
+inoremap <unique> <F4>  <esc>:w<cr>
+nnoremap <unique> <F4>  :w<cr>
+noremap  <unique> <F5>  <esc>:cd %:p:h<cr>:pwd<cr>
+inoremap <unique> <F5>  <esc>:cd %:p:h<cr>:pwd<cr>
+nnoremap <unique> <F6>  :CtrlPMRU<cr>
+noremap  <unique> <F10> <esc>:x<cr>
+inoremap <unique> <F10> <esc>:x<cr>
 cnoremap <unique> w!! w !sudo tee > /dev/null %
+vmap     <unique> C     gc
+nmap     <unique> css   yss
+vnoremap <unique> J     <esc>
+inoremap <unique> jf    <esc>
+inoremap <unique> fj    <esc>
+noremap  <unique> H     Hzz
+noremap  <unique> L     Lzz
+noremap  <unique> \H    H
+noremap  <unique> \L    L
+noremap ^        0
+noremap 0        ^
+noremap <Down>   +
+noremap <S-Down> +$
+noremap <Up>     -
+noremap <S-Up>   -$
+noremap <Left>   ^
+noremap <Right>  $
 nnoremap <unique> ]P :<C-U>YRYankCount 'yy'<CR>p
 nnoremap <unique> [P :<C-U>YRYankCount 'yy'<CR>P
 inoremap <unique> ]P <esc>:<C-U>YRYankCount 'yy'<CR>p
 inoremap <unique> [P <esc>:<C-U>YRYankCount 'yy'<CR>P
-nmap <unique> [C [Pj:Commentary<cr>`[
-nmap <unique> ]C ]Pk:Commentary<cr>`[
-imap <unique> [C <esc>[C
-imap <unique> ]C <esc>]C
-inoremap <unique> jf           <esc>
-inoremap <unique> fj           <esc>
+nmap     <unique> [C [Pj:Commentary<cr>`[
+nmap     <unique> ]C ]Pk:Commentary<cr>`[
+imap     <unique> [C <esc>[C
+imap     <unique> ]C <esc>]C
 nnoremap <unique> \N i<cr><esc>
-nmap <space>    <Plug>(easymotion-bd-f2)
 nmap <M-j> mz:m+<cr>`z
 nmap <M-k> mz:m-2<cr>`z
 vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-nmap <unique> css yss
-noremap <unique> <C-H> :TmuxNavigateLeft<cr>
-noremap <unique> <C-J> :TmuxNavigateDown<cr>
-noremap <unique> <C-K> :TmuxNavigateUp<cr>
-noremap <unique> <C-L> :TmuxNavigateRight<cr>
+noremap <unique>  <C-H> :TmuxNavigateLeft<cr>
+noremap <unique>  <C-J> :TmuxNavigateDown<cr>
+noremap <unique>  <C-K> :TmuxNavigateUp<cr>
+noremap <unique>  <C-L> :TmuxNavigateRight<cr>
 inoremap <unique> <C-H> :TmuxNavigateLeft<cr>
 inoremap <unique> <C-J> :TmuxNavigateDown<cr>
 inoremap <unique> <C-K> :TmuxNavigateUp<cr>
 inoremap <unique> <C-L> :TmuxNavigateRight<cr>
-noremap ^ 0
-noremap 0 ^
-noremap <Down> +
-noremap <S-Down> +$
-noremap <up> -
-noremap <S-Up> -$
-noremap <Left> ^
-noremap <Right> $
-noremap H Hzz
-noremap L Lzz
 vnoremap <silent> # :call VisualSelection('b')<cr>
 vnoremap <silent> * :call VisualSelection('f')<cr>
-" vnoremap <unique> C <Plug>Commentary
 
 let mapleader="-"
-inoremap <unique> <leader><F4>    <esc>:qall<cr>
-nnoremap <unique> <leader><F4>    :qall<cr>
-noremap <unique> <leader>k :MBEbf<CR>
-noremap <unique> <leader>j :MBEbb<CR>
-noremap <unique> <leader>h :MBEbp<CR>
-noremap <unique> <leader>l :MBEbn<CR>
-nnoremap <silent><unique> <leader>p :YRShow<cr>
-nnoremap <unique> <leader>b :CtrlPBuffer<cr>
-nnoremap <unique> <leader>fc :CtrlPChange<cr>
-nnoremap <unique> <leader>fd :CtrlPDir<cr>
-nnoremap <unique> <leader>ff :CtrlP<cr>
-nnoremap <unique> <leader>fl :CtrlPLine<cr>
-nnoremap <unique> <leader>fu :CtrlPUndo<cr>
-nnoremap <unique> <leader>U :UndotreeToggle<cr>
-nnoremap <unique> <leader>n :NERDTreeFind<cr>
-nnoremap <unique> <leader>t :TlistToggle<cr>
-nnoremap <unique> <leader>T <Plug>TaskList
+nnoremap <unique> <leader>B       :CtrlPBuffer<cr>
+nnoremap <unique> <leader>U       :CtrlPChange<cr>
+nnoremap <unique> <leader>D       :CtrlPDir<cr>
+nnoremap <unique> <leader>F       :CtrlP<cr>
+nnoremap <unique> <leader>L       :CtrlPLine<cr>
+nnoremap <unique> <leader>p       :YRShow<cr>
+nnoremap <unique> <leader>u       :UndotreeToggle<cr>
+nnoremap <unique> <leader>n       :NERDTreeFind<cr>
+nnoremap <unique> <leader>t       :TlistToggle<cr>
+nnoremap <unique> <leader>T       <Plug>TaskList
+noremap  <unique> <leader>k       :MBEbf<CR>
+noremap  <unique> <leader>j       :MBEbb<CR>
+noremap  <unique> <leader>h       :MBEbp<CR>
+noremap  <unique> <leader>l       :MBEbn<CR>
+noremap  <unique> <leader>0       <esc>:MBEOpen<cr>:MBEFocus<cr>
+noremap  <unique> <leader>1       :b1<cr>
+noremap  <unique> <leader>2       :b2<cr>
+noremap  <unique> <leader>3       :b3<cr>
+noremap  <unique> <leader>4       :b4<cr>
+noremap  <unique> <leader>5       :b5<cr>
+noremap  <unique> <leader>6       :b6<cr>
+noremap  <unique> <leader>7       :b7<cr>
+noremap  <unique> <leader>8       :b8<cr>
+noremap  <unique> <leader>9       :b9<cr>
+noremap  <unique> <leader>q       :Bclose<cr>
 nnoremap <unique> <leader><Tab>   :exe "b".g:lastbuff<cr>
-noremap  <unique> <leader>0 <esc>:MBEOpen<cr>:MBEFocus<cr>
-noremap  <unique> <leader>1 :b1<cr>
-noremap  <unique> <leader>2 :b2<cr>
-noremap  <unique> <leader>3 :b3<cr>
-noremap  <unique> <leader>4 :b4<cr>
-noremap  <unique> <leader>5 :b5<cr>
-noremap  <unique> <leader>6 :b6<cr>
-noremap  <unique> <leader>7 :b7<cr>
-noremap  <unique> <leader>8 :b8<cr>
-noremap  <unique> <leader>9 :b9<cr>
-noremap  <unique> <leader>q :Bclose<cr>
 noremap  <unique> <leader><space> :tabnew<cr>
 let mapleader=","
 function! RangeChooser()
