@@ -1,2 +1,2 @@
 #!/bin/env dash
-pymodoro -p '>' -b '_' -e '|' -l 80 -ltr -o
+pymodoro -p '>' -b '_' -e '|' -l 40 -ltr -o

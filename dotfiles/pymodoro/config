@@ -1,5 +1,5 @@
 [DEFAULT]
-oneline = false
+oneline = true
 
 [General]
 autohide = false
@@ -20,7 +20,7 @@ break_character = "|"
 empty_character = "·"
 
 [Sound]
-enable = true
+enable = false
 tick = false
 command = aplay -q %s &
 
