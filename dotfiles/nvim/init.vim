@@ -11,7 +11,10 @@ Plugin 'bling/vim-airline'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'neovimhaskell/haskell-vim.git'
 Plugin 'mbbill/undotree'
-Plugin 'jiangmiao/auto-pairs'
+" Plugin 'jiangmiao/auto-pairs'
+Plugin 'edsono/vim-matchit'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'Raimondi/delimitMate'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
@@ -55,8 +58,10 @@ call vundle#end()
 filetype plugin indent on
 set t_Co=256  " make use of 256 terminal colors
 let g:seoul256_background = 234
-color seoul256
+let g:jellybeans_background_color_256=233
+color jellybeans
 syntax enable
+let g:jellybeans_use_term_italics = 1
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline#extensions#quickfix#location_text = 'Location'
 let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
@@ -131,6 +136,7 @@ let g:yankring_min_element_length = 2
 let g:yankring_replace_n_nkey = '<C-n>'
 let g:yankring_replace_n_pkey = ',<C-b>'
 let g:yankring_window_height = 12
+let g:Perl_PerlTags           = 'on'
 
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=33
@@ -168,6 +174,7 @@ set splitright
 set shiftwidth=2
 set tildeop
 set tabstop=2
+set timeoutlen=2000
 set undodir     =$HOME/.config/nvim/files/undo/
 set undofile
 set viminfo     ='100,n$HOME/.config/nvim/files/info/viminfo

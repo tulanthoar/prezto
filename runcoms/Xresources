@@ -20,16 +20,15 @@ URxvt.boldFont: xft:hack:pixelsize=12:weight=bold
 URxvt.depth: 32
 
 URxvt.modifier: alt
-URxvt.perl-ext-common: autocomplete-ALL-the-things,fifo,keyboard-select,digital-clock,option-popup,readline
+URxvt.perl-ext-common: autocomplete-ALL-the-things,fifo,keyboard-select,digital-clock,option-popup,readline,selection
 URxvt.keysym.Mod4-v: perl:keyboard-select:activate
 URxvt.keysym.Mod4-s: perl:keyboard-select:search
 URxvt.keysym.C-0xffc7: perl:keyboard-select:search
 URxvt.keysym.Mod4-f: perl:fifo:start
 URxvt.keysym.C-semicolon:  perl:aAtt:fuzzy-complete
 URxvt.keysym.C-apostrophe: perl:aAtt:surround-complete
-URxvt.keysym.C-slash:  perl:aAtt:fuzzy-word-complete
-URxvt.keysym.C-backslash:  perl:aAtt:fuzzy-WORD-complete
-URxvt.keysym.C-period: perl:aAtt:suffix-complete
+URxvt.keysym.C-period: perl:aAtt:fuzzy-word-complete
+URxvt.keysym.C-comma: perl:aAtt:fuzzy-WORD-complete
 urxvt.fifo.file: /tmp/urxvt.fifo
 urxv.fifo.file: /tmp/urxv.fifo
 per.fifo.file: /tmp/urxvt-per.fifo
