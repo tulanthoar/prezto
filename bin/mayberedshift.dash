@@ -1,2 +1,2 @@
 #!/bin/env dash
-ps aux | grep -E "\Wredshift\W-c" || redshift -c "$HOME/.config/redshift.conf"
+ps aux | grep -E "\Wredshift\W-c" || redshift -c "$ZDOTD/redshift.conf"
