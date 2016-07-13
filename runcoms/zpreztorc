@@ -99,7 +99,7 @@ zstyle ':prezto:module:pacman' frontend 'pacman'
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
 # zstyle ':prezto:module:prompt' theme 'random'
-zstyle ':prezto:module:prompt' theme 'damoekri'
+zstyle ':prezto:module:prompt' theme 'paradox'
 
 #
 # Ruby
