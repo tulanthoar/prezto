@@ -8,7 +8,7 @@ for f in Xresources xserverrc zlogin zlogout zpreztorc zprofile zshenv zshrc; do
 done
 mkdir -p ${HOME}/bin
 for b in clipmenu.bash clipmenud.bash corezerot.dash diskspace.dash maybeclipmenud.dash mayberedshift.dash modkey.dash pymodoro-out.dash quteprint.dash search.dash start-pomodoro.py; do
-  t=echo "${b}" | perl -p -e 's/\.(py|[bd]ash)//; chomp'
+  t=$(echo "${b}" | perl -p -e 's/\.(py|[bd]ash)//; chomp')
   ln -s ${ZBIND}/${b} ${HOME}/bin/${t}
 done
 mkdir -p ${HOME}/apps-git
