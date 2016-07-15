@@ -38,8 +38,12 @@ URxvt.cursorUnderline:      true
 !!URxvt.pointerBlank:         false
 
 !  - color scheme
-URxvt.background:  #002533
+urxv.background:  #002533
 URxvt.foreground:  #ffff80
+ip.background: #00284d
+urxvt.background: #00384d
+per.background: #00331a
+range.background: #000d1a
 ! black + red
 !urxvt*color0:     #3f3f3f
 URxvt*color0:      #1a1a1a
@@ -66,7 +70,7 @@ URxvt*color13:     #e628ba
 URxvt*color14:     #7D7DFB
 URxvt*color15:     #ffffff
 
-URxvt.highlightColor: #000000
+URxvt.highlightColor: #006600
 URxvt.cursorColor: #ff00ff
 !!URxvt.background: #002b36
 !!URxvt.foreground: #de7a50

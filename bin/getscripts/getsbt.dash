@@ -1,0 +1,4 @@
+#!/bin/env dash
+http --download https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.11/sbt-launch.jar --output "${ZPREZD}/bin/sbt-launch.jar"
+SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
+java $SBT_OPTS -jar ${ZPREZD}/bin/sbt-launch.jar
