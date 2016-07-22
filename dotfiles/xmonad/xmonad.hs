@@ -15,10 +15,8 @@ import XMonad.Actions.Commands
 import XMonad.Actions.CycleWS
 import XMonad.Actions.FocusNth
 import XMonad.Actions.GridSelect
-import XMonad.Actions.ShowText
-import XMonad.Actions.SpawnOn
 import XMonad.Actions.TagWindows
-import XMonad.Actions.UpdatePointer
+import XMonad.Actions.UpdatePointer (updatePointer)
 import XMonad.Actions.WithAll
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -26,17 +24,17 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Minimize
 import XMonad.Hooks.ServerMode
 import XMonad.Hooks.SetWMName
-import XMonad.Layout.BoringWindows
 import XMonad.Layout.Minimize
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Reflect
+-- import XMonad.Layout.Reflect
 import XMonad.Layout.ToggleLayouts
+import XMonad.Hooks.WorkspaceHistory (workspaceHistoryHook)
 import XMonad.ManageHook
 import XMonad.Prompt
 import XMonad.Prompt.AppendFile
-import XMonad.Prompt.AppLauncher
+-- import XMonad.Prompt.AppLauncher
 import XMonad.Util.Dmenu
-import XMonad.Util.EZConfig(additionalKeysP, additionalKeys)
+import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Paste
 import XMonad.Util.Run(safeSpawn,spawnPipe, runProcessWithInputAndWait)
@@ -50,46 +48,44 @@ xInits = words "maybeclipmenud mayberedshift" :: [String]
 xInitM_ = mapM_ spawnOnce (uniqueInits++xInits)
 wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"] :: [String]
 menuH = 15 :: Int
-magFactor = 1.4 :: Rational
+magFactor = 1.2 :: Rational
 mvNEmpty = moveTo Next EmptyWS :: X()
-mvPEmpty = moveTo Prev EmptyWS :: X()
+mvNNEmpty = moveTo Next NonEmptyWS :: X()
+mvPNEmpty = moveTo Prev NonEmptyWS :: X()
 corePadsM_ = mapM_ (namedScratchpadAction scratchpads) [iPad, pPad, nPad, rPad] :: X()
 myBrowser = "qutebrowser" :: String
-launchAct = flashText def 4 "launch app" >> spawn dmRun :: X()
-srchAct = flashText def 4 "search engine" >> spawn dmSrch :: X()
-avoidNSP = replicateM_ 2 $ toggleWS' ["NSP"] :: X()
+launchAct = spawn dmRun :: X()
+srchAct = spawn dmSrch :: X()
 dmRun = "j4-dmenu-desktop --display-binary --term="++myTerminal++" --dmenu='dmenu -w 600 -y "++show menuH++" -z -p launch -l 50'" :: String
 dmSrch = "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50" :: String
 
-mylayoutHook = G.gaps [(G.U,menuH)] $ smartBorders $ M.magnifiercz magFactor $
-  boringAuto $ minimize $ toggleLayouts (GV.SplitGrid GV.T 1 2 (1%2) (16%10) delta) $ Tall 1 delta ratio
+mylayoutHook = G.gaps [(G.U,menuH)] $ M.magnifiercz magFactor $
+  minimize $ toggleLayouts (GV.SplitGrid GV.T 1 2 (1%2) (16%10) delta) $ Tall 1 delta ratio
   where
     delta = 3 % 100
     ratio = 11 % 20
-
 -- Manage hook
 myManageHook = namedScratchpadManageHook scratchpads
   <+> composeAll
   [ className =? "Xmessage"  --> doFloat
-  , className =? "Dialogue"  --> doFloat
+  , className =? "stmenu" --> doFloat
   ]
-  <+> (fmap not isDialog --> doF avoidMaster)
   <+> composeOne [ isFullscreen -?> doFullFloat ]
   <+> manageDocks
 
 xmConf p = def
-  { manageHook         = manageSpawn <+> myManageHook <+> def
+  { manageHook         = myManageHook <+> def
   , layoutHook         = mylayoutHook
   , startupHook        = return() >> wmNameM_ >> xInitM_ >> corePadsM_
   , terminal           = myTerminal
   , modMask            = myModMask
   , borderWidth        = 0
-  , focusFollowsMouse  = True
+  , focusFollowsMouse  = False
   , normalBorderColor  = cDkDkGray
   , focusedBorderColor = limeGreen
   , workspaces         = wsList
-  , logHook            = dynamicLogWithPP ( myDzenPP p ) >> updatePointer (0.5, 0.5) (0, 0)
-  , handleEventHook    = docksEventHook <+> minimizeEventHook <+> handleTimerEvent <+> serverModeEventHook <+> serverModeEventHookCmd' xmC
+  , logHook            = dynamicLogWithPP ( myDzenPP p ) >> workspaceHistoryHook >> updatePointer (0.5, 0.5) (0, 0)
+  , handleEventHook    = docksEventHook <+> minimizeEventHook <+> serverModeEventHookCmd' xmC
   , keys               = \c -> fromList xkM
   }
 
@@ -100,60 +96,44 @@ main = do
     `additionalKeysP` myKeysP
 
 xkM=
-  [ ((0, xK_Menu), launchAct)
-  , ((0, 0x1008ff17), spawn "echo `xsel -o` >> /tmp/urxvt-python.fifo")
-  , ((0, 0x1008ff16), appendFilePrompt def "/tmp/urxvt-python.fifo")
+  [ ((0, xK_Menu), spawn "st -c stmenu -e xmenu")
   , ((0, kKPenter), withFocused $ \w -> withAll minimizeWindow >> (sendMessage . RestoreMinimizedWin ) w )
   , ((0, kKPminus), withFocused minimizeWindow)
   , ((0, kKPzero), goToSelected def)
   , ((0, kKPdot), sendMessage ToggleLayout)
   , ((0, kKPplus), sendMessage RestoreNextMinimizedWin )
   , ((0, kKPmute), spawn "systemctl suspend")
-  , ((mod1Mask, lowvol), focusUp)
-  , ((mod1Mask, raisevol),  focusDown)
   , ((0, lowvol), replicateM_ 5 $ sendKey noModMask xK_Up)
   , ((0, raisevol), replicateM_ 5 $ sendKey noModMask xK_Down)
-  -- , ((mod4Mask, xK_y), spawn "xdotool key ctrl+F9")
   , ((mod4Mask, xK_y), sendKey controlMask xK_F9)
-  , ((myModMask, lowvol), moveTo Next NonEmptyWS >> avoidNSP)
-  , ((myModMask, raisevol), moveTo Prev NonEmptyWS >> avoidNSP)
+  , ((myModMask, lowvol), moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
+  , ((myModMask, raisevol), moveTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
   , ((myModMask, xK_Menu), srchAct)
   ] ++
   [ ((0, k), focusNth w)
     | (w, k) <- zip [0 .. 8] [xK_KP_End, 0xff99, 0xff9b, 0xff96, 0xff9d, 0xff98, 0xff95, 0xff97, 0xff9a ]
-  ] ++
-  [ ((myModMask, k), focusNth w)
-    | (w, k) <- zip [9 .. 17] [xK_KP_End, 0xff99, 0xff9b, 0xff96, 0xff9d, 0xff98, 0xff95, 0xff97, 0xff9a ]
   ]
 myKeysP =
-  [ ("M4-t",  spawn $ myTerminal ++ " -name " ++ myTerminal ++ " -n " ++ myTerminal)
-  , ("M4-<Space>", spawn "touch ~/.pomodoro_session" >> spawn "/home/ant/bin/start-pomodoro")
+  [ ("M4-<Space>", spawn "py-repeat -n 10 -s 1800 start-pomodoro")
   , ("<Insert>", spawn "xdotool click 2")
   , ("M-c", spawn "clipmenu -z -w 800 -l 50 -p 'clip'")
-  , ("M-<Down>", withFocused $ \w -> withAll minimizeWindow >> sendMessage (RestoreMinimizedWin w))
-  , ("M-h", mvPEmpty >> avoidNSP)
-  , ("M-l", mvNEmpty >> avoidNSP)
+  , ("M-h", moveTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
+  , ("M-l", moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
   , ("M-j", withFocused minimizeWindow)
   , ("M-k", sendMessage RestoreNextMinimizedWin)
-  , ("M-m", sendMessage M.Toggle )
   , ("M-<Left>", shiftTo Prev EmptyWS)
   , ("M-<Right>", shiftTo Next EmptyWS)
   , ("M-q",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
   , ("M-r",       refresh)
-  , ("M-<Space>", mvNEmpty >> avoidNSP >> spawn dmRun)
+  , ("M-<Space>", mvNEmpty >> spawn "st -c stmenu -e xmenu")
   , ("M-<Tab>", toggleWS' ["NSP"])
-  , ("M-t",  spawn $ myTerminal ++ " -name " ++ init myTerminal ++ " -n " ++ init myTerminal)
-  , ("M4-h", namedScratchpadAction scratchpads hPad)
-  , ("M4-a", corePadsM_)
-  , ("M4-i i",  namedScratchpadAction scratchpads iPad)
+  , ("M-t",  spawn $ urtRun myTerminal "/bin/zsh -c 'sleep 1; xmctl tagterm && byobu-tmux new-session'" )
   , ("M4-i <Space>", appendFilePrompt def "/tmp/urxvt-python.fifo")
   , ("M4-i <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-python.fifo")
   , ("M4-i <Return>", spawn "echo '\r' >> /tmp/urxvt-python.fifo")
-  , ("M4-n n",  namedScratchpadAction scratchpads "neovim")
   , ("M4-n <Space>", spawn "echo 'A' >> /tmp/urxvt-neovi.fifo" >> appendFilePrompt def "/tmp/urxvt-neovi.fifo" >> spawn "echo 'jf' >> /tmp/urxvt-neovi.fifo")
   , ("M4-n <Insert>", spawn "echo A`xsel -o`jf >> /tmp/urxvt-neovi.fifo")
   , ("M4-n <Return>", spawn "echo '\r' >> /tmp/urxvt-neovi.fifo")
-  , ("M4-p p",  namedScratchpadAction scratchpads pPad)
   , ("M4-p <Space>", appendFilePrompt def "/tmp/urxvt-per.fifo" )
   , ("M4-p <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-per.fifo")
   , ("M4-p <Return>", spawn "echo '\r' >> /tmp/urxvt-per.fifo")
@@ -161,17 +141,24 @@ myKeysP =
   , ("M4-b x", withTaggedP "myterm" (W.shiftWin "NSP"))
   , ("M4-b <Insert>", spawn "echo `xsel -o` >> /tmp/urxv.fifo")
   , ("M4-b <Space>", appendFilePrompt def "/tmp/urxv.fifo")
-  , ("M4-r r",  namedScratchpadAction scratchpads rPad)
   , ("M4-r <Space>", appendFilePrompt def "/tmp/urxvt-range.fifo")
-  , ("M4-n <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-range.fifo")
-  , ("M4-n <Return>", spawn "echo '\r' >> /tmp/urxvt-range.fifo")
+  , ("M4-r <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-range.fifo")
+  , ("M4-r <Return>", spawn "echo '\r' >> /tmp/urxvt-range.fifo")
   ]
 
 mC =
   [ ("minone", withFocused minimizeWindow )
   , ("tagterm", withFocused $ addTag "myterm")
   , ("rest",  sendMessage RestoreNextMinimizedWin )
-  , ("addpipe", sendKey mod4Mask xK_f )
+  , ("jmenu", launchAct )
+  , ("srmenu", srchAct )
+  , ("nvim", namedScratchpadAction scratchpads nPad )
+  , ("ipython", namedScratchpadAction scratchpads iPad )
+  , ("perl", namedScratchpadAction scratchpads pPad )
+  , ("ranger", namedScratchpadAction scratchpads rPad )
+  , ("allpads", corePadsM_ )
+  , ("byobu", spawn $ urtRun myTerminal "/bin/zsh -c 'sleep 1; xmctl tagterm && byobu-tmux new-session'" )
+  , ("pomodoro", spawn "py-repeat -n 10 -s 1800 start-pomodoro")
   ]
 xmC = return mC
 scratchpads =
@@ -191,7 +178,7 @@ nRun = urtRun nPad "nvim -u $ZDOTD/nvim/init.vim ~/buffer"
 rRun = urtRun rPad "ranger"
 urtRun ex cmd = concat [myTerminal, " -name ", init ex," -n ", init ex, " -e ", cmd]
 prepl = urtRun pPad "re.pl --rcfile $ZDOTD/re.pl/repl.rc"
-pyrepl= urtRun iPad "ptipython"
+pyrepl= urtRun iPad "ipython"
 icon = stringProperty "WM_ICON_NAME"
 myDzenPP p = def
   { ppCurrent         = dzenColor myFFGColor myFBGColor
@@ -215,10 +202,10 @@ kKPmute=0x1008ff12 :: KeySym
 kKPenter=0xff8d :: KeySym
 
 -- Avoid changing master on new window creation
-avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
-avoidMaster = W.modify' $ \c -> case c of
-  W.Stack t [] (r:rs) -> W.Stack t [r] rs
-  _ -> c
+-- avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
+-- avoidMaster = W.modify' $ \c -> case c of
+--   W.Stack t [] (r:rs) -> W.Stack t [r] rs
+--   _ -> c
 
 limeGreen = "#a3d930" :: String
 ltBlue = "#1793d1" :: String

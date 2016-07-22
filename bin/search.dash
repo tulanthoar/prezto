@@ -1,2 +1,2 @@
 #!/bin/env dash
-sr $(sr -elvi | tail -n +2 | cut -s -f1 | dmenu "$@")
+sr $(sr -elvi | tail -n +2 | cut -s -f1 | dmenu -q "$@" || echo "duckduckgo")
