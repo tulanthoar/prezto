@@ -1,5 +1,5 @@
 #!/bin/env zsh
-ZPREZD=${0:h}
+ZPREZD=${0:a:h}
 ZRCD=${ZPREZD}/runcoms
 ZBIND=${ZPREZD}/bin
 ZDOTD=${ZPREZD}/dotfiles
