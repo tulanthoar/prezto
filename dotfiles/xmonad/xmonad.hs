@@ -158,7 +158,7 @@ mC =
   , ("ranger", namedScratchpadAction scratchpads rPad )
   , ("allpads", corePadsM_ )
   , ("byobu", spawn $ urtRun myTerminal "/bin/zsh -c 'sleep 1; xmctl tagterm && byobu-tmux new-session'" )
-  , ("pomodoro", spawn "py-repeat -n 10 -s 1800 start-pomodoro")
+  , ("pomodoro", spawn "start-pomodoro")
   ]
 xmC = return mC
 scratchpads =
@@ -177,7 +177,7 @@ hPad = "htop"
 nRun = urtRun nPad "nvim -u $ZDOTD/nvim/init.vim ~/buffer"
 rRun = urtRun rPad "ranger"
 urtRun ex cmd = concat [myTerminal, " -name ", init ex," -n ", init ex, " -e ", cmd]
-prepl = urtRun pPad "re.pl --rcfile $ZDOTD/re.pl/repl.rc"
+prepl = urtRun pPad "reply"
 pyrepl= urtRun iPad "ipython"
 icon = stringProperty "WM_ICON_NAME"
 myDzenPP p = def

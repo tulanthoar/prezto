@@ -13,6 +13,7 @@ Plugin 'neovimhaskell/haskell-vim.git'
 Plugin 'mbbill/undotree'
 " Plugin 'jiangmiao/auto-pairs'
 Plugin 'edsono/vim-matchit'
+Plugin 'Konfekt/FastFold'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -184,7 +185,7 @@ set wildignorecase
 set wildignore=*.o,*~,*.pyc
 set writebackup
 
-nmap <space>    <Plug>(easymotion-bd-f2)
+nmap     <space>    <Plug>(easymotion-bd-f2)
 vmap     <unique> v               <Plug>(expand_region_expand)
 
 map      <unique> <leader>0       <Plug>(easymotion-sol-bd-jk)

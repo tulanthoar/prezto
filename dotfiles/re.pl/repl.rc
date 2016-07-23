@@ -6,7 +6,7 @@ load_plugin('Timing');
 load_plugin('History');
 load_plugin('LexEnv');
 load_plugin('Colors');
-load_plugin('DDP');
+load_plugin('DDC');
 load_plugin('Packages');
 load_plugin('Commands');
 load_plugin('MultiLine::PPI');

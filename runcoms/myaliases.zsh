@@ -1,3 +1,4 @@
+alias nvim='nvim -u $ZDOTD/nvim/init.vim'
 alias u='cd .. '
 alias b='bd'
 alias pl='perl '
