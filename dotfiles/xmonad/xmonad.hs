@@ -41,6 +41,7 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Util.Paste
 import XMonad.Util.Run(safeSpawn,spawnPipe, runProcessWithInputAndWait)
 import XMonad.Util.SpawnOnce
+import XMonad.Util.XUtils
 
 myTerminal = "urxvt" :: String
 myModMask = mod3Mask :: KeyMask
@@ -96,10 +97,11 @@ main = do
   xmonad $ xmConf dzP
     `additionalKeysP` myKeysP
 
+restoreFocused = withFocused ( sendMessage . RestoreMinimizedWin ) :: X()
 xkM=
   [ ((0, kKPenter), withFocused $ \w -> withAll minimizeWindow >> (sendMessage . RestoreMinimizedWin ) w )
   , ((0, kKPminus), withFocused minimizeWindow)
-  , ((0, kKPzero), goToSelected def)
+  , ((0, kKPzero), goToSelected def >> restoreFocused)
   , ((0, kKPdot), sendMessage ToggleLayout)
   , ((0, kKPplus), sendMessage RestoreNextMinimizedWin )
   , ((0, kKPmute), spawn "systemctl suspend")
@@ -114,7 +116,7 @@ xkM=
   ]
 myKeysP =
   [ ("<Insert>", spawn "xdotool click 2")
-  , ("M-c", spawn "clipmenu -z -w 800 -l 50 -p 'clip'")
+  , ("M-c", clipcmd)
   , ("M-h", moveTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
   , ("M-l", moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
   , ("M-j", withFocused minimizeWindow)
@@ -123,7 +125,7 @@ myKeysP =
   , ("M-<Right>", shiftTo Next EmptyWS)
   , ("M-q",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
   , ("M-<Tab>", toggleWS' ["NSP"])
-  , ("M-t",  spawn $ urtRun myTerminal "/bin/zsh -c 'sleep 1; xmctl tagterm && byobu-tmux new-session'" )
+  , ("M-t",  byobucmd )
   , ("M4-i <Space>", appendFilePrompt def "/tmp/urxvt-python.fifo")
   , ("M4-i <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-python.fifo")
   , ("M4-i <Return>", spawn "echo '\r' >> /tmp/urxvt-python.fifo")
@@ -139,23 +141,29 @@ myKeysP =
   , ("M4-r <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-range.fifo")
   , ("M4-r <Return>", spawn "echo '\r' >> /tmp/urxvt-range.fifo")
   ]
-
+clipcmd = spawn "clipmenu -z -w 800 -l 50 -p 'clip'"
+byobucmd = spawn $ urtRun myTerminal "/bin/zsh -c 'sleep 1; xmctl tagterm && byobu-tmux new-session'"
 mC =
   [ ("minone", withFocused minimizeWindow )
   , ("tagterm", withFocused $ addTag "myterm")
   , ("rest",  sendMessage RestoreNextMinimizedWin )
   , ("jmenu", launchAct )
   , ("srmenu", srchAct )
-  , ("nvim", namedScratchpadAction scratchpads nPad )
-  , ("ipython", namedScratchpadAction scratchpads iPad )
-  , ("perl", namedScratchpadAction scratchpads pPad )
-  , ("ranger", namedScratchpadAction scratchpads rPad )
+  , ("nvim", namedScratchpadAction scratchpads nPad >> restoreFocused)
+  , ("ipython", namedScratchpadAction scratchpads iPad >> restoreFocused)
+  , ("perl", namedScratchpadAction scratchpads pPad >> restoreFocused)
+  , ("ranger", namedScratchpadAction scratchpads rPad >> restoreFocused)
+  , ("htop", namedScratchpadAction scratchpads hPad >> restoreFocused)
+  , ("clipmenu", clipcmd)
+  , ("myterm", spawn $ myTerminal ++ " -name urxvt -n urxvt"  )
   , ("allpads", corePadsM_ )
-  , ("byobu", spawn $ urtRun myTerminal "/bin/zsh -c 'sleep 1; xmctl tagterm && byobu-tmux new-session'" )
+  , ("byobu", byobucmd )
   , ("pomodoro", spawn "start-pomodoro")
-  , ("bringbyo", withTaggedGlobalP "myterm" shiftHere >> focusUpTaggedGlobal "myterm")
+  , ("bringbyo", withTaggedGlobalP "myterm" shiftHere >> focusUpTaggedGlobal "myterm" >> restoreFocused)
   , ("sendbyo", withTaggedP "myterm" (W.shiftWin "NSP"))
   , ("nextempty", mvNEmpty)
+  , ("suicide", withFocused hideWindow)
+  , ("revive", withAll showWindow)
   ]
 xmC = return mC
 scratchpads =
