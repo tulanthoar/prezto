@@ -22,9 +22,6 @@ mkdir -p ${DEST}
 ln -s ${ZDOTD}/byobu/keybindings.tmux ${DEST}/keybindings.tmux
 ln -s ${ZDOTD}/byobu/status ${DEST}/status
 ln -s ${ZDOTD}/byobu/tmux.conf ${DEST}/.tmux.conf
-#DEST=${HOME}/.config/nvim/bundle/perl-support/templates
-#mkdir -p ${DEST}
-#ln -s ${ZDOTD}/nvim/bundle/perl-support/templates/comments.templates ${DEST}/comments.templates
 DEST=${HOME}/.config/pymodoro
 mkdir -p ${DEST}
 ln -s ${ZDOTD}/pymodoro/config ${DEST}/config
@@ -32,10 +29,6 @@ DEST=${HOME}/.config/qutebrowser
 mkdir -p ${DEST}
 ln -s ${ZDOTD}/qutebrowser/keys.conf ${DEST}/keys.conf
 ln -s ${ZDOTD}/qutebrowser/qutebrowser.conf ${DEST}/qutebrowser.conf
-#DEST=/usr/lib/urxvt/perl
-#sudo mkdir -p ${DEST}
-#sudo ln -s ${ZDOTD}/urxvt/autocomplete-ALL-the-things ${DEST}/autocomplete-ALL-the-things
-#sudo ln -s ${ZDOTD}/urxvt/fifo ${DEST}/fifo
 DEST=${HOME}/.xmonad
 mkdir -p ${DEST}
 ln -s ${ZDOTD}/xmonad/xmonad.hs ${DEST}/xmonad.hs
