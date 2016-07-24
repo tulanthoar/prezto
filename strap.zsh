@@ -4,7 +4,7 @@ ZPREZD=$HOME/.zprezto
 ZRCD=${ZPREZD}/runcoms
 ZBIND=${ZPREZD}/bin
 ZDOTD=${ZPREZD}/dotfiles
-for f in Xresources xserverrc zlogin zlogout zpreztorc zprofile zshenv zshrc; do
+for f in Xresources xserverrc zlogin zlogout zpreztorc zprofile zshenv zshrc xinitrc; do
   ln -s ${ZRCD}/${f} ${HOME}/.${f}
 done
 mkdir -p ${HOME}/bin
@@ -40,3 +40,6 @@ DEST=${HOME}/.xmonad
 mkdir -p ${DEST}
 ln -s ${ZDOTD}/xmonad/xmonad.hs ${DEST}/xmonad.hs
 ln -s ${ZDOTD}/xmonad/xmctl.hs ${DEST}/xmctl.hs
+curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
+mkdir -p ${HOME}/.config/nvim/bundle
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
