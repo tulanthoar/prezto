@@ -194,7 +194,7 @@ myDzenPP p = def
   , ppTitle           = dzenColor myTFGColor myTBGColor . trim . shorten 100
   , ppLayout          = dzenColor myLFGColor myLBGColor . shorten 0
   , ppSep             = dzenColor sepFGColor sepBGColor " -||- "
-  , ppExtras          = [L.date "%a %b %d", L.logCmd "diskspace", L.logCmd "coretemp", L.logCmd "pymodoro-out"]
+  , ppExtras          = [L.date "%a %b %d", L.logCmd "diskspace", L.logCmd "corezerot", L.logCmd "pymodoro-out"]
   , ppOutput          = hPutStrLn p }
 
 kKPplus=0xffab :: KeySym
