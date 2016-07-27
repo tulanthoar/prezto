@@ -47,7 +47,7 @@ myTerminal = "urxvt" :: String
 myModMask = mod3Mask :: KeyMask
 wmNameM_ = setWMName "LG3D" :: X()
 uniqueInits = ["sudo updatedb", "modkey", "tilda -c xmenu", "maybeclipmenud", "mayberedshift"] :: [String]
-xInitM_ = mapM_ spawnOnce uniqueInits
+xInitM_ = mapM_ spawnOnce uniqueInits :: X()
 wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"] :: [WorkspaceId]
 menuH = 15 :: Int
 magFactor = 1.2 :: Rational
@@ -60,13 +60,14 @@ launchAct = spawn dmRun :: X()
 srchAct = spawn dmSrch :: X()
 dmRun = "j4-dmenu-desktop --display-binary --term="++myTerminal++" --dmenu='dmenu -w 600 -y "++show menuH++" -z -p launch -l 50'" :: String
 dmSrch = "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50" :: String
+centrPtr = updatePointer (0.5, 0.5) (0, 0) :: X()
 
 mylayoutHook = boringAuto $ G.gaps [(G.U,menuH)] $ M.magnifiercz magFactor $
   minimize $ toggleLayouts (GV.SplitGrid GV.T 1 2 (1%2) (16%10) delta) $ Tall 1 delta ratio
   where
     delta = 3 % 100
     ratio = 11 % 20
--- Manage hook
+
 myManageHook = namedScratchpadManageHook scratchpads <+> manageDocks
   <+> composeOne [ isFullscreen -?> doFullFloat ]
   <+> composeAll
@@ -86,7 +87,7 @@ xmConf p = ewmh $ def
   , normalBorderColor  = cDkDkGray
   , focusedBorderColor = limeGreen
   , workspaces         = wsList
-  , logHook            = dynamicLogWithPP ( myDzenPP p ) >> workspaceHistoryHook >> updatePointer (0.5, 0.5) (0, 0)
+  , logHook            = dynamicLogWithPP ( myDzenPP p ) >> workspaceHistoryHook >> centrPtr
   , handleEventHook    = docksEventHook <+> minimizeEventHook <+> serverModeEventHookCmd' xmC <+> fullscreenEventHook
   , keys               = \c -> fromList xkM
   }
@@ -97,7 +98,7 @@ main = do
   xmonad $ xmConf dzP
     `additionalKeysP` myKeysP
 
-restoreFocused = withFocused ( sendMessage . RestoreMinimizedWin ) :: X()
+restoreFocused = withFocused $ sendMessage . RestoreMinimizedWin :: X()
 xkM=
   [ ((0, kKPenter), withFocused $ \w -> withAll minimizeWindow >> (sendMessage . RestoreMinimizedWin ) w )
   , ((0, kKPminus), withFocused minimizeWindow)
@@ -116,7 +117,6 @@ xkM=
   ]
 myKeysP =
   [ ("<Insert>", spawn "xdotool click 2")
-  , ("M-c", clipcmd)
   , ("M-h", moveTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
   , ("M-l", moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
   , ("M-j", withFocused minimizeWindow)
@@ -126,6 +126,7 @@ myKeysP =
   , ("M-q",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
   , ("M-<Tab>", toggleWS' ["NSP"])
   , ("M-t",  byobucmd )
+  , ("M4-t", myTermM_ )
   , ("M4-i <Space>", appendFilePrompt def "/tmp/urxvt-python.fifo")
   , ("M4-i <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-python.fifo")
   , ("M4-i <Return>", spawn "echo '\r' >> /tmp/urxvt-python.fifo")
@@ -141,8 +142,9 @@ myKeysP =
   , ("M4-r <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-range.fifo")
   , ("M4-r <Return>", spawn "echo '\r' >> /tmp/urxvt-range.fifo")
   ]
-clipcmd = spawn "clipmenu -z -w 800 -l 50 -p 'clip'"
-byobucmd = spawn $ urtRun myTerminal "/bin/zsh -c 'sleep 1; xmctl tagterm && byobu-tmux new-session'"
+clipcmd = spawn "clipmenu -z -w 800 -l 50 -p 'clip'" :: X()
+byobucmd = spawn $ urtRun myTerminal "/bin/zsh -c 'sleep 1; xmctl tagterm && byobu-tmux new-session'" :: X()
+myTermM_ = spawn $ myTerminal ++ " -name urxvt -n urxvt" :: X()
 mC =
   [ ("minone", withFocused minimizeWindow )
   , ("tagterm", withFocused $ addTag "myterm")
@@ -155,7 +157,7 @@ mC =
   , ("ranger", namedScratchpadAction scratchpads rPad >> restoreFocused)
   , ("htop", namedScratchpadAction scratchpads hPad >> restoreFocused)
   , ("clipmenu", clipcmd)
-  , ("myterm", spawn $ myTerminal ++ " -name urxvt -n urxvt"  )
+  , ("myterm", myTermM_ )
   , ("allpads", corePadsM_ )
   , ("byobu", byobucmd )
   , ("pomodoro", spawn "start-pomodoro")
@@ -172,19 +174,18 @@ scratchpads =
   , NS nPad nRun (icon =? init nPad) nonFloating
   , NS rPad rRun (icon =? init rPad) nonFloating
   , NS pPad prepl (icon =? init pPad) nonFloating
-  , NS myBrowser myBrowser (className =? "qutebrowser") nonFloating
   ]
+icon = stringProperty "WM_ICON_NAME"
 iPad = "ipy"
 pPad = "perl"
 nPad = "neovim"
 rPad = "ranger"
 hPad = "htop"
+urtRun ex cmd = concat [myTerminal, " -name ", init ex," -n ", init ex, " -e ", cmd]
 nRun = urtRun nPad "nvim -u $ZDOTD/nvim/init.vim ~/buffer"
 rRun = urtRun rPad "ranger"
-urtRun ex cmd = concat [myTerminal, " -name ", init ex," -n ", init ex, " -e ", cmd]
 prepl = urtRun pPad "reply"
 pyrepl= urtRun iPad "ptipython"
-icon = stringProperty "WM_ICON_NAME"
 myDzenPP p = def
   { ppCurrent         = dzenColor myFFGColor myFBGColor
   , ppVisible         = dzenColor myVFGColor myVBGColor
@@ -205,12 +206,6 @@ raisevol=0x1008ff13 :: KeySym
 lowvol=0x1008ff11 :: KeySym
 kKPmute=0x1008ff12 :: KeySym
 kKPenter=0xff8d :: KeySym
-
--- Avoid changing master on new window creation
--- avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
--- avoidMaster = W.modify' $ \c -> case c of
---   W.Stack t [] (r:rs) -> W.Stack t [r] rs
---   _ -> c
 
 limeGreen = "#a3d930" :: String
 ltBlue = "#1793d1" :: String
