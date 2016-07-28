@@ -1,47 +1,35 @@
-import Control.Monad
-import Data.List
+import Control.Monad(replicateM_)
 import Data.Map(fromList)
-import Data.Maybe(fromMaybe)
 import Data.Ratio((%))
 import qualified XMonad.Layout.Gaps as G
 import qualified XMonad.Layout.GridVariants as GV
-import qualified XMonad.Layout.Magnifier as M
+import XMonad.Layout.Magnifier (magnifiercz)
 import qualified XMonad.StackSet as W
-import qualified XMonad.Util.Dzen as D
-import qualified XMonad.Util.Loggers as L
+import XMonad.Util.Loggers (date, logCmd)
 import System.IO(hPutStrLn)
 import XMonad
-import XMonad.Actions.Commands
 import XMonad.Actions.CycleWS
-import XMonad.Actions.FocusNth
-import XMonad.Actions.GridSelect
+import XMonad.Actions.FocusNth (focusNth)
+import XMonad.Actions.GridSelect (goToSelected)
 import XMonad.Actions.TagWindows
 import XMonad.Actions.UpdatePointer (updatePointer)
-import XMonad.Actions.WithAll
+import XMonad.Actions.WithAll (withAll)
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.Minimize
-import XMonad.Hooks.ServerMode
-import XMonad.Hooks.SetWMName
-import XMonad.Layout.BoringWindows
+import XMonad.Hooks.EwmhDesktops (ewmh)
+import XMonad.Hooks.ManageDocks (manageDocks, docksEventHook)
+import XMonad.Hooks.Minimize (minimizeEventHook)
+import XMonad.Hooks.ServerMode (serverModeEventHookCmd')
+import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Layout.Minimize
-import XMonad.Layout.NoBorders
--- import XMonad.Layout.Reflect
 import XMonad.Layout.ToggleLayouts
 import XMonad.Hooks.WorkspaceHistory (workspaceHistoryHook)
-import XMonad.ManageHook
-import XMonad.Prompt
-import XMonad.Prompt.AppendFile
--- import XMonad.Prompt.AppLauncher
-import XMonad.Util.Dmenu
+import XMonad.Prompt.AppendFile (appendFilePrompt)
 import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
 import XMonad.Util.NamedScratchpad
-import XMonad.Util.Paste
-import XMonad.Util.Run(safeSpawn,spawnPipe, runProcessWithInputAndWait)
-import XMonad.Util.SpawnOnce
-import XMonad.Util.XUtils
+import XMonad.Util.Paste (sendKey)
+import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.SpawnOnce (spawnOnce)
+import XMonad.Util.XUtils (hideWindow)
 
 myTerminal = "urxvt" :: String
 myModMask = mod3Mask :: KeyMask
@@ -62,14 +50,13 @@ dmRun = "j4-dmenu-desktop --display-binary --term="++myTerminal++" --dmenu='dmen
 dmSrch = "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50" :: String
 centrPtr = updatePointer (0.5, 0.5) (0, 0) :: X()
 
-mylayoutHook = boringAuto $ G.gaps [(G.U,menuH)] $ M.magnifiercz magFactor $
+mylayoutHook = G.gaps [(G.U,menuH)] $ magnifiercz magFactor $
   minimize $ toggleLayouts (GV.SplitGrid GV.T 1 2 (1%2) (16%10) delta) $ Tall 1 delta ratio
   where
     delta = 3 % 100
     ratio = 11 % 20
 
 myManageHook = namedScratchpadManageHook scratchpads <+> manageDocks
-  <+> composeOne [ isFullscreen -?> doFullFloat ]
   <+> composeAll
   [ className =? "Xmessage"  --> doFloat
   , className =? "stmenu" --> doFloat
@@ -88,15 +75,14 @@ xmConf p = ewmh $ def
   , focusedBorderColor = limeGreen
   , workspaces         = wsList
   , logHook            = dynamicLogWithPP ( myDzenPP p ) >> workspaceHistoryHook >> centrPtr
-  , handleEventHook    = docksEventHook <+> minimizeEventHook <+> serverModeEventHookCmd' xmC <+> fullscreenEventHook
+  , handleEventHook    = docksEventHook <+> minimizeEventHook <+> serverModeEventHookCmd' xmC
   , keys               = \c -> fromList xkM
   }
 
 main :: IO()
 main = do
   dzP <- spawnPipe $ "dzen2 -h "++show menuH++" -ta c -p"
-  xmonad $ xmConf dzP
-    `additionalKeysP` myKeysP
+  xmonad $ xmConf dzP `additionalKeysP` myKeysP
 
 restoreFocused = withFocused $ sendMessage . RestoreMinimizedWin :: X()
 xkM=
@@ -115,6 +101,7 @@ xkM=
   [ ((0, k), focusNth w)
     | (w, k) <- zip [0 .. 8] [xK_KP_End, 0xff99, 0xff9b, 0xff96, 0xff9d, 0xff98, 0xff95, 0xff97, 0xff9a ]
   ]
+
 myKeysP =
   [ ("<Insert>", spawn "xdotool click 2")
   , ("M-h", moveTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
@@ -142,9 +129,11 @@ myKeysP =
   , ("M4-r <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-range.fifo")
   , ("M4-r <Return>", spawn "echo '\r' >> /tmp/urxvt-range.fifo")
   ]
+
 clipcmd = spawn "clipmenu -z -w 800 -l 50 -p 'clip'" :: X()
 byobucmd = spawn $ urtRun myTerminal "/bin/zsh -c 'sleep 1; xmctl tagterm && byobu-tmux new-session'" :: X()
 myTermM_ = spawn $ myTerminal ++ " -name urxvt -n urxvt" :: X()
+
 mC =
   [ ("minone", withFocused minimizeWindow )
   , ("tagterm", withFocused $ addTag "myterm")
@@ -161,13 +150,13 @@ mC =
   , ("allpads", corePadsM_ )
   , ("byobu", byobucmd )
   , ("pomodoro", spawn "start-pomodoro")
-  , ("bringbyo", withTaggedGlobalP "myterm" shiftHere >> focusUpTaggedGlobal "myterm" >> restoreFocused)
+  , ("bringbyo", withTaggedGlobalP "myterm" shiftHere >> focusUpTagged "myterm" >> restoreFocused)
   , ("sendbyo", withTaggedP "myterm" (W.shiftWin "NSP"))
   , ("nextempty", mvNEmpty)
   , ("suicide", withFocused hideWindow)
-  , ("revive", withAll showWindow)
   ]
 xmC = return mC
+
 scratchpads =
   [ NS hPad "urxvt -e htop" (title =? "htop") nonFloating
   , NS iPad pyrepl (icon =? init iPad) nonFloating
@@ -195,7 +184,7 @@ myDzenPP p = def
   , ppTitle           = dzenColor myTFGColor myTBGColor . trim . shorten 100
   , ppLayout          = dzenColor myLFGColor myLBGColor . shorten 0
   , ppSep             = dzenColor sepFGColor sepBGColor " -||- "
-  , ppExtras          = [L.date "%a %b %d", L.logCmd "diskspace", L.logCmd "corezerot", L.logCmd "pymodoro-out"]
+  , ppExtras          = [date "%a %b %d", logCmd "diskspace", logCmd "corezerot", logCmd "pymodoro-out"]
   , ppOutput          = hPutStrLn p }
 
 kKPplus=0xffab :: KeySym
