@@ -1,11 +1,6 @@
 import Control.Monad(replicateM_)
 import Data.Map(fromList)
 import Data.Ratio((%))
-import qualified XMonad.Layout.Gaps as G
-import qualified XMonad.Layout.GridVariants as GV
-import XMonad.Layout.Magnifier (magnifiercz)
-import qualified XMonad.StackSet as W
-import XMonad.Util.Loggers (date, logCmd)
 import System.IO(hPutStrLn)
 import XMonad
 import XMonad.Actions.CycleWS
@@ -20,11 +15,16 @@ import XMonad.Hooks.ManageDocks (manageDocks, docksEventHook)
 import XMonad.Hooks.Minimize (minimizeEventHook)
 import XMonad.Hooks.ServerMode (serverModeEventHookCmd')
 import XMonad.Hooks.SetWMName (setWMName)
+import XMonad.Hooks.WorkspaceHistory (workspaceHistoryHook)
+import qualified XMonad.Layout.Gaps as G
+import qualified XMonad.Layout.GridVariants as GV
+import XMonad.Layout.Magnifier (magnifiercz)
 import XMonad.Layout.Minimize
 import XMonad.Layout.ToggleLayouts
-import XMonad.Hooks.WorkspaceHistory (workspaceHistoryHook)
 import XMonad.Prompt.AppendFile (appendFilePrompt)
+import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
+import XMonad.Util.Loggers (date, logCmd)
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Paste (sendKey)
 import XMonad.Util.Run(spawnPipe)
@@ -38,23 +38,16 @@ uniqueInits = ["sudo updatedb", "modkey", "tilda -c xmenu", "maybeclipmenud", "m
 xInitM_ = mapM_ spawnOnce uniqueInits :: X()
 wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"] :: [WorkspaceId]
 menuH = 15 :: Int
-magFactor = 1.2 :: Rational
+mag = 1.2 :: Rational
 mvNEmpty = moveTo Next EmptyWS :: X()
-mvNNEmpty = moveTo Next NonEmptyWS :: X()
-mvPNEmpty = moveTo Prev NonEmptyWS :: X()
 corePadsM_ = mapM_ (namedScratchpadAction scratchpads) [iPad, pPad, nPad, rPad] :: X()
 myBrowser = "qutebrowser" :: String
-launchAct = spawn dmRun :: X()
-srchAct = spawn dmSrch :: X()
-dmRun = "j4-dmenu-desktop --display-binary --term="++myTerminal++" --dmenu='dmenu -w 600 -y "++show menuH++" -z -p launch -l 50'" :: String
-dmSrch = "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50" :: String
+launchAct = spawn $ "j4-dmenu-desktop --display-binary --term="++myTerminal++" --dmenu='dmenu -w 600 -y "++show menuH++" -z -p launch -l 50'" :: X()
+srchAct = spawn $  "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50" :: X()
 centrPtr = updatePointer (0.5, 0.5) (0, 0) :: X()
 
-mylayoutHook = G.gaps [(G.U,menuH)] $ magnifiercz magFactor $
-  minimize $ toggleLayouts (GV.SplitGrid GV.T 1 2 (1%2) (16%10) delta) $ Tall 1 delta ratio
-  where
-    delta = 3 % 100
-    ratio = 11 % 20
+mylayoutHook = G.gaps [(G.U,menuH)] $ magnifiercz mag $ minimize $ toggleLayouts (GV.SplitGrid GV.T 1 2 (1%2) (16%10) delta) $ Tall 1 delta (11%20)
+  where delta = 3 % 100
 
 myManageHook = namedScratchpadManageHook scratchpads <+> manageDocks
   <+> composeAll
@@ -114,20 +107,6 @@ myKeysP =
   , ("M-<Tab>", toggleWS' ["NSP"])
   , ("M-t",  byobucmd )
   , ("M4-t", myTermM_ )
-  , ("M4-i <Space>", appendFilePrompt def "/tmp/urxvt-python.fifo")
-  , ("M4-i <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-python.fifo")
-  , ("M4-i <Return>", spawn "echo '\r' >> /tmp/urxvt-python.fifo")
-  , ("M4-n <Space>", spawn "echo 'A' >> /tmp/urxvt-neovi.fifo" >> appendFilePrompt def "/tmp/urxvt-neovi.fifo" >> spawn "echo 'jf' >> /tmp/urxvt-neovi.fifo")
-  , ("M4-n <Insert>", spawn "echo A`xsel -o`jf >> /tmp/urxvt-neovi.fifo")
-  , ("M4-n <Return>", spawn "echo '\r' >> /tmp/urxvt-neovi.fifo")
-  , ("M4-p <Space>", appendFilePrompt def "/tmp/urxvt-per.fifo" )
-  , ("M4-p <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-per.fifo")
-  , ("M4-p <Return>", spawn "echo '\r' >> /tmp/urxvt-per.fifo")
-  , ("M4-b <Insert>", spawn "echo `xsel -o` >> /tmp/urxv.fifo")
-  , ("M4-b <Space>", appendFilePrompt def "/tmp/urxv.fifo")
-  , ("M4-r <Space>", appendFilePrompt def "/tmp/urxvt-range.fifo")
-  , ("M4-r <Insert>", spawn "echo `xsel -o` >> /tmp/urxvt-range.fifo")
-  , ("M4-r <Return>", spawn "echo '\r' >> /tmp/urxvt-range.fifo")
   ]
 
 clipcmd = spawn "clipmenu -z -w 800 -l 50 -p 'clip'" :: X()
