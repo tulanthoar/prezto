@@ -17,11 +17,10 @@ source "${ZRCD}/myfunctions.zsh"
 source "${ZRCD}/myaliases.zsh"
 source "${ZRCD}/mysnippets.zsh"
 source "${HOME}/.enhancd/init.sh"
-export T4=$(date +%S%N)
 eval infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 stty -ixon
-# RPROMPT='$editor_info[keymap] $(nice_exit_code)'
 bind_keys
+export T4=$(date +%S%N)
 compinit -i -d "${ZDOTDIR:-$HOME}/.zcompdump"
 export T5=$(date +%S%N)
 perl -e 'my $num = int(($ENV{"T2"}-$ENV{"T1"})/1_000_000); print "$num" . "\n"'

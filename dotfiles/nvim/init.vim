@@ -82,7 +82,7 @@ let g:ctrlp_cache_dir = '$HOME/.config/nvim/files/cache/ctrlp'
 let g:ctrlp_max_depth = 40
 let g:ctrlp_max_files = 0
 let g:ctrlp_show_hidden = 1
-let g:ctrlp_user_command ='ag -i -t --hidden -g "" %s'
+let g:ctrlp_user_command ='/usr/bin/ag -g "" %s'
 let g:ctrlp_mruf_max = 2500
 let g:ctrlp_lazy_update = 20
 let g:deoplete#auto_complete_start_length = 1
@@ -142,7 +142,7 @@ let g:Tlist_Use_SingleClick=1
 let g:undotree_SetFocusWhenToggle=1
 let g:yankring_min_element_length = 2
 let g:yankring_replace_n_nkey = '<C-n>'
-let g:yankring_replace_n_pkey = ',<C-b>'
+let g:yankring_replace_n_pkey = '<C-b>'
 let g:yankring_window_height = 12
 let g:Perl_PerlTags           = 'on'
 
@@ -265,10 +265,10 @@ vnoremap <silent> # :call VisualSelection('b')<cr>
 vnoremap <silent> * :call VisualSelection('f')<cr>
 
 let mapleader="-"
-nnoremap <unique> <leader>B       :CtrlPBuffer<cr>
+nnoremap <unique> <leader>b       :CtrlPBuffer<cr>
 nnoremap <unique> <leader>U       :CtrlPChange<cr>
 nnoremap <unique> <leader>D       :CtrlPDir<cr>
-nnoremap <unique> <leader>F       :CtrlP<cr>
+nnoremap <unique> <leader>f       :CtrlP<cr>
 nnoremap <unique> <leader>L       :CtrlPLine<cr>
 nnoremap <unique> <leader>p       :YRShow<cr>
 nnoremap <unique> <leader>u       :UndotreeToggle<cr>
