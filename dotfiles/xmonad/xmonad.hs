@@ -3,6 +3,7 @@ import Data.Map(fromList)
 import Data.Ratio((%))
 import System.IO(hPutStrLn)
 import XMonad
+import XMonad.Actions.CopyWindow (copy, copyToAll, kill1)
 import XMonad.Actions.CycleWS
 import XMonad.Actions.FocusNth (focusNth)
 import XMonad.Actions.GridSelect (goToSelected)
@@ -115,6 +116,9 @@ myTermM_ = spawn $ myTerminal ++ " -name urxvt -n urxvt" :: X()
 
 mC =
   [ ("minone", withFocused minimizeWindow )
+  , ("copyall", windows copyToAll)
+  , ("killone", kill1)
+  , ("copykill", windows ( copy "NSP" )>> kill1)
   , ("tagterm", withFocused $ addTag "myterm")
   , ("rest",  sendMessage RestoreNextMinimizedWin )
   , ("jmenu", launchAct )
