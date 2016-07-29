@@ -135,7 +135,7 @@ mC =
   , ("pomodoro", spawn "start-pomodoro")
   , ("bringbyo", withTaggedGlobalP "myterm" shiftHere >> focusUpTagged "myterm" >> restoreFocused)
   , ("sendbyo", withTaggedP "myterm" (W.shiftWin "NSP"))
-  , ("nextempty", mvNEmpty)
+  , ("nextempty", withFocused (addTag "shifter") >> mvNEmpty >> withTaggedGlobalP "shifter" shiftHere >> withTaggedGlobal "shifter" unTag)
   , ("suicide", withFocused hideWindow)
   ]
 xmC = return mC
