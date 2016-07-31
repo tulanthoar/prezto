@@ -3,7 +3,6 @@ import Data.Map(fromList)
 import Data.Ratio((%))
 import System.IO(hPutStrLn)
 import XMonad
-import XMonad.Actions.CopyWindow (copy, copyToAll, kill1)
 import XMonad.Actions.CycleWS
 import XMonad.Actions.FocusNth (focusNth)
 import XMonad.Actions.GridSelect (goToSelected)
@@ -30,7 +29,6 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Util.Paste (sendKey)
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.SpawnOnce (spawnOnce)
-import XMonad.Util.XUtils (hideWindow)
 
 myTerminal = "urxvt" :: String
 myModMask = mod3Mask :: KeyMask
@@ -116,9 +114,6 @@ myTermM_ = spawn $ myTerminal ++ " -name urxvt -n urxvt" :: X()
 
 mC =
   [ ("minone", withFocused minimizeWindow )
-  , ("copyall", windows copyToAll)
-  , ("killone", kill1)
-  , ("copykill", windows ( copy "NSP" )>> kill1)
   , ("tagterm", withFocused $ addTag "myterm")
   , ("rest",  sendMessage RestoreNextMinimizedWin )
   , ("jmenu", launchAct )
@@ -133,12 +128,7 @@ mC =
   , ("allpads", corePadsM_ )
   , ("byobu", byobucmd )
   , ("pomodoro", spawn "start-pomodoro")
-  -- , ("bringbyo", withTaggedGlobalP "myterm" shiftHere >> focusUpTagged "myterm" >> restoreFocused)
-  , ("bringbyo", byobucmd)
-  -- , ("sendbyo", withTaggedP "myterm" (W.shiftWin "NSP"))
-  , ("sendbyo", byobucmd)
   , ("nextempty", withFocused (addTag "shifter") >> mvNEmpty >> withTaggedGlobalP "shifter" shiftHere >> withTaggedGlobal "shifter" unTag)
-  , ("suicide", withFocused hideWindow)
   ]
 xmC = return mC
 
