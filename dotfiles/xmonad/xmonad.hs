@@ -41,7 +41,7 @@ wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"] :: [WorkspaceId]
 menuH = 15 :: Int
 mag = 1.2 :: Rational
 mvNEmpty = moveTo Next EmptyWS :: X()
-corePadsM_ = mapM_ (namedScratchpadAction scratchpads) [iPad, pPad, nPad, rPad] :: X()
+corePadsM_ = mapM_ (namedScratchpadAction scratchpads) [bPad, iPad, pPad, nPad, rPad] :: X()
 myBrowser = "qutebrowser" :: String
 launchAct = spawn $ "j4-dmenu-desktop --display-binary --term="++myTerminal++" --dmenu='dmenu -w 600 -y "++show menuH++" -z -p launch -l 50'" :: X()
 srchAct = spawn $  "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50" :: X()
@@ -111,7 +111,7 @@ myKeysP =
   ]
 
 clipcmd = spawn "clipmenu -z -w 800 -l 50 -p 'clip'" :: X()
-byobucmd = spawn $ urtRun myTerminal "/bin/zsh -c 'sleep 1; xmctl tagterm && byobu-tmux new-session'" :: X()
+byobucmd = namedScratchpadAction scratchpads bPad
 myTermM_ = spawn $ myTerminal ++ " -name urxvt -n urxvt" :: X()
 
 mC =
@@ -133,8 +133,10 @@ mC =
   , ("allpads", corePadsM_ )
   , ("byobu", byobucmd )
   , ("pomodoro", spawn "start-pomodoro")
-  , ("bringbyo", withTaggedGlobalP "myterm" shiftHere >> focusUpTagged "myterm" >> restoreFocused)
-  , ("sendbyo", withTaggedP "myterm" (W.shiftWin "NSP"))
+  -- , ("bringbyo", withTaggedGlobalP "myterm" shiftHere >> focusUpTagged "myterm" >> restoreFocused)
+  , ("bringbyo", byobucmd)
+  -- , ("sendbyo", withTaggedP "myterm" (W.shiftWin "NSP"))
+  , ("sendbyo", byobucmd)
   , ("nextempty", withFocused (addTag "shifter") >> mvNEmpty >> withTaggedGlobalP "shifter" shiftHere >> withTaggedGlobal "shifter" unTag)
   , ("suicide", withFocused hideWindow)
   ]
@@ -146,14 +148,17 @@ scratchpads =
   , NS nPad nRun (icon =? init nPad) nonFloating
   , NS rPad rRun (icon =? init rPad) nonFloating
   , NS pPad prepl (icon =? init pPad) nonFloating
-  ]
+  , NS bPad bRun' (netName =? "byobu_tmux") nonFloating
+  ] where netName = stringProperty "_NET_WM_NAME"
 icon = stringProperty "WM_ICON_NAME"
 iPad = "ipy"
 pPad = "perl"
 nPad = "neovim"
 rPad = "ranger"
 hPad = "htop"
+bPad = "byobu"
 urtRun ex cmd = concat [myTerminal, " -name ", init ex," -n ", init ex, " -e ", cmd]
+bRun' = unwords ["urxvt",  "-name", "urxv", "-n", "urxv", "-e", "byobu-tmux", "new-session"]
 nRun = urtRun nPad "nvim -u $ZDOTD/nvim/init.vim ~/buffer"
 rRun = urtRun rPad "ranger"
 prepl = urtRun pPad "reply"
