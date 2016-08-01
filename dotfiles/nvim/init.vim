@@ -1,9 +1,9 @@
 "init on 2016-05-26
 let mapleader=","
 filetype off
-let &path='/usr/include,/usr/include/c++/6.1.1,/home/ant/apps/code/include,'
-set rtp+=/home/ant/.config/nvim/bundle/Vundle.vim
-call vundle#begin('/home/ant/.config/nvim/bundle')
+let &path='/usr/include,/usr/include/c++/6.1.1,$HOME/apps/code/include,'
+set rtp+=$HOME/.config/nvim/bundle/Vundle.vim
+call vundle#begin('$HOME/.config/nvim/bundle')
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ascenator/L9'
 Plugin 'ervandew/supertab'
@@ -11,7 +11,6 @@ Plugin 'bling/vim-airline'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'neovimhaskell/haskell-vim.git'
 Plugin 'mbbill/undotree'
-" Plugin 'jiangmiao/auto-pairs'
 Plugin 'edsono/vim-matchit'
 Plugin 'Konfekt/FastFold'
 Plugin 'nanotech/jellybeans.vim'
@@ -59,7 +58,7 @@ call vundle#end()
 filetype plugin indent on
 set t_Co=256  " make use of 256 terminal colors
 let g:seoul256_background = 234
-let g:jellybeans_background_color_256=233
+let g:jellybeans_background_color_256 = 233
 color jellybeans
 syntax enable
 let g:jellybeans_use_term_italics = 1
@@ -69,20 +68,20 @@ let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_section_b ='%{getcwd()}'
-let g:airline_theme='molokai'
+let g:airline_section_b  = '%{getcwd()}'
+let g:airline_theme = 'molokai'
 let g:bufferline_echo = 0
 let g:bufferline_modified = '**'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_regexp = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:15,results:15'
 let g:ctrlp_working_path_mode = 'a'
-let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_cache_dir = '$HOME/.config/nvim/files/cache/ctrlp'
 let g:ctrlp_max_depth = 40
 let g:ctrlp_max_files = 0
 let g:ctrlp_show_hidden = 1
-let g:ctrlp_user_command ='/usr/bin/ag -g "" %s'
+let g:ctrlp_user_command  = '/usr/bin/ag -g "" %s'
 let g:ctrlp_mruf_max = 2500
 let g:ctrlp_lazy_update = 20
 let g:deoplete#auto_complete_start_length = 1
@@ -93,7 +92,7 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_use_upper = 1
 let g:expand_region_text_objects = {'iw':0, 'iW':0, 'i"':0, 'i''':0, 'i]':1, 'ib':1, 'iB':1, 'il':0, 'ii':1, 'ip':0, 'ie':0}
-let g:haddock_browser="/usr/bin/qutebrowser"
+let g:haddock_browser = "/usr/bin/qutebrowser"
 let g:haskell_enable_arrowsyntax = 1
 let g:haskell_enable_pattern_synonyms = 1
 let g:haskell_enable_quantification = 1
@@ -104,25 +103,25 @@ let g:indent_guides_default_mapping = 0
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 let g:indent_guides_guide_size = 1
-let g:indent_guides_start_level=2
+let g:indent_guides_start_level = 2
 let g:jedi#use_tabs_not_buffers = 1
 let g:miniBufExplCloseOnSelect = 1
 let g:miniBufExplCycleArround = 1
 let g:miniBufExplorerAutoStart = 0
 let g:miniBufExplUseSingleClick = 1
-let g:multi_cursor_next_key="<F2>"
+let g:multi_cursor_next_key = "<F2>"
 let g:multi_cursor_visual_maps = {'i':1, 'a':1, 'f':1, 'F':1, 't':1, 'T':1, 'S':1}
-let g:NERDTreeCascadeOpenSingleChildDir=1
-let g:NERDTreeIgnore=['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
-let g:NERDTreeMinimalUI=1
-let g:NERDTreeQuitOnOpen=0
+let g:NERDTreeCascadeOpenSingleChildDir = 1
+let g:NERDTreeIgnore = ['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeQuitOnOpen = 0
 let g:NERDTreeShowFiles = 0
-let g:NERDTreeShowHidden=1
-let g:NERDTreeShowLineNumbers=1
-let g:NERDTreeWinSize=35
-let g:pymode_doc_bind = 'gd'
-let g:pymode_rope_show_doc_bind = 'grd'
-let g:pymode_rope_goto_definition_bind = 'gD'
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeShowLineNumbers = 1
+let g:NERDTreeWinSize = 35
+let g:pymode_doc_bind = '\doc'
+let g:pymode_rope_show_doc_bind = '\grd'
+let g:pymode_rope_goto_definition_bind = '\def'
 let g:pymode_rope_rename_bind = '\rn'
 let g:pymode_rope_organize_imports_bind = '\ri'
 let g:pymode_rope_autoimport_bind = '\rfi'
@@ -138,8 +137,8 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
-let g:Tlist_Use_SingleClick=1
-let g:undotree_SetFocusWhenToggle=1
+let g:Tlist_Use_SingleClick = 1
+let g:undotree_SetFocusWhenToggle = 1
 let g:yankring_min_element_length = 2
 let g:yankring_replace_n_nkey = '<C-n>'
 let g:yankring_replace_n_pkey = '<C-b>'
