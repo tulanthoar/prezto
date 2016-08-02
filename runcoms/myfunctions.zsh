@@ -1,7 +1,7 @@
 _fzf_compgen_path() { ag -i --hidden -g "" "$1" }
 # Based on https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh (MIT licensed, as of 2016-05-05).
 function writecmd() {
-  perl -e '$TIOCSTI = 0x5412; $l = <STDIN>; $lc = $ARGV[0] eq "-run" ? "\n" : ""; $l =~ s/\s*$/$lc/; map { ioctl STDOUT, $TIOCSTI, $_; } split "", $l;' -- $1
+  perl -e '$TIOCSTI = 0x5412; $l = <STDIN>; $lc = $ARGV[0] eq "-run" ? "\r" : ""; $l =~ s/\s*$/$lc/; map { ioctl STDOUT, $TIOCSTI, $_; } split "", $l;' -- $1
 }
 alias fhe='fc -nl 1 | fzf --no-sort --tac | writecmd -run'
 alias h='fc -nl 1 | fzf --no-sort --tac | writecmd'
@@ -44,20 +44,26 @@ function z() {
 }
 function j() {
   local file
-  file=$(ag -i --hidden -g "" / 2&>/dev/null | fzf --query="$1")
+  file=$(ag -i --hidden -g "" / 2&>/dev/null | fzf +s --query="$1")
   [[ -d ${file:h} ]] && \cd ${file:h}
 }
-function cdUndoKey() {
-  BUFFER=""
+function p() {
   pushd -q +1 > /dev/null
-  echo && ls -lhF
-  zle accept-line
+  if [[ $# -ne 0 ]]; then
+    value=$1
+    (( value-- ))
+    [[ $value -gt 0 ]] && eval "p $value"
+    unset value
+  fi
 }
-function cdRedoKey () {
-  BUFFER=""
+function n() {
   pushd -q -0 > /dev/null
-  echo && ls -lhF
-  zle accept-line
+  if [[ $# -ne 0 ]]; then
+    value=$1
+    (( value-- ))
+    [[ $value -gt 0 ]] && eval "n $value"
+    unset value
+  fi
 }
 function copyfile {
   cat "$1" | xclip -i -sel p &> /dev/null
@@ -77,25 +83,38 @@ function suggest-accept-return(){
   zle accept-line
 }
 function c(){
-  \cd $(find . -maxdepth 2 -type d | grep -oE "/[\W^.]?\w.*$" | fzf -q "$1"|grep -oE "[\W^.]?\w.*$") && find . -maxdepth 1 -type d | grep -oE "/[\W^.]?\w.*$"
+  \cd $(find . -maxdepth 2 -type d | grep -oE "/[\W^.]?\w.*$" |cut -c2-| fzf -q "$1")
+  find . -maxdepth 1 -type d | grep -oE "/[\W^.]?\w.*$" |cut -c2-|perl -p -e 's/(.)$/$1\//g'|white
 }
 zle -N fzf-locate-widget
-zle -N cdUndoKey
-zle -N cdRedoKey
+zle -N p
+zle -N n
 zle -N sudo-command-line
 zle -N fuck-command-line
 zle -N suggest-accept-return
 
 function bind_keys() {
+  bindkey -M viins "^[i" fzf-locate-widget
+  bindkey -M viins "^[p" p
+  bindkey -M viins "^[n" n
+  bindkey -M viins "^[ " suggest-accept-return
+  bindkey -M viins "\e" sudo-command-line
+  bindkey -M vicmd "\t" fuck-command-line
   bindkey -M viins "^@" snippet-expand
   bindkey -M viins "^Z" vi-cmd-mode
-  bindkey -M viins "^A" beginning-of-line
-  bindkey -M viins "^[ " suggest-accept-return
+  bindkey -M viins "^A" vi-cmd-mode
   bindkey -M viins "^B" backward-word
-  bindkey -M viins "^[i" fzf-locate-widget
-  bindkey -M viins "^P" cdUndoKey
-  bindkey -M viins "^N" cdRedoKey
-  bindkey -rM viins "^[";
+  bindkey -rM viins "^Y"
+  bindkey -M viins "^Yb" vi-backward-kill-word
+  bindkey -M viins "^Ye" kill-word
+  bindkey -M viins "^Ys" kill-whole-line
+  bindkey -M viins "^\\" vi-end-of-line
+  bindkey -M viins "^_" beginning-of-line
+  bindkey -M viins "^U" undo
+  bindkey -M viins "^R" redo
+  bindkey -M viins "^F" vi-find-prev-char
+  bindkey -M viins "^S" vi-kill-eol
+  bindkey -rM viins "^["
   bindkey -rM viins "^D"
   bindkey -rM viins "^G"
   bindkey -rM viins "^H"
@@ -103,6 +122,4 @@ function bind_keys() {
   bindkey -rM viins "^K"
   bindkey -rM viins "^L"
   bindkey -M viins "^[[3~" vi-delete-char;
-  bindkey -M viins "\e" sudo-command-line
-  bindkey -M vicmd "\t" fuck-command-line
 }
