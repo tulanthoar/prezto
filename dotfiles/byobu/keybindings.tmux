@@ -1,6 +1,3 @@
-#unbind-key -tvi-copy Enter
-bind-key -n PPage copy-mode -ue
-bind-key -t vi-copy Enter copy-pipe "xclip -i -sel primary > /dev/null ; tmux set window-active-style bg=default"
 unbind-key p
 unbind-key -n F1
 unbind-key -n F8
@@ -66,6 +63,7 @@ unbind-key Space
 unbind-key q
 unbind-key l
 unbind-key k
+unbind-key 0
 bind-key F1 list-keys
 bind-key F2 display-panes \; split-window -h -c "#{pane_current_path}"
 bind-key F3 display-panes \; split-window -v -c "#{pane_current_path}"
@@ -81,8 +79,8 @@ bind-key y copy-mode \; run-shell 'tmux save-buffer - | xclip -i -sel clipboard 
 bind-key p if 'tmux set-buffer "$(xclip -o -sel primary)"' 'tmux paste-buffer'
 bind-key F11 set window-active-style bg=colour235 \; copy-mode
 bind-key -n C-F11 set window-active-style bg=colour235 \; copy-mode
-# bind-key F10 run-shell "tmux capturep -p > /tmp/nvimbuffer" \; new-window "nvim /tmp/nvimbuffer"
-# bind-key -n Print run-shell "tmux capturep -p > /tmp/nvimbuffer" \; new-window "nvim /tmp/nvimbuffer"
 bind-key -n C-F9 run-shell "tmux capturep -p > /tmp/nvimbuffer" \; new-window "nvim -RMu \"~/.zprezto/dotfiles/nvim/ro.vim\" /tmp/nvimbuffer"
 bind-key m select-pane -m
 bind-key M swap-pane
+bind-key -n PPage copy-mode -ue
+bind-key -t vi-copy Enter copy-pipe "xclip -i -sel primary > /dev/null ; tmux set window-active-style bg=default"

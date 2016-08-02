@@ -100,6 +100,7 @@ myKeysP =
   , ("M-l", moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
   , ("M-j", withFocused minimizeWindow)
   , ("M-k", sendMessage RestoreNextMinimizedWin)
+  , ("M-d", kill)
   , ("M-<Left>", shiftTo Prev EmptyWS)
   , ("M-<Right>", shiftTo Next EmptyWS)
   , ("M-q",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
@@ -128,17 +129,17 @@ mC =
   , ("allpads", corePadsM_ )
   , ("byobu", byobucmd )
   , ("pomodoro", spawn "start-pomodoro")
-  , ("nextempty", withFocused (addTag "shifter") >> mvNEmpty >> withTaggedGlobalP "shifter" shiftHere >> withTaggedGlobal "shifter" unTag)
+  , ("nextempty",(\t-> (withFocused . addTag) t >> mvNEmpty >> withTaggedGlobalP t shiftHere >> withTaggedGlobal t unTag) "shifter")
   ]
 xmC = return mC
 
 scratchpads =
-  [ NS hPad "urxvt -e htop" (title =? "htop") nonFloating
+  [ NS hPad hRun (title =? "htop") nonFloating
   , NS iPad pyrepl (icon =? init iPad) nonFloating
   , NS nPad nRun (icon =? init nPad) nonFloating
   , NS rPad rRun (icon =? init rPad) nonFloating
   , NS pPad prepl (icon =? init pPad) nonFloating
-  , NS bPad bRun' (netName =? "byobu_tmux") nonFloating
+  , NS bPad bRun (netName =? "byobu_tmux") nonFloating
   ] where netName = stringProperty "_NET_WM_NAME"
 icon = stringProperty "WM_ICON_NAME"
 iPad = "ipy"
@@ -148,7 +149,8 @@ rPad = "ranger"
 hPad = "htop"
 bPad = "byobu"
 urtRun ex cmd = concat [myTerminal, " -name ", init ex," -n ", init ex, " -e ", cmd]
-bRun' = unwords ["urxvt",  "-name", "urxv", "-n", "urxv", "-e", "byobu-tmux", "new-session"]
+bRun = unwords ["urxvt",  "-name", "urxv", "-n", "urxv", "-e", "byobu-tmux", "new-session"]
+hRun = urtRun hPad "htop"
 nRun = urtRun nPad "nvim -u $ZDOTD/nvim/init.vim ~/buffer"
 rRun = urtRun rPad "ranger"
 prepl = urtRun pPad "reply"
