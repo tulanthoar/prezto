@@ -16,6 +16,7 @@ import XMonad.Hooks.Minimize (minimizeEventHook)
 import XMonad.Hooks.ServerMode (serverModeEventHookCmd')
 import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Hooks.WorkspaceHistory (workspaceHistoryHook)
+import XMonad.Layout.Fullscreen (fullscreenEventHook, fullscreenManageHook, fullscreenFull)
 import qualified XMonad.Layout.Gaps as G
 import qualified XMonad.Layout.GridVariants as GV
 import XMonad.Layout.Magnifier (magnifiercz)
@@ -37,7 +38,7 @@ uniqueInits = ["sudo updatedb", "modkey", "tilda -c xmenu", "maybeclipmenud", "m
 xInitM_ = mapM_ spawnOnce uniqueInits :: X()
 wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"] :: [WorkspaceId]
 menuH = 15 :: Int
-mag = 1.2 :: Rational
+mag = 1.3 :: Rational
 mvNEmpty = moveTo Next EmptyWS :: X()
 corePadsM_ = mapM_ (namedScratchpadAction scratchpads) [bPad, iPad, pPad, nPad, rPad] :: X()
 myBrowser = "qutebrowser" :: String
@@ -45,7 +46,7 @@ launchAct = spawn $ "j4-dmenu-desktop --display-binary --term="++myTerminal++" -
 srchAct = spawn $  "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50" :: X()
 centrPtr = updatePointer (0.5, 0.5) (0, 0) :: X()
 
-mylayoutHook = G.gaps [(G.U,menuH)] $ magnifiercz mag $ minimize $ toggleLayouts (GV.SplitGrid GV.T 1 2 (1%2) (16%10) delta) $ Tall 1 delta (11%20)
+mylayoutHook = fullscreenFull $ G.gaps [(G.U,menuH)] $ magnifiercz mag $ minimize $ toggleLayouts (GV.SplitGrid GV.T 1 2 (1%2) (16%10) delta) $ Tall 1 delta (11%20)
   where delta = 3 % 100
 
 myManageHook = namedScratchpadManageHook scratchpads <+> manageDocks
@@ -56,7 +57,7 @@ myManageHook = namedScratchpadManageHook scratchpads <+> manageDocks
   ]
 
 xmConf p = ewmh $ def
-  { manageHook         = myManageHook <+> def
+  { manageHook         = myManageHook <+> fullscreenManageHook <+> def
   , layoutHook         = mylayoutHook
   , startupHook        = return() >> wmNameM_ >> xInitM_ >> corePadsM_
   , terminal           = myTerminal
@@ -67,7 +68,7 @@ xmConf p = ewmh $ def
   , focusedBorderColor = limeGreen
   , workspaces         = wsList
   , logHook            = dynamicLogWithPP ( myDzenPP p ) >> workspaceHistoryHook >> centrPtr
-  , handleEventHook    = docksEventHook <+> minimizeEventHook <+> serverModeEventHookCmd' xmC
+  , handleEventHook    = docksEventHook <+> minimizeEventHook <+> serverModeEventHookCmd' xmC <+> fullscreenEventHook
   , keys               = \c -> fromList xkM
   }
 

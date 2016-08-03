@@ -86,6 +86,18 @@ function c(){
   \cd $(find . -maxdepth 2 -type d | grep -oE "/[\W^.]?\w.*$" |cut -c2-| fzf -q "$1")
   find . -maxdepth 1 -type d | grep -oE "/[\W^.]?\w.*$" |cut -c2-|perl -p -e 's/(.)$/$1\//g'|white
 }
+export FZFBMARKS="$HOME/.fzfbmarks"
+[[ ! -f $FZFBMARKS ]] && touch  $FZFBMARKS
+
+function jump(){
+  \cd $(fzf --query=$1 < $FZFBMARKS|cut -c2-)
+}
+function damrk(){
+  cat $FZFBMARKS | grep -vx "$(fzf --query=$1 < $FZFBMARKS)" > $FZFBMARKS
+}
+function mark() {
+  echo $1 : $(pwd) >> $FZFBMARKS
+}
 zle -N fzf-locate-widget
 zle -N p
 zle -N n
