@@ -98,6 +98,16 @@ function damrk(){
 function mark() {
   echo $1 : $(pwd) >> $FZFBMARKS
 }
+# function alias_tip (){
+#   alias | perl -p -e "s/\A\w+.*='?//g; s/\s*'?$/\n/g" | sort -u | tail -n+2 > /tmp/aliasrhs
+#   local lastcmd=$(printf '%s\n' "${(@s/ /)$(fc -nl -1)}")
+#   reminder=$(echo $lastcmd | paste - /tmp/aliasrhs --delimiters='\n' | sort | uniq -d)
+#   short=$(alias|grep -w "$reminder"|perl -p -e "s/='\w+\s?'$//g")
+#   echo "$short replaces"
+#   echo "$reminder"
+# }
+# autoload -Uz add-zsh-hook
+# add-zsh-hook preexec alias_tip
 zle -N fzf-locate-widget
 zle -N p
 zle -N n
