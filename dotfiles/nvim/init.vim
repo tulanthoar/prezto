@@ -22,6 +22,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'bling/vim-bufferline'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'tmhedberg/SimpylFold'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'zchee/deoplete-jedi'
 Plugin 'easymotion/vim-easymotion'
@@ -131,6 +132,7 @@ let g:pymode_rope_autoimport_bind = '\rfi'
 let g:pymode_rope_project_root = "code/pygit"
 let g:pymode_rope_completion = 0
 let g:python3_host_prog = '/usr/bin/python3'
+let g:SimpylFold_docstring_preview = 1
 let g:snips_author = 'Nathan Yonkee'
 let g:SuperTabCrMapping = 1
 let g:SuperTabDefaultCompletionType = "context"
@@ -288,16 +290,6 @@ au FileType python syn keyword pythonDecorator True None False self
 au BufNewFile,BufRead *.jinja set syntax=htmljinja
 au BufNewFile,BufRead *.mako set ft=mako
 
-au FileType python map      <unique><buffer> \F :set foldmethod=indent<cr>
-au FileType python map      <unique><buffer> \f :set nofoldmethod<cr>
-
-au FileType python inoremap <unique><buffer> $r return
-au FileType python inoremap <unique><buffer> $i import
-au FileType python inoremap <unique><buffer> $p print
-au FileType python inoremap <unique><buffer> $f #--- PH ----------------------------------------------<esc>FP2xi
-au FileType python map      <unique><buffer> <leader>1 /class
-au FileType python map      <unique><buffer> <leader>2 /def
-au FileType python map      <unique><buffer> <leader>C ?class
 function! RangeChooser()
     let temp = tempname()
     " The option "--choosefiles" was added in ranger 1.5.1. Use the next line
