@@ -23,6 +23,7 @@ Plugin 'bling/vim-bufferline'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'zchee/deoplete-jedi'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'freeo/vim-kalisi'
 Plugin 'junegunn/seoul256.vim'
@@ -105,6 +106,7 @@ let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 2
 let g:jedi#use_tabs_not_buffers = 1
+" let g:deoplete#sources#jedi#show_docstring = 1
 let g:miniBufExplCloseOnSelect = 1
 let g:miniBufExplCycleArround = 1
 let g:miniBufExplorerAutoStart = 0
