@@ -102,7 +102,6 @@ function bind_keys() {
   bindkey -M viins "^[n" n
   bindkey -M viins "^[ " suggest-accept-return
   bindkey -M viins "^[s" sudo-command-line
-  bindkey -M vicmd "\t" fuck-command-line
   bindkey -M viins "^@" snippet-expand
   bindkey -M viins "^Z" vi-cmd-mode
   bindkey -M viins "^A" vi-cmd-mode

@@ -80,7 +80,6 @@ export FZFBMARKS="$HOME/.fzfbmarks"
 #have_package numlockx "numlockx"
 #have_package http "httpie"
 #have_package pip "python-pip"
-#which thefuck > /dev/null || sudo pip install thefuck
 #[[ -d "/tmp/${USER}zshrc" ]] || mkdir "/tmp/${USER}zshrc"
 # which fasd > /dev/null || git clone https://aur.archlinux.org/fasd.git "${HOME}/aur-git/fasd"
 #which byobu-tmux > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/byobu.tar.gz > ~/tmp/byobu.tgz

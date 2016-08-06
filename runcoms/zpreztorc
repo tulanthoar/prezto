@@ -30,14 +30,14 @@ zstyle ':prezto:load' pmodule \
   'utility' \
   'editor' \
   'history' \
-  'history-substring-search' \
   'pacman' \
   'archive' \
   'directory' \
   'completion' \
+  'prompt' \
   'syntax-highlighting' \
-  'autosuggestions' \
-  'prompt'
+  'history-substring-search' \
+  'autosuggestions'
   # 'terminal' \
 # completion = 60ms
 # syntax-highlight = 60 ms
