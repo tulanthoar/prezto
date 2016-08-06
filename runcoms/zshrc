@@ -1,4 +1,4 @@
-export T1=$(date +%S%N)
+local T1=$(date +%S%N)
 ZPLUGINS=( 'MikeDacre/cdbk' 'Tarrasch/zsh-bd' 'RobSis/zsh-completion-generator' 'bric3/nice-exit-code' 'djui/alias-tips' 'Tarrasch/zsh-colors' )
 setopt CLOBBER
 source "${ZDOTD}/antibody/ini.zsh"
@@ -6,14 +6,12 @@ antibody_zsh bundle <<< $(printf '%s\n' ${ZPLUGINS[@]})
 source "${HOME}/.fzf/fzf.zsh"
 source "${ZRCD}/myfunctions.zsh"
 source "${HOME}/.enhancd/init.sh"
-export T2=$(date +%S%N)
+local T2=$(date +%S%N)
 source "${ZPREZD}/init.zsh"
-export T3=$(date +%S%N)
 source "${ZRCD}/myaliases.zsh"
 source "${ZRCD}/mysnippets.zsh"
 eval infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 stty -ixon
 bind_keys
-compinit -i -d "${ZDOTDIR:-$HOME}/.zcompdump"
-export T4=$(date +%S%N)
-perl -e 'print int(($ENV{"T2"}-$ENV{"T1"})/1_000_000)."\n";print int(($ENV{"T3"}-$ENV{"T2"})/1_000_000)."\n";print int(($ENV{"T4"}-$ENV{"T3"})/1_000_000)."\n";print int(($ENV{"T4"}-$ENV{"T1"})/1_000_000)."\n"'
+local T3=$(date +%S%N)
+perl -e 'print int(($ARGV[1]-$ARGV[0])/1_000_000)."\n";print int(($ARGV[2]-$ARGV[1])/1_000_000)."\n";print int(($ARGV[2]-$ARGV[0])/1_000_000)."\n"' $T1 $T2 $T3

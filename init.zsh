@@ -106,6 +106,7 @@ zstyle -a ':prezto:load' zfunction 'zfunctions'
 for zfunction ("$zfunctions[@]") autoload -Uz "$zfunction"
 unset zfunction{s,}
 
+# compinit -i -d "${ZDOTDIR:-$HOME}/.zcompdump"
 # Load Prezto modules.
 zstyle -a ':prezto:load' pmodule 'pmodules'
 pmodload "$pmodules[@]"
