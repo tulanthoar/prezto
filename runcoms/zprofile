@@ -66,6 +66,8 @@ export GITAPPSD="${HOME}/apps-git"
 export FZFD=${HOME}/.fzf
 export ENHANCD_FILTER=fzf
 export ENHANCD_COMMAND="cd"
+export FZFBMARKS="$HOME/.fzfbmarks"
+[[ ! -f $FZFBMARKS ]] && touch  $FZFBMARKS
 # export JAVA_HOME="/usr/lib/jvm/default-jvm"
 # export GOPATH="$HOME/golang"
 # [[ -d "$GOPATH" ]] && export PATH="$PATH:$GOPATH/bin"

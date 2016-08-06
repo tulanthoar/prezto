@@ -73,12 +73,23 @@ function c(){
   \cd $(find . -maxdepth 2 -type d | grep -oE "/[\W^.]?\w.*$" |cut -c2-| fzf -q "$1")
   find . -maxdepth 1 -type d | grep -oE "/[\W^.]?\w.*$" |cut -c2-|perl -p -e 's/(.)$/$1\//g'|white
 }
-export FZFBMARKS="$HOME/.fzfbmarks"
-[[ ! -f $FZFBMARKS ]] && touch  $FZFBMARKS
 
 function jump(){ \cd $(fzf --query=$1 < $FZFBMARKS|cut -c2-) }
 function damrk(){ cat $FZFBMARKS | grep -vx "$(fzf --query=$1 < $FZFBMARKS)" > $FZFBMARKS }
 function mark() { echo $1 : $(pwd) >> $FZFBMARKS }
+
+typeset -Ag snippets
+snippet-add() { snippets[$1]="$2" }
+
+snippet-expand() {
+    emulate -L zsh
+    setopt extendedglob
+    local MATCH
+
+    LBUFFER=${LBUFFER%%(#m)[.\-+:|_a-zA-Z0-9]#}
+    LBUFFER+=${snippets[$MATCH]:-$MATCH}
+}
+zle -N snippet-expand
 zle -N fzf-locate-widget
 zle -N p
 zle -N n
@@ -90,7 +101,8 @@ function bind_keys() {
   bindkey -M viins "^[p" p
   bindkey -M viins "^[n" n
   bindkey -M viins "^[ " suggest-accept-return
-  bindkey -M viins "\e\e" sudo-command-line
+  bindkey -M viins "^[s" sudo-command-line
+  bindkey -M vicmd "\t" fuck-command-line
   bindkey -M viins "^@" snippet-expand
   bindkey -M viins "^Z" vi-cmd-mode
   bindkey -M viins "^A" vi-cmd-mode
