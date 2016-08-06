@@ -1,13 +1,12 @@
-ANTIBODY_BINARY=$(which antibody)
 function antibody_zsh() {
 	case "$1" in
 	bundle|update)
 		while read bundle; do
-			source "$bundle" 2&> /tmp/antibody-log
-		done < <( $ANTIBODY_BINARY $@ )
+			source "$bundle"
+		done < <( antibody $@ )
 		;;
 	*)
-		$ANTIBODY_BINARY $@
+		antibody $@
 		;;
 	esac
 }

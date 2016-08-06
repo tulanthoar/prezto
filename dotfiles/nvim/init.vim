@@ -74,7 +74,7 @@ let g:bufferline_echo = 0
 let g:bufferline_modified = '**'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_regexp = 1
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:15,results:15'
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_cache_dir = '$HOME/.config/nvim/files/cache/ctrlp'
@@ -119,6 +119,7 @@ let g:NERDTreeShowFiles = 0
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowLineNumbers = 1
 let g:NERDTreeWinSize = 35
+let python_highlight_all = 1
 let g:pymode_doc_bind = '\doc'
 let g:pymode_rope_show_doc_bind = '\grd'
 let g:pymode_rope_goto_definition_bind = '\def'
@@ -144,6 +145,12 @@ let g:yankring_replace_n_nkey = '<C-n>'
 let g:yankring_replace_n_pkey = '<C-b>'
 let g:yankring_window_height = 12
 let g:Perl_PerlTags           = 'on'
+let g:vimsyn_folding = 'af'
+let g:perl_fold = 1
+vnoremap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vnoremap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+nnoremap <M-j> :m+<cr>jk
+nnoremap <M-k> :m-2<cr>kj
 
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=33
@@ -191,8 +198,34 @@ set wildignorecase
 set wildignore=*.o,*~,*.pyc
 set writebackup
 
-nmap     <space>    <Plug>(easymotion-bd-f2)
-vmap     <unique> v               <Plug>(expand_region_expand)
+nmap     <unique> <space>  <Plug>(easymotion-bd-f2)
+vmap     <unique> v        <Plug>(expand_region_expand)
+inoremap <unique> <F1>     <Delete>
+inoremap <unique> <F4>     <esc>:w<cr>
+nnoremap <unique> <F4>     :w<cr>
+noremap  <unique> <F5>     <esc>:cd %:p:h<cr>:pwd<cr>
+inoremap <unique> <F5>     <esc>:cd %:p:h<cr>:pwd<cr>
+nnoremap <unique> <F6>     :CtrlPMRU<cr>
+noremap  <unique> <F10>    <esc>:x<cr>
+inoremap <unique> <F10>    <esc>:x<cr>
+cnoremap <unique> w!!      w !sudo tee > /dev/null %
+vmap     <unique> C        gc
+nmap     <unique> css      yss
+vnoremap <unique> J        <esc>
+inoremap <unique> jf       <esc>
+inoremap <unique> fj       <esc>
+noremap  <unique> H        Hzz
+noremap  <unique> L        Lzz
+noremap  <unique> \H       H
+noremap  <unique> \L       L
+noremap ^                  0
+noremap 0                  ^
+noremap <Down>             +
+noremap <S-Down>           +$
+noremap <Up>               -
+noremap <S-Up>             -$
+noremap <Left>             ^
+noremap <Right>            $
 
 map      <unique> <leader>0       <Plug>(easymotion-sol-bd-jk)
 map      <unique> <leader>e       <Plug>(easymotion-bd-el)
@@ -212,56 +245,8 @@ nnoremap <unique> <leader>;       :TmuxNavigatePrevious<cr>
 nnoremap <unique> <leader>q       :q<cr>
 inoremap <unique> <leader>R       <esc>:nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>i
 nnoremap <unique> <leader>R       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+nnoremap <unique> <leader>F       :<C-U>RangerChooser<CR>
 
-inoremap <unique> <F1>  <Delete>
-inoremap <unique> <F4>  <esc>:w<cr>
-nnoremap <unique> <F4>  :w<cr>
-noremap  <unique> <F5>  <esc>:cd %:p:h<cr>:pwd<cr>
-inoremap <unique> <F5>  <esc>:cd %:p:h<cr>:pwd<cr>
-nnoremap <unique> <F6>  :CtrlPMRU<cr>
-noremap  <unique> <F10> <esc>:x<cr>
-inoremap <unique> <F10> <esc>:x<cr>
-cnoremap <unique> w!! w !sudo tee > /dev/null %
-vmap     <unique> C     gc
-nmap     <unique> css   yss
-vnoremap <unique> J     <esc>
-inoremap <unique> jf    <esc>
-inoremap <unique> fj    <esc>
-noremap  <unique> H     Hzz
-noremap  <unique> L     Lzz
-noremap  <unique> \H    H
-noremap  <unique> \L    L
-noremap ^        0
-noremap 0        ^
-noremap <Down>   +
-noremap <S-Down> +$
-noremap <Up>     -
-noremap <S-Up>   -$
-noremap <Left>   ^
-noremap <Right>  $
-nnoremap <unique> ]P :<C-U>YRYankCount 'yy'<CR>p
-nnoremap <unique> [P :<C-U>YRYankCount 'yy'<CR>P
-inoremap <unique> ]P <esc>:<C-U>YRYankCount 'yy'<CR>p
-inoremap <unique> [P <esc>:<C-U>YRYankCount 'yy'<CR>P
-nmap     <unique> [C [Pj:Commentary<cr>`[
-nmap     <unique> ]C ]Pk:Commentary<cr>`[
-imap     <unique> [C <esc>[C
-imap     <unique> ]C <esc>]C
-nnoremap <unique> \N i<cr><esc>
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-noremap <unique>  <C-H> :TmuxNavigateLeft<cr>
-noremap <unique>  <C-J> :TmuxNavigateDown<cr>
-noremap <unique>  <C-K> :TmuxNavigateUp<cr>
-noremap <unique>  <C-L> :TmuxNavigateRight<cr>
-inoremap <unique> <C-H> :TmuxNavigateLeft<cr>
-inoremap <unique> <C-J> :TmuxNavigateDown<cr>
-inoremap <unique> <C-K> :TmuxNavigateUp<cr>
-inoremap <unique> <C-L> :TmuxNavigateRight<cr>
-vnoremap <silent> # :call VisualSelection('b')<cr>
-vnoremap <silent> * :call VisualSelection('f')<cr>
 
 let mapleader="-"
 nnoremap <unique> <leader>b       :CtrlPBuffer<cr>
@@ -292,6 +277,25 @@ noremap  <unique> <leader>q       :Bclose<cr>
 nnoremap <unique> <leader><Tab>   :exe "b".g:lastbuff<cr>
 noremap  <unique> <leader><space> :tabnew<cr>
 let mapleader=","
+""""""""""""""""""""""""""""""
+" => Python section
+""""""""""""""""""""""""""""""
+autocmd BufWrite *.py :call DeleteTrailingWS()
+au FileType python syn keyword pythonDecorator True None False self
+
+au BufNewFile,BufRead *.jinja set syntax=htmljinja
+au BufNewFile,BufRead *.mako set ft=mako
+
+au FileType python map      <unique><buffer> \F :set foldmethod=indent<cr>
+au FileType python map      <unique><buffer> \f :set nofoldmethod<cr>
+
+au FileType python inoremap <unique><buffer> $r return
+au FileType python inoremap <unique><buffer> $i import
+au FileType python inoremap <unique><buffer> $p print
+au FileType python inoremap <unique><buffer> $f #--- PH ----------------------------------------------<esc>FP2xi
+au FileType python map      <unique><buffer> <leader>1 /class
+au FileType python map      <unique><buffer> <leader>2 /def
+au FileType python map      <unique><buffer> <leader>C ?class
 function! RangeChooser()
     let temp = tempname()
     " The option "--choosefiles" was added in ranger 1.5.1. Use the next line
@@ -322,7 +326,6 @@ function! RangeChooser()
     redraw!
 endfunction
 command! -bar RangerChooser call RangeChooser()
-nnoremap <unique> <leader>F :<C-U>RangerChooser<CR>
 
 func! DeleteTrailingWS()
   exe "normal mz"
@@ -366,23 +369,3 @@ au InsertEnter * set nocursorline
 au InsertLeave * set cursorline
 " When editing a file, always jump to the last known cursor position.
 autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-""""""""""""""""""""""""""""""
-" => Python section
-""""""""""""""""""""""""""""""
-autocmd BufWrite *.py :call DeleteTrailingWS()
-let python_highlight_all = 1
-au FileType python syn keyword pythonDecorator True None False self
-
-au BufNewFile,BufRead *.jinja set syntax=htmljinja
-au BufNewFile,BufRead *.mako set ft=mako
-
-au FileType python map <buffer> F :set foldmethod=indent<cr>
-au FileType python map <buffer> -F :set nofoldmethod<cr>
-
-au FileType python inoremap <buffer> $r return
-au FileType python inoremap <buffer> $i import
-au FileType python inoremap <buffer> $p print
-au FileType python inoremap <buffer> $f #--- PH ----------------------------------------------<esc>FP2xi
-au FileType python map <buffer> <leader>1 /class
-au FileType python map <buffer> <leader>2 /def
-au FileType python map <buffer> <leader>C ?class

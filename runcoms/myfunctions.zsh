@@ -1,14 +1,13 @@
+_fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null }
+autoload -Uz add-zsh-hook
+add-zsh-hook preexec _fasd_preexec
 _fzf_compgen_path() { ag -i --hidden -g "" "$1" }
 # Based on https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh (MIT licensed, as of 2016-05-05).
-function writecmd() {
-  perl -e '$TIOCSTI = 0x5412; $l = <STDIN>; $lc = $ARGV[0] eq "-run" ? "\r" : ""; $l =~ s/\s*$/$lc/; map { ioctl STDOUT, $TIOCSTI, $_; } split "", $l;' -- $1
-}
+function writecmd() { perl -e '$TIOCSTI = 0x5412; $l = <STDIN>; $lc = $ARGV[0] eq "-run" ? "\r" : ""; $l =~ s/\s*$/$lc/; map { ioctl STDOUT, $TIOCSTI, $_; } split "", $l;' -- $1 }
 alias fhe='fc -nl 1 | fzf --no-sort --tac | writecmd -run'
 alias h='fc -nl 1 | fzf --no-sort --tac | writecmd'
 # fss [FUZZY PATTERN] - Select selected tmux session
-function fss() {
-  tmux switch-client -t $(tmux list-sessions -F "#{session_name}"|fzf --query="$1")
-}
+function fss() { tmux switch-client -t $(tmux list-sessions -F "#{session_name}"|fzf --query="$1") }
 # ftpane - switch pane (@george-b)
 function fp() {
   local panes current_window current_pane target target_window target_pane
@@ -36,12 +35,8 @@ function fzf-locate-widget() {
   fi
   zle redisplay
 }
-function v() {
-  nvim "$(fasd -Rfl "$1" | fzf-tmux --no-sort +m)"
-}
-function z() {
-  \cd "$(fasd -Rdl "$1" | fzf-tmux --no-sort +m)"
-}
+function v() { nvim "$(fasd -Rfl "$1" | fzf-tmux --no-sort +m)" }
+function z() { \cd "$(fasd -Rdl "$1" | fzf-tmux --no-sort +m)" }
 function j() {
   local file
   file=$(ag -i --hidden -g "" / 2&>/dev/null | fzf +s --query="$1")
@@ -65,18 +60,10 @@ function n() {
     unset value
   fi
 }
-function copyfile {
-  cat "$1" | xclip -i -sel p &> /dev/null
-}
+function copyfile { xsel -i <"$1" &> /dev/null }
 function sudo-command-line() {
   [[ -z "$BUFFER" ]] && zle up-history
   [[ "$BUFFER" == sudo\ * ]] && LBUFFER="${LBUFFER#sudo }" || LBUFFER="sudo $LBUFFER"
-}
-function fuck-command-line() {
-  local FUCK="$(THEFUCK_REQUIRE_CONFIRMATION=0 thefuck $(fc -ln -1 | tail -n 1) 2> /dev/null)"
-  [[ -z "$FUCK" ]] && echo -n -e "\a" && return
-  BUFFER="$FUCK"
-  zle end-of-line
 }
 function suggest-accept-return(){
   zle vi-end-of-line
@@ -89,30 +76,13 @@ function c(){
 export FZFBMARKS="$HOME/.fzfbmarks"
 [[ ! -f $FZFBMARKS ]] && touch  $FZFBMARKS
 
-function jump(){
-  \cd $(fzf --query=$1 < $FZFBMARKS|cut -c2-)
-}
-function damrk(){
-  cat $FZFBMARKS | grep -vx "$(fzf --query=$1 < $FZFBMARKS)" > $FZFBMARKS
-}
-function mark() {
-  echo $1 : $(pwd) >> $FZFBMARKS
-}
-# function alias_tip (){
-#   alias | perl -p -e "s/\A\w+.*='?//g; s/\s*'?$/\n/g" | sort -u | tail -n+2 > /tmp/aliasrhs
-#   local lastcmd=$(printf '%s\n' "${(@s/ /)$(fc -nl -1)}")
-#   reminder=$(echo $lastcmd | paste - /tmp/aliasrhs --delimiters='\n' | sort | uniq -d)
-#   short=$(alias|grep -w "$reminder"|perl -p -e "s/='\w+\s?'$//g")
-#   echo "$short replaces"
-#   echo "$reminder"
-# }
-# autoload -Uz add-zsh-hook
-# add-zsh-hook preexec alias_tip
+function jump(){ \cd $(fzf --query=$1 < $FZFBMARKS|cut -c2-) }
+function damrk(){ cat $FZFBMARKS | grep -vx "$(fzf --query=$1 < $FZFBMARKS)" > $FZFBMARKS }
+function mark() { echo $1 : $(pwd) >> $FZFBMARKS }
 zle -N fzf-locate-widget
 zle -N p
 zle -N n
 zle -N sudo-command-line
-zle -N fuck-command-line
 zle -N suggest-accept-return
 
 function bind_keys() {
@@ -120,8 +90,7 @@ function bind_keys() {
   bindkey -M viins "^[p" p
   bindkey -M viins "^[n" n
   bindkey -M viins "^[ " suggest-accept-return
-  bindkey -M viins "\e" sudo-command-line
-  bindkey -M vicmd "\t" fuck-command-line
+  bindkey -M viins "\e\e" sudo-command-line
   bindkey -M viins "^@" snippet-expand
   bindkey -M viins "^Z" vi-cmd-mode
   bindkey -M viins "^A" vi-cmd-mode

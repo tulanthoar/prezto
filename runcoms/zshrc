@@ -8,11 +8,6 @@ source "${ZPREZD}/init.zsh"
 export T3=$(date +%S%N)
 source "${HOME}/.fzf/fzf.zsh"
 # add fasd zsh hook
-_fasd_preexec() {
-  { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null
-}
-autoload -Uz add-zsh-hook
-add-zsh-hook preexec _fasd_preexec
 source "${ZRCD}/myfunctions.zsh"
 source "${ZRCD}/myaliases.zsh"
 source "${ZRCD}/mysnippets.zsh"
