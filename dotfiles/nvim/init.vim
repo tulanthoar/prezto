@@ -114,6 +114,7 @@ let g:miniBufExplorerAutoStart = 0
 let g:miniBufExplUseSingleClick = 1
 let g:multi_cursor_next_key = "<F2>"
 let g:multi_cursor_visual_maps = {'i':1, 'a':1, 'f':1, 'F':1, 't':1, 'T':1, 'S':1}
+let g:NERDTreeChDirMode = 2
 let g:NERDTreeCascadeOpenSingleChildDir = 1
 let g:NERDTreeIgnore = ['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
 let g:NERDTreeMinimalUI = 1
@@ -124,13 +125,13 @@ let g:NERDTreeShowLineNumbers = 1
 let g:NERDTreeWinSize = 35
 let python_highlight_all = 1
 let g:pymode_doc_bind = '\doc'
-let g:pymode_rope_show_doc_bind = '\grd'
+let g:pymode_rope_show_doc_bind = '\rdoc'
 let g:pymode_rope_goto_definition_bind = '\def'
 let g:pymode_rope_rename_bind = '\rn'
-let g:pymode_rope_organize_imports_bind = '\ri'
-let g:pymode_rope_autoimport_bind = '\rfi'
+let g:pymode_rope_organize_imports_bind = '\iorg'
+let g:pymode_rope_autoimport_bind = '\iau'
 let g:pymode_rope_project_root = "code/pygit"
-let g:pymode_rope_completion = 0
+let g:pymode_rope_completion = 1
 let g:python3_host_prog = '/usr/bin/python3'
 let g:SimpylFold_docstring_preview = 1
 let g:snips_author = 'Nathan Yonkee'
@@ -220,8 +221,9 @@ inoremap <unique> jf       <esc>
 inoremap <unique> fj       <esc>
 noremap  <unique> H        Hzz
 noremap  <unique> L        Lzz
-noremap  <unique> \H       H
-noremap  <unique> \L       L
+noremap  <unique> \\H      H
+noremap  <unique> \\L      L
+nnoremap <unique> \\n      i<cr><esc>
 noremap ^                  0
 noremap 0                  ^
 noremap <Down>             +
