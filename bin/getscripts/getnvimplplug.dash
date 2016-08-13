@@ -1,6 +1,5 @@
 #!/bin/env dash
 
 DEST=${HOME}/.config/nvim/bundle/perl-support/templates
-mkdir -p ${DEST}
-rm ${DEST}/comments.templates
+[[ -d ${DEST} ]] && rm ${DEST}/comments.templates
 ln -s ${ZDOTD}/nvim/bundle/perl-support/templates/comments.templates ${DEST}/comments.templates
