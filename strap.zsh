@@ -1,9 +1,9 @@
 #!/bin/env zsh
-#ZPREZD=${0:a:h}
-ZPREZD=$HOME/.zprezto
-ZRCD=${ZPREZD}/runcoms
-ZBIND=${ZPREZD}/bin
-ZDOTD=${ZPREZD}/dotfiles
+dir=${0:a:h}
+export ZPREZD=$HOME/${dir:t}
+export ZRCD=${ZPREZD}/runcoms
+export ZBIND=${ZPREZD}/bin
+export ZDOTD=${ZPREZD}/dotfiles
 for f in Xresources xserverrc zlogin zlogout zpreztorc zprofile zshenv zshrc xinitrc; do
   ln -s ${ZRCD}/${f} ${HOME}/.${f}
 done
