@@ -1,5 +1,5 @@
 #!/bin/env zsh
-sudo pacman -Syu dash
+sudo pacman -Syu --noconfirm dash
 dir=${0:a:h}
 export ZPREZD=$HOME/${dir:t}
 export ZRCD=${ZPREZD}/runcoms
@@ -38,7 +38,8 @@ curl -s https://raw.githubusercontent.com/getantibody/installer/master/install |
 mkdir -p ${HOME}/.config/nvim/bundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
 mkdir -p ${HOME}/.config/nvim/files/{undo,backup,swap,info}
-sudo pacman -Syu neovim ctags xsel python-neovim
+ln -s ${ZDOTD}/nvim/init.vim $HOME/.config/nvim/init.vim
+sudo pacman -Syu --noconfirm neovim ctags xsel python-neovim
 nvim -u $ZDOTD/nvim/init.vim +PluginInstall +qall
 nvim -u $ZDOTD/nvim/init.vim +UpdateRemotePlugins +qall
 git config --global user.name "Nate"
