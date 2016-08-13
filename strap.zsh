@@ -24,6 +24,7 @@ mkdir -p ${DEST}
 ln -s ${ZDOTD}/byobu/keybindings.tmux ${DEST}/keybindings.tmux
 ln -s ${ZDOTD}/byobu/status ${DEST}/status
 ln -s ${ZDOTD}/byobu/tmux.conf ${DEST}/.tmux.conf
+ln -s ${ZDOTD}/byobu/profile {DEST}/profile
 DEST=${HOME}/.config/pymodoro
 mkdir -p ${DEST}
 ln -s ${ZDOTD}/pymodoro/config ${DEST}/config
@@ -31,6 +32,8 @@ DEST=${HOME}/.config/qutebrowser
 mkdir -p ${DEST}
 ln -s ${ZDOTD}/qutebrowser/keys.conf ${DEST}/keys.conf
 ln -s ${ZDOTD}/qutebrowser/qutebrowser.conf ${DEST}/qutebrowser.conf
+DEST=${HOME}/.config
+ln -s ${ZDOTD}/redshift/redshift.conf ${DEST}/redshift.conf
 DEST=${HOME}/.xmonad
 mkdir -p ${DEST}
 ln -s ${ZDOTD}/xmonad/xmonad.hs ${DEST}/xmonad.hs
