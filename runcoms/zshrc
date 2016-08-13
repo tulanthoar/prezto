@@ -1,3 +1,4 @@
+[[ -n $ZDOTD ]] || source $HOME/.zshenv
 local T1=$(date +%S%N)
 ZPLUGINS=( 'MikeDacre/cdbk' 'Tarrasch/zsh-bd' 'RobSis/zsh-completion-generator' 'bric3/nice-exit-code' 'djui/alias-tips' 'Tarrasch/zsh-colors' )
 setopt CLOBBER

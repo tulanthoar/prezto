@@ -1,3 +1,3 @@
 #!/bin/env dash
 git clone https://aur.archlinux.org/dmenu2.git "${GITAPPSD}/dmenu2"
-cd "${GITAPPSD}/dmenu2" && makepkg -sri
+cd "${GITAPPSD}/dmenu2" && makepkg -si --noconfirm
