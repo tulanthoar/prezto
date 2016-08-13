@@ -6,6 +6,7 @@ export ZRCD=${ZPREZD}/runcoms
 export ZBIND=${ZPREZD}/bin
 export ZDOTD=${ZPREZD}/dotfiles
 for f in Xresources xserverrc zlogin zlogout zpreztorc zprofile zshenv zshrc xinitrc; do
+  [[ -f ${HOME}/.${f} ]] && rm ${HOME}/.${f}
   ln -s ${ZRCD}/${f} ${HOME}/.${f}
 done
 mkdir -p ${HOME}/bin
