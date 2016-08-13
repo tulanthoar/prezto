@@ -42,8 +42,5 @@ mkdir -p ${HOME}/.config/nvim/files/{undo,backup,swap,info}
 ln -s ${ZDOTD}/nvim/init.vim $HOME/.config/nvim/init.vim
 sudo pacman -Syu --noconfirm neovim ctags xsel python-neovim
 nvim -u $ZDOTD/nvim/init.vim +PluginInstall +qall
-DEST=${HOME}/.config/nvim/bundle/perl-support/templates
-[[ -d ${DEST} ]] && rm ${DEST}/comments.templates
-ln -s ${ZDOTD}/nvim/bundle/perl-support/templates/comments.templates ${DEST}/comments.templates
 git config --global user.name "Nate"
 git config --global user.email "tulanthoar@gmail.com"
