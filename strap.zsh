@@ -47,5 +47,5 @@ sudo pacman -S --noconfirm neovim ctags xsel python-neovim
 nvim -u $ZDOTD/nvim/init.vim +PluginInstall +qall
 git config --global user.name "Nate"
 git config --global user.email "tulanthoar@gmail.com"
-sudo pacman -S the_silver_searcher python-pip cpanminus gparted mlocate ipython
+sudo pacman -S --noconfirm the_silver_searcher python-pip cpanminus gparted mlocate ipython
 sudo pip install ptpython
