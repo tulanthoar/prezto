@@ -43,7 +43,9 @@ mkdir -p ${HOME}/.config/nvim/bundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
 mkdir -p ${HOME}/.config/nvim/files/{undo,backup,swap,info}
 ln -s ${ZDOTD}/nvim/init.vim $HOME/.config/nvim/init.vim
-sudo pacman -Syu --noconfirm neovim ctags xsel python-neovim
+sudo pacman -S --noconfirm neovim ctags xsel python-neovim
 nvim -u $ZDOTD/nvim/init.vim +PluginInstall +qall
 git config --global user.name "Nate"
 git config --global user.email "tulanthoar@gmail.com"
+sudo pacman -S the_silver_searcher python-pip cpanminus gparted mlocate ipython
+sudo pip install ptpython
