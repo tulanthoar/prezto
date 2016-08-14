@@ -19,6 +19,8 @@ export GITAPPSD="${HOME}/apps-git"
 for get in ${ZBIND}/getscripts/*; do
   eval "${get}"
 done
+local fzfbmarks="$HOME/.fzfbmarks"
+[[ -f $fzfbmarks ]] || touch $fzfbmarks
 DEST=${HOME}/.byobu
 mkdir -p ${DEST}
 ln -s ${ZDOTD}/byobu/keybindings.tmux ${DEST}/keybindings.tmux

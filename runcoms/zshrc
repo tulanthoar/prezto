@@ -2,14 +2,14 @@
 local t1=$(date +%S%N)
 ZPLUGINS=( 'MikeDacre/cdbk' 'Tarrasch/zsh-bd' 'RobSis/zsh-completion-generator' 'bric3/nice-exit-code' 'djui/alias-tips' 'Tarrasch/zsh-colors' )
 setopt CLOBBER
-source "${ZDOTD}/antibody/ini.zsh"
+source ${ZDOTD}/antibody/ini.zsh
 antibody_zsh bundle <<< $(printf '%s\n' ${ZPLUGINS[@]})
-source "${HOME}/.fzf/fzf.zsh"
-source "${ZRCD}/myfunctions.zsh"
-source "${HOME}/.enhancd/init.sh"
-source "${ZPREZD}/init.zsh"
-source "${ZRCD}/myaliases.zsh"
-source "${ZRCD}/mysnippets.zsh"
+source ${HOME}/.fzf/fzf.zsh
+source ${ZRCD}/myfunctions.zsh
+source ${HOME}/.enhancd/init.sh
+source ${ZPREZD}/init.zsh
+source ${ZRCD}/myaliases.zsh
+source ${ZRCD}/mysnippets.zsh
 infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 stty -ixon
 bind_keys
