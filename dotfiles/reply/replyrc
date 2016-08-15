@@ -1,11 +1,12 @@
-script_line1 = use Modern::Perl
+script_line1 = use Modern::Perl('2015')
 script_line2 = use utf8
 script_line3 = use Test::More
 script_line4 = use IO::All
 script_line5 = use DateTime
 
 [Interrupt]
-[FancyPrompt]
+[ConfigurablePrompt]
+prompt="Reply $history_count >"
 [DataDumpColor]
 [Colors]
 [ReadLine]
@@ -26,3 +27,4 @@ script_line5 = use DateTime
 [Timer]
 mintime=0.001
 [AutoRefresh]
+[TypeTiny]
