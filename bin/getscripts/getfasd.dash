@@ -1,3 +1,3 @@
 #!/bin/env dash
 git clone https://aur.archlinux.org/fasd.git "${GITAPPSD}/fasd"
-cd "${GITAPPSD}/fasd" && makepkg -sri
+cd "${GITAPPSD}/fasd" && makepkg -si --noconfirm

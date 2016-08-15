@@ -41,6 +41,8 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'kana/vim-textobj-entire'
 Plugin 'kana/vim-textobj-line'
 Plugin 'majutsushi/tagbar'
+Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'morhetz/gruvbox'
@@ -225,6 +227,7 @@ let g:syntastic_aggregate_errors = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
+let g:undotree_WindowLayout = 2
 let g:undotree_SetFocusWhenToggle = 1
 let g:vimsyn_folding = 'af'
 let g:yankring_min_element_length = 2
@@ -301,6 +304,7 @@ nmap     <unique> <leader><F7>    <Plug>AirlineSelectTab7
 nmap     <unique> <leader><F8>    <Plug>AirlineSelectTab8
 nmap     <unique> <leader><F9>    <Plug>AirlineSelectTab9
 nnoremap <unique> <leader>sp      :setlocal spell!<cr>
+
 nnoremap <unique> <leader>b       :CtrlPBuffer<cr>
 nnoremap <unique> <leader>f       :CtrlP<cr>
 nnoremap <unique> <leader>L       :CtrlPLine<cr>
@@ -330,6 +334,10 @@ nnoremap <unique> <leader><Tab>   :exe "b".g:lastbuff<cr>
 noremap  <unique> <leader><space> :tabnew<cr>
 let mapleader=","
 
+function g:Undotree_CustomMap()
+        nmap <buffer> J <plug>UndotreeGoNextState
+        nmap <buffer> K <plug>UndotreeGoPreviousState
+  endfunc
 let g:lasttab = 1
 let g:lastbuff = 1
 autocmd TabLeave    * let g:lasttab = tabpagenr()

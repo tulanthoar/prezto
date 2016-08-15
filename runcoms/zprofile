@@ -5,18 +5,16 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
-[[ "$OSTYPE" == darwin* ]] && export BROWSER='open'
-
-export PATH="$PATH:$HOME/bin:$HOME/.gem/ruby/2.3.0/bin"
+# export PATH="$PATH:$HOME/bin:$HOME/.gem/ruby/2.3.0/bin"
 export EDITOR='nvim'
 export VISUAL='nvim'
 export PAGER='less'
 export PERLDOC_SRC_PAGER='nvim'
 
-[[ -z "$LANG" ]] && export LANG='en_US.UTF-8'
+[[ -z $LANG ]] && export LANG='en_US.UTF-8'
 
 # Ensure path arrays do not contain duplicates.
-typeset -gU cdpath fpath mailpath path
+typeset -gU fpath path
 
 # Set the the list of directories that cd searches.
 # cdpath=(
@@ -25,8 +23,8 @@ typeset -gU cdpath fpath mailpath path
 
 # Set the list of directories that Zsh searches for programs.
 path=(
-  /usr/local/{bin,sbin}
   $path
+  $HOME/bin
 )
 
 # Set the default Less options.
@@ -36,63 +34,32 @@ export LESS='-F -g -i -M -R -S -w -X -z-4'
 
 # Set the Less input preprocessor.
 # Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
-if (( $#commands[(i)lesspipe(|.sh)] )); then
-  export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
-fi
+(( $#commands[(i)lesspipe(|.sh)] )) && export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 
 #
 # Temporary Files
 #
 
-if [[ ! -d "$TMPDIR" ]]; then
-  export TMPDIR="/tmp/$LOGNAME"
-  mkdir -p -m 700 "$TMPDIR"
-fi
+export TMPDIR=/tmp/$LOGNAME
+[[ -d $TMPDIR ]]|| mkdir -p -m 700 $TMPDIR
 
-TMPPREFIX="${TMPDIR%/}/zsh"
+TMPPREFIX=${TMPDIR%/}/zsh
 
 export FZF_COMPLETION_TRIGGER=',,'
 export FZF_DEFAULT_OPTS="-i --cycle --select-1 --exit-0 --inline-info --color fg:102,bg:233,hl:65,fg+:15,bg+:234,hl+:108,info:108,prompt:109,spinner:108,pointer:168,marker:168"
 export FZF_TMUX_HEIGHT='60%'
 export KEYTIMEOUT=3
 export RANGER_LOAD_DEFAULT_RC=FALSE
-export TERMCMD=$(which urxvt)
 export LD_LIBRARY_PATH=${HOME}/.local/lib
 export ZPREZD=${HOME}/.zprezto
 export ZDOTD=${ZPREZD}/dotfiles
 export ZBIND=${ZPREZD}/bin
 export ZRCD=${ZPREZD}/runcoms
-export GITAPPSD="${HOME}/apps-git"
+export GITAPPSD=${HOME}/apps-git
 export FZFD=${HOME}/.fzf
 export ENHANCD_FILTER=fzf
 export ENHANCD_COMMAND="cd"
-export FZFBMARKS="$HOME/.fzfbmarks"
-[[ ! -f $FZFBMARKS ]] && touch  $FZFBMARKS
+export FZFBMARKS=$HOME/.fzfbmarks
 # export JAVA_HOME="/usr/lib/jvm/default-jvm"
 # export GOPATH="$HOME/golang"
 # [[ -d "$GOPATH" ]] && export PATH="$PATH:$GOPATH/bin"
-# function fs(){ [[ -f $1 && -s $1 ]] }
-#function have_package(){ which $1 > /dev/null || sudo pacman -S $2; }
-#[[ -d ~/.fzf ]] || (git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install)
-#have_package ag "community/the_silver_searcher"
-#have_package st "community/st"
-#have_package nvim "neovim"
-#have_package numlockx "numlockx"
-#have_package http "httpie"
-#have_package pip "python-pip"
-#[[ -d "/tmp/${USER}zshrc" ]] || mkdir "/tmp/${USER}zshrc"
-# which fasd > /dev/null || git clone https://aur.archlinux.org/fasd.git "${HOME}/aur-git/fasd"
-#which byobu-tmux > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/byobu.tar.gz > ~/tmp/byobu.tgz
-# which fpp > /dev/null || git clone https://aur.archlinux.org/fpp-git.git "${HOME}/aur-git/fpp-git"
-#which yank > /dev/null || http --download https://aur.archlinux.org/cgit/aur.git/snapshot/yank.tar.gz > ~/tmp/yank.tgz
-# which antibody > /dev/null || curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
-# if [[ -d "${HOME}/.config/nvim/bundle/Vundle.vim" ]];
-#   then sleep 0;
-#   else mkdir -p "${HOME}/.config/nvim/bundle" && git clone https://github.com/VundleVim/Vundle.vim.git "${HOME}/.config/nvim/bundle/Vundle.vim";
-# fi
-# fs "$ZPREZD/init.zsh" || touch "$ZPREZD/init.zsh"
-# fs "${ZPDOTD}/anti_init.zsh" || touch "${ZPDOTD}/anti_init.zsh"
-# fs "${HOME}/.fzf/fzf.zsh" || touch "${HOME}/.fzf/fzf.zsh"
-# fs "${ZPDOTD}/myrc.zsh" || touch "${ZPDOTD}/myrc.zsh"
-# fs "${ZPDOTD}/mysnippets" || touch "${ZPDOTD}/mysnippets"
-# [[ -f "${HOME}/.fzf.zsh" ]] && mv "${HOME}/.fzf.zsh" "${HOME}/.fzf/fzf.zsh"
