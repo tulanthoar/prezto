@@ -1,5 +1,5 @@
 "init on 2016-05-26
-let mapleader=","
+let mapleader="\\"
 set rtp+=$HOME/.config/nvim/bundle/Vundle.vim
 filetype off
 call vundle#begin('$HOME/.config/nvim/bundle')
@@ -55,6 +55,8 @@ Plugin 'vim-scripts/TaskList.vim'
 Plugin 'xolox/vim-easytags'
 Plugin 'kopischke/vim-stay'
 "here
+Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-rsi'
 Plugin 'neovimhaskell/haskell-vim.git'
 Plugin 'WolfgangMehner/perl-support'
 Plugin 'klen/python-mode'
@@ -105,35 +107,35 @@ let g:kolor_italic = 1
 let g:kolor_bold = 1
 let g:kolor_alternative_matchparen = 1
 colorscheme kolor
+let g:airline_exclude_preview = 1
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline#extensions#ctrlspace#enabled = 1
-let g:airline#extensions#wordcount#enabled = 0
-let g:airline#extensions#whitespace#enabled = 1
-let g:airline#extensions#whitespace#checks = ['indent', 'trailing', 'long', 'mixed-indent-file']
+let g:airline#extensions#ctrlspace#enabled = 1
+let g:airline#extensions#nrrwrgn#enabled = 1
 let g:airline#extensions#quickfix#location_text = 'loc'
 let g:airline#extensions#quickfix#quickfix_text = 'qfix'
 let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#buffers_label = 'buf'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#exclude_preview = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_splits = 1
-let g:airline#extensions#tabline#tab_nr_type = 2
 let g:airline#extensions#tabline#show_tab_nr = 1
-let g:airline#extensions#tabline#show_tab_type = 1
-let g:airline#extensions#tabline#buffers_label = 'buf'
-let g:airline#extensions#tabline#tabs_label = 'ts'
-let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_tab_type = 1
+let g:airline#extensions#tabline#tab_nr_type = 2
+let g:airline#extensions#tabline#tabs_label = 'ts'
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#tagbar#flags = 's'
-let g:airline#extensions#nrrwrgn#enabled = 1
-let g:airline#extensions#ctrlspace#enabled = 1
+let g:airline#extensions#whitespace#checks = ['indent', 'trailing', 'long', 'mixed-indent-file']
+let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#wordcount#enabled = 0
 let g:airline_powerline_fonts = 1
 let g:airline_section_b = '%{getcwd()}'
 let g:airline_section_y = ''
 let g:airline_theme = 'molokai'
-let g:airline_exclude_preview = 1
 let g:bufferline_active_buffer_left = '_'
 let g:bufferline_active_buffer_right = '_'
 let g:bufferline_echo = 0
@@ -144,10 +146,10 @@ let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_lazy_update = 10
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
 let g:ctrlp_mruf_max = 2500
+let g:ctrlp_open_single_match = ['mru']
 let g:ctrlp_regexp = 1
 let g:ctrlp_user_command  = 'ag -i --hidden -l --nocolor -g "" %s'
 let g:ctrlp_working_path_mode = 'a'
-let g:ctrlp_open_single_match = ['mru']
 let g:CtrlSpaceGlobCommand = 'ag -i --hidden -l --nocolor -g ""'
 let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
 let g:CtrlSpaceSaveWorkspaceOnExit = 1
@@ -158,9 +160,10 @@ let g:delimitMate_balance_matchpairs = 1
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 0
 let g:delimitMate_jump_expansion = 1
-let g:deoplete#auto_complete_start_length = 1
+let g:deoplete#min_pattern_length = 1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
+let g:deoplete#auto_complete_delay = 10
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:EasyMotion_keys = 'ASDFGHJKLQWERUIO;'
 let g:EasyMotion_smartcase = 1
@@ -183,11 +186,11 @@ let g:indent_guides_exclude_filetypes = ['help']
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 4
 let g:jedi#use_tabs_not_buffers = 1
-let g:miniBufExplStatusLineText = 0
 let g:miniBufExplCloseOnSelect = 1
 let g:miniBufExplCycleArround = 1
 let g:miniBufExplorerAutoStart = 0
 let g:miniBufExplShowBufNumbers = 0
+let g:miniBufExplStatusLineText = 0
 let g:multi_cursor_next_key = "<F2>"
 let g:multi_cursor_visual_maps = {'i':1, 'a':1, 'f':1, 'F':1, 't':1, 'T':1, 'S':1}
 let g:NERDTreeIgnore = ['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
@@ -197,9 +200,9 @@ let g:NERDTreeShowFiles = 0
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowLineNumbers = 0
 let g:NERDTreeWinSize = 40
-let g:nrrw_rgn_wdth = 50
 let g:nrrw_rgn_nomap_nr = 1
 let g:nrrw_rgn_nomap_Nr = 1
+let g:nrrw_rgn_wdth = 50
 let g:perl_fold = 1
 let g:Perl_PerlTags = 'on'
 let g:pymode_doc_bind = '\doc'
@@ -211,30 +214,29 @@ let g:pymode_rope_organize_imports_bind = '\ri'
 let g:pymode_rope_project_root = "code/pygit"
 let g:pymode_rope_rename_bind = '\rn'
 let g:pymode_rope_show_doc_bind = '\rdoc'
-let g:python_highlight_all = 1
 let g:python3_host_prog = '/usr/bin/python3'
+let g:python_highlight_all = 1
 let g:SimpylFold_docstring_preview = 1
 let g:snips_author = 'Nathan Yonkee'
+let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
+let g:SuperTabContextDefaultCompletionType = "<C-p>"
+let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
+let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 let g:SuperTabCrMapping = 1
 let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<C-p>"
 let g:SuperTabLongestEnhanced = 1
-let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
-let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
-let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
 let g:SuperTabLongestHighlight = 1
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
-let g:undotree_WindowLayout = 2
 let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_WindowLayout = 2
 let g:vimsyn_folding = 'af'
 let g:yankring_min_element_length = 2
 let g:yankring_replace_n_nkey = '<C-n>'
 let g:yankring_replace_n_pkey = '<C-b>'
 let g:yankring_window_height = 12
-
 
 inoremap <unique> <F1>    <Delete>
 inoremap <unique> <F4>    <esc>:w<cr>
@@ -250,7 +252,7 @@ vnoremap <unique> <M-j>   :m'>+<cr>`<my`>mzgv`yo`z
 vnoremap <unique> <M-k>   :m'<-2<cr>`>my`<mzgv`yo`z
 nnoremap <unique> <M-j>   :m+<cr>jk
 nnoremap <unique> <M-k>   :m-2<cr>kj
-cnoremap <unique> w!!     w !sudo tee > /dev/null %
+cnoremap <unique> w!!     SudoWrite
 vmap     <unique> v       <Plug>(expand_region_expand)
 vmap     <unique> C       gc
 nmap     <unique> css     yss
@@ -277,6 +279,8 @@ nmap     <unique> ]P      ]<space>yil:m+<cr>kpj
 nmap     <unique> [C      ]<space>yil:m+<cr>gcckp
 nmap     <unique> ]C      ]<space>yil:m+<cr>kpgccj
 
+let mapleader=","
+nnoremap <unique> <leader>z       zjza
 nnoremap <unique> <Leader>H       H
 nnoremap <unique> <Leader>L       L
 inoremap <unique> <leader>r       <esc>:nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>i
@@ -332,12 +336,12 @@ noremap  <unique> <leader>8       :b8<cr>
 noremap  <unique> <leader>9       :b9<cr>
 nnoremap <unique> <leader><Tab>   :exe "b".g:lastbuff<cr>
 noremap  <unique> <leader><space> :tabnew<cr>
-let mapleader=","
+let mapleader="\\"
 
 function g:Undotree_CustomMap()
-        nmap <buffer> J <plug>UndotreeGoNextState
-        nmap <buffer> K <plug>UndotreeGoPreviousState
-  endfunc
+      nmap <buffer> J <plug>UndotreeGoNextState
+      nmap <buffer> K <plug>UndotreeGoPreviousState
+endfunc
 let g:lasttab = 1
 let g:lastbuff = 1
 autocmd TabLeave    * let g:lasttab = tabpagenr()

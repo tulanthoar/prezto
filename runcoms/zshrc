@@ -14,4 +14,4 @@ infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 stty -ixon
 bind_keys
 compinit -i
-cut -c-3 <<< $(( $(date +%S%N) - $t1 ))
+(( net = $(date +%S%N) - t1 )) && echo ${net[1,3]}
