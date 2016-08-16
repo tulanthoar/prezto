@@ -11,57 +11,233 @@ Plugin 'xolox/vim-misc'
 Plugin 'kana/vim-textobj-user'
 "this
 Plugin 'neovimhaskell/haskell-vim.git'
+let g:haddock_browser = "/usr/bin/firefox"
+let g:haskell_enable_arrowsyntax = 1
+let g:haskell_enable_pattern_synonyms = 1
+let g:haskell_enable_quantification = 1
+let g:haskell_enable_recursivedo = 1
+let g:haskell_enable_static_pointers = 1
+let g:haskell_enable_typeroles = 1
+let g:haskellmode_completion_ghc = 0
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
 Plugin 'WolfgangMehner/perl-support'
+let g:perl_fold = 1
+let g:Perl_PerlTags = 'on'
+
 Plugin 'klen/python-mode'
+let g:pymode_doc_bind = '\doc'
+let g:pymode_folding = 1
+let g:pymode_rope_autoimport_bind = '\rfi'
+let g:pymode_rope_completion = 0
+let g:pymode_rope_goto_definition_bind = '\def'
+let g:pymode_rope_organize_imports_bind = '\ri'
+let g:pymode_rope_project_root = "code/pygit"
+let g:pymode_rope_rename_bind = '\rn'
+let g:pymode_rope_show_doc_bind = '\rdoc'
+let g:python3_host_prog = '/usr/bin/python3'
+let g:python_highlight_all = 1
+
+Plugin 'vim-ctrlspace/vim-ctrlspace'
+let g:CtrlSpaceGlobCommand = 'ag -i --hidden -l --nocolor -g ""'
+let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
+let g:CtrlSpaceSaveWorkspaceOnExit = 1
+let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
+let g:CtrlSpaceStatuslineFunction = "airline#extensions#ctrlspace#statusline()"
+let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
 "here
 Plugin 'Shougo/deoplete.nvim'
-Plugin 'eagletmt/neco-ghc'
-Plugin 'Shougo/neco-vim'
-" Plugin 'davidhalter/jedi-vim'
+let g:deoplete#auto_complete_start_length = 1
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#auto_complete_delay = 10
+let g:deoplete#sources#_ = ['buffer']
+let g:deoplete#auto_complete_start_length = 1
+let g:deoplete#sources#jedi#show_docstring = 1
+
+Plugin 'davidhalter/jedi-vim'
 Plugin 'zchee/deoplete-jedi'
 Plugin 'Shougo/neoinclude.vim'
 Plugin 'c9s/perlomni.vim'
+Plugin 'eagletmt/neco-ghc'
+Plugin 'Shougo/neco-vim'
+let g:vimsyn_folding = 'af'
+
 Plugin 'terryma/vim-multiple-cursors'
+let g:multi_cursor_next_key = "<F2>"
+let g:multi_cursor_visual_maps = {'i':1, 'a':1, 'f':1, 'F':1, 't':1, 'T':1, 'S':1}
+
 Plugin 'vim-scripts/YankRing.vim'
-Plugin 'bling/vim-airline'
+let g:yankring_min_element_length = 2
+let g:yankring_replace_n_nkey = '<C-n>'
+let g:yankring_replace_n_pkey = '<C-b>'
+let g:yankring_window_height = 12
+let g:yankring_history_dir = '$HOME/.config/nvim/files'
+
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'vim-ctrlspace/vim-ctrlspace'
+Plugin 'bling/vim-airline'
+let g:airline_exclude_preview = 1
+let g:airline#extensions#bufferline#enabled = 1
+let g:airline#extensions#ctrlspace#enabled = 1
+let g:airline#extensions#ctrlspace#enabled = 1
+let g:airline#extensions#nrrwrgn#enabled = 1
+let g:airline#extensions#quickfix#location_text = 'loc'
+let g:airline#extensions#quickfix#quickfix_text = 'qfix'
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#buffers_label = 'buf'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#exclude_preview = 0
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_splits = 1
+let g:airline#extensions#tabline#show_tab_nr = 1
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_tab_type = 1
+let g:airline#extensions#tabline#tab_nr_type = 2
+let g:airline#extensions#tabline#tabs_label = 'ts'
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#tagbar#flags = 's'
+let g:airline#extensions#whitespace#checks = ['indent', 'trailing', 'long', 'mixed-indent-file']
+let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#wordcount#enabled = 0
+let g:airline_powerline_fonts = 1
+let g:airline_section_b = '%{getcwd()}'
+let g:airline_section_y = ''
+let g:airline_theme = 'molokai'
+
 Plugin 'ervandew/supertab'
+let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
+let g:SuperTabContextDefaultCompletionType = "<C-p>"
+let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
+let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+let g:SuperTabCrMapping = 1
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabLongestEnhanced = 1
+let g:SuperTabLongestHighlight = 1
+
 Plugin 'bling/vim-bufferline'
+let g:bufferline_active_buffer_left = '_'
+let g:bufferline_active_buffer_right = '_'
+let g:bufferline_echo = 0
+let g:bufferline_modified = '**'
+
 Plugin 'fholgado/minibufexpl.vim'
+let g:miniBufExplCloseOnSelect = 1
+let g:miniBufExplCycleArround = 1
+let g:miniBufExplorerAutoStart = 0
+let g:miniBufExplShowBufNumbers = 0
+let g:miniBufExplStatusLineText = 0
+
 Plugin 'Raimondi/delimitMate'
-Plugin 'edsono/vim-matchit'
-Plugin 'vim-scripts/twilight256.vim'
+let g:delimitMate_balance_matchpairs = 1
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_space = 0
+let g:delimitMate_jump_expansion = 1
+
 Plugin 'mbbill/undotree'
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_WindowLayout = 2
+
+Plugin 'edsono/vim-matchit'
 Plugin 'Konfekt/FastFold'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+let g:snips_author = 'Nathan Yonkee'
+
 Plugin 'ctrlpvim/ctrlp.vim'
+let g:ctrlp_cmd = 'CtrlPMRU'
+let g:ctrlp_by_filename = 0
+let g:ctrlp_cache_dir = '$HOME/.config/nvim/files/cache/ctrlp'
+let g:ctrlp_clear_cache_on_exit = 1
+let g:ctrlp_extensions = ['tag', 'buffertag', 'dir', 'line']
+let g:ctrlp_follow_symlinks = 1
+let g:ctrlp_lazy_update = 10
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:35'
+let g:ctrlp_mruf_max = 2500
+let g:ctrlp_open_single_match = ['mru']
+let g:ctrlp_regexp = 1
+let g:ctrlp_tilde_homedir = 1
+let g:ctrlp_types = ['fil', 'buf', 'mru', 'lns']
+let g:ctrlp_prompt_mappings = {'ToggleType(1)': ['<c-l>', '<c-up>'],
+                             \ 'ToggleType(-1)':['<c-h>', '<c-down>'],
+                             \ 'PrtCurLeft()':  ['<left>', '<c-^>'],
+                             \ 'PrtCurRight()': ['<right>']}
+let g:ctrlp_user_command  = 'ag -i --hidden -l --nocolor -g "" %s'
+let g:ctrlp_working_path_mode = 'a'
+
 Plugin 'tmhedberg/SimpylFold'
+let g:SimpylFold_docstring_preview = 1
+
 Plugin 'chrisbra/NrrwRgn'
-Plugin 'tpope/vim-unimpaired.git'
+let g:nrrw_rgn_nomap_nr = 1
+let g:nrrw_rgn_nomap_Nr = 1
+let g:nrrw_rgn_wdth = 80
+let g:nrrw_rgn_incr = 50
+let g:nrrw_rgn_vert = 1
+let g:nrrw_rgn_nohl = 1
+let b:nrrw_aucmd_written = ':update'
+
 Plugin 'easymotion/vim-easymotion'
+let g:EasyMotion_keys = 'ASDFGHJKLQWERUIO;'
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_startofline = 0
+let g:EasyMotion_use_upper = 1
+
+Plugin 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_default_mapping = 0
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_exclude_filetypes = ['help']
+let g:indent_guides_guide_size = 1
+let g:indent_guides_start_level = 4
+
+Plugin 'scrooloose/nerdtree'
+let g:NERDTreeIgnore = ['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeQuitOnOpen = 0
+let g:NERDTreeShowFiles = 0
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeShowLineNumbers = 0
+let g:NERDTreeWinSize = 40
+
+Plugin 'scrooloose/syntastic'
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_enable_signs = 1
+
+Plugin 'zeis/vim-kolor'
+let g:kolor_underline = 1
+let g:kolor_italic = 1
+let g:kolor_bold = 1
+let g:kolor_alternative_matchparen = 1
+
+Plugin 'terryma/vim-expand-region'
+let g:expand_region_text_objects = {'iw':0, 'iW':0, 'i"':0, 'i''':0, 'i]':1, 'ib':1, 'iB':1, 'il':0, 'ii':1, 'ip':0, 'ie':0}
+
+Plugin 'xolox/vim-easytags'
+let g:easytags_async=1
+let g:easytags_file = '$HOME/.config/nvim/files/.easytags'
+let g:easytags_resolve_links = 1
+
 Plugin 'kana/vim-textobj-entire'
 Plugin 'kana/vim-textobj-line'
+Plugin 'kopischke/vim-stay'
 Plugin 'majutsushi/tagbar'
 Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'morhetz/gruvbox'
-Plugin 'zeis/vim-kolor'
-Plugin 'terryma/vim-expand-region'
 Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'vim-scripts/TaskList.vim'
-Plugin 'xolox/vim-easytags'
-Plugin 'kopischke/vim-stay'
 Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired.git'
+Plugin 'vim-scripts/TaskList.vim'
 call vundle#end()
 filetype plugin indent on
 syntax enable
+
+
+colorscheme kolor
 set background=dark
 set backupdir=$HOME/.config/nvim/files/backup/
 set cmdheight=2
@@ -101,155 +277,14 @@ set whichwrap+=<,>,h,l
 set wildignorecase
 set wildignore=*.o,*~,*.pyc
 set writebackup
-let g:kolor_underline = 1
-let g:kolor_italic = 1
-let g:kolor_bold = 1
-let g:kolor_alternative_matchparen = 1
-colorscheme kolor
-let g:airline_exclude_preview = 1
-let g:airline#extensions#bufferline#enabled = 1
-let g:airline#extensions#ctrlspace#enabled = 1
-let g:airline#extensions#ctrlspace#enabled = 1
-let g:airline#extensions#nrrwrgn#enabled = 1
-let g:airline#extensions#quickfix#location_text = 'loc'
-let g:airline#extensions#quickfix#quickfix_text = 'qfix'
-let g:airline#extensions#syntastic#enabled = 1
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#tabline#buffers_label = 'buf'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#exclude_preview = 0
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#show_splits = 1
-let g:airline#extensions#tabline#show_tab_nr = 1
-let g:airline#extensions#tabline#show_tabs = 1
-let g:airline#extensions#tabline#show_tab_type = 1
-let g:airline#extensions#tabline#tab_nr_type = 2
-let g:airline#extensions#tabline#tabs_label = 'ts'
-let g:airline#extensions#tagbar#enabled = 1
-let g:airline#extensions#tagbar#flags = 's'
-let g:airline#extensions#whitespace#checks = ['indent', 'trailing', 'long', 'mixed-indent-file']
-let g:airline#extensions#whitespace#enabled = 1
-let g:airline#extensions#wordcount#enabled = 0
-let g:airline_powerline_fonts = 1
-let g:airline_section_b = '%{getcwd()}'
-let g:airline_section_y = ''
-let g:airline_theme = 'molokai'
-let g:bufferline_active_buffer_left = '_'
-let g:bufferline_active_buffer_right = '_'
-let g:bufferline_echo = 0
-let g:bufferline_modified = '**'
-let g:ctrlp_by_filename = 0
-let g:ctrlp_cache_dir = '$HOME/.config/nvim/files/cache/ctrlp'
-let g:ctrlp_clear_cache_on_exit = 1
-let g:ctrlp_lazy_update = 10
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
-let g:ctrlp_mruf_max = 2500
-let g:ctrlp_open_single_match = ['mru']
-let g:ctrlp_regexp = 1
-let g:ctrlp_user_command  = 'ag -i --hidden -l --nocolor -g "" %s'
-let g:ctrlp_working_path_mode = 'a'
-let g:CtrlSpaceGlobCommand = 'ag -i --hidden -l --nocolor -g ""'
-let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
-let g:CtrlSpaceSaveWorkspaceOnExit = 1
-let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
-let g:CtrlSpaceStatuslineFunction = "airline#extensions#ctrlspace#statusline()"
-let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
-let g:delimitMate_balance_matchpairs = 1
-let g:delimitMate_expand_cr = 1
-let g:delimitMate_expand_space = 0
-let g:delimitMate_jump_expansion = 1
 " let g:deoplete#min_pattern_length = 1
-let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#auto_complete_delay = 10
-let g:deoplete#sources#_ = ['buffer']
-let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#sources#jedi#show_docstring = 1
-let g:EasyMotion_keys = 'ASDFGHJKLQWERUIO;'
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_startofline = 0
-let g:EasyMotion_use_upper = 1
-let g:easytags_async=1
-let g:easytags_file = '$HOME/.config/nvim/files/.easytags'
-let g:easytags_resolve_links = 1
-let g:expand_region_text_objects = {'iw':0, 'iW':0, 'i"':0, 'i''':0, 'i]':1, 'ib':1, 'iB':1, 'il':0, 'ii':1, 'ip':0, 'ie':0}
-let g:haddock_browser = "/usr/bin/qutebrowser"
-let g:haskell_enable_arrowsyntax = 1
-let g:haskell_enable_pattern_synonyms = 1
-let g:haskell_enable_quantification = 1
-let g:haskell_enable_recursivedo = 1
-let g:haskell_enable_static_pointers = 1
-let g:haskell_enable_typeroles = 1
-let g:haskellmode_completion_ghc = 0
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-let g:indent_guides_default_mapping = 0
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_exclude_filetypes = ['help']
-let g:indent_guides_guide_size = 1
-let g:indent_guides_start_level = 4
 " let g:jedi#use_tabs_not_buffers = 1
-let g:miniBufExplCloseOnSelect = 1
-let g:miniBufExplCycleArround = 1
-let g:miniBufExplorerAutoStart = 0
-let g:miniBufExplShowBufNumbers = 0
-let g:miniBufExplStatusLineText = 0
-let g:multi_cursor_next_key = "<F2>"
-let g:multi_cursor_visual_maps = {'i':1, 'a':1, 'f':1, 'F':1, 't':1, 'T':1, 'S':1}
-let g:NERDTreeIgnore = ['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeQuitOnOpen = 0
-let g:NERDTreeShowFiles = 0
-let g:NERDTreeShowHidden = 1
-let g:NERDTreeShowLineNumbers = 0
-let g:NERDTreeWinSize = 40
-let g:nrrw_rgn_nomap_nr = 1
-let g:nrrw_rgn_nomap_Nr = 1
-let g:nrrw_rgn_wdth = 50
-let g:perl_fold = 1
-let g:Perl_PerlTags = 'on'
-let g:pymode_doc_bind = '\doc'
-let g:pymode_folding = 1
-let g:pymode_rope_autoimport_bind = '\rfi'
-let g:pymode_rope_completion = 0
-let g:pymode_rope_goto_definition_bind = '\def'
-let g:pymode_rope_organize_imports_bind = '\ri'
-let g:pymode_rope_project_root = "code/pygit"
-let g:pymode_rope_rename_bind = '\rn'
-let g:pymode_rope_show_doc_bind = '\rdoc'
-let g:python3_host_prog = '/usr/bin/python3'
-let g:python_highlight_all = 1
-let g:SimpylFold_docstring_preview = 1
-let g:snips_author = 'Nathan Yonkee'
-let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
-let g:SuperTabContextDefaultCompletionType = "<C-p>"
-let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
-let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
-let g:SuperTabCrMapping = 1
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabLongestEnhanced = 1
-let g:SuperTabLongestHighlight = 1
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_enable_signs = 1
-let g:undotree_SetFocusWhenToggle = 1
-let g:undotree_WindowLayout = 2
-let g:vimsyn_folding = 'af'
-let g:yankring_min_element_length = 2
-let g:yankring_replace_n_nkey = '<C-n>'
-let g:yankring_replace_n_pkey = '<C-b>'
-let g:yankring_window_height = 12
-let g:yankring_history_dir = '$HOME/.config/nvim/files'
 
 inoremap <unique> <F1>    <Delete>
 inoremap <unique> <F4>    <esc>:w<cr>
 nnoremap <unique> <F4>    <esc>:w<cr>
 nnoremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
 inoremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
-nnoremap <unique> <F6>    <esc>:CtrlPMRU<cr>
-inoremap <unique> <F6>    <esc>:CtrlPMRU<cr>
 nnoremap <unique> <F7>    <esc>:TagbarOpenAutoClose<cr>
 inoremap <unique> <F7>    <esc>:TagbarOpenAutoClose<cr>
 nnoremap <unique> <F8>    <esc>:Errors<cr>
@@ -277,6 +312,7 @@ nnoremap  <unique> 0       ^
 nnoremap <unique> <Down>  :vs<cr>
 nnoremap <unique> <Up>  :sp<cr>
 xmap     <unique> <CR>    <Plug>NrrwrgnDo
+nmap     <unique> <Leader><CR> <Plug>NrrwrgnWinIncr
 nmap     <unique> <Left>  <Plug>AirlineSelectPrevTab
 nmap     <unique> <Right> <Plug>AirlineSelectNextTab
 nnoremap <unique> <C-H>   <C-W><C-H>
@@ -302,11 +338,13 @@ nmap      <unique> <leader>k       <Plug>(easymotion-sol-k)
 nmap      <unique> <leader>n       <Plug>(easymotion-bd-n)
 nmap      <unique> <leader>$       <Plug>(easymotion-eol-bd-jk)
 nmap      <unique> <leader>t       <Plug>(easymotion-bd-tl)
+nnoremap  <unique> <Leader>v       <C-V>
 nmap      <unique> <leader>w       <Plug>(easymotion-bd-wl)
 nmap      <unique> <leader><space> <Plug>(easymotion-overwin-f2)
+nmap <unique> <leader><CR>    MVz^ozzz+zb<cr>
+nnoremap <unique> <leader>sp      :setlocal spell!<cr>
 
 let mapleader="-"
-nnoremap <unique> <leader><CR>    :NarrowWindow!<cr>
 nnoremap <unique> <leader><leader> :exe "tabn ".g:lasttab<cr>
 nmap     <unique> <leader><F1>    <Plug>AirlineSelectTab1
 nmap     <unique> <leader><F2>    <Plug>AirlineSelectTab2
@@ -317,11 +355,7 @@ nmap     <unique> <leader><F6>    <Plug>AirlineSelectTab6
 nmap     <unique> <leader><F7>    <Plug>AirlineSelectTab7
 nmap     <unique> <leader><F8>    <Plug>AirlineSelectTab8
 nmap     <unique> <leader><F9>    <Plug>AirlineSelectTab9
-nnoremap <unique> <leader>sp      :setlocal spell!<cr>
 
-nnoremap <unique> <leader>b       :CtrlPBuffer<cr>
-nnoremap <unique> <leader>f       :CtrlP<cr>
-nnoremap <unique> <leader>L       :CtrlPLine<cr>
 nnoremap <unique> <leader>p       :YRShow<cr>
 nnoremap <unique> <leader>u       :UndotreeToggle<cr>
 nnoremap <unique> <leader>n       :NERDTreeFind<cr>
@@ -332,6 +366,7 @@ noremap  <unique> <leader>j       :MBEbb<CR>
 noremap  <unique> <leader>h       :MBEbp<CR>
 noremap  <unique> <leader>l       :MBEbn<CR>
 noremap  <unique> <leader>q       :q<cr>
+noremap  <unique> <leader>Q       :qall<cr>
 noremap  <unique> <leader>w       :MBEbun<cr>
 noremap  <unique> <leader>x       :w<cr>
 noremap  <unique> <leader>0       <esc>:MBEOpen<cr>:MBEFocus<cr>
