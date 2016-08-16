@@ -4,10 +4,9 @@ script_line3 = use Test::More
 script_line4 = use IO::All
 script_line5 = use DateTime
 
-[Interrupt]
 [ConfigurablePrompt]
-prompt="Reply $history_count >"
-[DataDumpColor]
+prompt="$history_count>"
+[DataDumper]
 [Colors]
 [ReadLine]
 [Hints]

@@ -9,6 +9,20 @@ Plugin 'ascenator/L9'
 Plugin 'tomtom/tlib_vim'
 Plugin 'xolox/vim-misc'
 Plugin 'kana/vim-textobj-user'
+"this
+Plugin 'neovimhaskell/haskell-vim.git'
+Plugin 'WolfgangMehner/perl-support'
+Plugin 'klen/python-mode'
+"here
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'eagletmt/neco-ghc'
+Plugin 'Shougo/neco-vim'
+" Plugin 'davidhalter/jedi-vim'
+Plugin 'zchee/deoplete-jedi'
+Plugin 'Shougo/neoinclude.vim'
+Plugin 'c9s/perlomni.vim'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'vim-scripts/YankRing.vim'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-ctrlspace/vim-ctrlspace'
@@ -24,17 +38,6 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tmhedberg/SimpylFold'
-"this
-Plugin 'davidhalter/jedi-vim'
-Plugin 'zchee/deoplete-jedi'
-Plugin 'Shougo/neco-vim'
-Plugin 'Shougo/neoinclude.vim'
-Plugin 'eagletmt/neco-ghc'
-Plugin 'c9s/perlomni.vim'
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'vim-scripts/YankRing.vim'
-"this
 Plugin 'chrisbra/NrrwRgn'
 Plugin 'tpope/vim-unimpaired.git'
 Plugin 'easymotion/vim-easymotion'
@@ -54,12 +57,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'vim-scripts/TaskList.vim'
 Plugin 'xolox/vim-easytags'
 Plugin 'kopischke/vim-stay'
-"here
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-rsi'
-Plugin 'neovimhaskell/haskell-vim.git'
-Plugin 'WolfgangMehner/perl-support'
-Plugin 'klen/python-mode'
 call vundle#end()
 filetype plugin indent on
 syntax enable
@@ -160,10 +159,13 @@ let g:delimitMate_balance_matchpairs = 1
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 0
 let g:delimitMate_jump_expansion = 1
-let g:deoplete#min_pattern_length = 1
+" let g:deoplete#min_pattern_length = 1
+let g:deoplete#auto_complete_start_length = 1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#auto_complete_delay = 10
+let g:deoplete#sources#_ = ['buffer']
+let g:deoplete#auto_complete_start_length = 1
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:EasyMotion_keys = 'ASDFGHJKLQWERUIO;'
 let g:EasyMotion_smartcase = 1
@@ -180,12 +182,14 @@ let g:haskell_enable_quantification = 1
 let g:haskell_enable_recursivedo = 1
 let g:haskell_enable_static_pointers = 1
 let g:haskell_enable_typeroles = 1
+let g:haskellmode_completion_ghc = 0
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_exclude_filetypes = ['help']
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 4
-let g:jedi#use_tabs_not_buffers = 1
+" let g:jedi#use_tabs_not_buffers = 1
 let g:miniBufExplCloseOnSelect = 1
 let g:miniBufExplCycleArround = 1
 let g:miniBufExplorerAutoStart = 0
@@ -237,15 +241,21 @@ let g:yankring_min_element_length = 2
 let g:yankring_replace_n_nkey = '<C-n>'
 let g:yankring_replace_n_pkey = '<C-b>'
 let g:yankring_window_height = 12
+let g:yankring_history_dir = '$HOME/.config/nvim/files'
 
 inoremap <unique> <F1>    <Delete>
 inoremap <unique> <F4>    <esc>:w<cr>
-nnoremap <unique> <F4>    :w<cr>
-noremap  <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
+nnoremap <unique> <F4>    <esc>:w<cr>
+nnoremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
 inoremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
-nnoremap <unique> <F6>    :CtrlPMRU<cr>
-nnoremap <unique> <F7>    :TagbarOpenAutoClose<cr>
-nnoremap <unique> <F8>    :Errors<cr>
+nnoremap <unique> <F6>    <esc>:CtrlPMRU<cr>
+inoremap <unique> <F6>    <esc>:CtrlPMRU<cr>
+nnoremap <unique> <F7>    <esc>:TagbarOpenAutoClose<cr>
+inoremap <unique> <F7>    <esc>:TagbarOpenAutoClose<cr>
+nnoremap <unique> <F8>    <esc>:Errors<cr>
+inoremap <unique> <F8>    <esc>:Errors<cr>
+nnoremap <unique> <F9>    <esc>:YRShow<CR>
+inoremap <unique> <F9>    <esc>:YRShow<CR>
 nnoremap <unique> <F10>   <esc>:x<cr>
 inoremap <unique> <F10>   <esc>:x<cr>
 vnoremap <unique> <M-j>   :m'>+<cr>`<my`>mzgv`yo`z
@@ -262,11 +272,11 @@ nmap     <unique> <space> <Plug>(easymotion-bd-f2)
 vnoremap <unique> J       <esc>
 inoremap <unique> jf      <esc>
 inoremap <unique> fj      <esc>
-noremap  <unique> ^       0
-noremap  <unique> 0       ^
-nnoremap <unique> <Down>  :vnew<cr>
-nnoremap <unique> <Up>    :NarrowWindow!<cr>
-xmap     <unique> <Up>    <Plug>NrrwrgnDo
+nnoremap  <unique> ^       0
+nnoremap  <unique> 0       ^
+nnoremap <unique> <Down>  :vs<cr>
+nnoremap <unique> <Up>  :sp<cr>
+xmap     <unique> <CR>    <Plug>NrrwrgnDo
 nmap     <unique> <Left>  <Plug>AirlineSelectPrevTab
 nmap     <unique> <Right> <Plug>AirlineSelectNextTab
 nnoremap <unique> <C-H>   <C-W><C-H>
@@ -283,20 +293,20 @@ let mapleader=","
 nnoremap <unique> <leader>z       zjza
 nnoremap <unique> <Leader>H       H
 nnoremap <unique> <Leader>L       L
-inoremap <unique> <leader>r       <esc>:nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>i
 nnoremap <unique> <leader>r       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
-map      <unique> <leader>0       <Plug>(easymotion-sol-bd-jk)
-map      <unique> <leader>e       <Plug>(easymotion-bd-el)
-map      <unique> <leader>f       <Plug>(easymotion-bd-fl)
-map      <unique> <leader>j       <Plug>(easymotion-sol-j)
-map      <unique> <leader>k       <Plug>(easymotion-sol-k)
-map      <unique> <leader>n       <Plug>(easymotion-bd-n)
-map      <unique> <leader>$       <Plug>(easymotion-eol-bd-jk)
-map      <unique> <leader>t       <Plug>(easymotion-bd-tl)
-map      <unique> <leader>w       <Plug>(easymotion-bd-wl)
-map      <unique> <leader><space> <Plug>(easymotion-overwin-f2)
+nmap      <unique> <leader>0       <Plug>(easymotion-sol-bd-jk)
+nmap      <unique> <leader>e       <Plug>(easymotion-bd-el)
+nmap      <unique> <leader>f       <Plug>(easymotion-bd-fl)
+nmap      <unique> <leader>j       <Plug>(easymotion-sol-j)
+nmap      <unique> <leader>k       <Plug>(easymotion-sol-k)
+nmap      <unique> <leader>n       <Plug>(easymotion-bd-n)
+nmap      <unique> <leader>$       <Plug>(easymotion-eol-bd-jk)
+nmap      <unique> <leader>t       <Plug>(easymotion-bd-tl)
+nmap      <unique> <leader>w       <Plug>(easymotion-bd-wl)
+nmap      <unique> <leader><space> <Plug>(easymotion-overwin-f2)
 
 let mapleader="-"
+nnoremap <unique> <leader><CR>    :NarrowWindow!<cr>
 nnoremap <unique> <leader><leader> :exe "tabn ".g:lasttab<cr>
 nmap     <unique> <leader><F1>    <Plug>AirlineSelectTab1
 nmap     <unique> <leader><F2>    <Plug>AirlineSelectTab2
