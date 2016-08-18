@@ -26,7 +26,7 @@ mkdir -p ${DEST}
 ln -s ${ZDOTD}/byobu/keybindings.tmux ${DEST}/keybindings.tmux
 ln -s ${ZDOTD}/byobu/status ${DEST}/status
 ln -s ${ZDOTD}/byobu/tmux.conf ${DEST}/.tmux.conf
-ln -s ${ZDOTD}/byobu/profile {DEST}/profile
+ln -s ${ZDOTD}/byobu/profile ${DEST}/profile
 DEST=${HOME}/.config/pymodoro
 mkdir -p ${DEST}
 ln -s ${ZDOTD}/pymodoro/config ${DEST}/config
