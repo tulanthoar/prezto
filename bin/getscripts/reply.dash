@@ -1,0 +1,9 @@
+#!/bin/env dash
+[[ -e $(which cpanm) ]] || sudo pacman -S cpanminus
+for pl in Modern::Perl IO::All Term::ReadLine::Gnu Test::More DateTime Reply; do
+  cpanm $pl
+done
+for pl in ConfigurablePrompt DataDumper Colors ReadLine Hints Packages Editor Interrupt LoadClass LexicalPersistence ResultCache Autocomplete::Packages Autocomplete::Lexicals Autocomplete::Functions Autocomplete::Globals Autocomplete::Methods Autocomplete::Commands Autocomplete::Keywords Timer AutoRefresh TypeTiny; do
+  cpanm "Reply::Plugin::${pl}"
+done
+ln -s $ZDOTD/reply/replyrc $HOME/.replyrc

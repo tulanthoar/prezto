@@ -9,6 +9,7 @@ Plugin 'ascenator/L9'
 Plugin 'tomtom/tlib_vim'
 Plugin 'xolox/vim-misc'
 Plugin 'kana/vim-textobj-user'
+Plugin 'vim-perl/vim-perl'
 "this
 Plugin 'neovimhaskell/haskell-vim.git'
 let g:haddock_browser = "/usr/bin/firefox"
@@ -21,31 +22,63 @@ let g:haskell_enable_typeroles = 1
 let g:haskellmode_completion_ghc = 0
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
+Plugin 'vim-ctrlspace/vim-ctrlspace'
+let g:CtrlSpaceGlobCommand = 'ag -i --hidden -l --nocolor -g ""'
+hi link CtrlSpaceNormal   PMenu
+hi link CtrlSpaceSelected PMenuSel
+hi link CtrlSpaceSearch   Search
+hi link CtrlSpaceStatus   StatusLine
+let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
+let g:CtrlSpaceSaveWorkspaceOnExit = 1
+let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
+let g:CtrlSpaceStatuslineFunction = "airline#extensions#ctrlspace#statusline()"
+let g:CtrlSpaceSearchTiming = 10
+let g:CtrlSpaceCacheDir = expand('$HOME/.config/nvim/files/cache')
+let g:CtrlSpaceUseTabline = 1
+let g:CtrlSpaceUseUnicode = 0
+
+"here
 Plugin 'WolfgangMehner/perl-support'
 let g:perl_fold = 1
 let g:Perl_PerlTags = 'on'
 
 Plugin 'klen/python-mode'
+let g:pymode_doc = 1
 let g:pymode_doc_bind = '\doc'
 let g:pymode_folding = 1
+let g:pymode_lint_message = 1
+let g:pymode_lint_on_fly = 1
+let g:pymode_motion = 1
+let g:pymode_options = 1
+let g:pymode_options_max_line_length = 90
 let g:pymode_rope_autoimport_bind = '\rfi'
 let g:pymode_rope_completion = 0
 let g:pymode_rope_goto_definition_bind = '\def'
 let g:pymode_rope_organize_imports_bind = '\ri'
 let g:pymode_rope_project_root = "code/pygit"
+let g:pymode_rope_regenerate_on_write = 1
 let g:pymode_rope_rename_bind = '\rn'
-let g:pymode_rope_show_doc_bind = '\rdoc'
+let g:pymode_rope_show_doc_bind = '<C-d>'
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+let g:pymode_syntax_slow_sync = 1
 let g:python3_host_prog = '/usr/bin/python3'
 let g:python_highlight_all = 1
+let g:pymode_syntax_print_as_function = 1
+let g:pymode_syntax_highlight_equal_operato = 1
+let g:pymode_syntax_highlight_stars_operator = 1
+let g:pymode_syntax_highlight_self = 1
+let g:pymode_syntax_indent_errors = 1
+let g:pymode_syntax_space_errors = 1
+let g:pymode_syntax_string_formatting = 1
+let g:pymode_syntax_string_format = 1
+let g:pymode_syntax_string_templates = 1
+let g:pymode_syntax_doctests = 1
+let g:pymode_syntax_builtin_objs = 1
+let g:pymode_syntax_builtin_types= 1
+let g:pymode_syntax_highlight_exceptions = 1
+let g:pymode_syntax_docstrings   = 1
 
-Plugin 'vim-ctrlspace/vim-ctrlspace'
-let g:CtrlSpaceGlobCommand = 'ag -i --hidden -l --nocolor -g ""'
-let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
-let g:CtrlSpaceSaveWorkspaceOnExit = 1
-let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
-let g:CtrlSpaceStatuslineFunction = "airline#extensions#ctrlspace#statusline()"
-let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
-"here
 Plugin 'Shougo/deoplete.nvim'
 let g:deoplete#auto_complete_start_length = 1
 let g:deoplete#enable_at_startup = 1
@@ -79,14 +112,13 @@ Plugin 'bling/vim-airline'
 let g:airline_exclude_preview = 1
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline#extensions#ctrlspace#enabled = 1
-let g:airline#extensions#ctrlspace#enabled = 1
 let g:airline#extensions#nrrwrgn#enabled = 1
 let g:airline#extensions#quickfix#location_text = 'loc'
 let g:airline#extensions#quickfix#quickfix_text = 'qfix'
 let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#buffers_label = 'buf'
-let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#exclude_preview = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#show_buffers = 1
@@ -146,23 +178,23 @@ Plugin 'honza/vim-snippets'
 let g:snips_author = 'Nathan Yonkee'
 
 Plugin 'ctrlpvim/ctrlp.vim'
-let g:ctrlp_cmd = 'CtrlPMRU'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_cache_dir = '$HOME/.config/nvim/files/cache/ctrlp'
 let g:ctrlp_clear_cache_on_exit = 1
+let g:ctrlp_cmd = 'CtrlPMRU'
 let g:ctrlp_extensions = ['tag', 'buffertag', 'dir', 'line']
 let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_lazy_update = 10
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:35'
 let g:ctrlp_mruf_max = 2500
 let g:ctrlp_open_single_match = ['mru']
-let g:ctrlp_regexp = 1
-let g:ctrlp_tilde_homedir = 1
-let g:ctrlp_types = ['fil', 'buf', 'mru', 'lns']
 let g:ctrlp_prompt_mappings = {'ToggleType(1)': ['<c-l>', '<c-up>'],
                              \ 'ToggleType(-1)':['<c-h>', '<c-down>'],
                              \ 'PrtCurLeft()':  ['<left>', '<c-^>'],
                              \ 'PrtCurRight()': ['<right>']}
+let g:ctrlp_regexp = 1
+let g:ctrlp_tilde_homedir = 1
+let g:ctrlp_types = ['fil', 'buf', 'mru', 'lns']
 let g:ctrlp_user_command  = 'ag -i --hidden -l --nocolor -g "" %s'
 let g:ctrlp_working_path_mode = 'a'
 
@@ -267,6 +299,7 @@ set softtabstop=2
 set splitright
 set shiftwidth=2
 set tildeop
+set showtabline=0
 set tabstop=2
 set timeoutlen=2000
 set undodir=$HOME/.config/nvim/files/undo/
@@ -277,14 +310,15 @@ set whichwrap+=<,>,h,l
 set wildignorecase
 set wildignore=*.o,*~,*.pyc
 set writebackup
-" let g:deoplete#min_pattern_length = 1
-" let g:jedi#use_tabs_not_buffers = 1
+
 
 inoremap <unique> <F1>    <Delete>
 inoremap <unique> <F4>    <esc>:w<cr>
 nnoremap <unique> <F4>    <esc>:w<cr>
 nnoremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
 inoremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
+nnoremap <unique> <F6>    <esc>:CtrlSpace O<CR>
+inoremap <unique> <F6>    <esc>:CtrlSpace O<CR>
 nnoremap <unique> <F7>    <esc>:TagbarOpenAutoClose<cr>
 inoremap <unique> <F7>    <esc>:TagbarOpenAutoClose<cr>
 nnoremap <unique> <F8>    <esc>:Errors<cr>
@@ -298,6 +332,7 @@ vnoremap <unique> <M-k>   :m'<-2<cr>`>my`<mzgv`yo`z
 nnoremap <unique> <M-j>   :m+<cr>jk
 nnoremap <unique> <M-k>   :m-2<cr>kj
 cnoremap <unique> w!!     SudoWrite
+cnoremap <unique> <C-S>   sort
 vmap     <unique> v       <Plug>(expand_region_expand)
 vmap     <unique> C       gc
 nmap     <unique> css     yss
@@ -313,8 +348,8 @@ nnoremap <unique> <Down>  :vs<cr>
 nnoremap <unique> <Up>  :sp<cr>
 xmap     <unique> <CR>    <Plug>NrrwrgnDo
 nmap     <unique> <Leader><CR> <Plug>NrrwrgnWinIncr
-nmap     <unique> <Left>  <Plug>AirlineSelectPrevTab
-nmap     <unique> <Right> <Plug>AirlineSelectNextTab
+nnoremap     <unique> <Left>  <esc>:CtrlSpace l[[]<CR>
+nnoremap     <unique> <Right>  <esc>:CtrlSpace l]][<CR>
 nnoremap <unique> <C-H>   <C-W><C-H>
 nnoremap <unique> <C-J>   <C-W><C-J>
 nnoremap <unique> <C-K>   <C-W><C-K>
@@ -330,6 +365,9 @@ nnoremap <unique> <leader>z       zjza
 nnoremap <unique> <Leader>H       H
 nnoremap <unique> <Leader>L       L
 nnoremap <unique> <leader>r       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+nnoremap <unique> <Leader>l       :CtrlPLine<CR>
+nnoremap <unique> <leader>t       :CtrlPBufTag<CR>
+nnoremap <unique> <leader>T       :CtrlPBufTagAll<CR>
 nmap      <unique> <leader>0       <Plug>(easymotion-sol-bd-jk)
 nmap      <unique> <leader>e       <Plug>(easymotion-bd-el)
 nmap      <unique> <leader>f       <Plug>(easymotion-bd-fl)
@@ -337,7 +375,6 @@ nmap      <unique> <leader>j       <Plug>(easymotion-sol-j)
 nmap      <unique> <leader>k       <Plug>(easymotion-sol-k)
 nmap      <unique> <leader>n       <Plug>(easymotion-bd-n)
 nmap      <unique> <leader>$       <Plug>(easymotion-eol-bd-jk)
-nmap      <unique> <leader>t       <Plug>(easymotion-bd-tl)
 nnoremap  <unique> <Leader>v       <C-V>
 nmap      <unique> <leader>w       <Plug>(easymotion-bd-wl)
 nmap      <unique> <leader><space> <Plug>(easymotion-overwin-f2)
@@ -346,16 +383,7 @@ nnoremap <unique> <leader>sp      :setlocal spell!<cr>
 
 let mapleader="-"
 nnoremap <unique> <leader><leader> :exe "tabn ".g:lasttab<cr>
-nmap     <unique> <leader><F1>    <Plug>AirlineSelectTab1
-nmap     <unique> <leader><F2>    <Plug>AirlineSelectTab2
-nmap     <unique> <leader><F3>    <Plug>AirlineSelectTab3
-nmap     <unique> <leader><F4>    <Plug>AirlineSelectTab4
-nmap     <unique> <leader><F5>    <Plug>AirlineSelectTab5
-nmap     <unique> <leader><F6>    <Plug>AirlineSelectTab6
-nmap     <unique> <leader><F7>    <Plug>AirlineSelectTab7
-nmap     <unique> <leader><F8>    <Plug>AirlineSelectTab8
-nmap     <unique> <leader><F9>    <Plug>AirlineSelectTab9
-
+nnoremap     <unique> <leader><F10>    :CtrlSpace L<CR>
 nnoremap <unique> <leader>p       :YRShow<cr>
 nnoremap <unique> <leader>u       :UndotreeToggle<cr>
 nnoremap <unique> <leader>n       :NERDTreeFind<cr>
@@ -366,21 +394,11 @@ noremap  <unique> <leader>j       :MBEbb<CR>
 noremap  <unique> <leader>h       :MBEbp<CR>
 noremap  <unique> <leader>l       :MBEbn<CR>
 noremap  <unique> <leader>q       :q<cr>
-noremap  <unique> <leader>Q       :qall<cr>
-noremap  <unique> <leader>w       :MBEbun<cr>
-noremap  <unique> <leader>x       :w<cr>
-noremap  <unique> <leader>0       <esc>:MBEOpen<cr>:MBEFocus<cr>
-noremap  <unique> <leader>1       :b1<cr>
-noremap  <unique> <leader>2       :b2<cr>
-noremap  <unique> <leader>3       :b3<cr>
-noremap  <unique> <leader>4       :b4<cr>
-noremap  <unique> <leader>5       :b5<cr>
-noremap  <unique> <leader>6       :b6<cr>
-noremap  <unique> <leader>7       :b7<cr>
-noremap  <unique> <leader>8       :b8<cr>
-noremap  <unique> <leader>9       :b9<cr>
+noremap  <unique> <leader>Q       :CtrlSpace Q<cr>
+noremap  <unique> <leader>w       :CtrlSpaceSaveWorkspace<CR>
+noremap  <unique> <leader>0       :CtrlSpace A<CR>
 nnoremap <unique> <leader><Tab>   :exe "b".g:lastbuff<cr>
-noremap  <unique> <leader><space> :tabnew<cr>
+noremap  <unique> <leader><space> :CtrlSpace lahO<CR>
 let mapleader="\\"
 
 function g:Undotree_CustomMap()
@@ -406,6 +424,6 @@ autocmd FileType c,perl let b:delimitMate_eol_marker = ";"
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=33
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | exe ":CtrlPMRU" | endif
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | exe ":CtrlSpace B" | endif
 autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=52
 autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
