@@ -46,7 +46,8 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vund
 mkdir -p ${HOME}/.config/nvim/files/{undo,backup,swap,info}
 ln -s ${ZDOTD}/nvim/init.vim $HOME/.config/nvim/init.vim
 sudo pacman -S --noconfirm neovim ctags xsel python-neovim
-nvim -u $ZDOTD/nvim/init.vim +PluginInstall +qall
+perl <"$ZDOTD/nvim/init.vim" -p -e 's/^colorscheme kolor$//' > /tmp/viminit
+nvim -u /tmp/viminit +PluginInstall +qall
 git config --global user.name "Nate"
 git config --global user.email "tulanthoar@gmail.com"
 sudo pacman -S --noconfirm the_silver_searcher python-pip cpanminus gparted mlocate ipython
