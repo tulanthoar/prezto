@@ -1,5 +1,5 @@
 #!/bin/env dash
-[ -e "$(which cpanm)" ] || sudo pacman -S cpanminus
+[ -e "$(which cpanm)" ] || sudo pacman --noconfirm -S cpanminus
 for pl in Modern::Perl IO::All Term::ReadLine::Gnu Test::More DateTime Reply; do
   sudo cpanm $pl
 done
