@@ -1,6 +1,6 @@
 #!/bin/env dash
 [ -e "$(which cpanm)" ] || sudo pacman --noconfirm -S cpanminus
-for pl in Modern::Perl IO::All Term::ReadLine::Gnu Test::More DateTime Reply; do
+for pl in Term::ReadKey Modern::Perl IO::All Term::ReadLine::Gnu Test::More DateTime Reply; do
   sudo cpanm $pl
 done
 for pl in ConfigurablePrompt DataDumper Colors ReadLine Hints Packages Editor Interrupt LoadClass LexicalPersistence ResultCache Autocomplete::Packages Autocomplete::Lexicals Autocomplete::Functions Autocomplete::Globals Autocomplete::Methods Autocomplete::Commands Autocomplete::Keywords Timer AutoRefresh TypeTiny; do
