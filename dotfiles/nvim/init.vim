@@ -10,7 +10,25 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'xolox/vim-misc'
 Plugin 'kana/vim-textobj-user'
 Plugin 'vim-perl/vim-perl'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+let g:snips_author = 'Nathan Yonkee'
+Plugin 'WolfgangMehner/perl-support'
+let g:perl_fold = 1
+let g:Perl_PerlTags = 'on'
 "this
+Plugin 'LaTeX-Box-Team/LaTeX-Box'
+let g:LatexBox_completion_close_braces = 1
+let g:LatexBox_bibtex_wild_spaces = 1
+let g:LatexBox_complete_inlineMath = 1
+let g:LatexBox_latexmk_async = 1
+let g:LatexBox_latexmk_preview_continuously = 1
+let g:LatexBox_quickfix = 2
+let g:LatexBox_fold_automatic = 1
+let g:LatexBox_viewer = 'evince'
+let g:LatexBox_Folding = 1
+let g:tex_flavor = "latex"
+
 Plugin 'neovimhaskell/haskell-vim.git'
 let g:haddock_browser = "/usr/bin/firefox"
 let g:haskell_enable_arrowsyntax = 1
@@ -36,11 +54,6 @@ let g:CtrlSpaceSearchTiming = 10
 let g:CtrlSpaceCacheDir = expand('$HOME/.config/nvim/files/cache')
 let g:CtrlSpaceUseTabline = 1
 let g:CtrlSpaceUseUnicode = 0
-
-"here
-Plugin 'WolfgangMehner/perl-support'
-let g:perl_fold = 1
-let g:Perl_PerlTags = 'on'
 
 Plugin 'klen/python-mode'
 let g:pymode_doc = 1
@@ -173,9 +186,7 @@ let g:undotree_WindowLayout = 2
 
 Plugin 'edsono/vim-matchit'
 Plugin 'Konfekt/FastFold'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-let g:snips_author = 'Nathan Yonkee'
+let g:fastfold_skip_filetypes=['plaintex', 'tex']
 
 Plugin 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_by_filename = 0
@@ -359,6 +370,12 @@ nmap     <unique> [P      ]<space>yil:m+<cr>kp
 nmap     <unique> ]P      ]<space>yil:m+<cr>kpj
 nmap     <unique> [C      ]<space>yil:m+<cr>gcckp
 nmap     <unique> ]C      ]<space>yil:m+<cr>kpgccj
+imap <unique> <Leader>] <Plug>LatexCloseCurEnv
+nmap <unique> <Leader>* <Plug>LatexToggleStarEnv
+nmap <unique> <Leader>ce <Plug>LatexChangeEnv
+vmap <unique> <Leader>} <Plug>LatexWrapSelection
+vmap <unique> <Leader>se <Plug>LatexEnvWrapSelection
+nmap <unique> <Leader>ae ]<Space>ji\begin{}<CR><CR>\end{}jfk
 
 let mapleader=","
 nnoremap <unique> <leader>z       zjza
@@ -427,3 +444,4 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | exe ":CtrlSpace B" | endif
 autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=52
 autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
+" autocmd FileType plaintex,tex set foldmethod=expr
