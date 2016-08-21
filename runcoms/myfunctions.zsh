@@ -1,11 +1,11 @@
-_fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null }
+function _fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null }
 autoload -Uz add-zsh-hook
 add-zsh-hook preexec _fasd_preexec
-_fzf_compgen_path() { ag -i --hidden -g "" "$1" }
+function _fzf_compgen_path() { ag -i --hidden -g "" "$1" }
 # Based on https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh (MIT licensed, as of 2016-05-05).
 function writecmd() { perl -e '$TIOCSTI = 0x5412; $l = <STDIN>; $lc = $ARGV[0] eq "-run" ? "\r" : ""; $l =~ s/\s*$/$lc/; map { ioctl STDOUT, $TIOCSTI, $_; } split "", $l;' -- $1 }
-alias fhe='fc -nl 1 | fzf --no-sort --tac | writecmd -run'
-alias h='fc -nl 1 | fzf --no-sort --tac | writecmd'
+function fhe(){fc -nl 1 | fzf --no-sort --tac --query=$1 | writecmd -run}
+function h(){fc -nl 1 | fzf --no-sort --tac --query=$1 | writecmd}
 # fss [FUZZY PATTERN] - Select selected tmux session
 function fss() { tmux switch-client -t $(tmux list-sessions -F "#{session_name}"|fzf --query="$1") }
 # ftpane - switch pane (@george-b)
@@ -35,12 +35,15 @@ function fzf-locate-widget() {
   fi
   zle redisplay
 }
+function u() {
+  builtin cd $(perl -e '$\=qq(\n);$_=$ENV{q(PWD)};while(/^\/[^\/]+\//){s/\/[^\/]+$//}continue{print};print q(/)' | fzf --query=$1|| echo ${PWD:h})
+}
 function v() { nvim $(fasd -Rfl $1 | fzf-tmux --no-sort +m) }
-function z() { \cd $(fasd -Rdl $1 | fzf-tmux --no-sort +m) }
+function z() { builtin cd $(fasd -Rdl $1 | fzf-tmux --no-sort +m|| echo ${PWD}) }
 function j() {
   local file
   file=$(ag -i --hidden -g "" / 2&>/dev/null | fzf +s --query=$1)
-  [[ -d ${file:h} ]] && \cd ${file:h}
+  [[ -d ${file:h} ]] && builtin cd ${file:h}
 }
 function p() {
   pushd -q +1 > /dev/null
@@ -65,23 +68,16 @@ function sudo-command-line() {
   [[ -z $BUFFER ]] && zle up-history
   [[ $BUFFER == sudo\ * ]] && LBUFFER=${LBUFFER#sudo } || LBUFFER="sudo $LBUFFER"
 }
-function suggest-accept-return(){
-  zle vi-end-of-line
-  zle accept-line
-}
+function suggest-accept-return(){ zle vi-end-of-line&&zle accept-line }
 function c(){
-  \cd $(find . -maxdepth 2 -type d | grep -oE "/[\W^.]?\w.*$" |cut -c2-| fzf -q $1)
+  builtin cd $(find . -maxdepth 2 -type d | grep -oE "/[\W^.]?\w.*$" |cut -c2-| fzf -q $1)
   find . -maxdepth 1 -type d | grep -oE "/[\W^.]?\w.*$" |cut -c2-|perl -p -e 's/(.)$/$1\//g'|white
 }
-
-function jump(){ \cd $(fzf --query=$1 < $FZFBMARKS|cut -c2-) }
-function damrk(){ cat $FZFBMARKS | grep -vx $(fzf --query=$1 < $FZFBMARKS) > $FZFBMARKS }
-function mark() { echo $1 : $(pwd) >> $FZFBMARKS }
+function J(){ builtin cd $(perl -p -e 's/^hash -d (\w+)=/$1 /' < .zshbookmarks|fzf --query=$1|| echo ${PWD}) }
 
 typeset -Ag snippets
-snippet-add() { snippets[$1]=$2 }
-
-snippet-expand() {
+function snippet-add() { snippets[$1]=$2 } 
+function snippet-expand() {
     emulate -L zsh
     setopt extendedglob
     local MATCH
@@ -91,6 +87,7 @@ snippet-expand() {
 }
 zle -N snippet-expand
 zle -N fzf-locate-widget
+zle -N h
 zle -N p
 zle -N n
 zle -N sudo-command-line
@@ -100,6 +97,7 @@ function bind_keys() {
   bindkey -M viins "^[i" fzf-locate-widget
   bindkey -M viins "^[p" p
   bindkey -M viins "^[n" n
+  bindkey -M viins "^[h" h
   bindkey -M viins "^[ " suggest-accept-return
   bindkey -M viins "^[s" sudo-command-line
   bindkey -M viins "^@" snippet-expand
