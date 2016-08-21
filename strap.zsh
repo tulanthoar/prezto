@@ -1,5 +1,5 @@
 #!/bin/env zsh
-sudo pacman -Syu --noconfirm dash
+sudo pacman -Syu --noconfirm dash the_silver_searcher python-pip cpanminus gparted mlocate ipython neovim ctags xsel python-neovim
 dir=${0:a:h}
 export ZPREZD=$HOME/${dir:t}
 export ZRCD=${ZPREZD}/runcoms
@@ -14,9 +14,9 @@ for b in clipmenu.bash clipmenud.bash corezerot.dash diskspace.dash maybeclipmen
   t=$(echo "${b}" | perl -p -e 's/\.(py|[bd]ash)//; chomp')
   ln -s ${ZBIND}/${b} ${HOME}/bin/${t}
 done
-mkdir -p ${HOME}/apps-git
 export GITAPPSD="${HOME}/apps-git"
-for get in ${ZBIND}/getscripts/*; do
+mkdir -p ${GITAPPSD}
+for get in ${ZBIND}/getscripts/core/*; do
   eval "${get}"
 done
 local fzfbmarks="$HOME/.fzfbmarks"
@@ -41,14 +41,15 @@ mkdir -p ${DEST}
 ln -s ${ZDOTD}/xmonad/xmonad.hs ${DEST}/xmonad.hs
 ln -s ${ZDOTD}/xmonad/xmctl.hs ${DEST}/xmctl.hs
 curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
-mkdir -p ${HOME}/.config/nvim/bundle
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
+DEST=${HOME}/.config/nvim/bundle
+mkdir -p ${DEST}
+git clone https://github.com/VundleVim/Vundle.vim.git ${DEST}/Vundle.vim
 mkdir -p ${HOME}/.config/nvim/files/{undo,backup,swap,info}
+mkdir -p ${HOME}/.local/share/nvim/{swap,site,shada,view}
 ln -s ${ZDOTD}/nvim/init.vim $HOME/.config/nvim/init.vim
-sudo pacman -S --noconfirm neovim ctags xsel python-neovim
+ln -s ${ZDOTD}/nvim/ro.vim $HOME/.config/nvim/ro.vim
 perl <"$ZDOTD/nvim/init.vim" -p -e 's/^colorscheme kolor$//' > /tmp/viminit
 nvim -u /tmp/viminit +PluginInstall +qall
 git config --global user.name "Nate"
 git config --global user.email "tulanthoar@gmail.com"
-sudo pacman -S --noconfirm the_silver_searcher python-pip cpanminus gparted mlocate ipython
 sudo pip install ptpython
