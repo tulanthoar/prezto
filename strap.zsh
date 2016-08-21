@@ -1,5 +1,5 @@
 #!/bin/env zsh
-sudo pacman -Syu --noconfirm dash the_silver_searcher python-pip cpanminus gparted mlocate ipython neovim ctags xsel python-neovim
+sudo pacman -Syu --noconfirm dash the_silver_searcher python-pip cpanminus gparted mlocate ipython neovim ctags python-neovim
 dir=${0:a:h}
 export ZPREZD=$HOME/${dir:t}
 export ZRCD=${ZPREZD}/runcoms
