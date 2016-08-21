@@ -1,9 +1,6 @@
 [ -z ${ZDOTD+x} ] && source $HOME/.zprofile
 local t1=$(date +%S%N)
-ZPLUGINS=( 'MikeDacre/cdbk' 'Tarrasch/zsh-bd' 'RobSis/zsh-completion-generator' 'bric3/nice-exit-code' 'djui/alias-tips' 'Tarrasch/zsh-colors' )
-setopt CLOBBER
-source ${ZDOTD}/antibody/ini.zsh
-antibody_zsh bundle <<< $(printf '%s\n' ${ZPLUGINS[@]})
+source <(antibody bundle 'MikeDacre/cdbk' 'Tarrasch/zsh-bd' 'RobSis/zsh-completion-generator' 'bric3/nice-exit-code' 'djui/alias-tips' 'Tarrasch/zsh-colors')
 source ${HOME}/.fzf/fzf.zsh
 source ${ZRCD}/myfunctions.zsh
 source ${HOME}/.enhancd/init.sh
