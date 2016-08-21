@@ -1,12 +1,7 @@
 [ -z ${ZDOTD+x} ] && source $HOME/.zprofile
 local t1=$(date +%S%N)
 source <(antibody bundle 'MikeDacre/cdbk' 'Tarrasch/zsh-bd' 'RobSis/zsh-completion-generator' 'bric3/nice-exit-code' 'djui/alias-tips' 'Tarrasch/zsh-colors')
-source ${HOME}/.fzf/fzf.zsh
-source ${ZRCD}/myfunctions.zsh
-source ${HOME}/.enhancd/init.sh
-source ${ZPREZD}/init.zsh
-source ${ZRCD}/myaliases.zsh
-source ${ZRCD}/mysnippets.zsh
+source <(printf 'source %s\n' ${HOME}/.fzf/fzf.zsh ${ZRCD}/myfunctions.zsh ${HOME}/.enhancd/init.sh ${ZPREZD}/init.zsh ${ZRCD}/myaliases.zsh ${ZRCD}/mysnippets.zsh)
 infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 stty -ixon
 bind_keys
