@@ -1,18 +1,11 @@
 [ -z ${ZDOTD+x} ] && source $HOME/.zprofile
 local tinit=$(date +%S%N)
 source <(antibody bundle 'MikeDacre/cdbk' 'RobSis/zsh-completion-generator' 'bric3/nice-exit-code' 'djui/alias-tips' 'Tarrasch/zsh-colors')
-local tanti=$(date +%S%N)
 source ${ZPREZD}/init.zsh
-local tfuncs=$(date +%S%N)
 source <(printf 'source %s\n' ${ZRCD}/myfunctions.zsh ${ZRCD}/myaliases.zsh)
 infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 stty -ixon
 bind_keys
-local tstuff=$(date +%S%N)
 compinit -i
 local tf=$(date +%S%N)
-echo $(( ${tanti[1,5]} - ${tinit[1,5]} ))
-echo $(( ${tfuncs[1,5]} - ${tanti[1,5]} ))
-echo $(( ${tstuff[1,5]} - ${tfuncs[1,5]} ))
-echo $(( ${tf[1,5]} - ${tstuff[1,5]} ))
 echo $(( ${tf[1,5]} - ${tinit[1,5]} ))
