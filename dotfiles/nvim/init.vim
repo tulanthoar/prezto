@@ -9,14 +9,24 @@ Plugin 'ascenator/L9'
 Plugin 'tomtom/tlib_vim'
 Plugin 'xolox/vim-misc'
 Plugin 'kana/vim-textobj-user'
+Plugin 'Shougo/deoplete.nvim'
+let g:deoplete#auto_complete_start_length = 1
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#auto_complete_delay = 10
+let g:deoplete#sources#_ = ['buffer']
+let g:deoplete#auto_complete_start_length = 1
+let g:deoplete#sources#jedi#show_docstring = 1
 Plugin 'vim-perl/vim-perl'
+"this
 Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-let g:snips_author = 'Nathan Yonkee'
 Plugin 'WolfgangMehner/perl-support'
 let g:perl_fold = 1
 let g:Perl_PerlTags = 'on'
-"this
+Plugin 'honza/vim-snippets'
+let g:snips_author = 'Nathan Yonkee'
+let g:snips_email = 'tulanthoar@gmail.com'
+let g:snips_github = 'https://github.com/tulanthoar'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
 let g:LatexBox_completion_close_braces = 1
 let g:LatexBox_bibtex_wild_spaces = 1
@@ -28,7 +38,6 @@ let g:LatexBox_fold_automatic = 1
 let g:LatexBox_viewer = 'evince'
 let g:LatexBox_Folding = 1
 let g:tex_flavor = "latex"
-
 Plugin 'neovimhaskell/haskell-vim.git'
 let g:haddock_browser = "/usr/bin/firefox"
 let g:haskell_enable_arrowsyntax = 1
@@ -39,7 +48,6 @@ let g:haskell_enable_static_pointers = 1
 let g:haskell_enable_typeroles = 1
 let g:haskellmode_completion_ghc = 0
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-
 Plugin 'vim-ctrlspace/vim-ctrlspace'
 let g:CtrlSpaceGlobCommand = 'ag -i --hidden -l --nocolor -g ""'
 hi link CtrlSpaceNormal   PMenu
@@ -54,7 +62,6 @@ let g:CtrlSpaceSearchTiming = 10
 let g:CtrlSpaceCacheDir = expand('$HOME/.config/nvim/files/cache')
 let g:CtrlSpaceUseTabline = 1
 let g:CtrlSpaceUseUnicode = 0
-
 Plugin 'klen/python-mode'
 let g:pymode_doc = 1
 let g:pymode_doc_bind = '\doc'
@@ -91,16 +98,6 @@ let g:pymode_syntax_builtin_objs = 1
 let g:pymode_syntax_builtin_types= 1
 let g:pymode_syntax_highlight_exceptions = 1
 let g:pymode_syntax_docstrings   = 1
-
-Plugin 'Shougo/deoplete.nvim'
-let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#auto_complete_delay = 10
-let g:deoplete#sources#_ = ['buffer']
-let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#sources#jedi#show_docstring = 1
-
 Plugin 'davidhalter/jedi-vim'
 Plugin 'zchee/deoplete-jedi'
 Plugin 'Shougo/neoinclude.vim'
@@ -108,18 +105,15 @@ Plugin 'c9s/perlomni.vim'
 Plugin 'eagletmt/neco-ghc'
 Plugin 'Shougo/neco-vim'
 let g:vimsyn_folding = 'af'
-
 Plugin 'terryma/vim-multiple-cursors'
 let g:multi_cursor_next_key = "<F2>"
 let g:multi_cursor_visual_maps = {'i':1, 'a':1, 'f':1, 'F':1, 't':1, 'T':1, 'S':1}
-
 Plugin 'vim-scripts/YankRing.vim'
 let g:yankring_min_element_length = 2
 let g:yankring_replace_n_nkey = '<C-n>'
 let g:yankring_replace_n_pkey = '<C-b>'
 let g:yankring_window_height = 12
 let g:yankring_history_dir = '$HOME/.config/nvim/files'
-
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'bling/vim-airline'
 let g:airline_exclude_preview = 1
@@ -150,7 +144,6 @@ let g:airline_powerline_fonts = 1
 let g:airline_section_b = '%{getcwd()}'
 let g:airline_section_y = ''
 let g:airline_theme = 'molokai'
-
 Plugin 'ervandew/supertab'
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextDefaultCompletionType = "<C-p>"
@@ -160,34 +153,28 @@ let g:SuperTabCrMapping = 1
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabLongestEnhanced = 1
 let g:SuperTabLongestHighlight = 1
-
 Plugin 'bling/vim-bufferline'
 let g:bufferline_active_buffer_left = '_'
 let g:bufferline_active_buffer_right = '_'
 let g:bufferline_echo = 0
 let g:bufferline_modified = '**'
-
 Plugin 'fholgado/minibufexpl.vim'
 let g:miniBufExplCloseOnSelect = 1
 let g:miniBufExplCycleArround = 1
 let g:miniBufExplorerAutoStart = 0
 let g:miniBufExplShowBufNumbers = 0
 let g:miniBufExplStatusLineText = 0
-
 Plugin 'Raimondi/delimitMate'
 let g:delimitMate_balance_matchpairs = 1
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 0
 let g:delimitMate_jump_expansion = 1
-
 Plugin 'mbbill/undotree'
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_WindowLayout = 2
-
 Plugin 'edsono/vim-matchit'
 Plugin 'Konfekt/FastFold'
 let g:fastfold_skip_filetypes=['plaintex', 'tex']
-
 Plugin 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_cache_dir = '$HOME/.config/nvim/files/cache/ctrlp'
@@ -208,10 +195,8 @@ let g:ctrlp_tilde_homedir = 1
 let g:ctrlp_types = ['fil', 'buf', 'mru', 'lns']
 let g:ctrlp_user_command  = 'ag -i --hidden -l --nocolor -g "" %s'
 let g:ctrlp_working_path_mode = 'a'
-
 Plugin 'tmhedberg/SimpylFold'
 let g:SimpylFold_docstring_preview = 1
-
 Plugin 'chrisbra/NrrwRgn'
 let g:nrrw_rgn_nomap_nr = 1
 let g:nrrw_rgn_nomap_Nr = 1
@@ -220,20 +205,17 @@ let g:nrrw_rgn_incr = 50
 let g:nrrw_rgn_vert = 1
 let g:nrrw_rgn_nohl = 1
 let b:nrrw_aucmd_written = ':update'
-
 Plugin 'easymotion/vim-easymotion'
 let g:EasyMotion_keys = 'ASDFGHJKLQWERUIO;'
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_use_upper = 1
-
 Plugin 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_exclude_filetypes = ['help']
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 4
-
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeIgnore = ['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
 let g:NERDTreeMinimalUI = 1
@@ -242,27 +224,22 @@ let g:NERDTreeShowFiles = 0
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowLineNumbers = 0
 let g:NERDTreeWinSize = 40
-
 Plugin 'scrooloose/syntastic'
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
-
 Plugin 'zeis/vim-kolor'
 let g:kolor_underline = 1
 let g:kolor_italic = 1
 let g:kolor_bold = 1
 let g:kolor_alternative_matchparen = 1
-
 Plugin 'terryma/vim-expand-region'
 let g:expand_region_text_objects = {'iw':0, 'iW':0, 'i"':0, 'i''':0, 'i]':1, 'ib':1, 'iB':1, 'il':0, 'ii':1, 'ip':0, 'ie':0}
-
 Plugin 'xolox/vim-easytags'
 let g:easytags_async=1
 let g:easytags_file = '$HOME/.config/nvim/files/.easytags'
 let g:easytags_resolve_links = 1
-
 Plugin 'kana/vim-textobj-entire'
 Plugin 'kana/vim-textobj-line'
 Plugin 'kopischke/vim-stay'
@@ -278,7 +255,6 @@ Plugin 'vim-scripts/TaskList.vim'
 call vundle#end()
 filetype plugin indent on
 syntax enable
-
 
 colorscheme kolor
 set background=dark
@@ -444,4 +420,3 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | exe ":CtrlSpace B" | endif
 autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=52
 autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
-" autocmd FileType plaintex,tex set foldmethod=expr
