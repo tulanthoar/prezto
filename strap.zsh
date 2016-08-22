@@ -1,6 +1,5 @@
 #!/bin/env zsh
-exec 3>/dev/null
-sudo pacman -Syu --noconfirm dash the_silver_searcher python-pip cpanminus gparted mlocate ipython neovim ctags python-neovim >&3
+sudo pacman -Syu --noconfirm dash the_silver_searcher python-pip cpanminus gparted mlocate ipython neovim ctags python-neovim > /dev/null
 dir=${0:a:h}
 export ZPREZD=$HOME/${dir:t}
 export ZRCD=${ZPREZD}/runcoms
@@ -18,7 +17,7 @@ done
 export GITAPPSD="${HOME}/apps-git"
 mkdir -p ${GITAPPSD}
 for get in ${ZBIND}/getscripts/core/*; do
-  eval "${get}" >&3
+  eval "${get}> /dev/null"
 done
 local fzfbmarks="$HOME/.fzfbmarks"
 [[ -f $fzfbmarks ]] || touch $fzfbmarks
@@ -54,4 +53,3 @@ nvim -u /tmp/viminit +PluginInstall +qall
 git config --global user.name "Nate"
 git config --global user.email "tulanthoar@gmail.com"
 sudo pip install ptpython
-exec 3>&-
