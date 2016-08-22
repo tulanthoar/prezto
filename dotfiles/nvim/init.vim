@@ -1,7 +1,10 @@
 "init on 2016-05-26
+if &compatible
+  set nocompatible
+endif
+filetype off
 let mapleader="\\"
 set rtp+=$HOME/.config/nvim/bundle/Vundle.vim
-filetype off
 call vundle#begin('$HOME/.config/nvim/bundle')
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -10,20 +13,21 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'xolox/vim-misc'
 Plugin 'kana/vim-textobj-user'
 Plugin 'Shougo/deoplete.nvim'
-let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
+" let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_start_length = 2
+let g:deoplete#enable_refresh_always = 1
+let g:deoplete#enable_camel_case = 1
 let g:deoplete#auto_complete_delay = 10
-let g:deoplete#sources#_ = ['buffer']
-let g:deoplete#auto_complete_start_length = 1
 let g:deoplete#sources#jedi#show_docstring = 1
 Plugin 'vim-perl/vim-perl'
 "this
-Plugin 'SirVer/ultisnips'
+" Plugin 'SirVer/ultisnips'
+Plugin 'Shougo/neosnippet'
+Plugin 'Shougo/neosnippet-snippets'
 Plugin 'WolfgangMehner/perl-support'
 let g:perl_fold = 1
 let g:Perl_PerlTags = 'on'
-Plugin 'honza/vim-snippets'
+" Plugin 'honza/vim-snippets'
 let g:snips_author = 'Nathan Yonkee'
 let g:snips_email = 'tulanthoar@gmail.com'
 let g:snips_github = 'https://github.com/tulanthoar'
@@ -47,13 +51,8 @@ let g:haskell_enable_recursivedo = 1
 let g:haskell_enable_static_pointers = 1
 let g:haskell_enable_typeroles = 1
 let g:haskellmode_completion_ghc = 0
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 Plugin 'vim-ctrlspace/vim-ctrlspace'
 let g:CtrlSpaceGlobCommand = 'ag -i --hidden -l --nocolor -g ""'
-hi link CtrlSpaceNormal   PMenu
-hi link CtrlSpaceSelected PMenuSel
-hi link CtrlSpaceSearch   Search
-hi link CtrlSpaceStatus   StatusLine
 let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
 let g:CtrlSpaceSaveWorkspaceOnExit = 1
 let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
@@ -257,6 +256,10 @@ filetype plugin indent on
 syntax enable
 
 colorscheme kolor
+hi link CtrlSpaceNormal   PMenu
+hi link CtrlSpaceSelected PMenuSel
+hi link CtrlSpaceSearch   Search
+hi link CtrlSpaceStatus   StatusLine
 set background=dark
 set backupdir=$HOME/.config/nvim/files/backup/
 set cmdheight=2
@@ -341,6 +344,9 @@ nnoremap <unique> <C-H>   <C-W><C-H>
 nnoremap <unique> <C-J>   <C-W><C-J>
 nnoremap <unique> <C-K>   <C-W><C-K>
 nnoremap <unique> <C-L>   <C-W><C-L>
+imap <expr><C-l>
+\ neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
 nnoremap <unique> \\n     i<CR><Esc>
 nmap     <unique> [P      ]<space>yil:m+<cr>kp
 nmap     <unique> ]P      ]<space>yil:m+<cr>kpj
@@ -409,8 +415,13 @@ autocmd WinLeave    * set nocursorline
 autocmd WinLeave    * set nocursorcolumn
 autocmd InsertEnter * set nocursorline
 autocmd InsertLeave * set cursorline
+autocmd VimEnter * call deoplete#initialize()
+" autocmd VimEnter * :UpdateRemotePlugins
+autocmd InsertEnter * call deoplete#enable()
+" autocmd InsertLeave * call deoplete#disable()
 " When editing a file, always jump to the last known cursor position.
 autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 autocmd FileType python let b:match_words = '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
 autocmd FileType c,perl let b:delimitMate_insert_eol_marker = 2
 autocmd FileType c,perl let b:delimitMate_eol_marker = ";"
