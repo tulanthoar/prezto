@@ -18,8 +18,10 @@ export GITAPPSD="${HOME}/apps-git"
 mkdir -p ${GITAPPSD}
 for get in ${ZBIND}/getscripts/core/*; do
   exec 1>/dev/null
+  exec 2>/dev/null
   ${get}
   exec 1>/dev/tty
+  exec 2>/dev/tty
 done
 local fzfbmarks="$HOME/.fzfbmarks"
 [[ -f $fzfbmarks ]] || touch $fzfbmarks
