@@ -11,8 +11,7 @@ for f in Xresources xserverrc zlogin zlogout zpreztorc zprofile zshenv zshrc xin
 done
 mkdir -p ${HOME}/bin
 for b in clipmenu.bash clipmenud.bash corezerot.dash diskspace.dash maybeclipmenud.dash mayberedshift.dash modkey.dash pymodoro-out.dash quteprint.dash search.dash start-pomodoro.py; do
-  t=$(echo "${b}" | perl -p -e 's/\.(py|[bd]ash)//; chomp')
-  ln -s ${ZBIND}/${b} ${HOME}/bin/${t}
+  ln -s ${ZBIND}/${b} $(echo "${b}" | perl -p -e 's/([^\.]+)\.(py|[bd]ash)/$ENV{q(HOME)}\/bin\/$1/')
 done
 export GITAPPSD="${HOME}/apps-git"
 mkdir -p ${GITAPPSD}
@@ -44,10 +43,10 @@ DEST=${HOME}/.xmonad
 mkdir -p ${DEST}
 ln -s ${ZDOTD}/xmonad/xmonad.hs ${DEST}/xmonad.hs
 ln -s ${ZDOTD}/xmonad/xmctl.hs ${DEST}/xmctl.hs
-curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
+curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s > /dev/null
 DEST=${HOME}/.config/nvim/bundle
 mkdir -p ${DEST}
-git clone https://github.com/VundleVim/Vundle.vim.git ${DEST}/Vundle.vim
+git clone https://github.com/VundleVim/Vundle.vim.git ${DEST}/Vundle.vim > /dev/null
 mkdir -p ${HOME}/.config/nvim/files/{undo,backup,swap,info}
 mkdir -p ${HOME}/.local/share/nvim/{swap,site,shada,view}
 ln -s ${ZDOTD}/nvim/init.vim $HOME/.config/nvim/init.vim
@@ -56,4 +55,4 @@ perl <"$ZDOTD/nvim/init.vim" -p -e 's/^colorscheme kolor$//' > /tmp/viminit
 nvim -u /tmp/viminit +PluginInstall +qall
 git config --global user.name "Nate"
 git config --global user.email "tulanthoar@gmail.com"
-sudo pip install ptpython
+sudo pip install ptpython > /dev/null
