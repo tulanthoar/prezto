@@ -17,7 +17,9 @@ done
 export GITAPPSD="${HOME}/apps-git"
 mkdir -p ${GITAPPSD}
 for get in ${ZBIND}/getscripts/core/*; do
-  eval "${get}> /dev/null"
+  exec 1>/dev/null
+  ${get}
+  exec 1>/dev/tty
 done
 local fzfbmarks="$HOME/.fzfbmarks"
 [[ -f $fzfbmarks ]] || touch $fzfbmarks
