@@ -34,14 +34,14 @@ import XMonad.Util.SpawnOnce (spawnOnce)
 myTerminal = "urxvt" :: String
 myModMask = mod3Mask :: KeyMask
 wmNameM_ = setWMName "LG3D" :: X()
-uniqueInits = ["sudo updatedb", "modkey", "tilda -c xmenu", "maybeclipmenud", "mayberedshift"] :: [String]
+uniqueInits = ["sudo updatedb", "modkey", "tilda", "maybeclipmenud", "mayberedshift"] :: [String]
 xInitM_ = mapM_ spawnOnce uniqueInits :: X()
 wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"] :: [WorkspaceId]
 menuH = 15 :: Int
 mag = 1.3 :: Rational
 mvNEmpty = moveTo Next EmptyWS :: X()
-corePadsM_ = mapM_ (namedScratchpadAction scratchpads) [bPad, iPad, pPad, nPad, rPad] :: X()
-myBrowser = "qutebrowser" :: String
+corePadsM_ = mapM_ (namedScratchpadAction scratchpads) [bPad, iPad, pPad, nPad ] :: X()
+myBrowser = "fiefox" :: String
 launchAct = spawn $ "j4-dmenu-desktop --display-binary --term="++myTerminal++" --dmenu='dmenu -w 600 -y "++show menuH++" -z -p launch -l 50'" :: X()
 srchAct = spawn $  "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50" :: X()
 centrPtr = updatePointer (0.5, 0.5) (0, 0) :: X()
@@ -90,6 +90,7 @@ xkM=
   , ((mod4Mask, xK_y), sendKey controlMask xK_F9)
   , ((myModMask, lowvol), moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
   , ((myModMask, raisevol), moveTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
+  , ((myModMask, xK_Menu), spawn "ps -C tilda &>/dev/null || tilda")
   ] ++
   [ ((0, k), focusNth w)
     | (w, k) <- zip [0 .. 8] [xK_KP_End, 0xff99, 0xff9b, 0xff96, 0xff9d, 0xff98, 0xff95, 0xff97, 0xff9a ]
