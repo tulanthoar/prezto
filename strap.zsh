@@ -22,8 +22,6 @@ for get in ${ZBIND}/getscripts/core/*; do
   exec 1>/dev/tty
   exec 2>/dev/tty
 done
-local fzfbmarks="$HOME/.fzfbmarks"
-[[ -f $fzfbmarks ]] || touch $fzfbmarks
 DEST=${HOME}/.byobu
 mkdir -p ${DEST}
 ln -s ${ZDOTD}/byobu/keybindings.tmux ${DEST}/keybindings.tmux
@@ -46,7 +44,7 @@ ln -s ${ZDOTD}/xmonad/xmctl.hs ${DEST}/xmctl.hs
 curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s > /dev/null
 DEST=${HOME}/.config/nvim/bundle
 mkdir -p ${DEST}
-git clone https://github.com/VundleVim/Vundle.vim.git ${DEST}/Vundle.vim > /dev/null
+git clone https://github.com/VundleVim/Vundle.vim.git ${DEST}/Vundle.vim &> /dev/null
 mkdir -p ${HOME}/.config/nvim/files/{undo,backup,swap,info}
 mkdir -p ${HOME}/.local/share/nvim/{swap,site,shada,view}
 ln -s ${ZDOTD}/nvim/init.vim $HOME/.config/nvim/init.vim
