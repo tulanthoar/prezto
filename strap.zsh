@@ -6,16 +6,21 @@ export ZRCD=${ZPREZD}/runcoms
 export ZBIND=${ZPREZD}/bin
 export ZDOTD=${ZPREZD}/dotfiles
 for f in Xresources xserverrc zlogin zlogout zpreztorc zprofile zshenv zshrc xinitrc; do
-  [[ -f ${HOME}/.${f} ]] && rm ${HOME}/.${f}
+  [[ -e ${HOME}/.${f} ]] && rm ${HOME}/.${f}
   ln -s ${ZRCD}/${f} ${HOME}/.${f}
 done
+echo 'done linking runcoms'
 mkdir -p ${HOME}/bin
 for b in clipmenu.bash clipmenud.bash corezerot.dash diskspace.dash maybeclipmenud.dash mayberedshift.dash modkey.dash pymodoro-out.dash quteprint.dash search.dash start-pomodoro.py; do
-  ln -s ${ZBIND}/${b} $(echo "${b}" | perl -p -e 's/([^\.]+)\.(py|[bd]ash)/$ENV{q(HOME)}\/bin\/$1/')
+  local f=$(echo ${b} | perl -p -e 's/([^\.]+)\.(py|[bd]ash)/$ENV{q(HOME)}\/bin\/$1/')
+  [[ -e ${f} ]] && rm ${f}
+  ln -s ${ZBIND}/${b} ${f}
 done
-export GITAPPSD="${HOME}/apps-git"
+echo 'done linking bins'
+export GITAPPSD=${HOME}/apps-git
 mkdir -p ${GITAPPSD}
 for get in ${ZBIND}/getscripts/core/*; do
+  echo "getting ${get}"
   exec 1>/dev/null
   exec 2>/dev/null
   ${get}
