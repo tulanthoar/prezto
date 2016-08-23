@@ -1,15 +1,19 @@
 #!/bin/bash
 
-perl -pi -e 's/^#en_US\./en_US\./g' /etc/locale.gen
+perl -pi -e 's/^#en_US\./en_US\./' /etc/locale.gen && \
+perl -pi -e 's/^es_US\.UTF-8/#es_US\.UTF-8/' /etc/locale.gen
 locale-gen
 hostnamectl set-hostname arch
 timedatectl set-timezone 'America/Denver'
-echo 'perl -p -e </etc/sudoers "s/^## User privilege specification$/arch ALL=\\(ALL\\) NOPASSWD: ALL/" | tee mysudo | visudo -c -s -f- && cat mysudo > /etc/sudoers && cd /home/arch' > ~/postscript
-mkdir -p /home/arch&&touch ~/one
-touch /home/arch/.z{shenv,profile,shrc,login}&&touch ~/two
-echo 'git clone --recursive https://github.com/tulanthoar/prezto /home/arch/.zprezto' >> /home/arch/.zshrc
-echo '/home/arch/.zprezto/strap.zsh' >> /home/arch/.zshrc&&touch ~/three
-useradd -p 'arch1!' -s /bin/zsh arch &&touch ~/four
+perl -p -e </etc/sudoers "s/^## User privilege specification$/arch ALL=\\(ALL\\) NOPASSWD: ALL/" | tee mysudo | visudo -c -s -f- && cat mysudo > /etc/sudoers
+mkdir -p /home/arch
+touch /home/arch/.z{shenv,profile,shrc,login}
+echo 'sudo pacman -Syu --noconfirm git>/dev/null' >> /home/arch/.zshrc
+echo 'git clone --recursive https://github.com/tulanthoar/prezto /home/arch/.zprezto &> /dev/null' >> /home/arch/.zshrc
+echo '/home/arch/.zprezto/strap.zsh' >> /home/arch/.zshrc
+echo '"hello"' > /etc/motd
+useradd -p 'arch11' -s /bin/zsh arch
+echo 'arch:arch11'|chpasswd
 chown arch:arch /home/arch
-chown arch:arch /home/arch/.z{shenv,profile,shrc,login} && touch ~/five
-pacman -Syu --noconfirm zsh git&&touch ~/six
+chown arch:arch /home/arch/.z{shenv,profile,shrc,login}
+pacman -S --noconfirm zsh
