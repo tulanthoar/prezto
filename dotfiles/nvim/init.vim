@@ -22,6 +22,11 @@ let g:deoplete#sources#jedi#show_docstring = 1
 Plugin 'vim-perl/vim-perl'
 "this
 " Plugin 'SirVer/ultisnips'
+Plugin 'godlygeek/tabular'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
 Plugin 'WolfgangMehner/perl-support'
@@ -142,7 +147,7 @@ let g:airline#extensions#wordcount#enabled = 0
 let g:airline_powerline_fonts = 1
 let g:airline_section_b = '%{getcwd()}'
 let g:airline_section_y = ''
-let g:airline_theme = 'molokai'
+let g:airline_theme = 'kolor'
 Plugin 'ervandew/supertab'
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextDefaultCompletionType = "<C-p>"
