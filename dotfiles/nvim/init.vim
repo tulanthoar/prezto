@@ -21,8 +21,9 @@ let g:deoplete#auto_complete_delay = 10
 let g:deoplete#sources#jedi#show_docstring = 1
 Plugin 'vim-perl/vim-perl'
 "this
-Plugin 'hkupty/nvimux'
+" Plugin 'hkupty/nvimux'
 Plugin 'brettanomyces/nvim-terminus'
+"here
 Plugin 'kassio/neoterm'
 Plugin 'godlygeek/tabular'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -355,6 +356,16 @@ imap <expr><C-F>
 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
 nnoremap <unique> \\n     i<CR><Esc>
 nnoremap  <unique> QQ       :CtrlSpace Q<cr>
+nnoremap <unique><Leader>gt :GitGutterSignsToggle
+  nmap <unique>[g <Plug>GitGutterPrevHunk
+  nmap <unique>]g <Plug>GitGutterNextHunk
+  nmap <unique><Leader>ga <Plug>GitGutterStageHunk
+  nmap <unique><Leader>gu <Plug>GitGutterUndoHunk
+  nmap <unique><Leader>gv <Plug>GitGutterPreviewHunk
+  omap ig <Plug>GitGutterTextObjectInnerPending
+  omap ag <Plug>GitGutterTextObjectOuterPending
+  xmap ig <Plug>GitGutterTextObjectInnerVisual
+  xmap ag <Plug>GitGutterTextObjectOuterVisual
 nmap     <unique> <M-[>      ]<space>yil:m+<cr>kp
 nmap     <unique> <M-]>      ]<space>yil:m+<cr>kpj
 nmap     <unique> [c      ]<space>yil:m+<cr>gcckp
@@ -395,7 +406,7 @@ nnoremap <unique> <leader><leader> :exe "tabn ".g:lasttab<cr>
 nnoremap     <unique> <leader>b    :CtrlSpace A<CR>
 nnoremap <unique> <leader>p       :YRShow<cr>
 nnoremap <unique> <leader>u       :UndotreeToggle<cr>
-nnoremap <unique> <leader>n       :NERDTreeFind<cr>
+map <unique> <leader>n       <plug>NERDTreeMirrorToggle<CR>
 nmap     <unique> <leader>t       <Plug>TaskList
 noremap  <unique> <leader>k       :MBEbf<CR>
 noremap  <unique> <leader>j       :MBEbb<CR>
