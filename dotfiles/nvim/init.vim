@@ -13,7 +13,6 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'xolox/vim-misc'
 Plugin 'kana/vim-textobj-user'
 Plugin 'Shougo/deoplete.nvim'
-" let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_start_length = 2
 let g:deoplete#enable_refresh_always = 1
 let g:deoplete#enable_camel_case = 1
@@ -21,7 +20,6 @@ let g:deoplete#auto_complete_delay = 10
 let g:deoplete#sources#jedi#show_docstring = 1
 Plugin 'vim-perl/vim-perl'
 "this
-" Plugin 'SirVer/ultisnips'
 Plugin 'godlygeek/tabular'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'tpope/vim-fugitive'
@@ -32,10 +30,6 @@ Plugin 'Shougo/neosnippet-snippets'
 Plugin 'WolfgangMehner/perl-support'
 let g:perl_fold = 1
 let g:Perl_PerlTags = 'on'
-" Plugin 'honza/vim-snippets'
-let g:snips_author = 'Nathan Yonkee'
-let g:snips_email = 'tulanthoar@gmail.com'
-let g:snips_github = 'https://github.com/tulanthoar'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
 let g:LatexBox_completion_close_braces = 1
 let g:LatexBox_bibtex_wild_spaces = 1
@@ -143,7 +137,7 @@ let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#tagbar#flags = 's'
 let g:airline#extensions#whitespace#checks = ['indent', 'trailing', 'long', 'mixed-indent-file']
 let g:airline#extensions#whitespace#enabled = 1
-let g:airline#extensions#wordcount#enabled = 0
+let g:airline#extensions#wordcount#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_section_b = '%{getcwd()}'
 let g:airline_section_y = ''
@@ -184,7 +178,7 @@ let g:ctrlp_by_filename = 0
 let g:ctrlp_cache_dir = '$HOME/.config/nvim/files/cache/ctrlp'
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_cmd = 'CtrlPMRU'
-let g:ctrlp_extensions = ['tag', 'buffertag', 'dir', 'line']
+let g:ctrlp_extensions = ['tag', 'buffertag', 'line']
 let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_lazy_update = 10
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:35'
@@ -196,7 +190,7 @@ let g:ctrlp_prompt_mappings = {'ToggleType(1)': ['<c-l>', '<c-up>'],
                              \ 'PrtCurRight()': ['<right>']}
 let g:ctrlp_regexp = 1
 let g:ctrlp_tilde_homedir = 1
-let g:ctrlp_types = ['fil', 'buf', 'mru', 'lns']
+let g:ctrlp_types = ['fil', 'mru', 'lns']
 let g:ctrlp_user_command  = 'ag -i --hidden -l --nocolor -g "" %s'
 let g:ctrlp_working_path_mode = 'a'
 Plugin 'tmhedberg/SimpylFold'
@@ -336,6 +330,7 @@ nnoremap <unique> H       Hzz
 nnoremap <unique> L       Lzz
 nmap     <unique> <space> <Plug>(easymotion-bd-f2)
 vnoremap <unique> J       <esc>
+vnoremap <unique> Q       <esc>
 inoremap <unique> jf      <esc>
 inoremap <unique> fj      <esc>
 nnoremap  <unique> ^       0
@@ -346,26 +341,31 @@ xmap     <unique> <CR>    <Plug>NrrwrgnDo
 nmap     <unique> <Leader><CR> <Plug>NrrwrgnWinIncr
 nnoremap     <unique> <Left>  <esc>:CtrlSpace l[[]<CR>
 nnoremap     <unique> <Right>  <esc>:CtrlSpace l]][<CR>
-nnoremap <unique> <C-H>   <C-W><C-H>
-nnoremap <unique> <C-J>   <C-W><C-J>
-nnoremap <unique> <C-K>   <C-W><C-K>
-nnoremap <unique> <C-L>   <C-W><C-L>
-imap <expr><C-l>
+noremap <unique> <C-H>   <C-W><C-H>
+noremap <unique> <C-J>   <C-W><C-J>
+noremap <unique> <C-K>   <C-W><C-K>
+noremap <unique> <C-L>   <C-W><C-L>
+imap <expr><C-F>
 \ neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
 nnoremap <unique> \\n     i<CR><Esc>
-nmap     <unique> [P      ]<space>yil:m+<cr>kp
-nmap     <unique> ]P      ]<space>yil:m+<cr>kpj
-nmap     <unique> [C      ]<space>yil:m+<cr>gcckp
-nmap     <unique> ]C      ]<space>yil:m+<cr>kpgccj
-imap <unique> <Leader>] <Plug>LatexCloseCurEnv
-nmap <unique> <Leader>* <Plug>LatexToggleStarEnv
-nmap <unique> <Leader>ce <Plug>LatexChangeEnv
-vmap <unique> <Leader>} <Plug>LatexWrapSelection
-vmap <unique> <Leader>se <Plug>LatexEnvWrapSelection
-nmap <unique> <Leader>ae ]<Space>ji\begin{}<CR><CR>\end{}jfk
-
+nnoremap  <unique> QQ       :CtrlSpace Q<cr>
+nmap     <unique> <M-[>      ]<space>yil:m+<cr>kp
+nmap     <unique> <M-]>      ]<space>yil:m+<cr>kpj
+nmap     <unique> [c      ]<space>yil:m+<cr>gcckp
+nmap     <unique> ]c      ]<space>yil:m+<cr>kpgccj
+au FileType tex,plaintex imap <buffer> <Leader>] <Plug>LatexCloseCurEnv
+au FileType tex,plaintex nmap <buffer> <Leader>* <Plug>LatexToggleStarEnv
+au FileType tex,plaintex nmap <buffer> <Leader>ce <Plug>LatexChangeEnv
+au FileType tex,plaintex vmap <buffer> <Leader>} <Plug>LatexWrapSelection
+au FileType tex,plaintex vmap <buffer> <Leader>se <Plug>LatexEnvWrapSelection
+au FileType tex,plaintex nmap <buffer> <Leader>ae ]<Space>ji\begin{}<CR><CR>\end{}jfk
+au FileType nerdtree map <buffer> l :call nerdtree#ui_glue#invokeKeyMap("C")<CR>
+au FileType nerdtree map <buffer> L :call nerdtree#ui_glue#invokeKeyMap("o")<CR>
+au FileType nerdtree map <buffer> h :call nerdtree#ui_glue#invokeKeyMap("u")<CR>
+au FileType nerdtree map <buffer> H :call nerdtree#ui_glue#invokeKeyMap("U")<CR>
 let mapleader=","
+nmap <unique> <leader><CR>    MVz^ozzz+zb<cr>
 nnoremap <unique> <leader>z       zjza
 nnoremap <unique> <Leader>H       H
 nnoremap <unique> <Leader>L       L
@@ -383,25 +383,22 @@ nmap      <unique> <leader>$       <Plug>(easymotion-eol-bd-jk)
 nnoremap  <unique> <Leader>v       <C-V>
 nmap      <unique> <leader>w       <Plug>(easymotion-bd-wl)
 nmap      <unique> <leader><space> <Plug>(easymotion-overwin-f2)
-nmap <unique> <leader><CR>    MVz^ozzz+zb<cr>
 nnoremap <unique> <leader>sp      :setlocal spell!<cr>
 
 let mapleader="-"
 nnoremap <unique> <leader><leader> :exe "tabn ".g:lasttab<cr>
-nnoremap     <unique> <leader><F10>    :CtrlSpace L<CR>
+nnoremap     <unique> <leader>b    :CtrlSpace A<CR>
 nnoremap <unique> <leader>p       :YRShow<cr>
 nnoremap <unique> <leader>u       :UndotreeToggle<cr>
 nnoremap <unique> <leader>n       :NERDTreeFind<cr>
-nnoremap <unique> <leader>t       :TlistToggle<cr>
-nmap     <unique> <leader>T       <Plug>TaskList
+nmap     <unique> <leader>t       <Plug>TaskList
 noremap  <unique> <leader>k       :MBEbf<CR>
 noremap  <unique> <leader>j       :MBEbb<CR>
 noremap  <unique> <leader>h       :MBEbp<CR>
 noremap  <unique> <leader>l       :MBEbn<CR>
 noremap  <unique> <leader>q       :q<cr>
-noremap  <unique> <leader>Q       :CtrlSpace Q<cr>
 noremap  <unique> <leader>w       :CtrlSpaceSaveWorkspace<CR>
-noremap  <unique> <leader>0       :CtrlSpace A<CR>
+noremap  <unique> <leader>0       :CtrlSpace L<CR>
 nnoremap <unique> <leader><Tab>   :exe "b".g:lastbuff<cr>
 noremap  <unique> <leader><space> :CtrlSpace lahO<CR>
 let mapleader="\\"
@@ -422,9 +419,7 @@ autocmd WinLeave    * set nocursorcolumn
 autocmd InsertEnter * set nocursorline
 autocmd InsertLeave * set cursorline
 autocmd VimEnter * call deoplete#initialize()
-" autocmd VimEnter * :UpdateRemotePlugins
 autocmd InsertEnter * call deoplete#enable()
-" autocmd InsertLeave * call deoplete#disable()
 " When editing a file, always jump to the last known cursor position.
 autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
