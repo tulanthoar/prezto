@@ -5,6 +5,7 @@ endif
 filetype off
 let mapleader="\\"
 set rtp+=$HOME/.config/nvim/bundle/Vundle.vim
+set rtp+=$HOME/.config/nvim/rplugin/python
 call vundle#begin('$HOME/.config/nvim/bundle')
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -20,6 +21,9 @@ let g:deoplete#auto_complete_delay = 10
 let g:deoplete#sources#jedi#show_docstring = 1
 Plugin 'vim-perl/vim-perl'
 "this
+Plugin 'hkupty/nvimux'
+Plugin 'brettanomyces/nvim-terminus'
+Plugin 'kassio/neoterm'
 Plugin 'godlygeek/tabular'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'tpope/vim-fugitive'
@@ -50,6 +54,7 @@ let g:haskell_enable_recursivedo = 1
 let g:haskell_enable_static_pointers = 1
 let g:haskell_enable_typeroles = 1
 let g:haskellmode_completion_ghc = 0
+" Plugin 'tek/proteome.nvim'
 Plugin 'vim-ctrlspace/vim-ctrlspace'
 let g:CtrlSpaceGlobCommand = 'ag -i --hidden -l --nocolor -g ""'
 let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
