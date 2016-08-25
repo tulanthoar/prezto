@@ -17,15 +17,17 @@ RUN apk add --no-cache python3 git rsync musl-dev gcc ca-certificates openssl ct
   ls -1 /usr/share/nvim/runtime/syntax > /targets && \
     grep -Ev -f /patterns /targets |xargs -n1 echo|perl -pe '$_ = "/usr/share/nvim/runtime/syntax/".$_'| xargs -n1 rm -f && \
     printf '/usr/lib/perl5/core_perl/auto/Encode/%s\n' 'CN' 'JP' 'KR' 'TW' | xargs rm -rf && \
+    rm /usr/share/nvim/runtime/doc -rf && \
   rm /usr/lib/python3.5/idlelib/Icons -rf && \
     rm /usr/lib/python3.5/idlelib/idle_test -rf && \
     rm /usr/share/ca-certificates/mozilla/* && \
     rm /usr/share/locale -rf && \
-  for d in $(printf '%s ' ".git" "__pycache__" "doc" "test" "t" "tests" "test-files" "test-case"); do find / -type d -name "$d" -delete; done && \
+for d in $(printf '%s ' ".git" "__pycache__" "doc" "test" "t" "tests" "test-files" "test-case"); do find /root -type d -name "$d" | xargs -n1 rm -rf; done && \
+  for d in $(printf '%s ' ".git" "__pycache__" "doc" "test" "t" "tests" "test-files" "test-case"); do find /usr/lib -type d -name "$d" | xargs -n1 rm -rf; done && \
   for f in $(printf '%s ' "png" "rst" "md" "md" "svg" "gif" "txt" "exe"); do find / -type f -name "*.${f}" -delete; done && \
     for f in $(printf '%s ' "README" "LICENSE"); do find / -type f -name "${f}.*" -delete; done && \
   rm /root/.config/nvim/bundle/vim-ctrlspace/bin/*arm* && \
     rm /root/.config/nvim/bundle/vim-ctrlspace/bin/*386* && \
-    mv /root/.config/nvim/bundle/vim-ctrlspace/bin/*linux* /bundle/vim-ctrlspace/ && \
+    mv /root/.config/nvim/bundle/vim-ctrlspace/bin/*linux* /root/.config/nvim/bundle/vim-ctrlspace/ && \
     rm /root/.config/nvim/bundle/vim-ctrlspace/bin/*amd* && \
     mv /root/.config/nvim/bundle/vim-ctrlspace/file_engine*linux* /root/.config/nvim/bundle/vim-ctrlspace/bin
