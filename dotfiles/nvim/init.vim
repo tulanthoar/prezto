@@ -23,6 +23,11 @@ Plugin 'vim-perl/vim-perl'
 "this
 " Plugin 'hkupty/nvimux'
 Plugin 'brettanomyces/nvim-terminus'
+Plugin 'vim-utils/vim-man'
+Plugin 'eugen0329/vim-esearch'
+Plugin 'ShowMarks'
+let g:showmarks_textlower = "`\t"
+let g:showmarks_include = "abcdefghijklmnopqrstuvwxyz"
 "here
 Plugin 'kassio/neoterm'
 Plugin 'godlygeek/tabular'
@@ -262,11 +267,15 @@ syntax enable
 set t_Co=256
 
 colorscheme kolor
+set background=dark
 hi link CtrlSpaceNormal   PMenu
 hi link CtrlSpaceSelected PMenuSel
 hi link CtrlSpaceSearch   Search
 hi link CtrlSpaceStatus   StatusLine
-set background=dark
+highlight link ShowMarksHLl CursorColumn
+" ShowMarksHLu - For marks A-Z                       
+" ShowMarksHLo - For all other marks                 
+" ShowMarksHLm - For multiple marks on the same line.
 set backupdir=$HOME/.config/nvim/files/backup/
 set cmdheight=2
 set completeopt="menu,preview,longest"
