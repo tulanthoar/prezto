@@ -11,12 +11,11 @@ RUN apk add --no-cache python3 git rsync musl-dev gcc ca-certificates openssl ct
     git clone http://github.com/VundleVim/Vundle.vim.git /root/.config/nvim/bundle/Vundle.vim && \
     perl <"/root/.config/nvim/init.vim" -p -e 's/^colorscheme kolor$//' > /tmp/viminit && nvim -u /tmp/viminit +PluginInstall +qall && \
     nvim +UpdateRemotePlugins +qall && \
-    apk del gcc && \
-    rm -r /root/.cache && \
+    apk del --purge gcc rsync ca-certificates openssl && \
+    rm -rf /root/.cache && \
     printf '%s\n' '^vim$' '^initex.vim$' '^java.vim$' '^diff.vim' '^readline.vim$' '^html.vim$' '^lua.vim$' '^python.vim$' '^help.vim$' '^markdown.vim$' '^make.vim$' '^json.vim$' '^cmake.vim$' '^automake.vim$' '^matlab.vim$' '^git.vim$' '^syncolor.vim$' '^cpp.vim$' '^texmf.vim$' '^config.vim$' '^man.vim$' '^manual.vim$' '^conf.vim$' '^Dockerfile.vim$' '^godoc.vim$' '^chaskell.vim$' '^tex.vim$' '^vim$.vim$' '^sh.vim$' '^zsh.vim$' '^perl.vim$' '^texinfo.vim$' '^c.vim$' '^plaintex.vim$' '^haskell.vim$' '^go.vim$' '^pod.vim$' '^lhaskell.vim$' '^gitcommit.vim$' '^gitconfig.vim$' '^tags.vim$' '^master.vim$' '^syntax.vim$' > /patterns && \
   ls -1 /usr/share/nvim/runtime/syntax > /targets && \
     grep -Ev -f /patterns /targets |xargs -n1 echo|perl -pe '$_ = "/usr/share/nvim/runtime/syntax/".$_'| xargs -n1 rm -f && \
-    rm /var/cache/apk/* && \
     printf '/usr/lib/perl5/core_perl/auto/Encode/%s\n' 'CN' 'JP' 'KR' 'TW' | xargs rm -rf && \
   rm /usr/lib/python3.5/idlelib/Icons -rf && \
     rm /usr/lib/python3.5/idlelib/idle_test -rf && \
