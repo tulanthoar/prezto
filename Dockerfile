@@ -20,6 +20,7 @@ apk add neovim --update-cache --repository http://dl-2.alpinelinux.org/alpine/ed
     echo "syntax" && \
     printf '/usr/lib/perl5/core_perl/auto/Encode/%s\n' 'CN' 'JP' 'KR' 'TW' | xargs rm -rf && \
     echo "encode" && \
+		mv /root/.config/nvim/bundle/ShowMarks/doc /root/.config/nvim/bundle/ShowMarks/dox&&\
 for d in $(printf '%s ' ".git" "__pycache__" "doc" "test" "t" "tests" "test-files" "test-case"); do find /root -type d -name "$d" | xargs -n1 rm -rf; done && \
     echo "dirs" && \
   for f in $(printf '%s ' "png" "rst" "md" "md" "svg" "gif" "txt" "exe"); do find / -type f -name "*.${f}" -delete; done && \
@@ -37,4 +38,5 @@ for d in $(printf '%s ' ".git" "__pycache__" "doc" "test" "t" "tests" "test-file
     rm /root/.config/nvim/bundle/vim-ctrlspace/bin/*386* && \
     mv /root/.config/nvim/bundle/vim-ctrlspace/bin/*linux* /root/.config/nvim/bundle/vim-ctrlspace/ && \
     rm /root/.config/nvim/bundle/vim-ctrlspace/bin/*amd* && \
-    mv /root/.config/nvim/bundle/vim-ctrlspace/file_engine*linux* /root/.config/nvim/bundle/vim-ctrlspace/bin
+    mv /root/.config/nvim/bundle/vim-ctrlspace/file_engine*linux* /root/.config/nvim/bundle/vim-ctrlspace/bin  &&\
+		mv /root/.config/nvim/bundle/ShowMarks/dox /root/.config/nvim/bundle/ShowMarks/doc
