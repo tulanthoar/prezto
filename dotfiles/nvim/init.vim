@@ -21,13 +21,12 @@ let g:deoplete#auto_complete_delay = 10
 let g:deoplete#sources#jedi#show_docstring = 1
 Plugin 'vim-perl/vim-perl'
 "this
-" Plugin 'hkupty/nvimux'
 Plugin 'brettanomyces/nvim-terminus'
 Plugin 'vim-utils/vim-man'
 Plugin 'eugen0329/vim-esearch'
-Plugin 'ShowMarks'
-let g:showmarks_textlower = "`\t"
-let g:showmarks_include = "abcdefghijklmnopqrstuvwxyz"
+Plugin 'kshenoy/vim-signature'
+let g:SignatureMarkTextHLDynamic = 1
+let g:SignatureMarkerTextHLDynamic = 1
 "here
 Plugin 'kassio/neoterm'
 Plugin 'godlygeek/tabular'
@@ -60,7 +59,6 @@ let g:haskell_enable_recursivedo = 1
 let g:haskell_enable_static_pointers = 1
 let g:haskell_enable_typeroles = 1
 let g:haskellmode_completion_ghc = 0
-" Plugin 'tek/proteome.nvim'
 Plugin 'vim-ctrlspace/vim-ctrlspace'
 let g:CtrlSpaceGlobCommand = 'ag -i --hidden -l --nocolor -g ""'
 let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
@@ -272,10 +270,6 @@ hi link CtrlSpaceNormal   PMenu
 hi link CtrlSpaceSelected PMenuSel
 hi link CtrlSpaceSearch   Search
 hi link CtrlSpaceStatus   StatusLine
-highlight link ShowMarksHLl CursorColumn
-" ShowMarksHLu - For marks A-Z                       
-" ShowMarksHLo - For all other marks                 
-" ShowMarksHLm - For multiple marks on the same line.
 set backupdir=$HOME/.config/nvim/files/backup/
 set cmdheight=2
 set completeopt="menu,preview,longest"
