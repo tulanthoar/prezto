@@ -331,7 +331,6 @@ vnoremap <unique> <M-k>   :m'<-2<cr>`>my`<mzgv`yo`z
 nnoremap <unique> <M-j>   :m+<cr>jk
 nnoremap <unique> <M-k>   :m-2<cr>kj
 cnoremap <unique> w!!     SudoWrite
-cnoremap <unique> <C-S>   sort
 vmap     <unique> v       <Plug>(expand_region_expand)
 vmap     <unique> C       gc
 nmap     <unique> css     yss
@@ -342,49 +341,38 @@ vnoremap <unique> J       <esc>
 vnoremap <unique> Q       <esc>
 inoremap <unique> jf      <esc>
 inoremap <unique> fj      <esc>
-nnoremap  <unique> ^       0
-nnoremap  <unique> 0       ^
+nnoremap <unique> ^       0
+nnoremap <unique> 0       ^
 nnoremap <unique> <Down>  :vs<cr>
-nnoremap <unique> <Up>  :sp<cr>
+nnoremap <unique> <Up>    :sp<cr>
 xmap     <unique> <CR>    <Plug>NrrwrgnDo
 nmap     <unique> <Leader><CR> <Plug>NrrwrgnWinIncr
-nnoremap     <unique> <Left>  <esc>:CtrlSpace l[[]<CR>
-nnoremap     <unique> <Right>  <esc>:CtrlSpace l]][<CR>
-noremap <unique> <C-H>   <C-W><C-H>
-noremap <unique> <C-J>   <C-W><C-J>
-noremap <unique> <C-K>   <C-W><C-K>
-noremap <unique> <C-L>   <C-W><C-L>
-imap <expr><C-F>
+nnoremap <unique> <Left>  <esc>:CtrlSpace l[[]<CR>
+nnoremap <unique> <Right> <esc>:CtrlSpace l]][<CR>
+noremap  <unique> <C-H>   <C-W><C-H>
+noremap  <unique> <C-J>   <C-W><C-J>
+noremap  <unique> <C-K>   <C-W><C-K>
+noremap  <unique> <C-L>   <C-W><C-L>
+imap     <expr><C-F>
 \ neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
-nnoremap <unique> \\n     i<CR><Esc>
-nnoremap  <unique> QQ       :CtrlSpace Q<cr>
-nnoremap <unique><Leader>gt :GitGutterSignsToggle
-  nmap <unique>[g <Plug>GitGutterPrevHunk
-  nmap <unique>]g <Plug>GitGutterNextHunk
-  nmap <unique><Leader>ga <Plug>GitGutterStageHunk
-  nmap <unique><Leader>gu <Plug>GitGutterUndoHunk
-  nmap <unique><Leader>gv <Plug>GitGutterPreviewHunk
-  omap ig <Plug>GitGutterTextObjectInnerPending
-  omap ag <Plug>GitGutterTextObjectOuterPending
-  xmap ig <Plug>GitGutterTextObjectInnerVisual
-  xmap ag <Plug>GitGutterTextObjectOuterVisual
+nnoremap <unique> \\n        i<CR><Esc>
+nnoremap <unique> Q          qj
+nmap     <unique> [g         <Plug>GitGutterPrevHunk
+nmap     <unique> ]g         <Plug>GitGutterNextHunk
+nmap     <unique> ggu        <Plug>GitGutterUndoHunk
+nmap     <unique> gg<CR>     <Plug>GitGutterPreviewHunk
+omap     <unique> ig         <Plug>GitGutterTextObjectInnerPending
+omap     <unique> ag         <Plug>GitGutterTextObjectOuterPending
+xmap     <unique> ig         <Plug>GitGutterTextObjectInnerVisual
+xmap     <unique> ag         <Plug>GitGutterTextObjectOuterVisual
 nmap     <unique> <M-[>      ]<space>yil:m+<cr>kp
 nmap     <unique> <M-]>      ]<space>yil:m+<cr>kpj
-nmap     <unique> [c      ]<space>yil:m+<cr>gcckp
-nmap     <unique> ]c      ]<space>yil:m+<cr>kpgccj
-au FileType tex,plaintex imap <buffer> <Leader>] <Plug>LatexCloseCurEnv
-au FileType tex,plaintex nmap <buffer> <Leader>* <Plug>LatexToggleStarEnv
-au FileType tex,plaintex nmap <buffer> <Leader>ce <Plug>LatexChangeEnv
-au FileType tex,plaintex vmap <buffer> <Leader>} <Plug>LatexWrapSelection
-au FileType tex,plaintex vmap <buffer> <Leader>se <Plug>LatexEnvWrapSelection
-au FileType tex,plaintex nmap <buffer> <Leader>ae ]<Space>ji\begin{}<CR><CR>\end{}jfk
-au FileType nerdtree map <buffer> l :call nerdtree#ui_glue#invokeKeyMap("C")<CR>
-au FileType nerdtree map <buffer> L :call nerdtree#ui_glue#invokeKeyMap("o")<CR>
-au FileType nerdtree map <buffer> h :call nerdtree#ui_glue#invokeKeyMap("u")<CR>
-au FileType nerdtree map <buffer> H :call nerdtree#ui_glue#invokeKeyMap("U")<CR>
+nmap     <unique> [c         ]<space>yil:m+<cr>gcckp
+nmap     <unique> ]c         ]<space>yil:m+<cr>kpgccj
+
 let mapleader=","
-nmap <unique> <leader><CR>    MVz^ozzz+zb<cr>
+nmap     <unique> <leader><CR>    MVz^ozzz+zb<cr>
 nnoremap <unique> <leader>z       zjza
 nnoremap <unique> <Leader>H       H
 nnoremap <unique> <Leader>L       L
@@ -392,62 +380,74 @@ nnoremap <unique> <leader>r       :nohlsearch<cr>:diffupdate<cr>:syntax sync fro
 nnoremap <unique> <Leader>l       :CtrlPLine<CR>
 nnoremap <unique> <leader>t       :CtrlPBufTag<CR>
 nnoremap <unique> <leader>T       :CtrlPBufTagAll<CR>
-nmap      <unique> <leader>0       <Plug>(easymotion-sol-bd-jk)
-nmap      <unique> <leader>e       <Plug>(easymotion-bd-el)
-nmap      <unique> <leader>f       <Plug>(easymotion-bd-fl)
-nmap      <unique> <leader>j       <Plug>(easymotion-sol-j)
-nmap      <unique> <leader>k       <Plug>(easymotion-sol-k)
-nmap      <unique> <leader>n       <Plug>(easymotion-bd-n)
-nmap      <unique> <leader>$       <Plug>(easymotion-eol-bd-jk)
-nnoremap  <unique> <Leader>v       <C-V>
-nmap      <unique> <leader>w       <Plug>(easymotion-bd-wl)
-nmap      <unique> <leader><space> <Plug>(easymotion-overwin-f2)
+nmap     <unique> <leader>0       <Plug>(easymotion-sol-bd-jk)
+nmap     <unique> <leader>e       <Plug>(easymotion-bd-el)
+nmap     <unique> <leader>f       <Plug>(easymotion-bd-fl)
+nmap     <unique> <leader>j       <Plug>(easymotion-sol-j)
+nmap     <unique> <leader>k       <Plug>(easymotion-sol-k)
+nmap     <unique> <leader>n       <Plug>(easymotion-bd-n)
+nmap     <unique> <leader>$       <Plug>(easymotion-eol-bd-jk)
+nnoremap <unique> <Leader>v       <C-V>
+nmap     <unique> <leader>w       <Plug>(easymotion-bd-wl)
+nmap     <unique> <leader><space> <Plug>(easymotion-overwin-f2)
 nnoremap <unique> <leader>sp      :setlocal spell!<cr>
+nnoremap <unique> <Leader>.       @j
 
 let mapleader="-"
 nnoremap <unique> <leader><leader> :exe "tabn ".g:lasttab<cr>
-nnoremap     <unique> <leader>b    :CtrlSpace A<CR>
-nnoremap <unique> <leader>p       :YRShow<cr>
-nnoremap <unique> <leader>u       :UndotreeToggle<cr>
-map <unique> <leader>n       <plug>NERDTreeMirrorToggle<CR>
-nmap     <unique> <leader>t       <Plug>TaskList
-noremap  <unique> <leader>k       :MBEbf<CR>
-noremap  <unique> <leader>j       :MBEbb<CR>
-noremap  <unique> <leader>h       :MBEbp<CR>
-noremap  <unique> <leader>l       :MBEbn<CR>
-noremap  <unique> <leader>q       :q<cr>
-noremap  <unique> <leader>w       :CtrlSpaceSaveWorkspace<CR>
-noremap  <unique> <leader>0       :CtrlSpace L<CR>
-nnoremap <unique> <leader><Tab>   :exe "b".g:lastbuff<cr>
-noremap  <unique> <leader><space> :CtrlSpace lahO<CR>
+nnoremap <unique> <leader>b        :CtrlSpace A<CR>
+nnoremap <unique> <leader>p        :YRShow<cr>
+nnoremap <unique> <leader>u        :UndotreeToggle<cr>
+map      <unique> <leader>n        <plug>NERDTreeMirrorToggle<CR>
+nmap     <unique> <leader>t        <Plug>TaskList
+noremap  <unique> <leader>k        :MBEbf<CR>
+noremap  <unique> <leader>j        :MBEbb<CR>
+noremap  <unique> <leader>h        :MBEbp<CR>
+noremap  <unique> <leader>l        :MBEbn<CR>
+noremap  <unique> <leader>q        :CtrlSpace Q<cr>
+noremap  <unique> <leader>w        :CtrlSpaceSaveWorkspace<CR>
+noremap  <unique> <leader>0        :CtrlSpace L<CR>
+nnoremap <unique> <leader><Tab>    :exe "b".g:lastbuff<cr>
+noremap  <unique> <leader><space>  :CtrlSpace<CR>
 let mapleader="\\"
 
+au FileType tex,plaintex imap <buffer> <Leader>]  <Plug>LatexCloseCurEnv
+au FileType tex,plaintex nmap <buffer> <Leader>*  <Plug>LatexToggleStarEnv
+au FileType tex,plaintex nmap <buffer> <Leader>ce <Plug>LatexChangeEnv
+au FileType tex,plaintex vmap <buffer> <Leader>}  <Plug>LatexWrapSelection
+au FileType tex,plaintex vmap <buffer> <Leader>se <Plug>LatexEnvWrapSelection
+au FileType tex,plaintex nmap <buffer> <Leader>ae ]<Space>ji\begin{}<CR><CR>\end{}jfk
+au FileType nerdtree      map <buffer> l :call nerdtree#ui_glue#invokeKeyMap("C")<CR>
+au FileType nerdtree      map <buffer> L :call nerdtree#ui_glue#invokeKeyMap("o")<CR>
+au FileType nerdtree      map <buffer> h :call nerdtree#ui_glue#invokeKeyMap("u")<CR>
+au FileType nerdtree      map <buffer> H :call nerdtree#ui_glue#invokeKeyMap("U")<CR>
 function g:Undotree_CustomMap()
       nmap <buffer> J <plug>UndotreeGoNextState
       nmap <buffer> K <plug>UndotreeGoPreviousState
 endfunc
 let g:lasttab = 1
 let g:lastbuff = 1
-autocmd TabLeave    * let g:lasttab = tabpagenr()
-autocmd BufLeave    * let g:lastbuff = bufnr("%")
-autocmd WinEnter    * :AirlineRefresh
-autocmd WinEnter    * set cursorline
-autocmd WinEnter    * set cursorcolumn
-autocmd WinLeave    * set nocursorline
-autocmd WinLeave    * set nocursorcolumn
-autocmd InsertEnter * set nocursorline
-autocmd InsertLeave * set cursorline
-autocmd VimEnter * call deoplete#initialize()
-autocmd InsertEnter * call deoplete#enable()
-" When editing a file, always jump to the last known cursor position.
-autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+autocmd InsertEnter    * setlocal timeoutlen=300
+autocmd InsertLeave    * setlocal timeoutlen=2000
+autocmd TabLeave       * let   g:lasttab = tabpagenr()
+autocmd BufLeave       * let   g:lastbuff = bufnr("%")
+autocmd WinEnter       * :AirlineRefresh
+autocmd WinEnter       * set   cursorline
+autocmd WinEnter       * set   cursorcolumn
+autocmd WinLeave       * set   nocursorline
+autocmd WinLeave       * set   nocursorcolumn
+autocmd InsertEnter    * set   nocursorline
+autocmd InsertLeave    * set   cursorline
+autocmd VimEnter       * call  deoplete#initialize()
+autocmd InsertEnter    * call  deoplete#enable()
+autocmd BufReadPost    * if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-autocmd FileType python let b:match_words = '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
-autocmd FileType c,perl let b:delimitMate_insert_eol_marker = 2
-autocmd FileType c,perl let b:delimitMate_eol_marker = ";"
+autocmd FileType  python let b:match_words = '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
+autocmd FileType  c,perl let b:delimitMate_insert_eol_marker = 2
+autocmd FileType  c,perl let b:delimitMate_eol_marker = ";"
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=33
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | exe ":CtrlSpace B" | endif
 autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=52
 autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | exe ":CtrlSpace b" | endif
