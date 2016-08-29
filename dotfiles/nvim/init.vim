@@ -226,6 +226,7 @@ let g:indent_guides_exclude_filetypes = ['help']
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 4
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 let g:NERDTreeIgnore = ['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeQuitOnOpen = 0
