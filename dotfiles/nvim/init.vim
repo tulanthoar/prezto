@@ -21,6 +21,8 @@ let g:deoplete#auto_complete_delay = 10
 let g:deoplete#sources#jedi#show_docstring = 1
 Plugin 'vim-perl/vim-perl'
 "this
+Plugin 'ynkdir/vim-vimlparser'
+Plugin 'syngan/vim-vimlint'
 Plugin 'brettanomyces/nvim-terminus'
 Plugin 'vim-utils/vim-man'
 Plugin 'eugen0329/vim-esearch'
