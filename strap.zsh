@@ -1,18 +1,19 @@
 #!/bin/env zsh
-sudo pacman -Syu --noconfirm dash the_silver_searcher python-pip cpanminus gparted mlocate ipython neovim ctags python-neovim > /dev/null
+sudo pacman -Syu --noconfirm dash the_silver_searcher python-pip neovim ctags python-neovim docker> /dev/null
+sudo usermod -aG docker $USER
 dir=${0:a:h}
 export ZPREZD=$HOME/${dir:t}
 export ZRCD=${ZPREZD}/runcoms
 export ZBIND=${ZPREZD}/bin
 export ZDOTD=${ZPREZD}/dotfiles
-for f in Xresources xserverrc zlogin zlogout zpreztorc zprofile zshenv zshrc xinitrc; do
+for f in zlogin zlogout zpreztorc zprofile zshenv zshrc; do
   [[ -e ${HOME}/.${f} ]] && rm ${HOME}/.${f}
   ln -s ${ZRCD}/${f} ${HOME}/.${f}
 done
 echo 'done linking runcoms'
 mkdir -p ${HOME}/bin
-for b in clipmenu.bash clipmenud.bash corezerot.dash diskspace.dash maybeclipmenud.dash mayberedshift.dash modkey.dash pymodoro-out.dash quteprint.dash search.dash start-pomodoro.py; do
-  local f=$(echo ${b} | perl -p -e 's/([^\.]+)\.(py|[bd]ash)/$ENV{q(HOME)}\/bin\/$1/')
+for b in diskspace.dash pymodoro-out.dash start-pomodoro.py; do
+  local f=$HOME/bin/${b:r}
   [[ -e ${f} ]] && rm ${f}
   ln -s ${ZBIND}/${b} ${f}
 done
@@ -36,16 +37,6 @@ ln -s ${ZDOTD}/byobu/profile.tmux ${DEST}/profile.tmux
 DEST=${HOME}/.config/pymodoro
 mkdir -p ${DEST}
 ln -s ${ZDOTD}/pymodoro/config ${DEST}/config
-DEST=${HOME}/.config/qutebrowser
-mkdir -p ${DEST}
-ln -s ${ZDOTD}/qutebrowser/keys.conf ${DEST}/keys.conf
-ln -s ${ZDOTD}/qutebrowser/qutebrowser.conf ${DEST}/qutebrowser.conf
-DEST=${HOME}/.config
-ln -s ${ZDOTD}/redshift/redshift.conf ${DEST}/redshift.conf
-DEST=${HOME}/.xmonad
-mkdir -p ${DEST}
-ln -s ${ZDOTD}/xmonad/xmonad.hs ${DEST}/xmonad.hs
-ln -s ${ZDOTD}/xmonad/xmctl.hs ${DEST}/xmctl.hs
 curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s > /dev/null
 DEST=${HOME}/.config/nvim/bundle
 mkdir -p ${DEST}

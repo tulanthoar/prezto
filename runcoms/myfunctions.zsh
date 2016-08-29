@@ -4,17 +4,17 @@ add-zsh-hook preexec _fasd_preexec
 function _fzf_compgen_path() { ag -i --hidden -g "" "$1" }
 # Based on https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh (MIT licensed, as of 2016-05-05).
 function writecmd() { perl -e '$TIOCSTI = 0x5412; $l = <STDIN>; $lc = $ARGV[0] eq "-run" ? "\r" : ""; $l =~ s/\s*$/$lc/; map { ioctl STDOUT, $TIOCSTI, $_; } split "", $l;' -- $1 }
-function fhe(){fc -nl 1 | fzf --no-sort --tac --query=$1 | writecmd -run}
-function h(){fc -nl 1 | fzf --no-sort --tac --query=$1 | writecmd}
+function fhe(){fc -nl 1 | fzf-tmux --no-sort --tac --query=$1 | writecmd -run}
+function h(){fc -nl 1 | fzf-tmux --no-sort --tac --query=$1 | writecmd}
 # fss [FUZZY PATTERN] - Select selected tmux session
-function fss() { tmux switch-client -t $(tmux list-sessions -F "#{session_name}"|fzf --query="$1") }
+function fss() { tmux switch-client -t $(tmux list-sessions -F "#{session_name}"|fzf-tmux --query="$1") }
 # ftpane - switch pane (@george-b)
 function fp() {
   local panes current_window current_pane target target_window target_pane
   panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
   current_pane=$(tmux display-message -p '#I:#P')
   current_window=$(tmux display-message -p '#I')
-  target=$(echo "$panes" | grep -v "$current_pane" | fzf +m --reverse) || return
+  target=$(echo "$panes" | grep -v "$current_pane" | fzf-tmux +m --reverse) || return
   target_window=$(echo $target | awk 'BEGIN{FS=":|-"} {print$1}')
   target_pane=$(echo $target | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
   if [[ $current_window -eq $target_window ]]; then
@@ -25,24 +25,24 @@ function fp() {
   fi
 }
 function fk() {
-  pid=$(ps -ef | sed 1d | fzf -m --query="^$USER " | awk '{print $2}')
+  pid=$(ps -ef | sed 1d | fzf-tmux -m --query="^$USER " | awk '{print $2}')
   [[ "x$pid" != "x" ]] && kill -${1:-9} $pid
 }
 function fzf-locate-widget() {
   local selected
-  if selected=$(locate -0 / | fzf --read0); then
+  if selected=$(locate -0 / | fzf-tmux --read0); then
     LBUFFER="$LBUFFER $selected"
   fi
   zle redisplay
 }
 function u() {
-  builtin cd $(perl -e '$\=qq(\n);$_=$ENV{q(PWD)};while(/^\/[^\/]+\//){s/\/[^\/]+$//}continue{print};print q(/)' | fzf --query=$1|| echo ${PWD:h})
+  builtin cd $(perl -e '$\=qq(\n);$_=$ENV{q(PWD)};while(/^\/[^\/]+\//){s/\/[^\/]+$//}continue{print};print q(/)' | fzf-tmux --query=$1|| echo ${PWD:h})
 }
 function v() { nvim $(fasd -Rfl $1 | fzf-tmux --no-sort +m) }
 function z() { builtin cd $(fasd -Rdl $1 | fzf-tmux --no-sort +m|| echo ${PWD}) }
 function j() {
   local file
-  file=$(ag -i --hidden -g "" / 2&>/dev/null | fzf +s --query=$1)
+  file=$(ag -i --hidden -g "" / 2&>/dev/null | fzf-tmux +s --query=$1)
   [[ -d ${file:h} ]] && builtin cd ${file:h}
 }
 function p() {
@@ -70,10 +70,10 @@ function sudo-command-line() {
 }
 function suggest-accept-return(){ zle vi-end-of-line&&zle accept-line }
 function c(){
-  builtin cd $(find . -maxdepth 2 -type d | grep -oE "/[\W^.]?\w.*$" |cut -c2-| fzf -q $1)
+  builtin cd $(find . -maxdepth 2 -type d | grep -oE "/[\W^.]?\w.*$" |cut -c2-| fzf-tmux -q $1)
   find . -maxdepth 1 -type d | grep -oE "/[\W^.]?\w.*$" |cut -c2-|perl -p -e 's/(.)$/$1\//g'|white
 }
-function J(){ builtin cd $(perl -p -e 's/^hash -d (\w+)=/$1 /' < .zshbookmarks|fzf --query=$1|| echo ${PWD}) }
+function J(){ builtin cd $(perl -p -e 's/^hash -d (\w+)=/$1 /' < .zshbookmarks|fzf-tmux --query=$1|| echo ${PWD}) }
 
 typeset -Ag snippets
 function snippet-add() { snippets[$1]=$2 } 
