@@ -30,6 +30,7 @@ RUN printf >/tmp/sourceme '%s\n'\
  'for f in $(printf "%s " "README" "LICENSE");'\
  'do find / -type f -name "${f}.*" -delete'\
  'done'\
+ 'find /usr -type f -name "*.pod" -delete'\
  'rm -rf /usr/lib/python*/ensurepip'\
  'rm -rf /root/.cache'\
  'rm /usr/share/nvim/runtime/doc -rf'\
