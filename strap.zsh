@@ -28,6 +28,7 @@ for get in ${ZBIND}/getscripts/core/*; do
   exec 1>/dev/tty
   exec 2>/dev/tty
 done
+gem install curses
 DEST=${HOME}/.byobu
 mkdir -p ${DEST}
 ln -s ${ZDOTD}/byobu/keybindings.tmux ${DEST}/keybindings.tmux
