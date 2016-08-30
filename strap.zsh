@@ -39,15 +39,5 @@ DEST=${HOME}/.config/pymodoro
 mkdir -p ${DEST}
 ln -s ${ZDOTD}/pymodoro/config ${DEST}/config
 curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s > /dev/null
-DEST=${HOME}/.config/nvim/bundle
-mkdir -p ${DEST}
-git clone https://github.com/VundleVim/Vundle.vim.git ${DEST}/Vundle.vim &> /dev/null
-mkdir -p ${HOME}/.config/nvim/files/{undo,backup,swap,info}
-mkdir -p ${HOME}/.local/share/nvim/{swap,site,shada,view}
-ln -s ${ZDOTD}/nvim/init.vim $HOME/.config/nvim/init.vim
-ln -s ${ZDOTD}/nvim/ro.vim $HOME/.config/nvim/ro.vim
-perl <"$ZDOTD/nvim/init.vim" -p -e 's/^colorscheme kolor$//' > /tmp/viminit
-nvim -u /tmp/viminit +PluginInstall +qall
 git config --global user.name "Nate"
 git config --global user.email "tulanthoar@gmail.com"
-sudo pip install ptpython > /dev/null

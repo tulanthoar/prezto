@@ -1,13 +1,35 @@
 FROM alpine:edge
 
 RUN printf >/tmp/sourceme '%s\n'\
- 'apk add --no-cache python3 git rsync musl-dev gcc ca-certificates openssl ctags perl perl-dev curl make'\
- 'apk add neovim --update-cache --repository http://dl-2.alpinelinux.org/alpine/edge/testing/ --allow-untrusted'\
- 'apk add neovim --update-cache --repository http://dl-6.alpinelinux.org/alpine/edge/testing/ --allow-untrusted'\
+ 'apk add --no-cache python3 git zsh rsync musl-dev gcc ca-certificates openssl ctags perl perl-dev curl make'\
+ 'apk add neovim --no-cache --repository http://dl-2.alpinelinux.org/alpine/edge/testing/ --allow-untrusted'\
+ 'apk add neovim --no-cache --repository http://dl-6.alpinelinux.org/alpine/edge/testing/ --allow-untrusted'\
+ 'git clone --depth 1 https://github.com/junegunn/fzf.git /.fzf'\
+ 'mv /.fzf/fzf /usr/bin' 'mv /.fzf/bin/fzf-tmux /usr/bin' 'rm -rf /.fzf'\
+ 'wget -O /tmp/ainst https://raw.githubusercontent.com/getantibody/installer/master/install'\
+ 'tail -n+3 /tmp/ainst | perl -p -e "s/sudo//g" |zsh -s'\
+ 'git clone --recursive https://github.com/tulanthoar/prezto /tmp/prez'\
+ 'for f in zlogin zlogout zpreztorc zprofile zshenv'\
+ 'do mv /tmp/prez/runcoms/${f} ${HOME}/.${f}'\
+ 'done'\
+ 'perl -ne </tmp/prez/runcoms/zshrc "print unless /(infocmp|bind_keys|local|echo)/">$HOME/.zshrc'\
+ 'mkdir -p $HOME/.zprezto' 'mkdir $HOME/.zprezto/runcoms' 'mkdir $HOME/.zprezto/modules'\
+ 'zrcsave () { mv "/tmp/prez/runcoms/${1}" "$HOME/.zprezto/runcoms"; }'\
+ 'zmodsave () { mv "/tmp/prez/modules/${1}" "$HOME/.zprezto/modules"; }'\
+ 'zsave () { mv "/tmp/prez/${1}" "$HOME/.zprezto/${1}"; }'\
+ 'zsave init.zsh'\
+ 'for d in "environment" "helper" "spectrum" "utility" "editor" "history" "pacman" "archive" "directory" "completion" "prompt"\
+ "syntax-highlighting"  "history-substring-search" "autosuggestions";'\
+ 'do zmodsave $d'\
+ 'done'\
+ 'zrcsave myaliases.zsh' 'echo "unalias grep" >> /root/.zshrc' 'zrcsave myfunctions.zsh'\
+ 'echo "alias nvim=nvim -u /root/.config/nvim/init.vim">>/root/.zshrc'\
  'curl -L -o /usr/bin/cpanm https://cpanmin.us'\
  'chmod +x /usr/bin/cpanm'\
  'mv /usr/bin/wget /'\
- 'cpanm Perl::Critic || cpanm Perl::Critic -n || cpanm Perl::Critic --force'\
+ 'trycpanm () { cpanm $1 || cpanm $1 -n || cpanm $1 --force; }'\
+ # 'cpanm Perl::Critic || cpanm Perl::Critic -n || cpanm Perl::Critic --force'\
+ 'trycpanm "Perl::Critic"' 'trycpanm "Perl::Tidy"'\
  'mv /wget /usr/bin'\
  'python3 -m ensurepip'\
  'pip3 install --upgrade vim-vint prospector[with_everything] pip setuptools neovim jedi'\
@@ -46,7 +68,7 @@ RUN printf >/tmp/sourceme '%s\n'\
  'rm /usr/lib/python3.5/idlelib/idle_test -rf'\
  'find /usr/lib/python3.5 -type d -name "__pycache__" -print0|xargs -0n1 rm -rf'\
  'rm /usr/share/nvim/runtime/autoload/phpcomplete.vim'\
- 'rm /usr/share/ca-certificates/mozilla/*'\
+ # 'rm /usr/share/ca-certificates/mozilla/*'\
  'rm /usr/share/locale -rf'\
  'rm /root/.config/nvim/bundle/vim-ctrlspace/bin/*arm*'\
  'rm /root/.config/nvim/bundle/vim-ctrlspace/bin/*386*'\
@@ -54,6 +76,7 @@ RUN printf >/tmp/sourceme '%s\n'\
  'rm /root/.config/nvim/bundle/vim-ctrlspace/bin/*amd*'\
  'mv /root/.config/nvim/bundle/vim-ctrlspace/file_engine*linux* /root/.config/nvim/bundle/vim-ctrlspace/bin'\
  'find /usr/share/terminfo/ -type f -print0|perl -0ne "print $ARG.qq(\0) unless /xterm/"|xargs -0n1 rm -f'\
- 'apk del --purge perl-dev curl make git openssl musl-dev gcc rsync ca-certificates openssl'\
+ 'apk del --purge perl-dev curl make musl-dev gcc rsync'\
+ 'rm -rf /tmp/*'\
  'echo "apk"'\
  && cat /tmp/sourceme && source /tmp/sourceme && rm -f /tmp/sourceme
