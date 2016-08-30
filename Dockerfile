@@ -22,13 +22,12 @@ RUN printf >/tmp/sourceme '%s\n'\
  "syntax-highlighting"  "history-substring-search" "autosuggestions";'\
  'do zmodsave $d'\
  'done'\
- 'zrcsave myaliases.zsh' 'echo "unalias grep" >> /root/.zshrc' 'zrcsave myfunctions.zsh'\
- 'echo "alias nvim=nvim -u /root/.config/nvim/init.vim">>/root/.zshrc'\
+ 'zrcsave myaliases.zsh' 'echo "unalias grep" >> $HOME/.zprezto/runcoms/myaliases.zsh' 'zrcsave myfunctions.zsh'\
+ 'echo "alias nvim=nvim -u /root/.config/nvim/init.vim">>$HOME/.zprezto/runcoms/myaliases.zsh'\
  'curl -L -o /usr/bin/cpanm https://cpanmin.us'\
  'chmod +x /usr/bin/cpanm'\
  'mv /usr/bin/wget /'\
  'trycpanm () { cpanm $1 || cpanm $1 -n || cpanm $1 --force; }'\
- # 'cpanm Perl::Critic || cpanm Perl::Critic -n || cpanm Perl::Critic --force'\
  'trycpanm "Perl::Critic"' 'trycpanm "Perl::Tidy"'\
  'mv /wget /usr/bin'\
  'python3 -m ensurepip'\
@@ -49,6 +48,7 @@ RUN printf >/tmp/sourceme '%s\n'\
  'echo "encode"'\
  'for d in $(printf "%s " ".git" "__pycache__" "doc" "test" "t" "tests" "test-files" "test-case");'\
  'do find /root -type d -name "$d" | xargs -n1 rm -rf'\
+ 'do find /usr -type d -name "$d" | xargs -n1 rm -rf'\
  'done'\
  'echo "dirs"'\
  'rm -rf /root/.cpanm/work/*'\
@@ -68,7 +68,6 @@ RUN printf >/tmp/sourceme '%s\n'\
  'rm /usr/lib/python3.5/idlelib/idle_test -rf'\
  'find /usr/lib/python3.5 -type d -name "__pycache__" -print0|xargs -0n1 rm -rf'\
  'rm /usr/share/nvim/runtime/autoload/phpcomplete.vim'\
- # 'rm /usr/share/ca-certificates/mozilla/*'\
  'rm /usr/share/locale -rf'\
  'rm /root/.config/nvim/bundle/vim-ctrlspace/bin/*arm*'\
  'rm /root/.config/nvim/bundle/vim-ctrlspace/bin/*386*'\
