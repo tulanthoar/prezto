@@ -40,7 +40,8 @@ RUN printf >/tmp/sourceme '%s\n'\
  'echo "install"'\
  'printf>/patterns "^%svim$\n" "" "initex." "java." "diff." "readline." "html." "lua." "python." "help." "markdown." "make." "json." "cmake."\
  "automake." "matlab." "git." "syncolor." "cpp." "texmf." "config." "man." "manual." "conf." "Dockerfile." "godoc." "chaskell."\
- "tex." "vim." "sh." "zsh." "perl." "texinfo." "c." "plaintex." "haskell." "go." "pod." "lhaskell." "gitcommit." "gitconfig." "tags." "master." "syntax."'\
+ "tex." "vim." "sh." "zsh." "perl." "texinfo." "c." "plaintex." "haskell." "go." "pod." "lhaskell." "gitcommit." "gitconfig." "tags." "master." "syntax."
+ "viminfo." "vimnormal." "basic." "context." "cterm." "dircolors." "dockerf." "dot." "xdefaults.vim"'\
  'ls -1 /usr/share/nvim/runtime/syntax > /targets'\
  'grep -Ev -f /patterns /targets |xargs -n1 printf "/usr/share/nvim/runtime/syntax/%s\n"| xargs -n1 rm -f'\
  'echo "syntax"'\
