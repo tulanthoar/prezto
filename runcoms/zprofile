@@ -45,7 +45,7 @@ export TMPDIR=/tmp/$LOGNAME
 
 TMPPREFIX=${TMPDIR%/}/zsh
 
-export FZF_DEFAULT_OPTS="-i --cycle --select-1 --exit-0 --inline-info --color fg:102,bg:233,hl:65,fg+:15,bg+:234,hl+:108,info:108,prompt:109,spinner:108,pointer:168,marker:168"
+export FZF_DEFAULT_OPTS='-i --cycle --select-1 --exit-0 --inline-info --color fg:102,bg:233,hl:65,fg+:15,bg+:234,hl+:108,info:108,prompt:109,spinner:108,pointer:168,marker:168'
 export FZF_TMUX_HEIGHT='60%'
 export KEYTIMEOUT=3
 export RANGER_LOAD_DEFAULT_RC=FALSE
@@ -57,5 +57,5 @@ export ZRCD=${ZPREZD}/runcoms
 export GITAPPSD=${HOME}/apps-git
 export FZFD=${HOME}/.fzf
 # export JAVA_HOME="/usr/lib/jvm/default-jvm"
-# export GOPATH="$HOME/golang"
-# [[ -d "$GOPATH" ]] && export PATH="$PATH:$GOPATH/bin"
+export GOPATH=$HOME/golang
+[[ -d ${GOPATH} ]] && export PATH="$PATH:$GOPATH/bin"
