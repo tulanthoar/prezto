@@ -5,10 +5,10 @@ RUN printf >/tmp/sourceme '%s\n'\
  'apk add neovim --no-cache --repository http://dl-2.alpinelinux.org/alpine/edge/testing/ --allow-untrusted'\
  'apk add neovim --no-cache --repository http://dl-6.alpinelinux.org/alpine/edge/testing/ --allow-untrusted'\
  'git clone --depth 1 https://github.com/junegunn/fzf.git /.fzf'\
- 'mv /.fzf/fzf /usr/bin' 'mv /.fzf/bin/fzf-tmux /usr/bin' 'rm -rf /.fzf'\
+ 'mv /.fzf/fzf /usr/bin' 'mv /.fzf/bin/fzf-tmux /usr/bin'\
  'wget -O /tmp/ainst https://raw.githubusercontent.com/getantibody/installer/master/install'\
  'tail -n+3 /tmp/ainst | perl -p -e "s/sudo//g" |zsh -s'\
- 'git clone --recursive https://github.com/tulanthoar/prezto /tmp/prez'\
+ 'git clone --recursive  --depth 1 https://github.com/tulanthoar/prezto /tmp/prez'\
  'for f in zlogin zlogout zpreztorc zprofile zshenv'\
  'do mv /tmp/prez/runcoms/${f} ${HOME}/.${f}'\
  'done'\
@@ -33,23 +33,24 @@ RUN printf >/tmp/sourceme '%s\n'\
  'python3 -m ensurepip'\
  'pip3 install --upgrade vim-vint prospector[with_everything] pip setuptools neovim jedi'\
  'ln -s /usr/bin/python3.5 /usr/bin/python'\
- 'mkdir -p /root/.config/nvim/bundle'\
+ 'mkdir -p /root/.config/nvim/bundle' 'mkdir /root/.config/nvim/files/backup'\
  'wget -O /root/.config/nvim/init.vim http://raw.githubusercontent.com/tulanthoar/prezto/master/dotfiles/nvim/init.vim'\
- 'git clone http://github.com/VundleVim/Vundle.vim.git /root/.config/nvim/bundle/Vundle.vim'\
+ 'git clone --depth 1 http://github.com/VundleVim/Vundle.vim.git /root/.config/nvim/bundle/Vundle.vim'\
  'perl <"/root/.config/nvim/init.vim" -p -e "s/^colorscheme kolor$//" > /tmp/viminit && nvim -u /tmp/viminit +PluginInstall +qall'\
  'echo "install"'\
+ 'rm -rf /.fzf'\
  'printf>/patterns "^%svim$\n" "" "initex." "java." "diff." "readline." "html." "lua." "python." "help." "markdown." "make." "json." "cmake."\
  "automake." "matlab." "git." "syncolor." "cpp." "texmf." "config." "man." "manual." "conf." "Dockerfile." "godoc." "chaskell."\
  "tex." "vim." "sh." "zsh." "perl." "texinfo." "c." "plaintex." "haskell." "go." "pod." "lhaskell." "gitcommit." "gitconfig." "tags." "master." "syntax."
  "viminfo." "vimnormal." "basic." "context." "cterm." "dircolors." "dockerf." "dot." "xdefaults.vim"'\
  'ls -1 /usr/share/nvim/runtime/syntax > /targets'\
- 'grep -Ev -f /patterns /targets |xargs -n1 printf "/usr/share/nvim/runtime/syntax/%s\n"| xargs -n1 rm -f'\
+ #'grep -Ev -f /patterns /targets |xargs -n1 printf "/usr/share/nvim/runtime/syntax/%s\n"| xargs -n1 rm -f'\
  'echo "syntax"'\
  'printf "/usr/lib/perl5/core_perl/auto/Encode/%s\n" "CN" "JP" "KR" "TW" | xargs rm -rf'\
  'echo "encode"'\
  'for d in $(printf "%s " ".git" "__pycache__" "doc" "test" "t" "tests" "test-files" "test-case");'\
  'do find /root -type d -name "$d" | xargs -n1 rm -rf'\
- 'do find /usr -type d -name "$d" | xargs -n1 rm -rf'\
+ 'find /usr -type d -name "$d" | xargs -n1 rm -rf'\
  'done'\
  'echo "dirs"'\
  'rm -rf /root/.cpanm/work/*'\
@@ -76,6 +77,7 @@ RUN printf >/tmp/sourceme '%s\n'\
  'rm /root/.config/nvim/bundle/vim-ctrlspace/bin/*amd*'\
  'mv /root/.config/nvim/bundle/vim-ctrlspace/file_engine*linux* /root/.config/nvim/bundle/vim-ctrlspace/bin'\
  'find /usr/share/terminfo/ -type f -print0|perl -0ne "print $ARG.qq(\0) unless /xterm/"|xargs -0n1 rm -f'\
+ 'rm -rf /etc/ssl/certs' 'rm -f /lib/apk/db/installed'\
  'apk del --purge perl-dev curl make musl-dev gcc rsync'\
  'rm -rf /tmp/*'\
  'echo "apk"'\
