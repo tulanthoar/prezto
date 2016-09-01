@@ -1,3 +1,4 @@
+alias drun='docker run -it --rm'
 alias nvim='nvim -u $ZDOTD/nvim/init.vim'
 alias bka='cdbk -a'
 alias bkl='cdbk -l'

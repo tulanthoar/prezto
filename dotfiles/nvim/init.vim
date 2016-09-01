@@ -3,7 +3,7 @@ if &compatible
   set nocompatible
 endif
 filetype off
-let mapleader="\\"
+let g:mapleader="\\"
 set rtp+=$HOME/.config/nvim/bundle/Vundle.vim
 set rtp+=$HOME/.config/nvim/rplugin/python
 call vundle#begin('$HOME/.config/nvim/bundle')
@@ -21,17 +21,20 @@ let g:deoplete#auto_complete_delay = 10
 let g:deoplete#sources#jedi#show_docstring = 1
 Plugin 'vim-perl/vim-perl'
 "this
+Plugin 'ynkdir/vim-vimlparser'
+Plugin 'syngan/vim-vimlint'
 Plugin 'brettanomyces/nvim-terminus'
 Plugin 'vim-utils/vim-man'
 Plugin 'eugen0329/vim-esearch'
 Plugin 'kshenoy/vim-signature'
 let g:SignatureMarkTextHLDynamic = 1
 let g:SignatureMarkerTextHLDynamic = 1
-"here
+Plugin 'neomake/neomake'
 Plugin 'kassio/neoterm'
 Plugin 'godlygeek/tabular'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'tpope/vim-fugitive'
+"here
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'Shougo/neosnippet'
@@ -129,7 +132,7 @@ let g:airline#extensions#ctrlspace#enabled = 1
 let g:airline#extensions#nrrwrgn#enabled = 1
 let g:airline#extensions#quickfix#location_text = 'loc'
 let g:airline#extensions#quickfix#quickfix_text = 'qfix'
-let g:airline#extensions#syntastic#enabled = 1
+" let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#buffers_label = 'buf'
@@ -220,9 +223,10 @@ let g:EasyMotion_use_upper = 1
 Plugin 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_exclude_filetypes = ['help']
+let g:indent_guides_exclude_filetypes = ['help','nerdtree']
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 4
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeIgnore = ['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
 let g:NERDTreeMinimalUI = 1
@@ -231,11 +235,11 @@ let g:NERDTreeShowFiles = 0
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowLineNumbers = 0
 let g:NERDTreeWinSize = 40
-Plugin 'scrooloose/syntastic'
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_enable_signs = 1
+" Plugin 'scrooloose/syntastic'
+" let g:syntastic_aggregate_errors = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_enable_signs = 1
 Plugin 'zeis/vim-kolor'
 let g:kolor_underline = 1
 let g:kolor_italic = 1
@@ -262,7 +266,6 @@ Plugin 'vim-scripts/TaskList.vim'
 call vundle#end()
 filetype plugin indent on
 syntax enable
-set t_Co=256
 
 colorscheme kolor
 set background=dark
@@ -371,7 +374,7 @@ nmap     <unique> <M-]>      ]<space>yil:m+<cr>kpj
 nmap     <unique> [c         ]<space>yil:m+<cr>gcckp
 nmap     <unique> ]c         ]<space>yil:m+<cr>kpgccj
 
-let mapleader=","
+let g:mapleader=","
 nmap     <unique> <leader><CR>    MVz^ozzz+zb<cr>
 nnoremap <unique> <leader>z       zjza
 nnoremap <unique> <Leader>H       H
@@ -393,7 +396,7 @@ nmap     <unique> <leader><space> <Plug>(easymotion-overwin-f2)
 nnoremap <unique> <leader>sp      :setlocal spell!<cr>
 nnoremap <unique> <Leader>.       @j
 
-let mapleader="-"
+let g:mapleader="-"
 nnoremap <unique> <leader><leader> :exe "tabn ".g:lasttab<cr>
 nnoremap <unique> <leader>b        :CtrlSpace A<CR>
 nnoremap <unique> <leader>p        :YRShow<cr>
@@ -409,7 +412,7 @@ noremap  <unique> <leader>w        :CtrlSpaceSaveWorkspace<CR>
 noremap  <unique> <leader>0        :CtrlSpace L<CR>
 nnoremap <unique> <leader><Tab>    :exe "b".g:lastbuff<cr>
 noremap  <unique> <leader><space>  :CtrlSpace<CR>
-let mapleader="\\"
+let g:mapleader="\\"
 
 au FileType tex,plaintex imap <buffer> <Leader>]  <Plug>LatexCloseCurEnv
 au FileType tex,plaintex nmap <buffer> <Leader>*  <Plug>LatexToggleStarEnv
@@ -451,3 +454,4 @@ autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=52
 autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | exe ":CtrlSpace b" | endif
+autocmd! BufWritePost * Neomake

@@ -1,6 +1,7 @@
 #!/bin/env dash
 git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
-ln -s $HOME/.fzf/bin/fzf $HOME/bin/fzf
+[ -d "$HOME/bin" ] || mkdir $HOME/bin
+ln -s $HOME/.fzf/fzf $HOME/bin/fzf
 ln -s $HOME/.fzf/bin/fzf-tmux $HOME/bin/fzf-tmux
 sudo ln -s $HOME/.fzf/man/man1/fzf.1 /usr/share/man/man1/fzf.1
 sudo ln -s $HOME/.fzf/man/man1/fzf-tmux.1 /usr/share/man/man1/fzf-tmux.1
