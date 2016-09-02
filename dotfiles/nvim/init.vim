@@ -13,6 +13,7 @@ Plugin 'ascenator/L9'
 Plugin 'tomtom/tlib_vim'
 Plugin 'xolox/vim-misc'
 Plugin 'kana/vim-textobj-user'
+Plugin 'kana/vim-operator-user'
 Plugin 'Shougo/deoplete.nvim'
 let g:deoplete#auto_complete_start_length = 2
 let g:deoplete#enable_refresh_always = 1
@@ -35,6 +36,13 @@ Plugin 'godlygeek/tabular'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'tpope/vim-fugitive'
 "here
+Plugin 'matze/vim-move'
+Plugin 'haya14busa/incsearch-easymotion.vim'
+Plugin 'haya14busa/incsearch.vim'
+Plugin 'haya14busa/incsearch-fuzzy.vim'
+Plugin 'haya14busa/vim-operator-flashy'
+Plugin 'haya14busa/vim-asterisk'
+Plugin 'rhysd/clever-f.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'Shougo/neosnippet'
@@ -263,6 +271,7 @@ Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired.git'
 Plugin 'vim-scripts/TaskList.vim'
+let g:move_key_modifier = 'M'
 call vundle#end()
 filetype plugin indent on
 syntax enable
@@ -329,10 +338,11 @@ nnoremap <unique> <F9>    <esc>:YRShow<CR>
 inoremap <unique> <F9>    <esc>:YRShow<CR>
 nnoremap <unique> <F10>   <esc>:x<cr>
 inoremap <unique> <F10>   <esc>:x<cr>
-vnoremap <unique> <M-j>   :m'>+<cr>`<my`>mzgv`yo`z
-vnoremap <unique> <M-k>   :m'<-2<cr>`>my`<mzgv`yo`z
-nnoremap <unique> <M-j>   :m+<cr>jk
-nnoremap <unique> <M-k>   :m-2<cr>kj
+
+" vnoremap <unique> <M-j>   :m'>+<cr>`<my`>mzgv`yo`z
+" vnoremap <unique> <M-k>   :m'<-2<cr>`>my`<mzgv`yo`z
+" nnoremap <unique> <M-j>   :m+<cr>jk
+" nnoremap <unique> <M-k>   :m-2<cr>kj
 cnoremap <unique> w!!     SudoWrite
 vmap     <unique> v       <Plug>(expand_region_expand)
 vmap     <unique> C       gc
@@ -373,6 +383,7 @@ nmap     <unique> <M-[>      ]<space>yil:m+<cr>kp
 nmap     <unique> <M-]>      ]<space>yil:m+<cr>kpj
 nmap     <unique> [c         ]<space>yil:m+<cr>gcckp
 nmap     <unique> ]c         ]<space>yil:m+<cr>kpgccj
+map      <unique> ;          <Plug>(easymotion-prefix)
 
 let g:mapleader=","
 nmap     <unique> <leader><CR>    MVz^ozzz+zb<cr>
