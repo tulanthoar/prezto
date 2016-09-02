@@ -30,7 +30,7 @@ Plugin 'eugen0329/vim-esearch'
 Plugin 'kshenoy/vim-signature'
 let g:SignatureMarkTextHLDynamic = 1
 let g:SignatureMarkerTextHLDynamic = 1
-Plugin 'neomake/neomake'
+" Plugin 'neomake/neomake'
 Plugin 'kassio/neoterm'
 Plugin 'godlygeek/tabular'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -141,7 +141,7 @@ let g:airline#extensions#ctrlspace#enabled = 1
 let g:airline#extensions#nrrwrgn#enabled = 1
 let g:airline#extensions#quickfix#location_text = 'loc'
 let g:airline#extensions#quickfix#quickfix_text = 'qfix'
-" let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#buffers_label = 'buf'
@@ -244,11 +244,11 @@ let g:NERDTreeShowFiles = 0
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowLineNumbers = 0
 let g:NERDTreeWinSize = 40
-" Plugin 'scrooloose/syntastic'
-" let g:syntastic_aggregate_errors = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_enable_signs = 1
+Plugin 'scrooloose/syntastic'
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_enable_signs = 1
 Plugin 'zeis/vim-kolor'
 let g:kolor_underline = 1
 let g:kolor_italic = 1
@@ -465,4 +465,4 @@ autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=52
 autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | exe ":CtrlSpace b" | endif
-autocmd! BufWritePost * Neomake
+" autocmd! BufWritePost * Neomake
