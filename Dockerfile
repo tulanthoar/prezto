@@ -34,7 +34,7 @@ RUN printf >/tmp/sourceme '%s\n'\
  'pip3 install --upgrade vim-vint prospector[with_everything] pip setuptools neovim jedi'\
  'ln -s /usr/bin/python3.5 /usr/bin/python'\
  'mkdir -p /root/.config/nvim/bundle' 'mkdir -p /root/.config/nvim/files/backup'\
- 'mkdir /root/.config/nvim/files/info' '/root/.config/file/files/swap'\
+ 'mkdir /root/.config/nvim/files/info' 'mkdir /root/.config/file/files/swap'\
  'mkdir /root/.config/nvim/files/cache' 'mkdir /root/.config/nvim/files/undo'\
  'wget -O /root/.config/nvim/init.vim http://raw.githubusercontent.com/tulanthoar/prezto/master/dotfiles/nvim/init.vim'\
  'git clone --depth 1 http://github.com/VundleVim/Vundle.vim.git /root/.config/nvim/bundle/Vundle.vim'\
