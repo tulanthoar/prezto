@@ -37,6 +37,7 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'tpope/vim-fugitive'
 "here
 Plugin 'matze/vim-move'
+let g:move_key_modifier = 'M'
 Plugin 'haya14busa/incsearch-easymotion.vim'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'haya14busa/incsearch-fuzzy.vim'
@@ -271,7 +272,6 @@ Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired.git'
 Plugin 'vim-scripts/TaskList.vim'
-let g:move_key_modifier = 'M'
 call vundle#end()
 filetype plugin indent on
 syntax enable

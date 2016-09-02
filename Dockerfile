@@ -33,7 +33,9 @@ RUN printf >/tmp/sourceme '%s\n'\
  'python3 -m ensurepip'\
  'pip3 install --upgrade vim-vint prospector[with_everything] pip setuptools neovim jedi'\
  'ln -s /usr/bin/python3.5 /usr/bin/python'\
- 'mkdir -p /root/.config/nvim/bundle' 'mkdir /root/.config/nvim/files/backup'\
+ 'mkdir -p /root/.config/nvim/bundle' 'mkdir -p /root/.config/nvim/files/backup'\
+ 'mkdir /root/.config/nvim/files/info' '/root/.config/file/files/swap'\
+ 'mkdir /root/.config/nvim/files/cache' 'mkdir /root/.config/nvim/files/undo'\
  'wget -O /root/.config/nvim/init.vim http://raw.githubusercontent.com/tulanthoar/prezto/master/dotfiles/nvim/init.vim'\
  'git clone --depth 1 http://github.com/VundleVim/Vundle.vim.git /root/.config/nvim/bundle/Vundle.vim'\
  'perl <"/root/.config/nvim/init.vim" -p -e "s/^colorscheme kolor$//" > /tmp/viminit && nvim -u /tmp/viminit +PluginInstall +qall'\
@@ -41,7 +43,7 @@ RUN printf >/tmp/sourceme '%s\n'\
  'rm -rf /.fzf'\
  'printf>/patterns "^%svim$\n" "" "initex." "java." "diff." "readline." "html." "lua." "python." "help." "markdown." "make." "json." "cmake."\
  "automake." "matlab." "git." "syncolor." "cpp." "texmf." "config." "man." "manual." "conf." "Dockerfile." "godoc." "chaskell."\
- "tex." "vim." "sh." "zsh." "perl." "texinfo." "c." "plaintex." "haskell." "go." "pod." "lhaskell." "gitcommit." "gitconfig." "tags." "master." "syntax."
+ "tex." "vim." "sh." "zsh." "perl." "texinfo." "c." "plaintex." "haskell." "go." "pod." "lhaskell." "gitcommit." "gitconfig." "tags." "master." "syntax."\
  "viminfo." "vimnormal." "basic." "context." "cterm." "dircolors." "dockerf." "dot." "xdefaults.vim"'\
  'ls -1 /usr/share/nvim/runtime/syntax > /targets'\
  #'grep -Ev -f /patterns /targets |xargs -n1 printf "/usr/share/nvim/runtime/syntax/%s\n"| xargs -n1 rm -f'\

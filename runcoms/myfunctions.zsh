@@ -76,14 +76,13 @@ function c(){
 function J(){ builtin cd $(perl -p -e 's/^hash -d (\w+)=/$1 /' < .zshbookmarks|fzf-tmux --query=$1|| echo ${PWD}) }
 
 typeset -Ag snippets
-function snippet-add() { snippets[$1]=$2 } 
+function snippet-add() { snippets[$1]=$2 }
 function snippet-expand() {
-    emulate -L zsh
-    setopt extendedglob
-    local MATCH
-
-    LBUFFER=${LBUFFER%%(#m)[.\-+:|_a-zA-Z0-9]#}
-    LBUFFER+=${snippets[$MATCH]:-$MATCH}
+  emulate -L zsh
+  setopt extendedglob
+  local MATCH
+  LBUFFER=${LBUFFER%%(#m)[.\-+:|_a-zA-Z0-9]#}
+  LBUFFER+=${snippets[$MATCH]:-$MATCH}
 }
 zle -N snippet-expand
 zle -N fzf-locate-widget
