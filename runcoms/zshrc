@@ -1,6 +1,6 @@
 [ -z ${ZDOTD+x} ] && source $HOME/.zprofile
 local tinit=$(date +%S%N)
-source <(antibody bundle 'MikeDacre/cdbk' 'RobSis/zsh-completion-generator' 'bric3/nice-exit-code' 'djui/alias-tips' 'Tarrasch/zsh-colors')
+source <(antibody bundle 'MikeDacre/cdbk' 'RobSis/zsh-completion-generator' 'bric3/nice-exit-code' 'djui/alias-tips' 'Tarrasch/zsh-colors' )
 source ${ZPREZD}/init.zsh
 source <(printf 'source %s\n' ${ZRCD}/myfunctions.zsh ${ZRCD}/myaliases.zsh)
 infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -

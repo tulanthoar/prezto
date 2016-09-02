@@ -13,6 +13,7 @@ RUN printf >/tmp/sourceme '%s\n'\
  'do mv /tmp/prez/runcoms/${f} ${HOME}/.${f}'\
  'done'\
  'perl -ne </tmp/prez/runcoms/zshrc "print unless /(infocmp|bind_keys|local|echo)/">$HOME/.zshrc'\
+ 'grep "antibody" <"$HOME/.zshrc"|xargs printf '%s\n' |grep "/"|xargs antibody bundle'\
  'mkdir -p $HOME/.zprezto' 'mkdir $HOME/.zprezto/runcoms' 'mkdir $HOME/.zprezto/modules'\
  'zrcsave () { mv "/tmp/prez/runcoms/${1}" "$HOME/.zprezto/runcoms"; }'\
  'zmodsave () { mv "/tmp/prez/modules/${1}" "$HOME/.zprezto/modules"; }'\
