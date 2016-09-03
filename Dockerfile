@@ -1,7 +1,7 @@
 FROM alpine:edge
 
 RUN printf >/tmp/sourceme '%s\n'\
- 'apk add --no-cache python3 git zsh rsync musl-dev gcc ca-certificates openssl ctags perl perl-dev curl make'\
+ 'apk add --no-cache python3 git zsh rsync musl-dev gcc ca-certificates openssl ctags perl perl-dev curl make the_silver_searcher'\
  'apk add neovim --no-cache --repository http://dl-2.alpinelinux.org/alpine/edge/testing/ --allow-untrusted'\
  'apk add neovim --no-cache --repository http://dl-6.alpinelinux.org/alpine/edge/testing/ --allow-untrusted'\
  'git clone --depth 1 https://github.com/junegunn/fzf.git /.fzf'\
@@ -51,7 +51,8 @@ RUN printf >/tmp/sourceme '%s\n'\
  'echo "syntax"'\
  'printf "/usr/lib/perl5/core_perl/auto/Encode/%s\n" "CN" "JP" "KR" "TW" | xargs rm -rf'\
  'echo "encode"'\
- 'for d in $(printf "%s " ".git" "__pycache__" "doc" "test" "t" "tests" "test-files" "test-case");'\
+# 'for d in $(printf "%s " ".git" "__pycache__" "doc" "test" "t" "tests" "test-files" "test-case");'\
+ 'for d in $(printf "%s " ".git" "__pycache__" "test" "t" "tests" "test-files" "test-case");'\
  'do find /root -type d -name "$d" | xargs -n1 rm -rf'\
  'find /usr -type d -name "$d" | xargs -n1 rm -rf'\
  'done'\
@@ -68,7 +69,7 @@ RUN printf >/tmp/sourceme '%s\n'\
  'rm /usr/bin/cpanm -f'\
  'rm -rf /usr/lib/python*/ensurepip'\
  'rm -rf /root/.cache'\
- 'rm /usr/share/nvim/runtime/doc -rf'\
+ # 'rm /usr/share/nvim/runtime/doc -rf'\
  'rm /usr/lib/python3.5/idlelib/Icons -rf'\
  'rm /usr/lib/python3.5/idlelib/idle_test -rf'\
  'find /usr/lib/python3.5 -type d -name "__pycache__" -print0|xargs -0n1 rm -rf'\
