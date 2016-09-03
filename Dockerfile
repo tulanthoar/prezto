@@ -24,6 +24,7 @@ RUN printf >/tmp/sourceme '%s\n'\
  'do zmodsave $d'\
  'done'\
  'zrcsave myaliases.zsh' 'echo "unalias grep" >> $HOME/.zprezto/runcoms/myaliases.zsh' 'zrcsave myfunctions.zsh'\
+ 'echo "unalias rm">>$HOME/.zprezto/runcoms/myaliases.zsh'\
  'echo "alias nvim=nvim -u /root/.config/nvim/init.vim">>$HOME/.zprezto/runcoms/myaliases.zsh'\
  'curl -L -o /usr/bin/cpanm https://cpanmin.us'\
  'chmod +x /usr/bin/cpanm'\
