@@ -14,44 +14,17 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'xolox/vim-misc'
 Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-operator-user'
-Plugin 'Shougo/deoplete.nvim'
-let g:deoplete#auto_complete_start_length = 2
-let g:deoplete#enable_refresh_always = 1
-let g:deoplete#enable_camel_case = 1
-let g:deoplete#auto_complete_delay = 10
-let g:deoplete#sources#jedi#show_docstring = 1
-Plugin 'vim-perl/vim-perl'
-"this
-Plugin 'ynkdir/vim-vimlparser'
-Plugin 'syngan/vim-vimlint'
-Plugin 'brettanomyces/nvim-terminus'
-Plugin 'vim-utils/vim-man'
-Plugin 'eugen0329/vim-esearch'
-Plugin 'kshenoy/vim-signature'
-let g:SignatureMarkTextHLDynamic = 1
-let g:SignatureMarkerTextHLDynamic = 1
-" Plugin 'neomake/neomake'
-Plugin 'kassio/neoterm'
-Plugin 'godlygeek/tabular'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'tpope/vim-fugitive'
-"here
-Plugin 'matze/vim-move'
-let g:move_key_modifier = 'M'
-Plugin 'haya14busa/incsearch-easymotion.vim'
-Plugin 'haya14busa/incsearch.vim'
-Plugin 'haya14busa/incsearch-fuzzy.vim'
-Plugin 'haya14busa/vim-operator-flashy'
-Plugin 'haya14busa/vim-asterisk'
-Plugin 'rhysd/clever-f.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'Shougo/neosnippet'
-Plugin 'Shougo/neosnippet-snippets'
+Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'WolfgangMehner/perl-support'
+Plugin 'vim-perl/vim-perl'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'zchee/deoplete-jedi'
+Plugin 'Shougo/neoinclude.vim'
+Plugin 'c9s/perlomni.vim'
+Plugin 'eagletmt/neco-ghc'
+Plugin 'Shougo/neco-vim'
 let g:perl_fold = 1
 let g:Perl_PerlTags = 'on'
-Plugin 'LaTeX-Box-Team/LaTeX-Box'
 let g:LatexBox_completion_close_braces = 1
 let g:LatexBox_bibtex_wild_spaces = 1
 let g:LatexBox_complete_inlineMath = 1
@@ -60,7 +33,6 @@ let g:LatexBox_latexmk_preview_continuously = 1
 let g:LatexBox_quickfix = 2
 let g:LatexBox_fold_automatic = 1
 let g:LatexBox_viewer = 'evince'
-let g:LatexBox_Folding = 1
 let g:tex_flavor = "latex"
 Plugin 'neovimhaskell/haskell-vim.git'
 let g:haddock_browser = "/usr/bin/firefox"
@@ -70,8 +42,12 @@ let g:haskell_enable_quantification = 1
 let g:haskell_enable_recursivedo = 1
 let g:haskell_enable_static_pointers = 1
 let g:haskell_enable_typeroles = 1
+let g:deoplete#auto_complete_start_length = 2
+let g:deoplete#enable_refresh_always = 1
+let g:deoplete#enable_camel_case = 1
+let g:deoplete#auto_complete_delay = 10
+let g:deoplete#sources#jedi#show_docstring = 1
 let g:haskellmode_completion_ghc = 0
-Plugin 'vim-ctrlspace/vim-ctrlspace'
 let g:CtrlSpaceGlobCommand = 'ag -i --hidden -l --nocolor -g ""'
 let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
 let g:CtrlSpaceSaveWorkspaceOnExit = 1
@@ -117,12 +93,34 @@ let g:pymode_syntax_builtin_objs = 1
 let g:pymode_syntax_builtin_types= 1
 let g:pymode_syntax_highlight_exceptions = 1
 let g:pymode_syntax_docstrings   = 1
-Plugin 'davidhalter/jedi-vim'
-Plugin 'zchee/deoplete-jedi'
-Plugin 'Shougo/neoinclude.vim'
-Plugin 'c9s/perlomni.vim'
-Plugin 'eagletmt/neco-ghc'
-Plugin 'Shougo/neco-vim'
+"this
+
+
+Plugin 'brettanomyces/nvim-terminus'
+Plugin 'vim-utils/vim-man'
+Plugin 'kassio/neoterm'
+Plugin 'eugen0329/vim-esearch'
+"here
+Plugin 'kshenoy/vim-signature'
+let g:SignatureMarkTextHLDynamic = 1
+let g:SignatureMarkerTextHLDynamic = 1
+Plugin 'godlygeek/tabular'
+Plugin 'tpope/vim-fugitive'
+Plugin 'haya14busa/vim-operator-flashy'
+let g:operator#flashy#flash_time = 1000
+let g:move_key_modifier = 'M'
+Plugin 'matze/vim-move'
+Plugin 'haya14busa/incsearch-easymotion.vim'
+Plugin 'haya14busa/incsearch.vim'
+Plugin 'haya14busa/incsearch-fuzzy.vim'
+Plugin 'haya14busa/vim-asterisk'
+Plugin 'rhysd/clever-f.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'Shougo/neosnippet'
+Plugin 'Shougo/neosnippet-snippets'
+"this
+Plugin 'vim-ctrlspace/vim-ctrlspace'
+Plugin 'Shougo/deoplete.nvim'
 let g:vimsyn_folding = 'af'
 Plugin 'terryma/vim-multiple-cursors'
 let g:multi_cursor_next_key = "<F2>"
@@ -235,6 +233,7 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_exclude_filetypes = ['help','nerdtree']
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 4
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeIgnore = ['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
@@ -262,9 +261,9 @@ let g:easytags_file = '$HOME/.config/nvim/files/.easytags'
 let g:easytags_resolve_links = 1
 Plugin 'kana/vim-textobj-entire'
 Plugin 'kana/vim-textobj-line'
+Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'kopischke/vim-stay'
 Plugin 'majutsushi/tagbar'
-Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-repeat'
@@ -338,20 +337,29 @@ nnoremap <unique> <F9>    <esc>:YRShow<CR>
 inoremap <unique> <F9>    <esc>:YRShow<CR>
 nnoremap <unique> <F10>   <esc>:x<cr>
 inoremap <unique> <F10>   <esc>:x<cr>
-
-" vnoremap <unique> <M-j>   :m'>+<cr>`<my`>mzgv`yo`z
-" vnoremap <unique> <M-k>   :m'<-2<cr>`>my`<mzgv`yo`z
-" nnoremap <unique> <M-j>   :m+<cr>jk
-" nnoremap <unique> <M-k>   :m-2<cr>kj
+noremap      <unique> Q       <Esc>:q<CR>
 cnoremap <unique> w!!     SudoWrite
 vmap     <unique> v       <Plug>(expand_region_expand)
 vmap     <unique> C       gc
 nmap     <unique> css     yss
 nnoremap <unique> H       Hzz
 nnoremap <unique> L       Lzz
-nmap     <unique> <space> <Plug>(easymotion-bd-f2)
+
+nmap s         <Plug>(easymotion-bd-fl)
+xmap s         <Plug>(easymotion-bd-fl)
+omap z         <Plug>(easymotion-bd-fl)
+nmap gs         <Plug>(easymotion-bd-f2)
+xmap gs         <Plug>(easymotion-bd-f2)
+omap gz         <Plug>(easymotion-bd-f2)
+nmap gj <Plug>(easymotion-sol-bd-jk)
+xmap gj <Plug>(easymotion-sol-bd-jk)
+omap gj <Plug>(easymotion-sol-bd-jk)
+nmap gk <Plug>(easymotion-sol-bd-jk)
+xmap gk <Plug>(easymotion-sol-bd-jk)
+omap gk <Plug>(easymotion-sol-bd-jk)
+nmap g<Tab> <Plug>(easymotion-overwin-line)
+
 vnoremap <unique> J       <esc>
-vnoremap <unique> Q       <esc>
 inoremap <unique> jf      <esc>
 inoremap <unique> fj      <esc>
 nnoremap <unique> ^       0
@@ -370,7 +378,6 @@ imap     <expr><C-F>
 \ neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
 nnoremap <unique> \\n        i<CR><Esc>
-nnoremap <unique> Q          qj
 nmap     <unique> [g         <Plug>GitGutterPrevHunk
 nmap     <unique> ]g         <Plug>GitGutterNextHunk
 nmap     <unique> ggu        <Plug>GitGutterUndoHunk
@@ -384,27 +391,22 @@ nmap     <unique> <M-]>      ]<space>yil:m+<cr>kpj
 nmap     <unique> [c         ]<space>yil:m+<cr>gcckp
 nmap     <unique> ]c         ]<space>yil:m+<cr>kpgccj
 map      <unique> ;          <Plug>(easymotion-prefix)
+nmap     <unique> <Space>       <Plug>(easymotion-repeat)
 
 let g:mapleader=","
+nmap <Leader>s <Plug>(easymotion-bd-fn)
+xmap <Leader>s <Plug>(easymotion-bd-fn)
+omap <Leader>z <Plug>(easymotion-bd-fn)
 nmap     <unique> <leader><CR>    MVz^ozzz+zb<cr>
 nnoremap <unique> <leader>z       zjza
-nnoremap <unique> <Leader>H       H
-nnoremap <unique> <Leader>L       L
 nnoremap <unique> <leader>r       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 nnoremap <unique> <Leader>l       :CtrlPLine<CR>
 nnoremap <unique> <leader>t       :CtrlPBufTag<CR>
 nnoremap <unique> <leader>T       :CtrlPBufTagAll<CR>
-nmap     <unique> <leader>0       <Plug>(easymotion-sol-bd-jk)
-nmap     <unique> <leader>e       <Plug>(easymotion-bd-el)
-nmap     <unique> <leader>f       <Plug>(easymotion-bd-fl)
-nmap     <unique> <leader>j       <Plug>(easymotion-sol-j)
-nmap     <unique> <leader>k       <Plug>(easymotion-sol-k)
-nmap     <unique> <leader>n       <Plug>(easymotion-bd-n)
-nmap     <unique> <leader>$       <Plug>(easymotion-eol-bd-jk)
+nmap     <unique> <leader><Space>       <Plug>(easymotion-bd-n)
 nnoremap <unique> <Leader>v       <C-V>
-nmap     <unique> <leader>w       <Plug>(easymotion-bd-wl)
-nmap     <unique> <leader><space> <Plug>(easymotion-overwin-f2)
 nnoremap <unique> <leader>sp      :setlocal spell!<cr>
+nnoremap <unique> <Leader>,       qj
 nnoremap <unique> <Leader>.       @j
 
 let g:mapleader="-"
@@ -431,6 +433,9 @@ au FileType tex,plaintex nmap <buffer> <Leader>ce <Plug>LatexChangeEnv
 au FileType tex,plaintex vmap <buffer> <Leader>}  <Plug>LatexWrapSelection
 au FileType tex,plaintex vmap <buffer> <Leader>se <Plug>LatexEnvWrapSelection
 au FileType tex,plaintex nmap <buffer> <Leader>ae ]<Space>ji\begin{}<CR><CR>\end{}jfk
+au FileType nerdtree      map <buffer> s <Plug>(easymotion-bd-f2)
+au FileType nerdtree      map <buffer> . <Plug>(easymotion-repeat)
+au FileType nerdtree      map <buffer> l :call nerdtree#ui_glue#invokeKeyMap("C")<CR>
 au FileType nerdtree      map <buffer> l :call nerdtree#ui_glue#invokeKeyMap("C")<CR>
 au FileType nerdtree      map <buffer> L :call nerdtree#ui_glue#invokeKeyMap("o")<CR>
 au FileType nerdtree      map <buffer> h :call nerdtree#ui_glue#invokeKeyMap("u")<CR>
@@ -445,7 +450,8 @@ autocmd InsertEnter    * setlocal timeoutlen=300
 autocmd InsertLeave    * setlocal timeoutlen=2000
 autocmd TabLeave       * let   g:lasttab = tabpagenr()
 autocmd BufLeave       * let   g:lastbuff = bufnr("%")
-autocmd WinEnter       * :AirlineRefresh
+autocmd WinEnter       * AirlineRefresh
+
 autocmd WinEnter       * set   cursorline
 autocmd WinEnter       * set   cursorcolumn
 autocmd WinLeave       * set   nocursorline
@@ -453,16 +459,15 @@ autocmd WinLeave       * set   nocursorcolumn
 autocmd InsertEnter    * set   nocursorline
 autocmd InsertLeave    * set   cursorline
 autocmd VimEnter       * call  deoplete#initialize()
-autocmd InsertEnter    * call  deoplete#enable()
-autocmd BufReadPost    * if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-autocmd FileType  python let b:match_words = '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
-autocmd FileType  c,perl let b:delimitMate_insert_eol_marker = 2
-autocmd FileType  c,perl let b:delimitMate_eol_marker = ";"
+autocmd Insertenter    * call  deoplete#enable()
+autocmd bufreadpost    * if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+autocmd filetype haskell setlocal omnifunc=necoghc#omnifunc
+autocmd filetype  python let b:match_words = '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
+autocmd filetype  c,perl let b:delimitmate_insert_eol_marker = 2
+autocmd filetype  c,perl let b:delimitmate_eol_marker = ";"
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=33
 autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=52
 autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | exe ":CtrlSpace b" | endif
-" autocmd! BufWritePost * Neomake
