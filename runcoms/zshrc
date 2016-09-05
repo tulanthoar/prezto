@@ -6,6 +6,9 @@ source <(printf 'source %s\n' ${ZRCD}/myfunctions.zsh ${ZRCD}/myaliases.zsh)
 infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 stty -ixon
 bind_keys
-compinit -i
+fpath=($HOME/zsh-completions/src $fpath)
+autoload -U compinit&& compinit -i
+export ZSH_HIGHLIGHT_HIGHLIGHTERS=('brackets' 'cursor' 'line' 'main' 'pattern' 'root')
+[ -e "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && source "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 local tf=$(date +%S%N)
 echo $(( ${tf[1,5]} - ${tinit[1,5]} ))

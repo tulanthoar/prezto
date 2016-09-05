@@ -33,11 +33,11 @@ zstyle ':prezto:load' pmodule \
   'pacman' \
   'archive' \
   'directory' \
-  'completion' \
   'prompt' \
-  'syntax-highlighting' \
   'history-substring-search' \
   'autosuggestions'
+# 'completion' \
+  # 'syntax-highlighting' \
   # 'terminal' \
 # completion = 60ms
 # syntax-highlight = 60 ms
