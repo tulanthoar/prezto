@@ -33,12 +33,4 @@ alias bluectl='sudo bluetoothctl '
 alias suspendnow="systemctl suspend "
 alias czp="cd ${ZPREZD}; la "
 alias ex='unarchive '
-snippet-add wi "sudo wifi-menu"
-snippet-add t "|tail -n10"
-snippet-add h "|head -n10"
-snippet-add g "|grep "
-snippet-add l "|less "
-snippet-add f "|fpp "
-snippet-add add "git status | fpp"
-snippet-add push "git commit && git push"
-snippet-add s "startx"
+alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"

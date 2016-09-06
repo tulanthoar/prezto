@@ -14,7 +14,7 @@
 
 # Color output (auto set to 'no' on dumb terminals).
 zstyle ':prezto:*:*' color 'yes'
-zstyle ':prezto:module:autosuggestions' color 'yes'
+# zstyle ':prezto:module:autosuggestions' color 'yes'
 # Set the Zsh modules to load (man zshmodules).
 # zstyle ':prezto:load' zmodule 'attr' 'stat'
 
@@ -29,13 +29,14 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'editor' \
-  'history' \
   'pacman' \
   'archive' \
-  'directory' \
   'prompt' \
-  'history-substring-search' \
-  'autosuggestions'
+  'history-substring-search'
+
+# 'autosuggestions'
+# 'directory' \
+  # 'history' \
 # 'completion' \
   # 'syntax-highlighting' \
   # 'terminal' \
@@ -46,7 +47,7 @@ zstyle ':prezto:load' pmodule \
 #
 
 # Set the query found color.
-zstyle ':prezto:module:autosuggestions:color' found 'fg=12'
+# zstyle ':prezto:module:autosuggestions:color' found 'fg=12'
 
 #
 # Editor
@@ -131,19 +132,19 @@ zstyle ':prezto:module:prompt' theme 'paradox'
 
 # Set syntax highlighters.
 # By default, only the main highlighter is enabled.
-zstyle ':prezto:module:syntax-highlighting' highlighters \
-  'main' \
-  'brackets' \
-  'pattern' \
-  'line' \
-  'cursor' \
-  'root'
+# zstyle ':prezto:module:syntax-highlighting' highlighters \
+#   'main' \
+#   'brackets' \
+#   'pattern' \
+#   'line' \
+#   'cursor' \
+#   'root'
 #
 # Set syntax highlighting styles.
-zstyle ':prezto:module:syntax-highlighting' styles \
-  'builtin' 'bg=blue' \
-  'command' 'fg=green' \
-  'function' 'fg=yellow'
+# zstyle ':prezto:module:syntax-highlighting' styles \
+#   'builtin' 'bg=blue' \
+#   'command' 'fg=green' \
+#   'function' 'fg=yellow'
 
 #
 # Terminal

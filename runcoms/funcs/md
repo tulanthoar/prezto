@@ -1,0 +1,25 @@
+function md() {
+# Check if path included, if not use current working directory
+local mypath oldbk retval bkmk
+if [[ $# -eq 1 ]]; then
+  mypath=$PWD;
+  bkmk=$1
+else
+  mypath=$1
+  bkmk=$2
+fi
+
+grep -E $(printf '^%s$' $bkmk) <(perl <$ZSH_BOOKMARKS -pe 's/=/ /'|awk '{print$3}')>/dev/null && retval=$!
+oldbk=$(grep -E $(printf '^%s$' $bkmk) <(perl <$ZSH_BOOKMARKS -pe 's/=/ /'|awk '{print$4}'))
+[[ ${retval} -ne 0 ]] || printf 'replacing previous mark %s' "$oldbk"
+sort $ZSH_BOOKMARKS -u -o $ZSH_BOOKMARKS
+mk=$bkmk perl -ni -e 'print unless /^hash -d $ENV{q(bkmk)}=/' $ZSH_BOOKMARKS
+
+if [ -d $mypath ]; then
+      echo "hash -d $bkmk=$mypath" >> $ZSH_BOOKMARKS;
+      hash -d $bkmk=$mypath;
+      printf "Bookmark %s created for %s\n" $bkmk $mypath;
+else
+      printf "%s is not a valid path, please double-check\n" $mypath;
+fi
+}

@@ -1,0 +1,10 @@
+function n() {
+  typeset -g value
+  pushd -q -0 > /dev/null
+  if [[ $# -ne 0 ]]; then
+    value=$1
+    (( value-- ))
+    [[ $value -gt 0 ]] && eval "n $value"
+    unset value
+  fi
+}

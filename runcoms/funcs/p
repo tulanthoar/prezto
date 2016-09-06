@@ -1,0 +1,10 @@
+function p() {
+  typeset -g value
+  pushd -q +1 > /dev/null
+  if [[ $# -ne 0 ]]; then
+    value=$1
+    (( value-- ))
+    [[ $value -gt 0 ]] && eval "p $value"
+    unset value
+  fi
+}

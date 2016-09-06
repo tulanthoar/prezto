@@ -11,6 +11,9 @@ export VISUAL='nvim'
 export PAGER='less'
 export PERLDOC_SRC_PAGER='nvim'
 
+export HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"       # The path to the history file.
+export HISTSIZE=10000                   # The maximum number of events to save in the internal history.
+export SAVEHIST=10000                   # The maximum number of events to save in the history file.
 [[ -z $LANG ]] && export LANG='en_US.UTF-8'
 
 # Ensure path arrays do not contain duplicates.

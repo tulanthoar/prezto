@@ -1,0 +1,4 @@
+function fk() {
+  pid=$(ps -ef | sed 1d | fzf-tmux -m --query="^$USER " | awk '{print $2}')
+  [[ "x$pid" != "x" ]] && kill -${1:-9} $pid
+}

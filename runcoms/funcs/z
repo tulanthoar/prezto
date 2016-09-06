@@ -1,0 +1,1 @@
+function z() { builtin cd $(fasd -Rdl $1 | fzf-tmux --no-sort +m|| echo ${PWD}) }

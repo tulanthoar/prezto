@@ -1,0 +1,1 @@
+function suggest-accept-return(){ zle vi-end-of-line&&zle accept-line }

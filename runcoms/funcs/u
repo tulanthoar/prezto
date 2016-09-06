@@ -1,0 +1,3 @@
+function u() {
+  builtin cd $(perl -e '$\=qq(\n);$_=$ENV{q(PWD)};while(/^\/[^\/]+\//){s/\/[^\/]+$//}continue{print};print q(/)' | fzf-tmux --query=$1|| echo ${PWD:h})
+}

@@ -1,0 +1,1 @@
+function J(){ builtin cd $(perl -p -e 's/^hash -d (\w+)=/$1 /' < .zshbookmarks|fzf-tmux --query=$1|| echo ${PWD}) }

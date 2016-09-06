@@ -1,0 +1,5 @@
+function j() {
+  local file
+  file=$(ag -i --hidden -g "" / 2&>/dev/null | fzf-tmux +s --query=$1)
+  [[ -d ${file:h} ]] && builtin cd ${file:h}
+}

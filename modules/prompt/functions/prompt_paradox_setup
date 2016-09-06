@@ -17,10 +17,13 @@
 # pmodload 'helper'
 
 # Define variables.
+_prompt_paradox_pwd=$PWD
 _prompt_paradox_current_bg='NONE'
 _prompt_paradox_segment_separator=''
 _prompt_paradox_start_time=$SECONDS
-
+MATCH=
+MBEGIN=
+MEND=
 function prompt_paradox_start_segment {
   local bg fg
   [[ -n "$1" ]] && bg="%K{$1}" || bg="%k"
