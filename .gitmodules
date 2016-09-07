@@ -1,18 +1,18 @@
 [submodule "modules/history-substring-search/external"]
 	path = modules/history-substring-search/external
-	url = https://github.com/zsh-users/zsh-history-substring-search.git
+	url = https://github.com/zsh-users/zsh-history-substring-search
 [submodule "modules/prompt/external/agnoster"]
 	path = modules/prompt/external/agnoster
-	url = https://github.com/agnoster/agnoster-zsh-theme.git
+	url = https://github.com/agnoster/agnoster-zsh-theme
 [submodule "modules/zsh-colors"]
 	path = modules/zsh-colors
-	url = https://github.com/Tarrasch/zsh-colors.git
+	url = https://github.com/Tarrasch/zsh-colors
 [submodule "modules/alias-tips"]
 	path = modules/alias-tips
-	url = https://github.com/djui/alias-tips.git
+	url = https://github.com/djui/alias-tips
 [submodule "modules/zsh-completion-generator"]
 	path = modules/zsh-completion-generator
-	url = https://github.com/RobSis/zsh-completion-generator.git
+	url = https://github.com/RobSis/zsh-completion-generator
 [submodule "modules/zsh-autosuggestions"]
 	path = modules/zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions.git
+	url = https://github.com/zsh-users/zsh-autosuggestions
