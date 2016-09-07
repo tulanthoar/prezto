@@ -1,9 +1,16 @@
 [ -z ${ZDOTD+x} ] && source $HOME/.zprofile
 local tinit=$(date +%S%N)
+source <(printf 'source $ZPREZD/modules/%s\n' 'alias-tips/alias-tips.plugin.zsh'\
+ 'zsh-completion-generator/zsh-completion-generator.plugin.zsh'\
+ 'zsh-autosuggestions/zsh-autosuggestions.plugin.zsh'\
+ 'zsh-colors/colors.plugin.zsh')
+# source <(antibody bundle 'RobSis/zsh-completion-generator'  'djui/alias-tips' 'Tarrasch/zsh-colors' 'zsh-users/zsh-autosuggestions' )
+local tbdy=$(date +%S%N)
 fpath=($ZRCD/funcs $HOME/zsh-completions/src $fpath)
-source <(antibody bundle 'RobSis/zsh-completion-generator'  'djui/alias-tips' 'Tarrasch/zsh-colors' 'zsh-users/zsh-autosuggestions' )
 source <(printf 'source %s\n' ${ZRCD}/myfunctions.zsh ${ZRCD}/myaliases.zsh)
-infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
+# local tmy=$(date +%S%N)
+[[ -f ${HOME}/.terminfo/${TERM[1]}/${TERM} ]] || infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
+# local tterm=$(date +%S%N)
 
 setopt MULTIOS              # Write to multiple descriptors.
 setopt EXTENDED_GLOB        # Use extended globbing syntax.
@@ -45,12 +52,25 @@ unsetopt FLOW_CONTROL      # Disable start/stop characters in shell editor.
 setopt PATH_DIRS           # Perform path search even on command names with slashes.
 setopt PRINT_EXIT_VALUE      # print exit values
 setopt RC_QUOTES            # use `''` for single quotes in single quotes
+local tset=$(date +%S%N)
 
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=('brackets' 'cursor' 'line' 'main' 'pattern' 'root')
 [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+local tsyn=$(date +%S%N)
 source ${ZPREZD}/init.zsh
+local tprez=$(date +%S%N)
 snippets-add
 bind_keys
+local tbind=$(date +%S%N)
 autoload -Uz compinit&& compinit -i
 local tf=$(date +%S%N)
+echo $(( ${tbdy[1,5]} - ${tinit[1,5]} ))
+# echo $(( ${tbdy[1,5]} - ${tp[1,5]} ))
+# echo $(( ${tmy[1,5]} - ${tbdy[1,5]} ))
+# echo $(( ${tterm[1,5]} - ${tmy[1,5]} ))
+echo $(( ${tset[1,5]} - ${tbdy[1,5]} ))
+echo $(( ${tsyn[1,5]} - ${tset[1,5]} ))
+echo $(( ${tprez[1,5]} - ${tsyn[1,5]} ))
+echo $(( ${tbind[1,5]} - ${tprez[1,5]} ))
+echo $(( ${tf[1,5]} - ${tbind[1,5]} ))
 echo $(( ${tf[1,5]} - ${tinit[1,5]} ))

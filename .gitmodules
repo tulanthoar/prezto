@@ -22,3 +22,15 @@
 [submodule "modules/dwim"]
 	path = modules/dwim
 	url = https://github.com/oknowton/zsh-dwim.git
+[submodule "modules/zsh-colors"]
+	path = modules/zsh-colors
+	url = https://github.com/Tarrasch/zsh-colors.git
+[submodule "modules/alias-tips"]
+	path = modules/alias-tips
+	url = https://github.com/djui/alias-tips.git
+[submodule "modules/zsh-completion-generator"]
+	path = modules/zsh-completion-generator
+	url = https://github.com/RobSis/zsh-completion-generator.git
+[submodule "modules/zsh-autosuggestions"]
+	path = modules/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
