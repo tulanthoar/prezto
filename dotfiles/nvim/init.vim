@@ -14,40 +14,18 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'xolox/vim-misc'
 Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-operator-user'
-Plugin 'LaTeX-Box-Team/LaTeX-Box'
-Plugin 'WolfgangMehner/perl-support'
-Plugin 'vim-perl/vim-perl'
+
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'Shougo/neoinclude.vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'zchee/deoplete-jedi'
-Plugin 'Shougo/neoinclude.vim'
-Plugin 'c9s/perlomni.vim'
-Plugin 'eagletmt/neco-ghc'
-Plugin 'Shougo/neco-vim'
-let g:perl_fold = 1
-let g:Perl_PerlTags = 'on'
-let g:LatexBox_completion_close_braces = 1
-let g:LatexBox_bibtex_wild_spaces = 1
-let g:LatexBox_complete_inlineMath = 1
-let g:LatexBox_latexmk_async = 1
-let g:LatexBox_latexmk_preview_continuously = 1
-let g:LatexBox_quickfix = 2
-let g:LatexBox_fold_automatic = 1
-let g:LatexBox_viewer = 'evince'
-let g:tex_flavor = "latex"
-Plugin 'neovimhaskell/haskell-vim.git'
-let g:haddock_browser = "/usr/bin/firefox"
-let g:haskell_enable_arrowsyntax = 1
-let g:haskell_enable_pattern_synonyms = 1
-let g:haskell_enable_quantification = 1
-let g:haskell_enable_recursivedo = 1
-let g:haskell_enable_static_pointers = 1
-let g:haskell_enable_typeroles = 1
 let g:deoplete#auto_complete_start_length = 2
 let g:deoplete#enable_refresh_always = 1
 let g:deoplete#enable_camel_case = 1
 let g:deoplete#auto_complete_delay = 10
 let g:deoplete#sources#jedi#show_docstring = 1
-let g:haskellmode_completion_ghc = 0
+
+Plugin 'vim-ctrlspace/vim-ctrlspace'
 let g:CtrlSpaceGlobCommand = 'ag -i --hidden -l --nocolor -g ""'
 let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
 let g:CtrlSpaceSaveWorkspaceOnExit = 1
@@ -57,6 +35,35 @@ let g:CtrlSpaceSearchTiming = 10
 let g:CtrlSpaceCacheDir = expand('$HOME/.config/nvim/files/cache')
 let g:CtrlSpaceUseTabline = 1
 let g:CtrlSpaceUseUnicode = 0
+
+Plugin 'LaTeX-Box-Team/LaTeX-Box'
+let g:LatexBox_completion_close_braces = 1
+let g:LatexBox_bibtex_wild_spaces = 1
+let g:LatexBox_complete_inlineMath = 1
+let g:LatexBox_latexmk_async = 1
+let g:LatexBox_latexmk_preview_continuously = 1
+let g:LatexBox_quickfix = 2
+let g:LatexBox_fold_automatic = 1
+let g:LatexBox_viewer = 'evince'
+let g:tex_flavor = "latex"
+
+Plugin 'WolfgangMehner/perl-support'
+Plugin 'vim-perl/vim-perl'
+Plugin 'c9s/perlomni.vim'
+let g:perl_fold = 1
+let g:Perl_PerlTags = 'on'
+
+Plugin 'neovimhaskell/haskell-vim.git'
+Plugin 'eagletmt/neco-ghc'
+let g:haddock_browser = "/usr/bin/firefox"
+let g:haskell_enable_arrowsyntax = 1
+let g:haskell_enable_pattern_synonyms = 1
+let g:haskell_enable_quantification = 1
+let g:haskell_enable_recursivedo = 1
+let g:haskell_enable_static_pointers = 1
+let g:haskell_enable_typeroles = 1
+let g:haskellmode_completion_ghc = 0
+
 Plugin 'klen/python-mode'
 let g:pymode_doc = 1
 let g:pymode_doc_bind = '\doc'
@@ -93,13 +100,16 @@ let g:pymode_syntax_builtin_objs = 1
 let g:pymode_syntax_builtin_types= 1
 let g:pymode_syntax_highlight_exceptions = 1
 let g:pymode_syntax_docstrings   = 1
+
+Plugin 'Shougo/neco-vim'
+
 "this
-
-
 Plugin 'brettanomyces/nvim-terminus'
 Plugin 'vim-utils/vim-man'
 Plugin 'kassio/neoterm'
 Plugin 'eugen0329/vim-esearch'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 "here
 Plugin 'kshenoy/vim-signature'
 let g:SignatureMarkTextHLDynamic = 1
@@ -119,8 +129,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
 "this
-Plugin 'vim-ctrlspace/vim-ctrlspace'
-Plugin 'Shougo/deoplete.nvim'
+
 let g:vimsyn_folding = 'af'
 Plugin 'terryma/vim-multiple-cursors'
 let g:multi_cursor_next_key = "<F2>"
@@ -196,15 +205,15 @@ Plugin 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_cache_dir = '$HOME/.config/nvim/files/cache/ctrlp'
 let g:ctrlp_clear_cache_on_exit = 1
-let g:ctrlp_cmd = 'CtrlPMRU'
+let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_extensions = ['tag', 'buffertag', 'line']
 let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_lazy_update = 10
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:35'
 let g:ctrlp_mruf_max = 2500
 let g:ctrlp_open_single_match = ['mru']
-let g:ctrlp_prompt_mappings = {'ToggleType(1)': ['<c-l>', '<c-up>'],
-                             \ 'ToggleType(-1)':['<c-h>', '<c-down>'],
+let g:ctrlp_prompt_mappings = {'ToggleType(1)': ['<c-j>', '<c-up>'],
+                             \ 'ToggleType(-1)':['<c-f>', '<c-down>'],
                              \ 'PrtCurLeft()':  ['<left>', '<c-^>'],
                              \ 'PrtCurRight()': ['<right>']}
 let g:ctrlp_regexp = 1
@@ -233,8 +242,6 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_exclude_filetypes = ['help','nerdtree']
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 4
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeIgnore = ['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
 let g:NERDTreeMinimalUI = 1
@@ -298,7 +305,7 @@ set listchars+=extends:&,precedes:&
 set mouse=v
 set noshowmode
 set scrolljump=2
-set scrolloff=5 "ensure 5 lines are above/below cursor when scrolling
+set scrolloff=3 "ensure 3 lines are above/below cursor when scrolling
 set showcmd
 set showmatch
 set showtabline=0
@@ -337,7 +344,7 @@ nnoremap <unique> <F9>    <esc>:YRShow<CR>
 inoremap <unique> <F9>    <esc>:YRShow<CR>
 nnoremap <unique> <F10>   <esc>:x<cr>
 inoremap <unique> <F10>   <esc>:x<cr>
-noremap      <unique> Q       <Esc>:q<CR>
+noremap  <unique> Q       <Esc>:q<CR>
 cnoremap <unique> w!!     SudoWrite
 vmap     <unique> v       <Plug>(expand_region_expand)
 vmap     <unique> C       gc
@@ -345,20 +352,24 @@ nmap     <unique> css     yss
 nnoremap <unique> H       Hzz
 nnoremap <unique> L       Lzz
 
-nmap s         <Plug>(easymotion-bd-fl)
-xmap s         <Plug>(easymotion-bd-fl)
-omap z         <Plug>(easymotion-bd-fl)
-nmap gs         <Plug>(easymotion-bd-f2)
-xmap gs         <Plug>(easymotion-bd-f2)
-omap gz         <Plug>(easymotion-bd-f2)
-nmap gj <Plug>(easymotion-sol-bd-jk)
-xmap gj <Plug>(easymotion-sol-bd-jk)
-omap gj <Plug>(easymotion-sol-bd-jk)
-nmap gk <Plug>(easymotion-sol-bd-jk)
-xmap gk <Plug>(easymotion-sol-bd-jk)
-omap gk <Plug>(easymotion-sol-bd-jk)
+nmap s      <Plug>(easymotion-bd-fl)
+xmap s      <Plug>(easymotion-bd-fl)
+omap z      <Plug>(easymotion-bd-fl)
+nmap gs     <Plug>(easymotion-bd-f2)
+xmap gs     <Plug>(easymotion-bd-f2)
+omap gz     <Plug>(easymotion-bd-f2)
+nmap ;s     <Plug>(easymotion-bd-fn)
+xmap ;s     <Plug>(easymotion-bd-fn)
+omap ;z     <Plug>(easymotion-bd-fn)
+nmap gj     <Plug>(easymotion-sol-bd-jk)
+xmap gj     <Plug>(easymotion-sol-bd-jk)
+omap gj     <Plug>(easymotion-sol-bd-jk)
+nmap gk     <Plug>(easymotion-sol-bd-jk)
+xmap gk     <Plug>(easymotion-sol-bd-jk)
+omap gk     <Plug>(easymotion-sol-bd-jk)
 nmap g<Tab> <Plug>(easymotion-overwin-line)
 
+nnoremap <unique> \\n     i<CR><Esc>
 vnoremap <unique> J       <esc>
 inoremap <unique> jf      <esc>
 inoremap <unique> fj      <esc>
@@ -367,7 +378,6 @@ nnoremap <unique> 0       ^
 nnoremap <unique> <Down>  :vs<cr>
 nnoremap <unique> <Up>    :sp<cr>
 xmap     <unique> <CR>    <Plug>NrrwrgnDo
-nmap     <unique> <Leader><CR> <Plug>NrrwrgnWinIncr
 nnoremap <unique> <Left>  <esc>:CtrlSpace l[[]<CR>
 nnoremap <unique> <Right> <esc>:CtrlSpace l]][<CR>
 noremap  <unique> <C-H>   <C-W><C-H>
@@ -376,45 +386,43 @@ noremap  <unique> <C-K>   <C-W><C-K>
 noremap  <unique> <C-L>   <C-W><C-L>
 imap     <expr><C-F>
 \ neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
-nnoremap <unique> \\n        i<CR><Esc>
-nmap     <unique> [g         <Plug>GitGutterPrevHunk
-nmap     <unique> ]g         <Plug>GitGutterNextHunk
-nmap     <unique> ggu        <Plug>GitGutterUndoHunk
-nmap     <unique> gg<CR>     <Plug>GitGutterPreviewHunk
-omap     <unique> ig         <Plug>GitGutterTextObjectInnerPending
-omap     <unique> ag         <Plug>GitGutterTextObjectOuterPending
-xmap     <unique> ig         <Plug>GitGutterTextObjectInnerVisual
-xmap     <unique> ag         <Plug>GitGutterTextObjectOuterVisual
-nmap     <unique> <M-[>      ]<space>yil:m+<cr>kp
-nmap     <unique> <M-]>      ]<space>yil:m+<cr>kpj
-nmap     <unique> [c         ]<space>yil:m+<cr>gcckp
-nmap     <unique> ]c         ]<space>yil:m+<cr>kpgccj
-map      <unique> ;          <Plug>(easymotion-prefix)
-nmap     <unique> <Space>       <Plug>(easymotion-repeat)
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-N>"
+nmap <unique> [g      <Plug>GitGutterPrevHunk
+nmap <unique> ]g      <Plug>GitGutterNextHunk
+omap <unique> ig      <Plug>GitGutterTextObjectInnerPending
+omap <unique> ag      <Plug>GitGutterTextObjectOuterPending
+xmap <unique> ig      <Plug>GitGutterTextObjectInnerVisual
+xmap <unique> ag      <Plug>GitGutterTextObjectOuterVisual
+nmap <unique> <M-[>   ]<space>yil:m+<cr>kp
+nmap <unique> <M-]>   ]<space>yil:m+<cr>kpj
+nmap <unique> [c      ]<space>yil:m+<cr>gcckp
+nmap <unique> ]c      ]<space>yil:m+<cr>kpgccj
+map  <unique> ;       <Plug>(easymotion-prefix)
+nmap <unique> <Space> <Plug>(easymotion-repeat)
 
 let g:mapleader=","
-nmap <Leader>s <Plug>(easymotion-bd-fn)
-xmap <Leader>s <Plug>(easymotion-bd-fn)
-omap <Leader>z <Plug>(easymotion-bd-fn)
+nmap     <unique> <Leader>gu      <Plug>GitGutterUndoHunk
+nmap     <unique> <Leader>g<CR>   <Plug>GitGutterPreviewHunk
 nmap     <unique> <leader><CR>    MVz^ozzz+zb<cr>
 nnoremap <unique> <leader>z       zjza
 nnoremap <unique> <leader>r       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 nnoremap <unique> <Leader>l       :CtrlPLine<CR>
 nnoremap <unique> <leader>t       :CtrlPBufTag<CR>
 nnoremap <unique> <leader>T       :CtrlPBufTagAll<CR>
-nmap     <unique> <leader><Space>       <Plug>(easymotion-bd-n)
+nmap     <unique> <leader><Space> <Plug>(easymotion-bd-n)
 nnoremap <unique> <Leader>v       <C-V>
 nnoremap <unique> <leader>sp      :setlocal spell!<cr>
 nnoremap <unique> <Leader>,       qj
 nnoremap <unique> <Leader>.       @j
 
 let g:mapleader="-"
+nmap     <unique> <Leader><CR>     <Plug>NrrwrgnWinIncr
 nnoremap <unique> <leader><leader> :exe "tabn ".g:lasttab<cr>
+nnoremap <unique> <leader><Tab>    :exe "b".g:lastbuff<cr>
 nnoremap <unique> <leader>b        :CtrlSpace A<CR>
 nnoremap <unique> <leader>p        :YRShow<cr>
 nnoremap <unique> <leader>u        :UndotreeToggle<cr>
-map      <unique> <leader>n        <plug>NERDTreeMirrorToggle<CR>
+nmap     <unique> <leader>n        <plug>NERDTreeMirrorToggle<CR>j
 nmap     <unique> <leader>t        <Plug>TaskList
 noremap  <unique> <leader>k        :MBEbf<CR>
 noremap  <unique> <leader>j        :MBEbb<CR>
@@ -423,10 +431,9 @@ noremap  <unique> <leader>l        :MBEbn<CR>
 noremap  <unique> <leader>q        :CtrlSpace Q<cr>
 noremap  <unique> <leader>w        :CtrlSpaceSaveWorkspace<CR>
 noremap  <unique> <leader>0        :CtrlSpace L<CR>
-nnoremap <unique> <leader><Tab>    :exe "b".g:lastbuff<cr>
 noremap  <unique> <leader><space>  :CtrlSpace<CR>
-let g:mapleader="\\"
 
+let g:mapleader="\\"
 au FileType tex,plaintex imap <buffer> <Leader>]  <Plug>LatexCloseCurEnv
 au FileType tex,plaintex nmap <buffer> <Leader>*  <Plug>LatexToggleStarEnv
 au FileType tex,plaintex nmap <buffer> <Leader>ce <Plug>LatexChangeEnv
@@ -435,14 +442,15 @@ au FileType tex,plaintex vmap <buffer> <Leader>se <Plug>LatexEnvWrapSelection
 au FileType tex,plaintex nmap <buffer> <Leader>ae ]<Space>ji\begin{}<CR><CR>\end{}jfk
 au FileType nerdtree      map <buffer> s <Plug>(easymotion-bd-f2)
 au FileType nerdtree      map <buffer> . <Plug>(easymotion-repeat)
-au FileType nerdtree      map <buffer> l :call nerdtree#ui_glue#invokeKeyMap("C")<CR>
-au FileType nerdtree      map <buffer> l :call nerdtree#ui_glue#invokeKeyMap("C")<CR>
-au FileType nerdtree      map <buffer> L :call nerdtree#ui_glue#invokeKeyMap("o")<CR>
-au FileType nerdtree      map <buffer> h :call nerdtree#ui_glue#invokeKeyMap("u")<CR>
-au FileType nerdtree      map <buffer> H :call nerdtree#ui_glue#invokeKeyMap("U")<CR>
+au FileType nerdtree      map <buffer> l :call nerdtree#ui_glue#invokeKeyMap("C")j<CR>
+au FileType nerdtree      map <buffer> L :call nerdtree#ui_glue#invokeKeyMap("o")j<CR>
+au FileType nerdtree      map <buffer> h :call nerdtree#ui_glue#invokeKeyMap("u")j<CR>
+au FileType nerdtree      map <buffer> H :call nerdtree#ui_glue#invokeKeyMap("U")j<CR>
+au FileType nerdtree      setlocal nocursorcolumn
+au FileType nerdtree      setlocal nocursorline
 function g:Undotree_CustomMap()
-      nmap <buffer> J <plug>UndotreeGoNextState
-      nmap <buffer> K <plug>UndotreeGoPreviousState
+  nmap <buffer> J <plug>UndotreeGoNextState
+  nmap <buffer> K <plug>UndotreeGoPreviousState
 endfunc
 let g:lasttab = 1
 let g:lastbuff = 1
@@ -459,7 +467,7 @@ autocmd WinLeave       * set   nocursorcolumn
 autocmd InsertEnter    * set   nocursorline
 autocmd InsertLeave    * set   cursorline
 autocmd VimEnter       * call  deoplete#initialize()
-autocmd Insertenter    * call  deoplete#enable()
+autocmd InsertEnter    * call  deoplete#enable()
 autocmd bufreadpost    * if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 autocmd filetype haskell setlocal omnifunc=necoghc#omnifunc
 autocmd filetype  python let b:match_words = '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
@@ -467,7 +475,7 @@ autocmd filetype  c,perl let b:delimitmate_insert_eol_marker = 2
 autocmd filetype  c,perl let b:delimitmate_eol_marker = ";"
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=33
-autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=52
+autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=27
 autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | exe ":CtrlSpace b" | endif
