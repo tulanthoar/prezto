@@ -1,4 +1,4 @@
-autoload -U _fzf_compgen_path writecmd fhe f fss fp fk fzf-locate-widget u md cm v z j p n copyfile sudo-command-line suggest-accept-return c J nice_exit_code snippet-expand
+autoload -U unarchive _fzf_compgen_path writecmd fhe f fss fp fk fzf-locate-widget u md cm v z j p n copyfile sudo-command-line suggest-accept-return c J nice_exit_code snippet-expand
 
 function _fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null }
 autoload -Uz add-zsh-hook && add-zsh-hook preexec _fasd_preexec
