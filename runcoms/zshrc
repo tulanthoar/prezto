@@ -1,6 +1,6 @@
 [ -z ${ZDOTD+x} ] && source $HOME/.zprofile
 local tinit=$(date +%S%N)
-source <(printf 'source $ZPREZD/modules/%s\n' 'alias-tips/alias-tips.plugin.zsh'\
+source <(printf 'source $ZPREZD/%s\n' 'alias-tips/alias-tips.plugin.zsh'\
  'zsh-completion-generator/zsh-completion-generator.plugin.zsh'\
  'zsh-autosuggestions/zsh-autosuggestions.plugin.zsh'\
  'zsh-colors/colors.plugin.zsh')
