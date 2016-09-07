@@ -55,14 +55,14 @@ setopt RC_QUOTES            # use `''` for single quotes in single quotes
 local tset=$(date +%S%N)
 
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=('brackets' 'cursor' 'line' 'main' 'pattern' 'root')
-[[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 local tsyn=$(date +%S%N)
-source ${ZPREZD}/init.zsh
 local tprez=$(date +%S%N)
+source ${ZPREZD}/init.zsh
 snippets-add
 bind_keys
-local tbind=$(date +%S%N)
 autoload -Uz compinit&& compinit -i
+local tbind=$(date +%S%N)
+[[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 local tf=$(date +%S%N)
 echo $(( ${tbdy[1,5]} - ${tinit[1,5]} ))
 # echo $(( ${tbdy[1,5]} - ${tp[1,5]} ))
