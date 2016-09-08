@@ -1,9 +1,6 @@
 [submodule "alias-tips"]
 	path = alias-tips
 	url = https://github.com/djui/alias-tips.git
-[submodule "zsh-colors"]
-	path = zsh-colors
-	url = https://github.com/Tarrasch/zsh-colors.git
 [submodule "zsh-completion-generator"]
 	path = zsh-completion-generator
 	url = https://github.com/RobSis/zsh-completion-generator.git
