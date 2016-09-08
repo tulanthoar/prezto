@@ -10,3 +10,6 @@
 [submodule "modules/history-substring-search/external"]
 	path = modules/history-substring-search/external
 	url = https://github.com/zsh-users/zsh-history-substring-search.git
+[submodule "tmux-omnivim"]
+	path = tmux-omnivim
+	url = https://github.com/andy-lang/tmux-omnivim.git

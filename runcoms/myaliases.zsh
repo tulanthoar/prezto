@@ -1,5 +1,4 @@
 alias drun='docker run -it --rm'
-alias nvim='nvim -u $ZDOTD/nvim/init.vim'
 alias bka='cdbk -a'
 alias bkl='cdbk -l'
 alias bkr='cdbk -r'
@@ -34,3 +33,4 @@ alias suspendnow="systemctl suspend "
 alias czp="cd ${ZPREZD}; la "
 alias ex='unarchive '
 alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
+alias nnvim="python $ZPREZD/tmux-omnivim/omnivim.py"

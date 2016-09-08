@@ -4,7 +4,6 @@ local tinit=$(date +%S%N)
 source <(printf 'source $ZPREZD/%s\n' 'alias-tips/alias-tips.plugin.zsh'\
  'zsh-completion-generator/zsh-completion-generator.plugin.zsh'\
  'zsh-autosuggestions/zsh-autosuggestions.plugin.zsh')
-local t2=$(date +%S%N)
 fpath=($ZRCD/funcs $HOME/zsh-completions/src $fpath)
 source <(printf 'source %s\n' ${ZRCD}/myfunctions.zsh ${ZRCD}/myaliases.zsh)
 
@@ -46,28 +45,15 @@ setopt RC_QUOTES            # use `''` for single quotes in single quotes
 
 autoload -Uz black red green yellow blue magenta cyan white
 autoload -U colors && colors
-local t3=$(date +%S%N)
 autoload -Uz compinit&& compinit -i
-local t4=$(date +%S%N)
-export ZSH_HIGHLIGHT_HIGHLIGHTERS=('brackets' 'cursor' 'line' 'main' 'pattern' 'root')
+export ZSH_HIGHLIGHT_HIGHLIGHTERS=('brackets' 'cursor' 'main' )
 [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # export ZSH_HIGHLIGHT_STYLES[line]='fg=234,bg=244'
 # export ZSH_HIGHLIGHT_STYLES[unknown-token]='standout,bold'
 # export ZSH_HIGHLIGHT_STYLES[default]='standout'
 # export ZSH_HIGHLIGHT_STYLES[path]='underline'
-local t5=$(date +%S%N)
 source ${ZPREZD}/init.zsh
-local t6=$(date +%S%N)
 snippets-add
 bind_keys
 local tf=$(date +%S%N)
-echo $(( ${t2[1,5]} - ${tinit[1,5]} ))
-# echo $(( ${tbdy[1,5]} - ${tp[1,5]} ))
-# echo $(( ${tmy[1,5]} - ${tbdy[1,5]} ))
-# echo $(( ${tterm[1,5]} - ${tmy[1,5]} ))
-echo $(( ${t3[1,5]} - ${t2[1,5]} ))
-echo $(( ${t4[1,5]} - ${t3[1,5]} ))
-echo $(( ${t5[1,5]} - ${t4[1,5]} ))
-echo $(( ${t6[1,5]} - ${t5[1,5]} ))
-echo $(( ${tf[1,5]} - ${t6[1,5]} ))
 echo $(( ${tf[1,5]} - ${tinit[1,5]} ))
