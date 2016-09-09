@@ -18,14 +18,17 @@ RUN printf >/tmp/sourceme '%s\n'\
  'mkdir -p $HOME/.zprezto' 'mkdir $HOME/.zprezto/runcoms' 'mkdir $HOME/.zprezto/modules'\
  'zrcsave () { mv "/tmp/prez/runcoms/${1}" "$HOME/.zprezto/runcoms"; }'\
  'zmodsave () { mv "/tmp/prez/modules/${1}" "$HOME/.zprezto/modules"; }'\
- 'zsave () { mv "/tmp/prez/${1}" "$HOME/.zprezto/${1}"; }'\
- 'printf "%s\n" "zinit.zsh" "alias-tips" "tmux-omnivim" "zsh-autosuggestions" "zsh-completion-generator" |xargs -n1 zsave'\
+ 'zsave () { mv "/tmp/prez/${1}" "$HOME/.zprezto"; }'\
+ 'zsave "zinit.zsh"'\
+ 'for d in "alias-tips" "tmux-omnivim" "zsh-autosuggestions" "zsh-completion-generator";'\
+ 'do zsave $d'\
+ 'done'\
  'for d in "environment" "helper" "spectrum" "utility" "editor" "pacman" "prompt" "history-substring-search";'\
  'do zmodsave $d'\
  'done'\
- 'zrcsave myaliases.zsh' 'echo "unalias grep" >> $HOME/.zprezto/runcoms/myaliases.zsh' 'zrcsave myfunctions.zsh'\
+ 'zrcsave myaliases.zsh' 'echo "unalias grep" >> $HOME/.zprezto/runcoms/myaliases.zsh'\
+ 'zrcsave funcs' 'zrcsave myfunctions.zsh'\
  'echo "unalias rm">>$HOME/.zprezto/runcoms/myaliases.zsh'\
- 'echo "unalias nvim">>$HOME/.zprezto/runcoms/myaliases.zsh'\
  'curl -L -o /usr/bin/cpanm https://cpanmin.us'\
  'chmod +x /usr/bin/cpanm'\
  'mv /usr/bin/wget /'\
