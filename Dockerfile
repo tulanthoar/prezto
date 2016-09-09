@@ -1,31 +1,29 @@
 FROM alpine:edge
 
 RUN printf >/tmp/sourceme '%s\n'\
- 'apk add --no-cache python3 git zsh rsync musl-dev gcc ca-certificates openssl ctags perl perl-dev curl make the_silver_searcher'\
+ 'apk add --no-cache python3 git zsh rsync musl-dev gcc ca-certificates openssl ctags perl perl-dev curl make'\
  'apk add neovim --no-cache --repository http://dl-2.alpinelinux.org/alpine/edge/testing/ --allow-untrusted'\
  'apk add neovim --no-cache --repository http://dl-6.alpinelinux.org/alpine/edge/testing/ --allow-untrusted'\
  'git clone --depth 1 https://github.com/junegunn/fzf.git /.fzf'\
  'mv /.fzf/fzf /usr/bin' 'mv /.fzf/bin/fzf-tmux /usr/bin'\
- 'wget -O /tmp/ainst https://raw.githubusercontent.com/getantibody/installer/master/install'\
- 'tail -n+3 /tmp/ainst | perl -p -e "s/sudo//g" |zsh -s'\
  'git clone --recursive  --depth 1 https://github.com/tulanthoar/prezto /tmp/prez'\
+ 'wget -O /tmp/pt.tar.gz' 'tar -xzf /tmp/ptarch.tar.gz' 'mv /tmp/ptarch/pt /usr/local/bin/pt'\
+ 'ln -s /usr/local/bin/pt /usr/local/bin/ag'
  'for f in zlogin zlogout zpreztorc zprofile zshenv'\
  'do mv /tmp/prez/runcoms/${f} ${HOME}/.${f}'\
  'done'\
  'perl -ne </tmp/prez/runcoms/zshrc "print unless /(infocmp|bind_keys|local|echo)/">$HOME/.zshrc'\
- 'grep "antibody" <"$HOME/.zshrc"|xargs printf "%s\n" |grep "/"|xargs antibody bundle'\
  'mkdir -p $HOME/.zprezto' 'mkdir $HOME/.zprezto/runcoms' 'mkdir $HOME/.zprezto/modules'\
  'zrcsave () { mv "/tmp/prez/runcoms/${1}" "$HOME/.zprezto/runcoms"; }'\
  'zmodsave () { mv "/tmp/prez/modules/${1}" "$HOME/.zprezto/modules"; }'\
  'zsave () { mv "/tmp/prez/${1}" "$HOME/.zprezto/${1}"; }'\
- 'zsave init.zsh'\
- 'for d in "environment" "helper" "spectrum" "utility" "editor" "history" "pacman" "archive" "directory" "completion" "prompt"\
- "syntax-highlighting"  "history-substring-search" "autosuggestions";'\
+ 'printf "%s\n" "zinit.zsh" "alias-tips" "tmux-ohmnivim" "zsh-autosuggestions" "zsh-completion-generator" |xargs -n1 zsave'\
+ 'for d in "environment" "helper" "spectrum" "utility" "editor" "pacman" "prompt" "history-substring-search";'\
  'do zmodsave $d'\
  'done'\
  'zrcsave myaliases.zsh' 'echo "unalias grep" >> $HOME/.zprezto/runcoms/myaliases.zsh' 'zrcsave myfunctions.zsh'\
  'echo "unalias rm">>$HOME/.zprezto/runcoms/myaliases.zsh'\
- 'echo "alias nvim=nvim -u /root/.config/nvim/init.vim">>$HOME/.zprezto/runcoms/myaliases.zsh'\
+ 'echo "unalias nvim">>$HOME/.zprezto/runcoms/myaliases.zsh'\
  'curl -L -o /usr/bin/cpanm https://cpanmin.us'\
  'chmod +x /usr/bin/cpanm'\
  'mv /usr/bin/wget /'\
