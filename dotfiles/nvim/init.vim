@@ -104,6 +104,8 @@ let g:pymode_syntax_docstrings   = 1
 Plugin 'Shougo/neco-vim'
 
 "this
+Plugin 'christoomey/vim-tmux-navigator'
+let g:tmux_navigator_save_on_switch = 1
 Plugin 'brettanomyces/nvim-terminus'
 Plugin 'vim-utils/vim-man'
 Plugin 'kassio/neoterm'
