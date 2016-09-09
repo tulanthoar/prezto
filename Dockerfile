@@ -19,7 +19,7 @@ RUN printf >/tmp/sourceme '%s\n'\
  'zrcsave () { mv "/tmp/prez/runcoms/${1}" "$HOME/.zprezto/runcoms"; }'\
  'zmodsave () { mv "/tmp/prez/modules/${1}" "$HOME/.zprezto/modules"; }'\
  'zsave () { mv "/tmp/prez/${1}" "$HOME/.zprezto/${1}"; }'\
- 'printf "%s\n" "zinit.zsh" "alias-tips" "tmux-ohmnivim" "zsh-autosuggestions" "zsh-completion-generator" |xargs -n1 zsave'\
+ 'printf "%s\n" "zinit.zsh" "alias-tips" "tmux-omnivim" "zsh-autosuggestions" "zsh-completion-generator" |xargs -n1 zsave'\
  'for d in "environment" "helper" "spectrum" "utility" "editor" "pacman" "prompt" "history-substring-search";'\
  'do zmodsave $d'\
  'done'\
