@@ -7,8 +7,9 @@ RUN printf >/tmp/sourceme '%s\n'\
  'git clone --depth 1 https://github.com/junegunn/fzf.git /.fzf'\
  'mv /.fzf/fzf /usr/bin' 'mv /.fzf/bin/fzf-tmux /usr/bin'\
  'git clone --recursive  --depth 1 https://github.com/tulanthoar/prezto /tmp/prez'\
- 'wget -O /tmp/ptarch.tar.gz https://github.com/monochromegane/the_platinum_searcher/releases/download/v2.1.4/pt_linux_amd64.tar.gz'\
- 'tar -xzf /tmp/ptarch.tar.gz' 'mv ./ptarch/pt /usr/local/bin/pt'\
+ 'wget -O /tmp/pt_linux_amd64.tar.gz\
+ https://github.com/monochromegane/the_platinum_searcher/releases/download/v2.1.4/pt_linux_amd64.tar.gz'\
+ 'tar -xzf /tmp/pt_linux_amd64.tar.gz' 'mv pt_linux_amd64/pt /usr/local/bin/pt'\
  'ln -s /usr/local/bin/pt /usr/local/bin/ag'\
  'for f in zlogin zlogout zpreztorc zprofile zshenv'\
  'do mv /tmp/prez/runcoms/${f} ${HOME}/.${f}'\
