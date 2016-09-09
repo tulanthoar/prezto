@@ -8,7 +8,7 @@ RUN printf >/tmp/sourceme '%s\n'\
  'mv /.fzf/fzf /usr/bin' 'mv /.fzf/bin/fzf-tmux /usr/bin'\
  'git clone --recursive  --depth 1 https://github.com/tulanthoar/prezto /tmp/prez'\
  'wget -O /tmp/pt.tar.gz' 'tar -xzf /tmp/ptarch.tar.gz' 'mv /tmp/ptarch/pt /usr/local/bin/pt'\
- 'ln -s /usr/local/bin/pt /usr/local/bin/ag'
+ 'ln -s /usr/local/bin/pt /usr/local/bin/ag'\
  'for f in zlogin zlogout zpreztorc zprofile zshenv'\
  'do mv /tmp/prez/runcoms/${f} ${HOME}/.${f}'\
  'done'\
