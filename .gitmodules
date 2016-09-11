@@ -13,3 +13,6 @@
 [submodule "tmux-omnivim"]
 	path = tmux-omnivim
 	url = https://github.com/andy-lang/tmux-omnivim.git
+[submodule "zsh-syntax-highlighting"]
+	path = zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git

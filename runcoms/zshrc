@@ -47,7 +47,7 @@ autoload -Uz black red green yellow blue magenta cyan white
 autoload -U colors && colors
 autoload -Uz compinit&& compinit -i
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=('brackets' 'cursor' 'main' 'line')
-[[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+printf 'source $ZPREZD/%s\n' 'zsh-syntax-highlighting/zsh-syntax-highlighting'
 # export ZSH_HIGHLIGHT_STYLES[line]='fg=234,bg=244'
 # export ZSH_HIGHLIGHT_STYLES[unknown-token]='standout,bold'
 # export ZSH_HIGHLIGHT_STYLES[default]='standout'
