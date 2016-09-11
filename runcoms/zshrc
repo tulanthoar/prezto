@@ -46,7 +46,7 @@ setopt RC_QUOTES            # use `''` for single quotes in single quotes
 autoload -Uz black red green yellow blue magenta cyan white
 autoload -U colors && colors
 autoload -Uz compinit&& compinit -i
-export ZSH_HIGHLIGHT_HIGHLIGHTERS=('brackets' 'cursor' 'main' )
+export ZSH_HIGHLIGHT_HIGHLIGHTERS=('brackets' 'cursor' 'main' 'line')
 [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # export ZSH_HIGHLIGHT_STYLES[line]='fg=234,bg=244'
 # export ZSH_HIGHLIGHT_STYLES[unknown-token]='standout,bold'

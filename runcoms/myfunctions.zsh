@@ -1,4 +1,4 @@
-autoload -U unarchive _fzf_compgen_path writecmd fhe f fss fp fk fzf-locate-widget u md cm v z j p n copyfile sudo-command-line suggest-accept-return c J nice_exit_code snippet-expand
+autoload -U unarchive _fzf_compgen_path writecmd fhe f fss fp fk fzf-locate-widget u md cm v z j p n copyfile sudo-command-line c J nice_exit_code snippet-expand
 
 function _fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null }
 autoload -Uz add-zsh-hook && add-zsh-hook preexec _fasd_preexec
@@ -18,6 +18,7 @@ function snippets-add() {
 }
 
 function bind_keys() {
+  function suggest-accept-return(){ zle vi-end-of-line; zle accept-line }
   zle -N snippet-expand
   zle -N fzf-locate-widget
   zle -N h
@@ -26,17 +27,25 @@ function bind_keys() {
   zle -N sudo-command-line
   zle -N suggest-accept-return
   bindkey -v
+  bindkey -rM viins "^["
+  bindkey -rM viins "^D"
+  bindkey -rM viins "^G"
+  bindkey -rM viins "^H"
+  bindkey -rM viins "^J"
+  bindkey -rM viins "^K"
+  bindkey -rM viins "^L"
+  bindkey -rM viins "^Y"
   bindkey -M viins "^[i" fzf-locate-widget
   bindkey -M viins "^[p" p
   bindkey -M viins "^[n" n
   bindkey -M viins "^[h" h
-  bindkey -M viins "^[ " suggest-accept-return
+  bindkey -M viins "^[ " autosuggest-accept
   bindkey -M viins "^[s" sudo-command-line
   bindkey -M viins "^@" snippet-expand
   bindkey -M viins "^Z" vi-cmd-mode
   bindkey -M viins "^A" vi-cmd-mode
+  bindkey -M viins "^E" vi-forward-blank-word-end
   bindkey -M viins "^B" backward-word
-  bindkey -rM viins "^Y"
   bindkey -M viins "^Yb" vi-backward-kill-word
   bindkey -M viins "^Ye" kill-word
   bindkey -M viins "^Ys" kill-whole-line
@@ -46,12 +55,5 @@ function bind_keys() {
   bindkey -M viins "^R" redo
   bindkey -M viins "^F" vi-find-prev-char
   bindkey -M viins "^S" vi-kill-eol
-  bindkey -rM viins "^["
-  bindkey -rM viins "^D"
-  bindkey -rM viins "^G"
-  bindkey -rM viins "^H"
-  bindkey -rM viins "^J"
-  bindkey -rM viins "^K"
-  bindkey -rM viins "^L"
   bindkey -M viins "^[[3~" vi-delete-char;
 }

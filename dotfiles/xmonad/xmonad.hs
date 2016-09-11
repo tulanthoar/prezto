@@ -40,7 +40,7 @@ wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"] :: [WorkspaceId]
 menuH = 15 :: Int
 mag = 1.3 :: Rational
 mvNEmpty = moveTo Next EmptyWS :: X()
-corePadsM_ = mapM_ (namedScratchpadAction scratchpads) [bPad, iPad, pPad, nPad ] :: X()
+corePadsM_ = mapM_ (namedScratchpadAction scratchpads) [bPad] :: X()
 myBrowser = "fiefox" :: String
 launchAct = spawn $ "j4-dmenu-desktop --display-binary --term="++myTerminal++" --dmenu='dmenu -w 600 -y "++show menuH++" -z -p launch -l 50'" :: X()
 srchAct = spawn $  "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50" :: X()
@@ -141,7 +141,7 @@ scratchpads =
   , NS nPad nRun (icon =? init nPad) nonFloating
   , NS rPad rRun (icon =? init rPad) nonFloating
   , NS pPad prepl (icon =? init pPad) nonFloating
-  , NS bPad bRun (netName =? "byobu_tmux") nonFloating
+  , NS bPad "BYOBU_WINDOWS=me urxvt -name urxv -name urxv -n urxv -e byobu-tmux" (netName =? "byobu_tmux") nonFloating
   ] where netName = stringProperty "_NET_WM_NAME"
 icon = stringProperty "WM_ICON_NAME"
 iPad = "ipy"
