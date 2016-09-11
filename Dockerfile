@@ -80,7 +80,7 @@ RUN printf >/tmp/sourceme '%s\n'\
  'mv /root/.config/nvim/bundle/vim-ctrlspace/bin/*linux* /root/.config/nvim/bundle/vim-ctrlspace/'\
  'rm /root/.config/nvim/bundle/vim-ctrlspace/bin/*amd*'\
  'mv /root/.config/nvim/bundle/vim-ctrlspace/file_engine*linux* /root/.config/nvim/bundle/vim-ctrlspace/bin'\
- 'find /usr/share/terminfo/ -type f -print0|perl -0ne "print $ARG.qq(\0) unless /xterm/"|xargs -0n1 rm -f'\
+ 'find /usr/share/terminfo/ -type f -print0|perl -0ne "print $ARG.qq(\0) unless /(urxvt|screen|byobu|xterm)/"|xargs -0n1 rm -f'\
  'apk del --purge perl-dev curl make musl-dev gcc rsync'\
  # 'rm -rf /etc/ssl/certs' 'rm -f /lib/apk/db/installed'\
  'rm -rf /tmp/*'\
