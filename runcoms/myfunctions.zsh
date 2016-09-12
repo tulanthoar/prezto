@@ -18,7 +18,7 @@ function snippets-add() {
 }
 
 function bind_keys() {
-  function suggest-accept-return(){ zle vi-end-of-line; zle accept-line }
+  function suggest-accept-return(){ zle autosuggest-execute; zle vi-accept-line }
   zle -N snippet-expand
   zle -N fzf-locate-widget
   zle -N h
@@ -39,7 +39,8 @@ function bind_keys() {
   bindkey -M viins "^[p" p
   bindkey -M viins "^[n" n
   bindkey -M viins "^[h" h
-  bindkey -M viins "^[ " autosuggest-accept
+  bindkey -M viins "^[ " autosuggest-execute
+  #bindkey -M viins "^[ " suggest-accept-return
   bindkey -M viins "^[s" sudo-command-line
   bindkey -M viins "^@" snippet-expand
   bindkey -M viins "^Z" vi-cmd-mode
