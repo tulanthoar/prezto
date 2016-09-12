@@ -25,7 +25,7 @@ setopt LIST_AMBIGUOUS       # automatically inset ambiguous compeltions
 setopt LIST_PACKED          # use variable length width completion columns
 setopt LIST_TYPES           # include file types when autocompletin 
 setopt CSH_NULL_GLOB        # remove unused glob patters without report errors
-setopt GLOB_STAR_SHORT      # ** is shorthand for **/*
+#setopt GLOB_STAR_SHORT      # ** is shorthand for **/*
 setopt MARK_DIRS            # add trailing / to filename (directory) generation
 setopt NUMERIC_GLOB_SORT    # sort by numbers when prefixed
 # setopt WARN_CREATE_GLOBAL   # no creating global vars in functiuons unless typeset -g used 
@@ -46,8 +46,9 @@ setopt RC_QUOTES            # use `''` for single quotes in single quotes
 autoload -Uz black red green yellow blue magenta cyan white
 autoload -U colors && colors
 autoload -Uz compinit&& compinit -i
-export ZSH_HIGHLIGHT_HIGHLIGHTERS=('brackets' 'cursor' 'main' 'line')
-source <(printf 'source $ZPREZD/%s.plugin.zsh\n' 'zsh-syntax-highlighting/zsh-syntax-highlighting')
+local -a ZSH_HIGHLIGHT_HIGHLIGHTERS
+ZSH_HIGHLIGHT_HIGHLIGHTERS=( 'brackets' 'cursor' 'main' 'line' )
+source $ZPREZD/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 # export ZSH_HIGHLIGHT_STYLES[line]='fg=234,bg=244'
 # export ZSH_HIGHLIGHT_STYLES[unknown-token]='standout,bold'
 # export ZSH_HIGHLIGHT_STYLES[default]='standout'
