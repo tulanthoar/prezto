@@ -1,4 +1,4 @@
-#!/bin/env zsh
+#!/usr/bin/env zsh
 sudo pacman -Syu --noconfirm dash the_silver_searcher python-pip neovim ctags python-neovim docker> /dev/null
 sudo usermod -aG docker $USER
 dir=${0:a:h}
