@@ -16,15 +16,17 @@ RUN printf >/tmp/sourceme '%s\n'\
  'zmodsave () { mv "/tmp/prez/modules/${1}" "$HOME/.zprezto/modules"; }'\
  'zsave () { mv "/tmp/prez/${1}" "$HOME/.zprezto"; }'\
  'zsave "init.zsh"'\
- 'for d in "alias-tips" "tmux-omnivim" "zsh-autosuggestions" "zsh-completion-generator";'\
+ 'for d in "zsh-syntax-highlighting" "alias-tips" "tmux-omnivim" "zsh-autosuggestions" "zsh-completion-generator";'\
  'do zsave $d'\
  'done'\
  'for d in "environment" "helper" "spectrum" "utility" "editor" "pacman" "prompt" "history-substring-search";'\
  'do zmodsave $d'\
  'done'\
- 'zrcsave myaliases.zsh' 'echo "unalias grep" >> $HOME/.zprezto/runcoms/myaliases.zsh'\
+ 'zrcsave myaliases.zsh' 'perl -pi -e "s/^alias\sgrep=.*//" $HOME/.zprezto/runcoms/myaliases.zsh'\
+ 'echo "unalias grep" >> $HOME/.zshrc'\
+ 'perl -pi -e "s/^alias\srm=.*//" $HOME/.zprezto/runcoms/myaliases.zsh'\
+ 'echo "unalias rm" >> $HOME/.zshrc'\
  'zrcsave funcs' 'zrcsave myfunctions.zsh'\
- 'echo "unalias rm">>$HOME/.zprezto/runcoms/myaliases.zsh'\
  'curl -L -o /usr/bin/cpanm https://cpanmin.us'\
  'chmod +x /usr/bin/cpanm'\
  'mv /usr/bin/wget /'\
@@ -51,7 +53,6 @@ RUN printf >/tmp/sourceme '%s\n'\
  'echo "syntax"'\
  'printf "/usr/lib/perl5/core_perl/auto/Encode/%s\n" "CN" "JP" "KR" "TW" | xargs rm -rf'\
  'echo "encode"'\
-# 'for d in $(printf "%s " ".git" "__pycache__" "doc" "test" "t" "tests" "test-files" "test-case");'\
  'for d in $(printf "%s " ".git" "__pycache__" "test" "t" "tests" "test-files" "test-case");'\
  'do find /root -type d -name "$d" | xargs -n1 rm -rf'\
  'find /usr -type d -name "$d" | xargs -n1 rm -rf'\
