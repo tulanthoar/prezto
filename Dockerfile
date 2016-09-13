@@ -70,7 +70,6 @@ RUN printf >/tmp/sourceme '%s\n'\
  'rm /usr/bin/cpanm -f'\
  'rm -rf /usr/lib/python*/ensurepip'\
  'rm -rf /root/.cache'\
- # 'rm /usr/share/nvim/runtime/doc -rf'\
  'rm /usr/lib/python3.5/idlelib/Icons -rf'\
  'rm /usr/lib/python3.5/idlelib/idle_test -rf'\
  'find /usr/lib/python3.5 -type d -name "__pycache__" -print0|xargs -0n1 rm -rf'\

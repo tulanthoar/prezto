@@ -30,7 +30,7 @@ let g:CtrlSpaceGlobCommand = 'ag -i --hidden -l --nocolor -g ""'
 let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
 let g:CtrlSpaceSaveWorkspaceOnExit = 1
 let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
-let g:CtrlSpaceStatuslineFunction = "airline#extensions#ctrlspace#statusline()"
+let g:CtrlSpaceStatuslineFunction ="airline#extensions#ctrlspace#statusline()"
 let g:CtrlSpaceSearchTiming = 10
 let g:CtrlSpaceCacheDir = expand('$HOME/.config/nvim/files/cache')
 let g:CtrlSpaceUseTabline = 1
@@ -135,7 +135,7 @@ Plugin 'Shougo/neosnippet-snippets'
 let g:vimsyn_folding = 'af'
 Plugin 'terryma/vim-multiple-cursors'
 let g:multi_cursor_next_key = "<F2>"
-let g:multi_cursor_visual_maps = {'i':1, 'a':1, 'f':1, 'F':1, 't':1, 'T':1, 'S':1}
+let g:multi_cursor_visual_maps = {'i':1,'a':1,'f':1,'F':1,'t':1,'T':1,'S':1}
 Plugin 'vim-scripts/YankRing.vim'
 let g:yankring_min_element_length = 2
 let g:yankring_replace_n_nkey = '<C-n>'
@@ -165,7 +165,8 @@ let g:airline#extensions#tabline#tab_nr_type = 2
 let g:airline#extensions#tabline#tabs_label = 'ts'
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#tagbar#flags = 's'
-let g:airline#extensions#whitespace#checks = ['indent', 'trailing', 'long', 'mixed-indent-file']
+let g:airline#extensions#whitespace#checks =\
+      ['indent', 'trailing', 'long', 'mixed-indent-file']
 let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#wordcount#enabled = 1
 let g:airline_powerline_fonts = 1
@@ -175,7 +176,8 @@ let g:airline_theme = 'kolor'
 Plugin 'ervandew/supertab'
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextDefaultCompletionType = "<C-p>"
-let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
+let g:SuperTabContextDiscoverDiscovery =\
+      ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
 let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 let g:SuperTabCrMapping = 1
 let g:SuperTabDefaultCompletionType = "context"
@@ -245,7 +247,8 @@ let g:indent_guides_exclude_filetypes = ['help','nerdtree']
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 4
 Plugin 'scrooloose/nerdtree'
-let g:NERDTreeIgnore = ['\pyc$', '\~$[[file]]', '\swp$', '\git$', '\pyc$', '\pycache__$[[dir]]]']
+let g:NERDTreeIgnore =\
+      ['\pyc$','\~$[[file]]','\swp$','\git$','\pyc$','\pycache__$[[dir]]]']
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeQuitOnOpen = 0
 let g:NERDTreeShowFiles = 0
@@ -263,7 +266,9 @@ let g:kolor_italic = 1
 let g:kolor_bold = 1
 let g:kolor_alternative_matchparen = 1
 Plugin 'terryma/vim-expand-region'
-let g:expand_region_text_objects = {'iw':0, 'iW':0, 'i"':0, 'i''':0, 'i]':1, 'ib':1, 'iB':1, 'il':0, 'ii':1, 'ip':0, 'ie':0}
+let g:expand_region_text_objects =\
+      {'iw':0, 'iW':0, 'i"':0, 'i''':0, 'i]':1,\
+       'ib':1, 'iB':1, 'il':0, 'ii':1, 'ip':0, 'ie':0}
 Plugin 'xolox/vim-easytags'
 let g:easytags_async=1
 let g:easytags_file = '$HOME/.config/nvim/files/.easytags'
@@ -403,19 +408,20 @@ map  <unique> ;       <Plug>(easymotion-prefix)
 nmap <unique> <Space> <Plug>(easymotion-repeat)
 
 let g:mapleader=","
-nmap     <unique> <Leader>gu      <Plug>GitGutterUndoHunk
-nmap     <unique> <Leader>g<CR>   <Plug>GitGutterPreviewHunk
-nmap     <unique> <leader><CR>    MVz^ozzz+zb<cr>
-nnoremap <unique> <leader>z       zjza
-nnoremap <unique> <leader>r       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
-nnoremap <unique> <Leader>l       :CtrlPLine<CR>
-nnoremap <unique> <leader>t       :CtrlPBufTag<CR>
-nnoremap <unique> <leader>T       :CtrlPBufTagAll<CR>
-nmap     <unique> <leader><Space> <Plug>(easymotion-bd-n)
-nnoremap <unique> <Leader>v       <C-V>
-nnoremap <unique> <leader>sp      :setlocal spell!<cr>
-nnoremap <unique> <Leader>,       qj
-nnoremap <unique> <Leader>.       @j
+nmap     <unique><Leader>gu      <Plug>GitGutterUndoHunk
+nmap     <unique><Leader>g<CR>   <Plug>GitGutterPreviewHunk
+nmap     <unique><leader><CR>    MVz^ozzz+zb<cr>
+nnoremap <unique><leader>z       zjza
+nnoremap <unique><leader>r\
+      :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+nnoremap <unique><Leader>l       :CtrlPLine<CR>
+nnoremap <unique><leader>t       :CtrlPBufTag<CR>
+nnoremap <unique><leader>T       :CtrlPBufTagAll<CR>
+nmap     <unique><leader><Space> <Plug>(easymotion-bd-n)
+nnoremap <unique><Leader>v       <C-V>
+nnoremap <unique><leader>sp      :setlocal spell!<cr>
+nnoremap <unique><Leader>,       qj
+nnoremap <unique><Leader>.       @j
 
 let g:mapleader="-"
 nmap     <unique> <Leader><CR>     <Plug>NrrwrgnWinIncr
@@ -441,15 +447,18 @@ au FileType tex,plaintex nmap <buffer> <Leader>*  <Plug>LatexToggleStarEnv
 au FileType tex,plaintex nmap <buffer> <Leader>ce <Plug>LatexChangeEnv
 au FileType tex,plaintex vmap <buffer> <Leader>}  <Plug>LatexWrapSelection
 au FileType tex,plaintex vmap <buffer> <Leader>se <Plug>LatexEnvWrapSelection
-au FileType tex,plaintex nmap <buffer> <Leader>ae ]<Space>ji\begin{}<CR><CR>\end{}jfk
-au FileType nerdtree      map <buffer> s <Plug>(easymotion-bd-f2)
-au FileType nerdtree      map <buffer> . <Plug>(easymotion-repeat)
-au FileType nerdtree      map <buffer> l :call nerdtree#ui_glue#invokeKeyMap("C")j<CR>
-au FileType nerdtree      map <buffer> L :call nerdtree#ui_glue#invokeKeyMap("o")j<CR>
-au FileType nerdtree      map <buffer> h :call nerdtree#ui_glue#invokeKeyMap("u")j<CR>
-au FileType nerdtree      map <buffer> H :call nerdtree#ui_glue#invokeKeyMap("U")j<CR>
-au FileType nerdtree      setlocal nocursorcolumn
-au FileType nerdtree      setlocal nocursorline
+au FileType nerdtree map <buffer> s <Plug>(easymotion-bd-f2)
+au FileType nerdtree map <buffer> . <Plug>(easymotion-repeat)
+au FileType nerdtree map <buffer> l :call\
+      nerdtree#ui_glue#invokeKeyMap("C")<CR>j
+au FileType nerdtree map <buffer> L :call\
+      nerdtree#ui_glue#invokeKeyMap("o")<CR>j
+au FileType nerdtree map <buffer> h :call\
+      nerdtree#ui_glue#invokeKeyMap("u")<CR>j
+au FileType nerdtree map <buffer> H :call\
+      nerdtree#ui_glue#invokeKeyMap("U")<CR>j
+au FileType nerdtree setlocal nocursorcolumn
+au FileType nerdtree setlocal nocursorline
 function g:Undotree_CustomMap()
   nmap <buffer> J <plug>UndotreeGoNextState
   nmap <buffer> K <plug>UndotreeGoPreviousState
@@ -470,14 +479,15 @@ autocmd InsertEnter    * set   nocursorline
 autocmd InsertLeave    * set   cursorline
 autocmd VimEnter       * call  deoplete#initialize()
 autocmd InsertEnter    * call  deoplete#enable()
-autocmd bufreadpost    * if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+autocmd bufreadpost    * if line("'\"") >= 1 && line("'\"") <= line("$") |\
+      exe "normal! g`\"" | endif
 autocmd filetype haskell setlocal omnifunc=necoghc#omnifunc
-autocmd filetype  python let b:match_words = '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
+au filetype  python let b:match_words =\
+      '\<def\>:\<return\>,\<if\>:\<elif\>:\
+            \<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
 autocmd filetype  c,perl let b:delimitmate_insert_eol_marker = 2
 autocmd filetype  c,perl let b:delimitmate_eol_marker = ";"
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=33
 autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=27
 autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | exe ":CtrlSpace b" | endif
