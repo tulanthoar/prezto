@@ -7,10 +7,6 @@ RUN printf >/tmp/sourceme '%s\n'\
  'git clone --depth 1 https://github.com/junegunn/fzf.git /.fzf'\
  'mv /.fzf/fzf /usr/bin' 'mv /.fzf/bin/fzf-tmux /usr/bin'\
  'git clone --recursive  --depth 1 https://github.com/tulanthoar/prezto /tmp/prez'\
- 'for f in zlogin zlogout zpreztorc zprofile zshenv'\
- 'do mv /tmp/prez/runcoms/${f} ${HOME}/.${f}'\
- 'done'\
- 'perl -ne </tmp/prez/runcoms/zshrc "print unless /(infocmp|bind_keys|local|echo)/">$HOME/.zshrc'\
  'mkdir -p $HOME/.zprezto' 'mkdir $HOME/.zprezto/runcoms' 'mkdir $HOME/.zprezto/modules'\
  'zrcsave () { mv "/tmp/prez/runcoms/${1}" "$HOME/.zprezto/runcoms"; }'\
  'zmodsave () { mv "/tmp/prez/modules/${1}" "$HOME/.zprezto/modules"; }'\
@@ -22,20 +18,21 @@ RUN printf >/tmp/sourceme '%s\n'\
  'for d in "environment" "helper" "spectrum" "utility" "editor" "pacman" "prompt" "history-substring-search";'\
  'do zmodsave $d'\
  'done'\
- 'zrcsave myaliases.zsh' 'perl -pi -e "s/^alias\sgrep=.*//" $HOME/.zprezto/runcoms/myaliases.zsh'\
+ 'for f in "zlogin" "zlogout" "zpreztorc" "zprofile"" zshenv"' 'do mv "/tmp/prez/runcoms/${f}" "$HOME"' 'done'\
+ 'zrcsave myaliases.zsh'\ 'zrcsave funcs' 'zrcsave myfunctions.zsh'\
+ 'perl -ne </tmp/prez/runcoms/zshrc "print unless /(infocmp|bind_keys|local|echo)/">$HOME/.zshrc'\
+ 'perl -pi -e "s/^alias\sgrep=.*//" $HOME/.zprezto/runcoms/myaliases.zsh'
  'echo "unalias grep" >> $HOME/.zshrc'\
  'perl -pi -e "s/^alias\srm=.*//" $HOME/.zprezto/runcoms/myaliases.zsh'\
  'echo "unalias rm" >> $HOME/.zshrc'\
- 'zrcsave funcs' 'zrcsave myfunctions.zsh'\
- 'curl -L -o /usr/bin/cpanm https://cpanmin.us'\
- 'chmod +x /usr/bin/cpanm'\
+ 'curl -L -o /usr/bin/cpanm https://cpanmin.us' 'chmod +x /usr/bin/cpanm'\
  'mv /usr/bin/wget /'\
  'trycpanm () { cpanm $1 || cpanm $1 -n || cpanm $1 --force; }'\
  'trycpanm "Perl::Critic"' 'trycpanm "Perl::Tidy"'\
  'mv /wget /usr/bin'\
+ 'ln -s /usr/bin/python3.5 /usr/bin/python'\
  'python3 -m ensurepip'\
  'pip3 install --upgrade vim-vint prospector[with_everything] pip setuptools neovim jedi'\
- 'ln -s /usr/bin/python3.5 /usr/bin/python'\
  'mkdir -p /root/.config/nvim/bundle' 'mkdir -p /root/.config/nvim/files/backup'\
  'mkdir /root/.config/nvim/files/info' 'mkdir /root/.config/nvim/files/swap'\
  'mkdir /root/.config/nvim/files/cache' 'mkdir /root/.config/nvim/files/undo'\
@@ -50,21 +47,14 @@ RUN printf >/tmp/sourceme '%s\n'\
  "viminfo." "vimnormal." "basic." "context." "cterm." "dircolors." "dockerf." "dot." "xdefaults.vim"'\
  'ls -1 /usr/share/nvim/runtime/syntax > /targets'\
  #'grep -Ev -f /patterns /targets |xargs -n1 printf "/usr/share/nvim/runtime/syntax/%s\n"| xargs -n1 rm -f'\
- 'echo "syntax"'\
  'printf "/usr/lib/perl5/core_perl/auto/Encode/%s\n" "CN" "JP" "KR" "TW" | xargs rm -rf'\
- 'echo "encode"'\
  'for d in $(printf "%s " ".git" "__pycache__" "test" "t" "tests" "test-files" "test-case");'\
- 'do find /root -type d -name "$d" | xargs -n1 rm -rf'\
- 'find /usr -type d -name "$d" | xargs -n1 rm -rf'\
+ 'do find /root -type d -name "$d" | xargs -n1 rm -rf' 'find /usr -type d -name "$d" | xargs -n1 rm -rf'\
  'done'\
- 'echo "dirs"'\
- 'rm -rf /root/.cpanm/work/*'\
- 'rm -rf /usr/local/share/man/man3'\
- 'for f in $(printf "%s " "png" "rst" "md" "md" "svg" "gif" "txt" "exe");'\
- 'do find / -type f -name "*.${f}" -delete'\
+ 'rm -rf /root/.cpanm/work/*' 'rm -rf /usr/local/share/man/man3'\
+ 'for f in $(printf "%s " "png" "rst" "svg" "gif" "exe");' 'do find / -type f -name "*.${f}" -delete'\
  'done'\
- 'for f in $(printf "%s " "README" "LICENSE");'\
- 'do find / -type f -name "${f}.*" -delete'\
+ 'for f in $(printf "%s " "README" "LICENSE");' 'do find / -type f -name "${f}.*" -delete'\
  'done'\
  'find /usr -type f -name "*.pod" -delete'\
  'rm /usr/bin/cpanm -f'\
@@ -82,7 +72,5 @@ RUN printf >/tmp/sourceme '%s\n'\
  'mv /root/.config/nvim/bundle/vim-ctrlspace/file_engine*linux* /root/.config/nvim/bundle/vim-ctrlspace/bin'\
  'find /usr/share/terminfo/ -type f -print0|perl -0ne "print $ARG.qq(\0) unless /(urxvt|screen|byobu|xterm)/"|xargs -0n1 rm -f'\
  'apk del --purge perl-dev curl make musl-dev gcc rsync'\
- # 'rm -rf /etc/ssl/certs' 'rm -f /lib/apk/db/installed'\
  'rm -rf /tmp/*'\
- 'echo "apk"'\
  && cat /tmp/sourceme && source /tmp/sourceme && rm -f /tmp/sourceme
