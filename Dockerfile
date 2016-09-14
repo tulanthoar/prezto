@@ -13,13 +13,11 @@ RUN printf >/tmp/sourceme '%s\n'\
  'zsave () { mv "/tmp/prez/${1}" "$HOME/.zprezto"; }'\
  'zsave "init.zsh"'\
  'for d in "zsh-syntax-highlighting" "alias-tips" "tmux-omnivim" "zsh-autosuggestions" "zsh-completion-generator";'\
- 'do zsave $d'\
- 'done'\
+ 'do zsave $d' 'done'\
  'for d in "environment" "helper" "spectrum" "utility" "editor" "pacman" "prompt" "history-substring-search";'\
- 'do zmodsave $d'\
- 'done'\
+ 'do zmodsave $d' 'done'\
  'for f in "zlogin" "zlogout" "zpreztorc" "zprofile" "zshenv";' 'do mv "/tmp/prez/runcoms/${f}" "$HOME/.${f}"' 'done'\
- 'zrcsave myaliases.zsh'\ 'zrcsave funcs' 'zrcsave myfunctions.zsh'\
+ 'for f in "myaliases.zsh" "myfunctions.zsh" "funcs";' 'do zrcsave $f' 'done'\
  'perl -ne </tmp/prez/runcoms/zshrc "print unless /(infocmp|bind_keys|local|echo)/">$HOME/.zshrc'\
  'perl -pi -e "s/^alias\sgrep=.*//" $HOME/.zprezto/runcoms/myaliases.zsh'\
  'echo "unalias grep" >> $HOME/.zshrc'\
@@ -39,7 +37,6 @@ RUN printf >/tmp/sourceme '%s\n'\
  'wget -O /root/.config/nvim/init.vim http://raw.githubusercontent.com/tulanthoar/prezto/master/dotfiles/nvim/init.vim'\
  'git clone --depth 1 http://github.com/VundleVim/Vundle.vim.git /root/.config/nvim/bundle/Vundle.vim'\
  'perl <"/root/.config/nvim/init.vim" -p -e "s/^colorscheme kolor$//" > /tmp/viminit && nvim -u /tmp/viminit +PluginInstall +qall'\
- 'echo "install"'\
  'rm -rf /.fzf'\
  'printf>/patterns "^%svim$\n" "" "initex." "java." "diff." "readline." "html." "lua." "python." "help." "markdown." "make." "json." "cmake."\
  "automake." "matlab." "git." "syncolor." "cpp." "texmf." "config." "man." "manual." "conf." "Dockerfile." "godoc." "chaskell."\
@@ -49,13 +46,10 @@ RUN printf >/tmp/sourceme '%s\n'\
  #'grep -Ev -f /patterns /targets |xargs -n1 printf "/usr/share/nvim/runtime/syntax/%s\n"| xargs -n1 rm -f'\
  'printf "/usr/lib/perl5/core_perl/auto/Encode/%s\n" "CN" "JP" "KR" "TW" | xargs rm -rf'\
  'for d in $(printf "%s " ".git" "__pycache__" "test" "t" "tests" "test-files" "test-case");'\
- 'do find /root -type d -name "$d" | xargs -n1 rm -rf' 'find /usr -type d -name "$d" | xargs -n1 rm -rf'\
- 'done'\
+ 'do find /root -type d -name "$d" | xargs -n1 rm -rf' 'find /usr -type d -name "$d" | xargs -n1 rm -rf' 'done'\
  'rm -rf /root/.cpanm/work/*' 'rm -rf /usr/local/share/man/man3'\
- 'for f in "png" "rst" "svg" "gif" "exe" "md"' 'do find / -type f -name "*.${f}" -delete'\
- 'done'\
- 'for f in $(printf "%s " "README" "LICENSE");' 'do find / -type f -name "${f}.*" -delete'\
- 'done'\
+ 'for f in "png" "rst" "svg" "gif" "exe" "md"' 'do find / -type f -name "*.${f}" -delete' 'done'\
+ 'for f in $(printf "%s " "README" "LICENSE");' 'do find / -type f -name "${f}.*" -delete' 'done'\
  'find /usr -type f -name "*.pod" -delete'\
  'rm /usr/bin/cpanm -f'\
  'rm -rf /usr/lib/python*/ensurepip'\
