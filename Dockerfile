@@ -65,6 +65,8 @@ RUN printf >/tmp/sourceme '%s\n'\
  'rm /root/.config/nvim/bundle/vim-ctrlspace/bin/*amd*'\
  'mv /root/.config/nvim/bundle/vim-ctrlspace/file_engine*linux* /root/.config/nvim/bundle/vim-ctrlspace/bin'\
  'find /usr/share/terminfo/ -type f -print0|perl -0ne "print $ARG.qq(\0) unless /(urxvt|screen|byobu|xterm)/"|xargs -0n1 rm -f'\
+ 'find /root -type d -name "shunit2" -print0 | xargs -0n1 rm -rf'\
+ 'find / -type d -name "test-data" -print0 | xargs -0n1 rm -rf'\
  'apk del --purge perl-dev curl make musl-dev gcc rsync'\
  'rm -rf /tmp/*'\
  && cat /tmp/sourceme && source /tmp/sourceme && rm -f /tmp/sourceme

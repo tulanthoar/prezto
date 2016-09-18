@@ -17,10 +17,21 @@ Plugin 'kana/vim-operator-user'
 
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'Shougo/neoinclude.vim'
-Plugin 'davidhalter/jedi-vim'
+" Plugin 'davidhalter/jedi-vim'
 Plugin 'zchee/deoplete-jedi'
+Plugin 'Shougo/context_filetype.vim'
+if !exists('g:context_filetype#same_filetypes')                                                                                                                                                                                                                   
+  let g:context_filetype#same_filetypes = {}                                                                                                                                                                                                                      
+endif                                                                                                                                                                                                                                                             
+" In cpp buffers, completes from c buffers.                                                                                                                                                                                                                       
+let g:context_filetype#same_filetypes.cpp = 'c'                                                                                                                                                                                                                   
+" In gitconfig buffers, completes from all buffers.                                                                                                                                                                                                               
+let g:context_filetype#same_filetypes.gitconfig = '_'                                                                                                                                                                                                             
+" In default, completes from all buffers.                                                                                                                                                                                                                         
+let g:context_filetype#same_filetypes._ = '_'
 let g:deoplete#auto_complete_start_length = 2
 let g:deoplete#enable_refresh_always = 1
+let g:deoplete#auto_refresh_delay = 10
 let g:deoplete#enable_camel_case = 1
 let g:deoplete#auto_complete_delay = 10
 let g:deoplete#sources#jedi#show_docstring = 1
