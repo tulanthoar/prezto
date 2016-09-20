@@ -20,14 +20,13 @@ Plugin 'Shougo/neoinclude.vim'
 " Plugin 'davidhalter/jedi-vim'
 Plugin 'zchee/deoplete-jedi'
 Plugin 'Shougo/context_filetype.vim'
-if !exists('g:context_filetype#same_filetypes')                                                                                                                                                                                                                   
-  let g:context_filetype#same_filetypes = {}                                                                                                                                                                                                                      
-endif                                                                                                                                                                                                                                                             
-" In cpp buffers, completes from c buffers.                                                                                                                                                                                                                       
-let g:context_filetype#same_filetypes.cpp = 'c'                                                                                                                                                                                                                   
-" In gitconfig buffers, completes from all buffers.                                                                                                                                                                                                               
-let g:context_filetype#same_filetypes.gitconfig = '_'                                                                                                                                                                                                             
-" In default, completes from all buffers.                                                                                                                                                                                                                         
+if !exists('g:context_filetype#same_filetypes')
+  let g:context_filetype#same_filetypes = {}
+endif
+let g:context_filetype#same_filetypes.cpp = 'c'
+" In gitconfig buffers, completes from all buffers.
+let g:context_filetype#same_filetypes.gitconfig = '_'
+" In default, completes from all buffers.
 let g:context_filetype#same_filetypes._ = '_'
 let g:deoplete#auto_complete_start_length = 2
 let g:deoplete#enable_refresh_always = 1
@@ -114,13 +113,16 @@ let g:pymode_syntax_docstrings   = 1
 
 Plugin 'Shougo/neco-vim'
 
-"this
 Plugin 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_save_on_switch = 1
-Plugin 'brettanomyces/nvim-terminus'
 Plugin 'vim-utils/vim-man'
-Plugin 'kassio/neoterm'
 Plugin 'eugen0329/vim-esearch'
+if !exists('g:esearch') | let g:esearch = {} | endif
+let g:esearch.adapter = 'ag'
+let g:esearch.backend = 'nvim'
+"this
+Plugin 'brettanomyces/nvim-terminus'
+Plugin 'kassio/neoterm'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 "here
@@ -429,6 +431,8 @@ nnoremap <unique><Leader>v       <C-V>
 nnoremap <unique><leader>sp      :setlocal spell!<cr>
 nnoremap <unique><Leader>,       qj
 nnoremap <unique><Leader>.       @j
+nmap     <unique><Leader>/       <Plug>(esearch)
+noremap  <unique><leader>q       :q<CR>
 
 let g:mapleader="-"
 nmap     <unique> <Leader><CR>     <Plug>NrrwrgnWinIncr

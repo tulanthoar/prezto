@@ -107,6 +107,7 @@ myKeysP =
   , ("M-<Right>", shiftTo Next EmptyWS)
   , ("M-q",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
   , ("M-<Tab>", toggleWS' ["NSP"])
+  , ("M-p",  spawn "start-pomodoro" )
   , ("M-t",  byobucmd )
   , ("M4-t", myTermM_ )
   ]
