@@ -112,6 +112,7 @@ let g:pymode_syntax_highlight_exceptions = 1
 let g:pymode_syntax_docstrings   = 1
 
 Plugin 'Shougo/neco-vim'
+let g:vimsyn_folding = 'af'
 
 Plugin 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_save_on_switch = 1
@@ -120,32 +121,36 @@ Plugin 'eugen0329/vim-esearch'
 if !exists('g:esearch') | let g:esearch = {} | endif
 let g:esearch.adapter = 'ag'
 let g:esearch.backend = 'nvim'
-"this
-Plugin 'brettanomyces/nvim-terminus'
-Plugin 'kassio/neoterm'
-Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
-"here
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'kshenoy/vim-signature'
 let g:SignatureMarkTextHLDynamic = 1
 let g:SignatureMarkerTextHLDynamic = 1
-Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-fugitive'
+Plugin 'godlygeek/tabular'
 Plugin 'haya14busa/vim-operator-flashy'
-let g:operator#flashy#flash_time = 1000
-let g:move_key_modifier = 'M'
+let g:operator#flashy#flash_time = 3000
+au VimEnter,ColorScheme * :hi mFlashy cterm=bold,underline
+let g:operator#flashy#group = 'mFlashy'
+Plugin 'rhysd/clever-f.vim'
+let g:clever_f_smart_case = 1
+let g:clever_f_show_prompt = 1
+Plugin 'haya14busa/vim-asterisk'
+Plugin 'airblade/vim-gitgutter'
+let g:gitgutter_highlight_lines = 1
 Plugin 'matze/vim-move'
+let g:move_key_modifier = 'M'
+
+"this
+Plugin 'brettanomyces/nvim-terminus'
+Plugin 'kassio/neoterm'
 Plugin 'haya14busa/incsearch-easymotion.vim'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'haya14busa/incsearch-fuzzy.vim'
-Plugin 'haya14busa/vim-asterisk'
-Plugin 'rhysd/clever-f.vim'
-Plugin 'airblade/vim-gitgutter'
 Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
 "this
 
-let g:vimsyn_folding = 'af'
 Plugin 'terryma/vim-multiple-cursors'
 let g:multi_cursor_next_key = "<F2>"
 let g:multi_cursor_visual_maps = {'i':1,'a':1,'f':1,'F':1,'t':1,'T':1,'S':1}
@@ -220,16 +225,16 @@ Plugin 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_cache_dir = '$HOME/.config/nvim/files/cache/ctrlp'
 let g:ctrlp_clear_cache_on_exit = 1
-let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_cmd = 'CtrlPMRUFiles'
 let g:ctrlp_extensions = ['tag', 'buffertag', 'line']
 let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_lazy_update = 10
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:35'
 let g:ctrlp_mruf_max = 2500
 let g:ctrlp_open_single_match = ['mru']
-let g:ctrlp_prompt_mappings = {'ToggleType(1)': ['<c-j>', '<c-up>'],
-                             \ 'ToggleType(-1)':['<c-f>', '<c-down>'],
-                             \ 'PrtCurLeft()':  ['<left>', '<c-^>'],
+let g:ctrlp_prompt_mappings = {'ToggleType(1)': ['<C-f>', '<C-up>'],
+                             \ 'ToggleType(-1)':['<C-down>'],
+                             \ 'PrtCurLeft()':  ['<left>', '<C-^>'],
                              \ 'PrtCurRight()': ['<right>']}
 let g:ctrlp_regexp = 1
 let g:ctrlp_tilde_homedir = 1
@@ -344,29 +349,48 @@ set wildignorecase
 set wildignore=*.o,*~,*.pyc
 set writebackup
 
-
-inoremap <unique> <F1>    <Delete>
-inoremap <unique> <F4>    <esc>:w<cr>
-nnoremap <unique> <F4>    <esc>:w<cr>
-nnoremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
-inoremap <unique> <F5>    <esc>:cd %:p:h<cr>:pwd<cr>
-nnoremap <unique> <F6>    <esc>:CtrlSpace O<CR>
-inoremap <unique> <F6>    <esc>:CtrlSpace O<CR>
-nnoremap <unique> <F7>    <esc>:TagbarOpenAutoClose<cr>
-inoremap <unique> <F7>    <esc>:TagbarOpenAutoClose<cr>
-nnoremap <unique> <F8>    <esc>:Errors<cr>
-inoremap <unique> <F8>    <esc>:Errors<cr>
-nnoremap <unique> <F9>    <esc>:YRShow<CR>
-inoremap <unique> <F9>    <esc>:YRShow<CR>
-nnoremap <unique> <F10>   <esc>:x<cr>
-inoremap <unique> <F10>   <esc>:x<cr>
-noremap  <unique> Q       <Esc>:q<CR>
-cnoremap <unique> w!!     SudoWrite
-vmap     <unique> v       <Plug>(expand_region_expand)
-vmap     <unique> C       gc
-nmap     <unique> css     yss
-nnoremap <unique> H       Hzz
-nnoremap <unique> L       Lzz
+nmap <unique><M-l> <Plug>MoveLineHalfPageDownzz
+nmap <unique><M-h> <Plug>MoveLineHalfPageUpzz
+vmap <unique><M-l> <Plug>MoveBlockHalfPageDownzz
+vmap <unique><M-h> <Plug>MoveBlockHalfPageUpzz
+map *   <Plug>(asterisk-*)
+map #   <Plug>(asterisk-#)
+map g*  <Plug>(asterisk-g*)
+map g#  <Plug>(asterisk-g#)
+map z*  <Plug>(asterisk-z*)
+map gz* <Plug>(asterisk-gz*)
+map z#  <Plug>(asterisk-z#)
+map gz# <Plug>(asterisk-gz#)
+nmap <unique>yaW <Plug>(operator-flashy)aW
+nmap <unique>yiW <Plug>(operator-flashy)iW
+nmap <unique>yaw <Plug>(operator-flashy)aw
+nmap <unique>yiw <Plug>(operator-flashy)iw
+vmap <unique>y   <Plug>(operator-flashy)
+nmap <unique>yal <Plug>(operator-flashy)al
+nmap <unique>yil <Plug>(operator-flashy)il
+inoremap <unique><F1>  <Delete>
+inoremap <unique><F4>  <esc>:w<cr>
+nnoremap <unique><F4>  <esc>:w<cr>
+nnoremap <unique><F5>  <esc>:cd %:p:h<cr>:pwd<cr>
+inoremap <unique><F5>  <esc>:cd %:p:h<cr>:pwd<cr>
+nnoremap <unique><F6>  <esc>:CtrlSpace O<CR>
+inoremap <unique><F6>  <esc>:CtrlSpace O<CR>
+nnoremap <unique><F7>  <esc>:TagbarOpenAutoClose<cr>
+inoremap <unique><F7>  <esc>:TagbarOpenAutoClose<cr>
+nnoremap <unique><F8>  <esc>:Errors<cr>
+inoremap <unique><F8>  <esc>:Errors<cr>
+nnoremap <unique><F9>  <esc>:YRShow<CR>
+inoremap <unique><F9>  <esc>:YRShow<CR>
+nnoremap <unique><F10> <esc>:x<cr>
+inoremap <unique><F10> <esc>:x<cr>
+noremap  <unique>Q     <Esc>:q<CR>
+cnoremap <unique>w!!   SudoWrite
+cnoremap <unique>t! Tabularize /
+vmap     <unique>v     <Plug>(expand_region_expand)
+vmap     <unique>C     gc
+nmap     <unique>css   yss
+nnoremap <unique>H     Hzz
+nnoremap <unique>L     Lzz
 
 nmap s      <Plug>(easymotion-bd-fl)
 xmap s      <Plug>(easymotion-bd-fl)
@@ -396,10 +420,10 @@ nnoremap <unique> <Up>    :sp<cr>
 xmap     <unique> <CR>    <Plug>NrrwrgnDo
 nnoremap <unique> <Left>  <esc>:CtrlSpace l[[]<CR>
 nnoremap <unique> <Right> <esc>:CtrlSpace l]][<CR>
-noremap  <unique> <C-H>   <C-W><C-H>
-noremap  <unique> <C-J>   <C-W><C-J>
-noremap  <unique> <C-K>   <C-W><C-K>
-noremap  <unique> <C-L>   <C-W><C-L>
+noremap  <unique> <C-H>   <C-W>h
+noremap  <unique> <C-J>   <C-W>j
+noremap  <unique> <C-K>   <C-W>k
+noremap  <unique> <C-L>   <C-W>l
 imap     <expr><C-F>
 \ neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-N>"
@@ -441,7 +465,7 @@ nnoremap <unique> <leader><Tab>    :exe "b".g:lastbuff<cr>
 nnoremap <unique> <leader>b        :CtrlSpace A<CR>
 nnoremap <unique> <leader>p        :YRShow<cr>
 nnoremap <unique> <leader>u        :UndotreeToggle<cr>
-nmap     <unique> <leader>n        <plug>NERDTreeMirrorToggle<CR>j
+nmap     <unique> <leader>n        <plug>NERDTreeTabsToggle<CR>j
 nmap     <unique> <leader>t        <Plug>TaskList
 noremap  <unique> <leader>k        :MBEbf<CR>
 noremap  <unique> <leader>j        :MBEbb<CR>
@@ -458,6 +482,8 @@ au FileType tex,plaintex nmap <buffer> <Leader>*  <Plug>LatexToggleStarEnv
 au FileType tex,plaintex nmap <buffer> <Leader>ce <Plug>LatexChangeEnv
 au FileType tex,plaintex vmap <buffer> <Leader>}  <Plug>LatexWrapSelection
 au FileType tex,plaintex vmap <buffer> <Leader>se <Plug>LatexEnvWrapSelection
+au FileType nerdtree map <buffer> <C-J>   <C-W>j
+au FileType nerdtree map <buffer> <C-K>   <C-W>k
 au FileType nerdtree map <buffer> s <Plug>(easymotion-bd-f2)
 au FileType nerdtree map <buffer> . <Plug>(easymotion-repeat)
 au FileType nerdtree map <buffer> l :call nerdtree#ui_glue#invokeKeyMap("C")<CR>j
@@ -488,7 +514,7 @@ autocmd VimEnter       * call  deoplete#initialize()
 autocmd InsertEnter    * call  deoplete#enable()
 autocmd bufreadpost    * if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 autocmd filetype haskell setlocal omnifunc=necoghc#omnifunc
-au filetype  python let b:match_words = '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
+autocmd filetype  python let b:match_words = '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
 autocmd filetype  c,perl let b:delimitmate_insert_eol_marker = 2
 autocmd filetype  c,perl let b:delimitmate_eol_marker = ";"
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
