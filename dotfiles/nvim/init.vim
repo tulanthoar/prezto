@@ -145,10 +145,10 @@ Plugin 'haya14busa/incsearch-fuzzy.vim'
 "this
 Plugin 'brettanomyces/nvim-terminus'
 Plugin 'kassio/neoterm'
-Plugin 'Shougo/neosnippet'
-Plugin 'Shougo/neosnippet-snippets'
 "this
 
+Plugin 'Shougo/neosnippet'
+Plugin 'Shougo/neosnippet-snippets'
 Plugin 'terryma/vim-multiple-cursors'
 let g:multi_cursor_next_key = "<F2>"
 let g:multi_cursor_visual_maps = {'i':1,'a':1,'f':1,'F':1,'t':1,'T':1,'S':1}
