@@ -64,3 +64,4 @@ export FZFD=${HOME}/.fzf
 export GOPATH=$HOME/golang
 [[ -d ${GOPATH} ]] && export PATH="$PATH:$GOPATH/bin"
 export OMNIVIM_EDITOR="nvim"
+export URXVT_PERL_LIB=${HOME}/.config/urxvt/perls
