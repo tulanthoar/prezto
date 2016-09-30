@@ -1,7 +1,5 @@
 "init on 2016-05-26
-if &compatible
-  set nocompatible
-endif
+if &compatible | set nocompatible | endif
 filetype off
 let g:mapleader="\\"
 set rtp+=$HOME/.config/nvim/bundle/Vundle.vim
@@ -140,13 +138,13 @@ Plugin 'airblade/vim-gitgutter'
 let g:gitgutter_highlight_lines = 1
 Plugin 'matze/vim-move'
 let g:move_key_modifier = 'M'
+Plugin 'haya14busa/incsearch-easymotion.vim'
+Plugin 'haya14busa/incsearch.vim'
+Plugin 'haya14busa/incsearch-fuzzy.vim'
 
 "this
 Plugin 'brettanomyces/nvim-terminus'
 Plugin 'kassio/neoterm'
-Plugin 'haya14busa/incsearch-easymotion.vim'
-Plugin 'haya14busa/incsearch.vim'
-Plugin 'haya14busa/incsearch-fuzzy.vim'
 Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
 "this
@@ -232,8 +230,8 @@ let g:ctrlp_lazy_update = 10
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:35'
 let g:ctrlp_mruf_max = 2500
 let g:ctrlp_open_single_match = ['mru']
-let g:ctrlp_prompt_mappings = {'ToggleType(1)': ['<C-f>', '<C-up>'],
-                             \ 'ToggleType(-1)':['<C-down>'],
+let g:ctrlp_prompt_mappings = {'ToggleType(1)': ['<M-n>', '<C-up>'],
+                             \ 'ToggleType(-1)':['<M-b>', '<C-down>'],
                              \ 'PrtCurLeft()':  ['<left>', '<C-^>'],
                              \ 'PrtCurRight()': ['<right>']}
 let g:ctrlp_regexp = 1
@@ -259,11 +257,11 @@ let g:EasyMotion_use_upper = 1
 Plugin 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_exclude_filetypes = ['help','nerdtree']
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 4
 Plugin 'scrooloose/nerdtree'
-let g:NERDTreeIgnore = ['\pyc$','\~$[[file]]','\swp$','\git$','\pyc$','\pycache__$[[dir]]]']
+let g:NERDTreeIgnore = ['\pyc$','\~$[[file]]','\swp$','\git$','\pyc$','\pycache__$[[dir]]']
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeQuitOnOpen = 0
 let g:NERDTreeShowFiles = 0
@@ -349,6 +347,23 @@ set wildignorecase
 set wildignore=*.o,*~,*.pyc
 set writebackup
 
+function! s:config_easyfuzzymotion(...) abort
+  return extend(copy({
+  \   'converters': [incsearch#config#fuzzy#converter()],
+  \   'modules': [incsearch#config#easymotion#module()],
+  \   'keymap': {"\<CR>": '<Over>(easymotion)'},
+  \   'is_expr': 0,
+  \   'is_stay': 1
+  \ }), get(a:, 1, {}))
+endfunction
+
+nnoremap <silent><expr> ;/ incsearch#go(<SID>config_easyfuzzymotion())
+onoremap <silent><expr> ;/ incsearch#go(<SID>config_easyfuzzymotion())
+xnoremap <silent><expr> ;/ incsearch#go(<SID>config_easyfuzzymotion())
+nmap g/ <Plug>(incsearch-fuzzy-/)
+nmap ? <Plug>(incsearch-fuzzy-?)
+nmap / <Plug>(incsearch-fuzzy-stay)
+nnoremap <unique><Leader>/ /
 nmap <unique><M-l> <Plug>MoveLineHalfPageDownzz
 nmap <unique><M-h> <Plug>MoveLineHalfPageUpzz
 vmap <unique><M-l> <Plug>MoveBlockHalfPageDownzz
@@ -385,60 +400,53 @@ nnoremap <unique><F10> <esc>:x<cr>
 inoremap <unique><F10> <esc>:x<cr>
 noremap  <unique>Q     <Esc>:q<CR>
 cnoremap <unique>w!!   SudoWrite
-cnoremap <unique>t! Tabularize /
+cnoremap <unique>t!    Tabularize /
 vmap     <unique>v     <Plug>(expand_region_expand)
 vmap     <unique>C     gc
 nmap     <unique>css   yss
 nnoremap <unique>H     Hzz
 nnoremap <unique>L     Lzz
 
-nmap s      <Plug>(easymotion-bd-fl)
-xmap s      <Plug>(easymotion-bd-fl)
-omap z      <Plug>(easymotion-bd-fl)
-nmap gs     <Plug>(easymotion-bd-f2)
-xmap gs     <Plug>(easymotion-bd-f2)
-omap gz     <Plug>(easymotion-bd-f2)
-nmap ;s     <Plug>(easymotion-bd-fn)
-xmap ;s     <Plug>(easymotion-bd-fn)
-omap ;z     <Plug>(easymotion-bd-fn)
-nmap gj     <Plug>(easymotion-sol-bd-jk)
-xmap gj     <Plug>(easymotion-sol-bd-jk)
-omap gj     <Plug>(easymotion-sol-bd-jk)
-nmap gk     <Plug>(easymotion-sol-bd-jk)
-xmap gk     <Plug>(easymotion-sol-bd-jk)
-omap gk     <Plug>(easymotion-sol-bd-jk)
-nmap g<Tab> <Plug>(easymotion-overwin-line)
+nmap <unique>s       <Plug>(easymotion-bd-fl)
+xmap <unique>s       <Plug>(easymotion-bd-fl)
+omap <unique>z       <Plug>(easymotion-bd-fl)
+nmap <unique>S       <Plug>(easymotion-bd-f2)
+xmap <unique>S       <Plug>(easymotion-bd-f2)
+omap <unique>S       <Plug>(easymotion-bd-f2)
+nmap <unique>K       <Plug>(easymotion-sol-bd-jk)
+xmap <unique>K       <Plug>(easymotion-sol-bd-jk)
+omap <unique>K       <Plug>(easymotion-sol-bd-jk)
+nmap <unique><Space> <Plug>(easymotion-overwin-line)
 
-nnoremap <unique> \\n     i<CR><Esc>
-vnoremap <unique> J       <esc>
-inoremap <unique> jf      <esc>
-inoremap <unique> fj      <esc>
-nnoremap <unique> ^       0
-nnoremap <unique> 0       ^
-nnoremap <unique> <Down>  :vs<cr>
-nnoremap <unique> <Up>    :sp<cr>
-xmap     <unique> <CR>    <Plug>NrrwrgnDo
-nnoremap <unique> <Left>  <esc>:CtrlSpace l[[]<CR>
-nnoremap <unique> <Right> <esc>:CtrlSpace l]][<CR>
-noremap  <unique> <C-H>   <C-W>h
-noremap  <unique> <C-J>   <C-W>j
-noremap  <unique> <C-K>   <C-W>k
-noremap  <unique> <C-L>   <C-W>l
+nnoremap <unique>\\n     i<CR><Esc>
+vnoremap <unique>J       <esc>
+inoremap <unique>jf      <esc>
+inoremap <unique>fj      <esc>
+nnoremap <unique>^       0
+nnoremap <unique>0       ^
+nnoremap <unique><Down>  :vs<cr>
+nnoremap <unique><Up>    :sp<cr>
+xmap     <unique><CR>    <Plug>NrrwrgnDo
+nnoremap <unique><Left>  <esc>:CtrlSpace l[[]<CR>
+nnoremap <unique><Right> <esc>:CtrlSpace l]][<CR>
+noremap  <unique><C-H>   <C-W>h
+noremap  <unique><C-J>   <C-W>j
+noremap  <unique><C-K>   <C-W>k
+noremap  <unique><C-L>   <C-W>l
 imap     <expr><C-F>
 \ neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-N>"
-nmap <unique> [g      <Plug>GitGutterPrevHunk
-nmap <unique> ]g      <Plug>GitGutterNextHunk
-omap <unique> ig      <Plug>GitGutterTextObjectInnerPending
-omap <unique> ag      <Plug>GitGutterTextObjectOuterPending
-xmap <unique> ig      <Plug>GitGutterTextObjectInnerVisual
-xmap <unique> ag      <Plug>GitGutterTextObjectOuterVisual
-nmap <unique> <M-[>   ]<space>yil:m+<cr>kp
-nmap <unique> <M-]>   ]<space>yil:m+<cr>kpj
-nmap <unique> [c      ]<space>yil:m+<cr>gcckp
-nmap <unique> ]c      ]<space>yil:m+<cr>kpgccj
-map  <unique> ;       <Plug>(easymotion-prefix)
-nmap <unique> <Space> <Plug>(easymotion-repeat)
+nmap <unique>[g      <Plug>GitGutterPrevHunk
+nmap <unique>]g      <Plug>GitGutterNextHunk
+omap <unique>ig      <Plug>GitGutterTextObjectInnerPending
+omap <unique>ag      <Plug>GitGutterTextObjectOuterPending
+xmap <unique>ig      <Plug>GitGutterTextObjectInnerVisual
+xmap <unique>ag      <Plug>GitGutterTextObjectOuterVisual
+nmap <unique><M-[>   ]<space>yil:m+<cr>kp
+nmap <unique><M-]>   ]<space>yil:m+<cr>kpj
+nmap <unique>[c      ]<space>yil:m+<cr>gcckp
+nmap <unique>]c      ]<space>yil:m+<cr>kpgccj
+map  <unique>;       <Plug>(easymotion-prefix)
 
 let g:mapleader=","
 nmap     <unique><Leader>gu      <Plug>GitGutterUndoHunk
@@ -446,7 +454,7 @@ nmap     <unique><Leader>g<CR>   <Plug>GitGutterPreviewHunk
 nmap     <unique><leader><CR>    MVz^ozzz+zb<cr>
 nnoremap <unique><leader>z       zjza
 nnoremap <unique><leader>r
-\:nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+\ :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 nnoremap <unique><Leader>l       :CtrlPLine<CR>
 nnoremap <unique><leader>t       :CtrlPBufTag<CR>
 nnoremap <unique><leader>T       :CtrlPBufTagAll<CR>
