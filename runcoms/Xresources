@@ -17,6 +17,7 @@ URxvt.boldFont      :xft:hack:pixelsize=12:style=Bold
 URxvt.italicFont    :xft:hack:pixelsize=12:style=Italic
 URxvt.boldItalicFont:xft:hack:pixelsize=12:style=Bold Italic
 
+URxvt.perl-lib             : "/home/ant/.config/urxvt/perls"
 URxvt.modifier             : alt
 URxvt.perl-ext-common      : option-popup,background,autocomplete-ALL-the-things,fifo,keyboard-select,readline,selection,searchable-scrollback,clipboard,url-select,tabbed,selection-popup,kuake
 URxvt.kuake.hotkey         : F12
@@ -25,7 +26,8 @@ URxvt.url-select.launcher  : chromium
 URxvt.url-select.underline : true
 URxvt.keysym.M-u           : perl:url-select:select_next
 URxvt.keysym.Mod4-v        : perl:keyboard-select:activate
-URxvt.keysym.Mod4-s        : perl:keyboard-select:search
+URxvt.keysym.Mod4-0x2f        : perl:keyboard-select:search
+URxvt.keysym.M-0x2f:searchable-scrollback:start
 URxvt.keysym.C-semicolon   : perl:aAtt:fuzzy-complete
 URxvt.keysym.C-apostrophe  : perl:aAtt:surround-complete
 URxvt.keysym.C-period      : perl:aAtt:fuzzy-word-complete
