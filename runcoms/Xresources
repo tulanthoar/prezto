@@ -17,34 +17,36 @@ URxvt.boldFont      :xft:hack:pixelsize=12:style=Bold
 URxvt.italicFont    :xft:hack:pixelsize=12:style=Italic
 URxvt.boldItalicFont:xft:hack:pixelsize=12:style=Bold Italic
 
-URxvt.modifier            : alt
-URxvt.perl-ext-common     : autocomplete-ALL-the-things,fifo,keyboard-select,readline,selection,option-popup,selection-popup,searchable-scrollback,clipboard,url-select,tabbed,digital-clock
-URxvt.url-select.launcher : chromium
-URxvt.url-select.underline: true
-URxvt.keysym.M-u          : perl:url-select:select_next
-URxvt.keysym.Mod4-v       : perl:keyboard-select:activate
-URxvt.keysym.Mod4-s       : perl:keyboard-select:search
-URxvt.keysym.C-semicolon  : perl:aAtt:fuzzy-complete
-URxvt.keysym.C-apostrophe : perl:aAtt:surround-complete
-URxvt.keysym.C-period     : perl:aAtt:fuzzy-word-complete
-URxvt.keysym.C-comma      : perl:aAtt:fuzzy-WORD-complete
-urxvt.fifo.file           : /tmp/urxvt.fifo
-urxv.fifo.file            : /tmp/urxv.fifo
-per.fifo.file             : /tmp/urxvt-per.fifo
-ip.fifo.file              : /tmp/urxvt-python.fifo
-neovi.fifo.file           : /tmp/urxvt-neovi.fifo
-range.fifo.file           : /tmp/urxvt-range.fifo
+URxvt.modifier             : alt
+URxvt.perl-ext-common      : option-popup,background,autocomplete-ALL-the-things,fifo,keyboard-select,readline,selection,searchable-scrollback,clipboard,url-select,tabbed,selection-popup,kuake
+URxvt.kuake.hotkey         : F12
+URxvt.background.expr      : scale keep { load "/home/ant/bg.jpg" }
+URxvt.url-select.launcher  : chromium
+URxvt.url-select.underline : true
+URxvt.keysym.M-u           : perl:url-select:select_next
+URxvt.keysym.Mod4-v        : perl:keyboard-select:activate
+URxvt.keysym.Mod4-s        : perl:keyboard-select:search
+URxvt.keysym.C-semicolon   : perl:aAtt:fuzzy-complete
+URxvt.keysym.C-apostrophe  : perl:aAtt:surround-complete
+URxvt.keysym.C-period      : perl:aAtt:fuzzy-word-complete
+URxvt.keysym.C-comma       : perl:aAtt:fuzzy-WORD-complete
+urxvt.fifo.file            : /tmp/urxvt.fifo
+urxv.fifo.file             : /tmp/urxv.fifo
+per.fifo.file              : /tmp/urxvt-per.fifo
+ip.fifo.file               : /tmp/urxvt-python.fifo
+neovi.fifo.file            : /tmp/urxvt-neovi.fifo
+range.fifo.file            : /tmp/urxvt-range.fifo
 
 URxvt.cursorBlink    : true
 URxvt.cursorUnderline: true
 
 !  - color scheme
-urxv.background : #002533
 URxvt.foreground: #ffff80
-ip.background   : #00284d
-urxvt.background: #00384d
-per.background  : #00331a
-range.background: #000d1a
+!urxv.background : #002533
+!ip.background   : #00284d
+!urxvt.background: #00384d
+!per.background  : #00331a
+!range.background: #000d1a
 ! black + red
 URxvt*color0: #1a1a1a
 URxvt*color1: #e01010
