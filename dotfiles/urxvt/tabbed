@@ -72,6 +72,17 @@ sub refresh {
       $ofs += $len + 1;
    }
 
+   if ($self->{tab_title} && $ofs + 3 < $ncol) {
+      my $term = $self->{term};
+      my @str = $term->XGetWindowProperty($term->parent, $self->{tab_title});
+      if (@str && $str[2]) {
+         my $str = '| ' . decode("utf8", $str[2]);
+         my $len = length $str;
+         $len = $ncol - $ofs if $ofs + $len > $ncol;
+         substr $text, $ofs, $len, substr $str, 0, $len;
+         @$rend[$ofs + 2 .. $ofs + $len - 1] = ($self->{rs_title}) x ($len - 2);
+      }
+   }
    $self->{tabofs} = \@ofs;
 
    $self->ROW_t (0, $text, 0, 0, $ncol);
@@ -268,14 +279,32 @@ sub on_init {
    my $bg    = $self->x_resource ("tabbar-bg");
    my $tabfg = $self->x_resource ("tab-fg");
    my $tabbg = $self->x_resource ("tab-bg");
+   my $titfg = $self->x_resource ("title-fg");
+   my $titbg = $self->x_resource ("title-bg");
 
    defined $fg    or $fg    = 3;
    defined $bg    or $bg    = 0;
    defined $tabfg or $tabfg = 0;
    defined $tabbg or $tabbg = 1;
+   defined $titfg or $titfg = 2;
+   defined $titbg or $titbg = 0;
 
    $self->{rs_tabbar} = urxvt::SET_COLOR (urxvt::DEFAULT_RSTYLE, $fg    + 2, $bg    + 2);
    $self->{rs_tab}    = urxvt::SET_COLOR (urxvt::DEFAULT_RSTYLE, $tabfg + 2, $tabbg + 2);
+   $self->{rs_title}  = urxvt::SET_COLOR (urxvt::DEFAULT_RSTYLE, $titfg + 2, $titbg + 2);
+
+   my $timeouts = $self->my_resource ("tabbar-timeouts");
+   $timeouts = '16:.:8:::4:+' unless defined $timeouts;
+   if ($timeouts ne '') {
+      my @timeouts;
+      while ($timeouts =~ /^(\d+):(.)(?::(.*))?$/) {
+         push @timeouts, [ int $1, $2 ];
+         $timeouts = defined $3 ? $3 : '';
+      }
+      if (@timeouts) {
+         $self->{timeouts} = [ sort { $b->[0] <=> $a-> [0] } @timeouts ];
+      }
+   }
 
    ()
 }
@@ -293,7 +322,19 @@ sub on_start {
       shift @argv;
    } while @argv && $argv[0] ne "-e";
 
+   if ($self->{tab_title}) {
+      $self->{tab_title} = $self->{term}->XInternAtom("_NET_WM_NAME", 1);
+   }
    $self->new_tab (@argv);
+
+
+   if (defined $self->{timeouts}) {
+      my $interval = ($self->{timeouts}[@{ $self->{timeouts} } - 1]->[0]);
+      $interval = int($interval / 4);
+      $self->{timer} = urxvt::timer->new
+                                   ->interval($interval < 1 ? 1 : $interval)
+                                   ->cb ( sub { $self->refresh; } );
+   }
 
    $self->{overlay} = $self->overlay (-1, 0, 5, 1, urxvt::OVERLAY_RSTYLE, 0);
    $self->{timer} = urxvt::timer
@@ -302,7 +343,7 @@ sub on_start {
                     ->interval (60)
                     ->cb (sub {
                        $self->{overlay}->set (0, 0,
-                          sprintf "%2d:%02d", (localtime urxvt::NOW)[2,1,0]);
+                          sprintf "%02d:%02d", (localtime urxvt::NOW)[2,1,0]);
                     });
    ()
 }
@@ -360,6 +401,25 @@ sub tab_destroy {
 sub tab_key_press {
    my ($self, $tab, $event, $keysym, $str) = @_;
 
+   if ($tab->{is_inputting_name}) {
+      if ($keysym == 0xff0d || $keysym == 0xff8d) { # enter
+         $tab->{name} = $tab->{new_name};
+         $tab->{is_inputting_name} = 0;
+         $self->update_autohide (1);
+      } elsif ($keysym == 0xff1b) { # escape
+         $tab->{name} = $tab->{old_name};
+         $tab->{is_inputting_name} = 0;
+         $self->update_autohide (1);
+      } elsif ($keysym == 0xff08) { # backspace
+         substr $tab->{new_name}, -1, 1, "";
+         $tab->{name} = "$tab->{new_name}█";
+      } elsif ($str !~ /[\x00-\x1f\x80-\xaf]/) {
+         $tab->{new_name} .= $str;
+         $tab->{name} = "$tab->{new_name}█";
+      }
+      $self->refresh;
+      return 1;
+   }
    if ($event->{state} & urxvt::ShiftMask) {
       if ($keysym == 0xff51 || $keysym == 0xff53) {
          my ($idx) = grep $self->{tabs}[$_] == $tab, 0 .. $#{ $self->{tabs} };
@@ -373,6 +433,9 @@ sub tab_key_press {
       } elsif ($keysym == 0x20) {
          $self->new_tab;
 
+         return 1;
+      } elsif ($keysym == 0xff52) {
+         $self->rename_tab($tab);
          return 1;
       }
    }
@@ -429,6 +492,10 @@ package urxvt::ext::tabbed::tab;
 sub on_add_lines {
   $_[0]->{activity}++
      or $_[0]{term}{parent}->tab_activity ($_[0]);
+    my ($self, $tab) = @_;
+   my $mark = $self->tab_activity_mark($tab);
+   $tab->{lastActivity} = int urxvt::NOW;
+   $self->refresh if $mark ne $self->tab_activity_mark($tab);
   ()
 }
 

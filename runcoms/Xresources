@@ -10,7 +10,8 @@ URxvt.scrollBar     :false
 URxvt.visualBell    :true
 URxvt.internalBorder:0
 URxvt.externalBorder:0
-URxvt.saveLines     :1800
+!urxvt*secondaryScroll:    true
+URxvt.saveLines     :5800
 URxvt.letterSpace   :0
 URxvt.font          :xft:hack:pixelsize=12:style=Regular
 URxvt.boldFont      :xft:hack:pixelsize=12:style=Bold
@@ -19,12 +20,29 @@ URxvt.boldItalicFont:xft:hack:pixelsize=12:style=Bold Italic
 
 URxvt.perl-lib             : "/home/ant/.config/urxvt/perls"
 URxvt.modifier             : alt
-URxvt.perl-ext-common      : option-popup,background,autocomplete-ALL-the-things,fifo,keyboard-select,readline,selection,searchable-scrollback,clipboard,url-select,tabbed,selection-popup,kuake
+URxvt.perl-ext-common      : tabbed,reactivity,option-popup,background,autocomplete-ALL-the-things,fifo,keyboard-select,readline,selection,searchable-scrollback,clipboard,url-select,selection-popup,kuake
+URxvt.tabbed.tabbar-fg: 3
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg: 0
+URxvt.tabbed.tab-bg: 1
+!URxvt.tabbed.tab_title: true
+!URxvt.tabbed.autohide: false
+!URxvt.tabbedex.autohide: false
+!URxvt.tabbedex.title: true
+!URxvt.tabbed.title: true
+!URxvt.tabbedex.new-button: true
+!URxvt.tabbed.new-button: true
+!URxvt.keysym.M-1: perl:tabbedex:new_tab
+!URxvt.keysym.M-2: perl:tabbedex:next_tab
+!URxvt.keysym.M-3: perl:tabbedex:previous_tab
+URxvt.keysym.Mod4-e: perl:reactivity:vim
+URxvt.keysym.M-0x5d: perl:reactivity:smallerfont
+URxvt.keysym.M-0x5b: perl:reactivity:largerfont
 URxvt.kuake.hotkey         : F12
 URxvt.background.expr      : scale keep { load "/home/ant/bg.jpg" }
 URxvt.url-select.launcher  : chromium
 URxvt.url-select.underline : true
-URxvt.keysym.M-u           : perl:url-select:select_next
+!URxvt.keysym.M-u           : perl:url-select:select_next
 URxvt.keysym.Mod4-v        : perl:keyboard-select:activate
 URxvt.keysym.Mod4-0x2f        : perl:keyboard-select:search
 URxvt.keysym.M-0x2f:searchable-scrollback:start
