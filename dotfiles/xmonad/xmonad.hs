@@ -87,7 +87,6 @@ xkM=
   , ((0, kKPmute), spawn "systemctl suspend")
   , ((0, lowvol), replicateM_ 5 $ sendKey noModMask xK_Up)
   , ((0, raisevol), replicateM_ 5 $ sendKey noModMask xK_Down)
-  , ((mod4Mask, xK_y), sendKey controlMask xK_F9)
   , ((myModMask, lowvol), moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
   , ((myModMask, raisevol), moveTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
   , ((myModMask, xK_Menu), spawn "ps -C tilda &>/dev/null || tilda")
@@ -98,6 +97,7 @@ xkM=
 
 myKeysP =
   [ ("<Insert>", spawn "xdotool click 2")
+  , ("M-<Space>",launchAct)
   , ("M-h", moveTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
   , ("M-l", moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
   , ("M-j", withFocused minimizeWindow)
@@ -132,7 +132,8 @@ mC =
   , ("allpads", corePadsM_ )
   , ("byobu", byobucmd )
   , ("pomodoro", spawn "start-pomodoro")
-  , ("nextempty",(\t-> (withFocused . addTag) t >> mvNEmpty >> withTaggedGlobalP t shiftHere >> withTaggedGlobal t unTag) "shifter")
+  , ("sendempty", (\t-> (withFocused . addTag) t >> mvNEmpty >> withTaggedGlobalP t shiftHere >> withTaggedGlobal t unTag) "shifter")
+  , ("nextempty", mvNEmpty )
   ]
 xmC = return mC
 
