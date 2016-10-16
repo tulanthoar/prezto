@@ -44,6 +44,7 @@ function bind_keys() {
   bindkey -M viins "^Z" vi-cmd-mode
   bindkey -M viins "^A" vi-cmd-mode
   bindkey -M viins "^E" vi-forward-blank-word
+  bindkey -M viins "^N" vi-forward-word
   bindkey -M viins "^B" backward-word
   bindkey -M viins "^Yb" vi-backward-kill-word
   bindkey -M viins "^Ye" kill-word
