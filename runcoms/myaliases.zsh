@@ -33,4 +33,4 @@ alias suspendnow="systemctl suspend "
 alias czp="cd ${ZPREZD}; la "
 alias ex='unarchive '
 alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
-alias nnvim="python $ZPREZD/tmux-omnivim/omnivim.py"
+alias nvim="python $ZPREZD/tmux-omnivim/omnivim.py"
