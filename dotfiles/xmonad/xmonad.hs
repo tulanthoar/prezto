@@ -103,8 +103,8 @@ myKeysP =
   , ("M-j", withFocused minimizeWindow)
   , ("M-k", sendMessage RestoreNextMinimizedWin)
   , ("M-d", kill)
-  , ("M-<Left>", shiftTo Prev EmptyWS)
-  , ("M-<Right>", shiftTo Next EmptyWS)
+  , ("M-<Left>", shiftTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
+  , ("M-<Right>", shiftTo Next (WSIs $ return (('<' `elem`) . W.tag)))
   , ("M-q",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
   , ("M-<Tab>", toggleWS' ["NSP"])
   , ("M-p",  spawn "start-pomodoro" )
@@ -132,6 +132,7 @@ mC =
   , ("allpads", corePadsM_ )
   , ("byobu", byobucmd )
   , ("pomodoro", spawn "start-pomodoro")
+  , ("moveempty", moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
   , ("nextempty",(\t-> (withFocused . addTag) t >> mvNEmpty >> withTaggedGlobalP t shiftHere >> withTaggedGlobal t unTag) "shifter")
   ]
 xmC = return mC

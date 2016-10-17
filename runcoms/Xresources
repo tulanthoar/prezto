@@ -10,7 +10,6 @@ URxvt.scrollBar     :false
 URxvt.visualBell    :true
 URxvt.internalBorder:0
 URxvt.externalBorder:0
-!urxvt*secondaryScroll:    true
 URxvt.saveLines     :5800
 URxvt.letterSpace   :0
 URxvt.font          :xft:hack:pixelsize=12:style=Regular
@@ -18,55 +17,35 @@ URxvt.boldFont      :xft:hack:pixelsize=12:style=Bold
 URxvt.italicFont    :xft:hack:pixelsize=12:style=Italic
 URxvt.boldItalicFont:xft:hack:pixelsize=12:style=Bold Italic
 
-URxvt.perl-lib             : "/home/ant/.config/urxvt/perls"
 URxvt.modifier             : alt
 URxvt.perl-ext-common      : tabbed,reactivity,option-popup,background,autocomplete-ALL-the-things,fifo,keyboard-select,readline,selection,searchable-scrollback,clipboard,url-select,selection-popup,kuake
 URxvt.tabbed.tabbar-fg: 3
 URxvt.tabbed.tabbar-bg: 0
 URxvt.tabbed.tab-fg: 0
 URxvt.tabbed.tab-bg: 1
-!URxvt.tabbed.tab_title: true
-!URxvt.tabbed.autohide: false
-!URxvt.tabbedex.autohide: false
-!URxvt.tabbedex.title: true
-!URxvt.tabbed.title: true
-!URxvt.tabbedex.new-button: true
-!URxvt.tabbed.new-button: true
-!URxvt.keysym.M-1: perl:tabbedex:new_tab
-!URxvt.keysym.M-2: perl:tabbedex:next_tab
-!URxvt.keysym.M-3: perl:tabbedex:previous_tab
 URxvt.keysym.Mod4-e: perl:reactivity:vim
-URxvt.keysym.M-0x5d: perl:reactivity:smallerfont
-URxvt.keysym.M-0x5b: perl:reactivity:largerfont
+URxvt.keysym.Mod4-0x5d: perl:reactivity:smallerfont
+URxvt.keysym.Mod4-0x5b: perl:reactivity:largerfont
 URxvt.kuake.hotkey         : F11
 !URxvt.background.expr      : scale keep { load "/home/ant/bg.jpg" }
 URxvt.url-select.launcher  : chromium
 URxvt.url-select.underline : true
 !URxvt.keysym.M-u           : perl:url-select:select_next
 URxvt.keysym.Mod4-v        : perl:keyboard-select:activate
-URxvt.keysym.Mod4-0x2f        : perl:keyboard-select:search
-URxvt.keysym.M-0x2f:searchable-scrollback:start
-URxvt.keysym.C-semicolon   : perl:aAtt:fuzzy-complete
-URxvt.keysym.C-apostrophe  : perl:aAtt:surround-complete
-URxvt.keysym.C-period      : perl:aAtt:fuzzy-word-complete
-URxvt.keysym.C-comma       : perl:aAtt:fuzzy-WORD-complete
-urxvt.fifo.file            : /tmp/urxvt.fifo
-urxv.fifo.file             : /tmp/urxv.fifo
-per.fifo.file              : /tmp/urxvt-per.fifo
-ip.fifo.file               : /tmp/urxvt-python.fifo
-neovi.fifo.file            : /tmp/urxvt-neovi.fifo
-range.fifo.file            : /tmp/urxvt-range.fifo
+URxvt.keysym.Mod4-s        : perl:keyboard-select:search
+URxvt.keysym.Mod4-0x2f:searchable-scrollback:start
+URxvt.keysym.Mod4-semicolon   : perl:aAtt:fuzzy-complete
+URxvt.keysym.Mod4-apostrophe  : perl:aAtt:surround-complete
+URxvt.keysym.Mod4-period      : perl:aAtt:fuzzy-word-complete
+URxvt.keysym.Mod4-comma       : perl:aAtt:fuzzy-WORD-complete
+URxvt.fifo.file            : /tmp/urxvt.fifo
 
 URxvt.cursorBlink    : true
 URxvt.cursorUnderline: true
 
 !  - color scheme
 URxvt.foreground: #ffff80
-urxv.background : #002533
-ip.background   : #00284d
-urxvt.background: #00384d
-per.background  : #00331a
-range.background: #000d1a
+URxvt.background: #00384d
 ! black + red
 URxvt*color0: #1a1a1a
 URxvt*color1: #e01010
