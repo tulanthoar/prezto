@@ -38,8 +38,8 @@ URxvt.tabbed.tab-bg: 1
 URxvt.keysym.Mod4-e: perl:reactivity:vim
 URxvt.keysym.M-0x5d: perl:reactivity:smallerfont
 URxvt.keysym.M-0x5b: perl:reactivity:largerfont
-URxvt.kuake.hotkey         : F12
-URxvt.background.expr      : scale keep { load "/home/ant/bg.jpg" }
+URxvt.kuake.hotkey         : F11
+!URxvt.background.expr      : scale keep { load "/home/ant/bg.jpg" }
 URxvt.url-select.launcher  : chromium
 URxvt.url-select.underline : true
 !URxvt.keysym.M-u           : perl:url-select:select_next
@@ -62,11 +62,11 @@ URxvt.cursorUnderline: true
 
 !  - color scheme
 URxvt.foreground: #ffff80
-!urxv.background : #002533
-!ip.background   : #00284d
-!urxvt.background: #00384d
-!per.background  : #00331a
-!range.background: #000d1a
+urxv.background : #002533
+ip.background   : #00284d
+urxvt.background: #00384d
+per.background  : #00331a
+range.background: #000d1a
 ! black + red
 URxvt*color0: #1a1a1a
 URxvt*color1: #e01010
