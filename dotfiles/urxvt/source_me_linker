@@ -1,0 +1,1 @@
+for f in $ZDOTD/urxvt/*; do echo "linking $f to /usr/lib/urxvt/perl/${f:t}"; [[ -e /usr/lib/urxvt/perl/${f:t} ]] && echo "removing /usr/lib/urxvt/perl/${f:t}" && sudo rm /usr/lib/urxvt/perl/${f:t}; sudo ln -s $f /usr/lib/urxvt/perl/${f:t}; done
