@@ -132,7 +132,7 @@ au VimEnter,ColorScheme * :hi mFlashy cterm=bold,underline
 let g:operator#flashy#group = 'mFlashy'
 Plugin 'rhysd/clever-f.vim'
 let g:clever_f_smart_case = 1
-let g:clever_f_show_prompt = 1
+let g:clever_f_show_prompt = 0
 Plugin 'haya14busa/vim-asterisk'
 Plugin 'airblade/vim-gitgutter'
 let g:gitgutter_highlight_lines = 1
@@ -262,8 +262,9 @@ let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 4
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeIgnore = ['\pyc$','\~$[[file]]','\swp$','\git$','\pyc$','\pycache__$[[dir]]']
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeQuitOnOpen = 0
+let g:NERDTreeMinimalUI = 0
+let NERDTreeAutoCenter = 1
+let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeShowFiles = 0
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowLineNumbers = 0
@@ -492,7 +493,7 @@ au FileType tex,plaintex vmap <buffer> <Leader>}  <Plug>LatexWrapSelection
 au FileType tex,plaintex vmap <buffer> <Leader>se <Plug>LatexEnvWrapSelection
 au FileType nerdtree map <buffer> <C-J>   <C-W>j
 au FileType nerdtree map <buffer> <C-K>   <C-W>k
-au FileType nerdtree map <buffer> s <Plug>(easymotion-bd-f2)
+au FileType nerdtree map <buffer> s <Plug>(easymotion-bd-f1)
 au FileType nerdtree map <buffer> . <Plug>(easymotion-repeat)
 au FileType nerdtree map <buffer> l :call nerdtree#ui_glue#invokeKeyMap("C")<CR>j
 au FileType nerdtree map <buffer> L :call nerdtree#ui_glue#invokeKeyMap("o")<CR>j
@@ -529,3 +530,4 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=33
 autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=27
 autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
+au VimEnter * command! -nargs=* -bar -complete=customlist,man#completion#run Man  call man#get_page('horizontal', <f-args>)

@@ -56,7 +56,7 @@ sub on_user_command {
                 print $fh $cleanline . "\n";
                 $previous = $term->line($i)->beg
             }
-            
+
             # Keep track of trailing empty lines
             $empties = $term->line($i)->t eq "" ? $empties + 1 : 0;
         }
@@ -67,8 +67,7 @@ sub on_user_command {
 
         # Open file in Vim
         # my $vimcmds = "+setl so=0 ts=8 clipboard=unnamed | normal G$up";
-# system("urxvt", "-e", "vim", $vimcmds, $filename);
-        system("lxterminal", "-e", "nvim", $filename);
+        system("st", "-f Hack", "nvim", $filename);
     } elsif (/:resetfont/) {
         $term->cmd_parse("\e]710;" . $term->x_resource("font") . "\007");
         $term->{fontsize} = 12;

@@ -1,11 +1,11 @@
+local tinit=$(date +%S%N)
 [ -z ${ZDOTD+x} ] && source $HOME/.zprofile
 [[ -f ${HOME}/.terminfo/${TERM[1]}/${TERM} ]] || infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
-local tinit=$(date +%S%N)
 source <(printf 'source $ZPREZD/%s\n' 'alias-tips/alias-tips.plugin.zsh'\
  'zsh-completion-generator/zsh-completion-generator.plugin.zsh'\
  'zsh-autosuggestions/zsh-autosuggestions.plugin.zsh')
 fpath=($ZRCD/funcs $HOME/zsh-completions/src $fpath)
-source <(printf 'source %s\n' ${ZRCD}/myfunctions.zsh ${ZRCD}/myaliases.zsh)
+source <(printf 'source $ZRCD/%s\n' 'myfunctions.zsh' 'myaliases.zsh')
 
 setopt MULTIOS              # Write to multiple descriptors.
 setopt EXTENDED_GLOB        # Use extended globbing syntax.  
