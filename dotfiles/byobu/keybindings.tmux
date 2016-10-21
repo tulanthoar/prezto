@@ -64,6 +64,10 @@ unbind-key q
 unbind-key l
 unbind-key k
 unbind-key 0
+unbind-key -
+unbind-key |
+bind-key - split-window -v
+bind-key | split-window -h
 bind-key F1 list-keys
 bind-key F2 display-panes \; split-window -h -c "#{pane_current_path}"
 bind-key F3 display-panes \; split-window -v -c "#{pane_current_path}"

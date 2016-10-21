@@ -40,8 +40,7 @@ wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"] :: [WorkspaceId]
 menuH = 15 :: Int
 mag = 1.3 :: Rational
 mvNEmpty = moveTo Next EmptyWS :: X()
-corePadsM_ = mapM_ (namedScratchpadAction scratchpads) [bPad] :: X()
-myBrowser = "fiefox" :: String
+corePadsM_ = byobucmd :: X()
 launchAct = spawn $ "j4-dmenu-desktop --display-binary --term="++myTerminal++" --dmenu='dmenu -w 600 -y "++show menuH++" -z -p launch -l 50'" :: X()
 srchAct = spawn $  "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50" :: X()
 centrPtr = updatePointer (0.5, 0.5) (0, 0) :: X()
@@ -87,7 +86,6 @@ xkM=
   , ((0, kKPmute), spawn "systemctl suspend")
   , ((0, lowvol), replicateM_ 5 $ sendKey noModMask xK_Up)
   , ((0, raisevol), replicateM_ 5 $ sendKey noModMask xK_Down)
-  , ((mod4Mask, xK_y), sendKey controlMask xK_F9)
   , ((myModMask, lowvol), moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
   , ((myModMask, raisevol), moveTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
   , ((myModMask, xK_Menu), spawn "ps -C tilda &>/dev/null || tilda")
@@ -98,6 +96,8 @@ xkM=
 
 myKeysP =
   [ ("<Insert>", spawn "xdotool click 2")
+  , ("M-c", clipcmd)
+  , ("M-<Space>", launchAct)
   , ("M-h", moveTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
   , ("M-l", moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
   , ("M-j", withFocused minimizeWindow)
@@ -114,7 +114,7 @@ myKeysP =
 
 clipcmd = spawn "clipmenu -z -w 800 -l 50 -p 'clip'" :: X()
 byobucmd = namedScratchpadAction scratchpads bPad
-myTermM_ = spawn $ myTerminal ++ " -name urxvt -n urxvt" :: X()
+myTermM_ = spawn "konsole" :: X()
 
 mC =
   [ ("minone", withFocused minimizeWindow )
@@ -122,43 +122,18 @@ mC =
   , ("rest",  sendMessage RestoreNextMinimizedWin )
   , ("jmenu", launchAct )
   , ("srmenu", srchAct )
-  , ("nvim", namedScratchpadAction scratchpads nPad >> restoreFocused)
-  , ("ipython", namedScratchpadAction scratchpads iPad >> restoreFocused)
-  , ("perl", namedScratchpadAction scratchpads pPad >> restoreFocused)
-  , ("ranger", namedScratchpadAction scratchpads rPad >> restoreFocused)
-  , ("htop", namedScratchpadAction scratchpads hPad >> restoreFocused)
   , ("clipmenu", clipcmd)
   , ("myterm", myTermM_ )
-  , ("allpads", corePadsM_ )
   , ("byobu", byobucmd )
-  , ("pomodoro", spawn "start-pomodoro")
-  , ("moveempty", moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
-  , ("nextempty",(\t-> (withFocused . addTag) t >> mvNEmpty >> withTaggedGlobalP t shiftHere >> withTaggedGlobal t unTag) "shifter")
+  , ("pomodoro", spawn "start-pomodoro" )
+  , ("moveempty", mvNEmpty )
+  , ("nextempty",(\t-> (withFocused . addTag) t >> mvNEmpty >> withTaggedGlobalP t shiftHere >> withTaggedGlobal t unTag) "shifter" )
   ]
 xmC = return mC
 
-scratchpads =
-  [ NS hPad hRun (title =? "htop") nonFloating
-  , NS iPad pyrepl (icon =? init iPad) nonFloating
-  , NS nPad nRun (icon =? init nPad) nonFloating
-  , NS rPad rRun (icon =? init rPad) nonFloating
-  , NS pPad prepl (icon =? init pPad) nonFloating
-  , NS bPad "BYOBU_WINDOWS=me urxvt -name urxv -name urxv -n urxv -e byobu-tmux" (netName =? "byobu_tmux") nonFloating
-  ] where netName = stringProperty "_NET_WM_NAME"
-icon = stringProperty "WM_ICON_NAME"
-iPad = "ipy"
-pPad = "perl"
-nPad = "neovim"
-rPad = "ranger"
-hPad = "htop"
+scratchpads = [ NS bPad bRun (stringProperty "_NET_WM_NAME" =? "byobu_tmux") nonFloating ]
 bPad = "byobu"
-urtRun ex cmd = concat [myTerminal, " -name ", init ex," -n ", init ex, " -e ", cmd]
-bRun = unwords ["urxvt",  "-name", "urxv", "-n", "urxv", "-e", "byobu-tmux", "new-session"]
-hRun = urtRun hPad "htop"
-nRun = urtRun nPad "nvim"
-rRun = urtRun rPad "ranger"
-prepl = urtRun pPad "reply"
-pyrepl= urtRun iPad "ptipython"
+bRun = unwords ["urxvt", "-e", "byobu-tmux", "new-session"]
 myDzenPP p = def
   { ppCurrent         = dzenColor myFFGColor myFBGColor
   , ppVisible         = dzenColor myVFGColor myVBGColor
