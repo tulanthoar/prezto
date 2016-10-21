@@ -133,7 +133,7 @@ xmC = return mC
 
 scratchpads = [ NS bPad bRun (stringProperty "_NET_WM_NAME" =? "byobu_tmux") nonFloating ]
 bPad = "byobu"
-bRun = unwords ["urxvt", "-e", "byobu-tmux", "new-session"]
+bRun = unwords ["BYOBU_WINDOWS=me", "urxvt", "-e", "byobu-tmux"]
 myDzenPP p = def
   { ppCurrent         = dzenColor myFFGColor myFBGColor
   , ppVisible         = dzenColor myVFGColor myVBGColor
