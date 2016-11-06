@@ -128,7 +128,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'godlygeek/tabular'
 Plugin 'haya14busa/vim-operator-flashy'
 let g:operator#flashy#flash_time = 3000
-au VimEnter,ColorScheme * :hi mFlashy cterm=bold,underline
+au VimEnter,ColorScheme * :hi mFlashy cterm=bold,underline ctermbg=0
 let g:operator#flashy#group = 'mFlashy'
 Plugin 'rhysd/clever-f.vim'
 let g:clever_f_smart_case = 1
@@ -181,17 +181,22 @@ let g:airline#extensions#tabline#tab_nr_type = 2
 let g:airline#extensions#tabline#tabs_label = 'ts'
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#tagbar#flags = 's'
-let g:airline#extensions#whitespace#checks = ['indent', 'trailing', 'long', 'mixed-indent-file']
 let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#whitespace#checks =
+      \ ['indent', 'trailing', 'long', 'mixed-indent-file']
+let g:airline#extensions#whitespace#symbol = ''
 let g:airline#extensions#wordcount#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_section_b = '%{getcwd()}'
 let g:airline_section_y = ''
 let g:airline_theme = 'kolor'
+if !exists('g:airline_symbols') | let g:airline_symbols = {} | endif
+let g:airline_symbols.maxlinenr = ''
 Plugin 'ervandew/supertab'
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextDefaultCompletionType = "<C-p>"
-let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
+let g:SuperTabContextDiscoverDiscovery =
+      \ ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
 let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 let g:SuperTabCrMapping = 1
 let g:SuperTabDefaultCompletionType = "context"
@@ -261,7 +266,8 @@ let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 4
 Plugin 'scrooloose/nerdtree'
-let g:NERDTreeIgnore = ['\pyc$','\~$[[file]]','\swp$','\git$','\pyc$','\pycache__$[[dir]]']
+let g:NERDTreeIgnore =
+      \ ['\pyc$','\~$[[file]]','\swp$','\git$','\pyc$','\pycache__$[[dir]]']
 let g:NERDTreeMinimalUI = 0
 let NERDTreeAutoCenter = 1
 let g:NERDTreeQuitOnOpen = 1
@@ -377,13 +383,8 @@ map z*  <Plug>(asterisk-z*)
 map gz* <Plug>(asterisk-gz*)
 map z#  <Plug>(asterisk-z#)
 map gz# <Plug>(asterisk-gz#)
-nmap <unique>yaW <Plug>(operator-flashy)aW
-nmap <unique>yiW <Plug>(operator-flashy)iW
-nmap <unique>yaw <Plug>(operator-flashy)aw
-nmap <unique>yiw <Plug>(operator-flashy)iw
-vmap <unique>y   <Plug>(operator-flashy)
-nmap <unique>yal <Plug>(operator-flashy)al
-nmap <unique>yil <Plug>(operator-flashy)il
+map y <Plug>(operator-flashy)
+map Y <Plug>(operator-flashy)$
 inoremap <unique><F1>  <Delete>
 inoremap <unique><F4>  <esc>:w<cr>
 nnoremap <unique><F4>  <esc>:w<cr>
@@ -495,10 +496,14 @@ au FileType nerdtree map <buffer> <C-J>   <C-W>j
 au FileType nerdtree map <buffer> <C-K>   <C-W>k
 au FileType nerdtree map <buffer> s <Plug>(easymotion-bd-f1)
 au FileType nerdtree map <buffer> . <Plug>(easymotion-repeat)
-au FileType nerdtree map <buffer> l :call nerdtree#ui_glue#invokeKeyMap("C")<CR>j
-au FileType nerdtree map <buffer> L :call nerdtree#ui_glue#invokeKeyMap("o")<CR>j
-au FileType nerdtree map <buffer> h :call nerdtree#ui_glue#invokeKeyMap("u")<CR>j
-au FileType nerdtree map <buffer> H :call nerdtree#ui_glue#invokeKeyMap("U")<CR>j
+au FileType nerdtree
+      \ map <buffer> l :call nerdtree#ui_glue#invokeKeyMap("C")<CR>j
+au FileType nerdtree
+      \ map <buffer> L :call nerdtree#ui_glue#invokeKeyMap("o")<CR>j
+au FileType nerdtree
+      \ map <buffer> h :call nerdtree#ui_glue#invokeKeyMap("u")<CR>j
+au FileType nerdtree
+      \ map <buffer> H :call nerdtree#ui_glue#invokeKeyMap("U")<CR>j
 au FileType nerdtree setlocal nocursorcolumn
 au FileType nerdtree setlocal nocursorline
 function g:Undotree_CustomMap()
@@ -521,13 +526,16 @@ autocmd InsertEnter    * set   nocursorline
 autocmd InsertLeave    * set   cursorline
 autocmd VimEnter       * call  deoplete#initialize()
 autocmd InsertEnter    * call  deoplete#enable()
-autocmd bufreadpost    * if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+autocmd bufreadpost    * if line("'\"") >= 1 && line("'\"") <= line("$")
+      \ | exe "normal! g`\"" | endif
 autocmd filetype haskell setlocal omnifunc=necoghc#omnifunc
-autocmd filetype  python let b:match_words = '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
 autocmd filetype  c,perl let b:delimitmate_insert_eol_marker = 2
 autocmd filetype  c,perl let b:delimitmate_eol_marker = ";"
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=33
 autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=27
 autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
-au VimEnter * command! -nargs=* -bar -complete=customlist,man#completion#run Man  call man#get_page('horizontal', <f-args>)
+au VimEnter * command! -nargs=* -bar -complete=customlist,man#completion#run
+      \ Man call man#get_page('horizontal', <f-args>)
+autocmd filetype  python let b:match_words =
+      \ '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
