@@ -24,26 +24,26 @@ unset min_zsh_version
 # Loads Prezto modules.
 function pmodload {
   local -a pmodules
-  local pmodule
-  local pfunction_glob='^([_.]*|prompt_*_setup|README*)(-.N:t)'
+  # local pmodule
+  # local pfunction_glob='^([_.]*|prompt_*_setup|README*)(-.N:t)'
 
   # $argv is overridden in the anonymous function.
   pmodules=("$argv[@]")
 
   # Add functions to $fpath.
-  fpath=(${pmodules:+${ZDOTDIR:-$HOME}/.zprezto/modules/${^pmodules}/functions(/FN)} $fpath)
+  # fpath=(${pmodules:+${ZDOTDIR:-$HOME}/.zprezto/modules/${^pmodules}/functions(/FN)} $fpath)
 
-  function {
-    local pfunction
+  # function {
+  #   local pfunction
 
-    # Extended globbing is needed for listing autoloadable function directories.
-    setopt LOCAL_OPTIONS EXTENDED_GLOB
+  #   # Extended globbing is needed for listing autoloadable function directories.
+  #   setopt LOCAL_OPTIONS EXTENDED_GLOB
 
-    # Load Prezto functions.
-    for pfunction in ${ZDOTDIR:-$HOME}/.zprezto/modules/${^pmodules}/functions/$~pfunction_glob; do
-      autoload -Uz "$pfunction"
-    done
-  }
+  #   # Load Prezto functions.
+  #   for pfunction in ${ZDOTDIR:-$HOME}/.zprezto/modules/${^pmodules}/functions/$~pfunction_glob; do
+  #     autoload -Uz "$pfunction"
+  #   done
+  # }
 
   # Load Prezto modules.
   for pmodule in "$pmodules[@]"; do
@@ -88,7 +88,7 @@ function pmodload {
 #
 
 # Source the Prezto configuration file.
-[[ -s "${ZDOTDIR:-$HOME}/.zpreztorc" ]] && source "${ZDOTDIR:-$HOME}/.zpreztorc"
+[[ -s "$ZRCD/zpreztorc" ]] && source "$ZRCD/zpreztorc"
 
 # Disable color and theme in dumb terminals.
 if [[ "$TERM" == 'dumb' ]]; then
@@ -102,9 +102,9 @@ for zmodule ("$zmodules[@]") zmodload "zsh/${(z)zmodule}"
 unset zmodule{s,}
 
 # Autoload Zsh functions.
-zstyle -a ':prezto:load' zfunction 'zfunctions'
-for zfunction ("$zfunctions[@]") autoload -Uz "$zfunction"
-unset zfunction{s,}
+# zstyle -a ':prezto:load' zfunction 'zfunctions'
+# for zfunction ("$zfunctions[@]") autoload -Uz "$zfunction"
+# unset zfunction{s,}
 
 # compinit -i -d "${ZDOTDIR:-$HOME}/.zcompdump"
 # Load Prezto modules.

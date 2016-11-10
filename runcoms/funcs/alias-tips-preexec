@@ -1,0 +1,19 @@
+function _alias-tips-preexec () {
+  if hash git 2> /dev/null; then
+
+    # alias.foo bar      => git foo = git bar
+    # alias.foo !git bar => git foo = git bar
+    local git_aliases=$(git config --get-regexp "^alias\." | \
+      sed 's/[ ]/ = /' | \
+      sed 's/^alias\./git /' | \
+      sed 's/ = \([^!]\)/ = git \1/' | \
+      sed 's/ = !/ = /')
+  fi
+
+  local shell_aliases=$(alias)
+
+  local shell_functions=$(functions | grep '^[^'$'\t'' _-].\+ () {$')
+
+  echo $shell_functions "\n" $git_aliases "\n" $shell_aliases | \
+    python $ZRCD/scripts/alias-tips.py $*
+}

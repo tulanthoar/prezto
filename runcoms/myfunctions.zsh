@@ -1,10 +1,13 @@
-autoload -U unarchive _fzf_compgen_path writecmd fhe f fss fp fk fzf-locate-widget u md cm v z j p n copyfile sudo-command-line c J nice_exit_code snippet-expand
-
-autoload -Uz black red green yellow blue magenta cyan white
 autoload -U colors && colors
+autoload -Uz promptinit && promptinit
+function fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null }
+autoload -Uz add-zsh-hook && add-zsh-hook preexec fasd_preexec
+add-zsh-hook preexec alias-tips-preexec
+prompt "paradox"
 
-function _fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null }
-autoload -Uz add-zsh-hook && add-zsh-hook preexec _fasd_preexec
+autoload -U unarchive _fzf_compgen_path writecmd fhe f fss fp fk fzf-locate-widget u md cm v z j p n copyfile sudo-command-line c J nice_exit_code snippet-expand
+autoload -Uz black red green yellow blue magenta cyan white
+
 
 function snippets-add() {
   typeset -Ag snippets

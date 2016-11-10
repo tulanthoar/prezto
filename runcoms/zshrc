@@ -2,11 +2,9 @@ tinit=$(date +%S%N)
 [ -z ${ZDOTD+x} ] && source $HOME/.zprofile
 [[ -f ${HOME}/.terminfo/${TERM[1]}/${TERM} ]] || infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 fpath=($ZRCD/funcs $ZPREZD/zsh-completions/src $fpath)
-source <(printf 'source $ZPREZD/%s.plugin.zsh\n' 'alias-tips/alias-tips'\
- 'zsh-completion-generator/zsh-completion-generator'\
- 'zsh-autosuggestions/zsh-autosuggestions')
-source <(printf 'source $ZRCD/my%s.zsh\n' 'functions' 'aliases')
-
+source $ZRCD/myfunctions.zsh && source $ZRCD/myaliases.zsh
+source $ZPREZD/zsh-completion-generator/zsh-completion-generator.plugin.zsh
+source $ZPREZD/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 setopt MULTIOS              # Write to multiple descriptors.
 setopt EXTENDED_GLOB        # Use extended globbing syntax.
 setopt AUTO_CD              # Auto changes to a directory without typing cd.
@@ -28,7 +26,6 @@ setopt CSH_NULL_GLOB        # remove unused glob patters without report errors
 #setopt GLOB_STAR_SHORT      # ** is shorthand for **/*
 setopt MARK_DIRS            # add trailing / to filename (directory) generation
 setopt NUMERIC_GLOB_SORT    # sort by numbers when prefixed
-# setopt WARN_CREATE_GLOBAL   # no creating global vars in functiuons unless typeset -g used
 setopt HIST_IGNORE_ALL_DUPS # don't show duplicated lines in history
 setopt HIST_NO_STORE        # don't include the history "fc -l" command
 setopt HIST_REDUCE_BLANKS   # let zsh trim blanks automagically
@@ -42,7 +39,6 @@ unsetopt FLOW_CONTROL       # Disable start/stop characters in shell editor.
 setopt PATH_DIRS            # Perform path search even on command names with slashes.
 setopt PRINT_EXIT_VALUE     # print exit values
 setopt RC_QUOTES            # use `''` for single quotes in single quotes
-
 autoload -Uz compinit && compinit -i
 local -a ZSH_HIGHLIGHT_HIGHLIGHTERS
 ZSH_HIGHLIGHT_HIGHLIGHTERS=( 'brackets' 'cursor' 'main' 'line' )
