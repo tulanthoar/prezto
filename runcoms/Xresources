@@ -33,7 +33,7 @@ URxvt.url-select.underline : true
 !URxvt.keysym.M-u           : perl:url-select:select_next
 URxvt.keysym.Mod4-v        : perl:keyboard-select:activate
 URxvt.keysym.Mod4-s        : perl:keyboard-select:search
-URxvt.keysym.Mod4-0x2f:searchable-scrollback:start
+URxvt.keysym.Mod4-0x2f:perl:searchable-scrollback:start
 URxvt.keysym.Mod4-semicolon   : perl:aAtt:fuzzy-complete
 URxvt.keysym.Mod4-apostrophe  : perl:aAtt:surround-complete
 URxvt.keysym.Mod4-period      : perl:aAtt:fuzzy-word-complete

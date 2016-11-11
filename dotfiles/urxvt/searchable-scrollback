@@ -31,20 +31,6 @@ See L<perlre> for more info about perl regular expression syntax.
 
 =cut
 
-sub on_init {
-   my ($self) = @_;
-
-   # only for backwards compatibility
-   my $hotkey = $self->{argv}[0]
-                || $self->x_resource ("%")
-                || "M-s";
-
-   $self->bind_action ($hotkey, "%:start")
-      or warn "unable to register '$hotkey' as scrollback search start hotkey\n";
-
-   ()
-}
-
 sub on_user_command {
    my ($self, $cmd) = @_;
 
