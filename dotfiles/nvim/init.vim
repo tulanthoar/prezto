@@ -536,6 +536,6 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=33
 autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=27
 autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
 au VimEnter * command! -nargs=* -bar -complete=customlist,man#completion#run
-      \ Man call man#get_page('horizontal', <f-args>)
+      \ Man call man#get_page('tab', <f-args>)
 autocmd filetype  python let b:match_words =
       \ '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'

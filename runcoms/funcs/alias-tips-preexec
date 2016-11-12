@@ -1,4 +1,4 @@
-function _alias-tips-preexec () {
+function alias-tips-preexec () {
   if hash git 2> /dev/null; then
 
     # alias.foo bar      => git foo = git bar
