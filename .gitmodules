@@ -1,15 +1,6 @@
-[submodule "alias-tips"]
-	path = alias-tips
-	url = https://github.com/djui/alias-tips.git
-[submodule "zsh-completion-generator"]
-	path = zsh-completion-generator
-	url = https://github.com/RobSis/zsh-completion-generator.git
 [submodule "modules/history-substring-search/external"]
 	path = modules/history-substring-search/external
 	url = https://github.com/zsh-users/zsh-history-substring-search.git
-[submodule "tmux-omnivim"]
-	path = tmux-omnivim
-	url = https://github.com/andy-lang/tmux-omnivim.git
 [submodule "zsh-syntax-highlighting"]
 	path = zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
