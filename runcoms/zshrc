@@ -3,7 +3,6 @@ tinit=$(date +%S%N)
 [[ -f ${HOME}/.terminfo/${TERM[1]}/${TERM} ]] || infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 fpath=($ZRCD/funcs $ZPREZD/zsh-completions/src $fpath)
 source $ZRCD/myfunctions.zsh && source $ZRCD/myaliases.zsh
-source $ZPREZD/zsh-completion-generator/zsh-completion-generator.plugin.zsh
 source $ZPREZD/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 setopt MULTIOS              # Write to multiple descriptors.
 setopt EXTENDED_GLOB        # Use extended globbing syntax.
