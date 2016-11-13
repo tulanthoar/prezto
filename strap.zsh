@@ -41,3 +41,4 @@ ln -s ${ZDOTD}/pymodoro/config ${DEST}/config
 curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s > /dev/null
 git config --global user.name "Nate"
 git config --global user.email "tulanthoar@gmail.com"
+git config --global credential.https://github.com.username "tulanthoar"
