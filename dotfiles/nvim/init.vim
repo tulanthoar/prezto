@@ -15,7 +15,7 @@ Plugin 'kana/vim-operator-user'
 
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'Shougo/neoinclude.vim'
-" Plugin 'davidhalter/jedi-vim'
+Plugin 'davidhalter/jedi-vim'
 Plugin 'zchee/deoplete-jedi'
 Plugin 'Shougo/context_filetype.vim'
 if !exists('g:context_filetype#same_filetypes')
