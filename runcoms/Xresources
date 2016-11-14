@@ -41,7 +41,11 @@ URxvt.keysym.Mod4-comma       : perl:aAtt:fuzzy-WORD-complete
 URxvt.fifo.file            : /tmp/urxvt.fifo
 
 URxvt.cursorBlink    : true
-URxvt.cursorUnderline: true
+URxvt.cursorUnderline: false
+URxvt.underlineColor : #e628ba
+URxvt.highlightColor: #a6a6a
+!URxvt.cursorColor2: #ffffff
+URxvt.cursorColor   : #ff00ff
 
 !  - color scheme
 URxvt.foreground: #ffff80
@@ -70,6 +74,3 @@ URxvt*color13: #e628ba
 ! bright-cyan + bright-white
 URxvt*color14: #7D7DFB
 URxvt*color15: #ffffff
-
-URxvt.highlightColor: #006600
-URxvt.cursorColor   : #ff00ff
