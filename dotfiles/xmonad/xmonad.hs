@@ -103,18 +103,18 @@ myKeysP =
   , ("M-j", withFocused minimizeWindow)
   , ("M-k", sendMessage RestoreNextMinimizedWin)
   , ("M-d", kill)
-  , ("M-<Left>", shiftTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
-  , ("M-<Right>", shiftTo Next (WSIs $ return (('<' `elem`) . W.tag)))
+  , ("M-b", shiftTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
+  , ("M-n", shiftTo Next (WSIs $ return (('<' `elem`) . W.tag)))
   , ("M-q",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
   , ("M-<Tab>", toggleWS' ["NSP"])
   , ("M-p",  spawn "start-pomodoro" )
-  , ("M-t",  byobucmd )
-  , ("M4-t", myTermM_ )
+  , ("M-u",  byobucmd )
+  , ("M-t", altTerm_ )
   ]
 
 clipcmd = spawn "clipmenu -z -w 800 -l 50 -p 'clip'" :: X()
 byobucmd = namedScratchpadAction scratchpads bPad
-myTermM_ = spawn "konsole" :: X()
+altTerm_ = spawn "konsole"
 
 mC =
   [ ("minone", withFocused minimizeWindow )
@@ -123,8 +123,8 @@ mC =
   , ("jmenu", launchAct )
   , ("srmenu", srchAct )
   , ("clipmenu", clipcmd)
-  , ("myterm", myTermM_ )
-  , ("byobu", byobucmd )
+  , ("terminal", altTerm_ )
+  , ("urxvt", byobucmd )
   , ("pomodoro", spawn "start-pomodoro" )
   , ("moveempty", mvNEmpty )
   , ("nextempty",(\t-> (withFocused . addTag) t >> mvNEmpty >> withTaggedGlobalP t shiftHere >> withTaggedGlobal t unTag) "shifter" )
