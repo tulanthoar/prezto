@@ -355,7 +355,7 @@
     </keybind>
     <keybind key="Mod3-t">
       <action name="Execute">
-        <command>st</command>
+        <command>urxvt -e byobu-tmux</command>
       </action>
     </keybind>
     <keybind key="Mod3-j">
@@ -387,8 +387,8 @@
       </action>
     </keybind>
     <keybind key="Mod3-Space">
-      <action name="ShowMenu">
-        <menu>client-list-combined-menu</menu>
+      <action name="Execute">
+        <command>j4-dmenu-desktop</command>
       </action>
     </keybind>
     <!-- Keybindings for window switching -->
@@ -434,15 +434,15 @@
     <keybind key="Mod3-Down">
       <action name="Iconify"/>
     </keybind>
-    <keybind key="Mod3-t">
-      <action name="Execute">
-        <command>st</command>
-        <startupnotify>
-          <enabled>yes</enabled>
-          <name>st</name>
-        </startupnotify>
-      </action>
-    </keybind>
+    <!-- <keybind key="Mod3-t"> -->
+    <!--   <action name="Execute"> -->
+    <!--     <command>st</command> -->
+    <!--     <startupnotify> -->
+    <!--       <enabled>yes</enabled> -->
+    <!--       <name>st</name> -->
+    <!--     </startupnotify> -->
+    <!--   </action> -->
+    <!-- </keybind> -->
     <!-- <keybind key="W-q"> -->
     <!--   <action name="Execute"> -->
     <!--     <command>xkill</command> -->

@@ -1,10 +1,10 @@
 autoload -U colors unarchive _fzf_compgen_path writecmd fhe f fss fp fk fzf-locate-widget u md cm v z j p n copyfile sudo-command-line c J nice_exit_code snippet-expand paste-primary
 autoload -Uz add-zsh-hook promptinit black red green yellow blue magenta cyan white alias-tips-preexec gencomp
-function fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null }
+function _fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } >> "/dev/null" 2>&1 }
 colors
 promptinit
 prompt "paradox"
-add-zsh-hook preexec fasd_preexec
+add-zsh-hook preexec _fasd_preexec
 add-zsh-hook preexec alias-tips-preexec
 
 function snippets-add() {
