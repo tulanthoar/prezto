@@ -22,11 +22,14 @@ URxvt.italicFont    :xft:hack:pixelsize=13:style=Italic
 URxvt.boldItalicFont:xft:hack:pixelsize=13:style=Bold Italic
 
 URxvt.modifier             : alt
-URxvt.perl-ext-common      : tabbed,reactivity,option-popup,background,autocomplete-ALL-the-things,fifo,keyboard-select,readline,selection,searchable-scrollback,clipboard,url-select,selection-popup,kuake
+URxvt.perl-ext-common      : tabbedex,reactivity,option-popup,background,autocomplete-ALL-the-things,fifo,keyboard-select,readline,selection,searchable-scrollback,clipboard,url-select,selection-popup,kuake
 URxvt.tabbed.tabbar-fg: 3
 URxvt.tabbed.tabbar-bg: 0
 URxvt.tabbed.tab-fg: 0
 URxvt.tabbed.tab-bg: 1
+URxvt.tabbed.autohide:  yes
+URxvt.tabbed.new-button:  no
+URxvt.tabbed.title: yes
 URxvt.keysym.Mod4-e: perl:reactivity:vim
 URxvt.keysym.Mod4-0x5d: perl:reactivity:smallerfont
 URxvt.keysym.Mod4-0x5b: perl:reactivity:largerfont
