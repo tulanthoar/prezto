@@ -44,7 +44,7 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=( 'brackets' 'cursor' 'main' )
 source $ZPREZD/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red,bg=black'
 export ZSH_HIGHLIGHT_STYLES[builtin]='fg=green,bold'
-export ZSH_HIGHLIGHT_STYLES[function]='fg=green,underline'
+export ZSH_HIGHLIGHT_STYLES[function]='fg=10,underline'
 export ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=red,bold'
 export ZSH_HIGHLIGHT_STYLES[path]='fg=white,bold'
 export ZSH_HIGHLIGHT_STYLES[path_pathseparator]='fg=white'
@@ -61,5 +61,9 @@ export ZSH_HIGHLIGHT_STYLES[redirection]='fg=red'
 source ${ZPREZD}/init.zsh
 snippets-add
 bind_keys
+export BASE16_THEME=base16-google-dark
+source $HOME/.base16_theme
+# BASE16_SHELL=$HOME/.config/base16-shell/
+# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 tf=$(date +%S%N)
 echo $(( ${tf[1,5]} - ${tinit[1,5]} ))

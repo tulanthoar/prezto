@@ -1,5 +1,5 @@
 autoload -U colors unarchive _fzf_compgen_path writecmd fhe f fss fp fk fzf-locate-widget u md cm v z j p n copyfile sudo-command-line c J nice_exit_code snippet-expand paste-primary
-autoload -Uz add-zsh-hook promptinit black red green yellow blue magenta cyan white alias-tips-preexec gencomp
+autoload -Uz add-zsh-hook promptinit black red green yellow blue magenta cyan white alias-tips-preexec gencomp 256-color-test
 function fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null }
 colors
 promptinit

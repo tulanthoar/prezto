@@ -1,0 +1,8 @@
+function 256-color-test (){
+  local x=`tput op`
+  local y=`printf %$((${COLUMNS}-6))s`
+  for i in {0..256}; do
+    local o=00$i
+    echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x
+  done
+  }

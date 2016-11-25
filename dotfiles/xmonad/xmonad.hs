@@ -50,7 +50,7 @@ mylayoutHook = fullscreenFull $ G.gaps [(G.U,menuH)] $ magnifiercz mag $ minimiz
 
 myManageHook = namedScratchpadManageHook scratchpads <+> manageDocks
   <+> composeAll
-  [ className =? "Xmessage"  --> doFloat
+  [ className =? "Xmessage"  --> doIgnore
   , className =? "stmenu" --> doFloat
   , className =? "Tilda" --> doFloat
   ]
@@ -66,7 +66,7 @@ xmConf p = ewmh $ def
   , normalBorderColor  = cDkDkGray
   , focusedBorderColor = limeGreen
   , workspaces         = wsList
-  , logHook            = dynamicLogWithPP ( myDzenPP p ) >> workspaceHistoryHook >> centrPtr
+  , logHook            = dynamicLogWithPP ( myDzenPP {ppOutput = hPutStrLn p} ) >> workspaceHistoryHook >> centrPtr
   , handleEventHook    = docksEventHook <+> minimizeEventHook <+> serverModeEventHookCmd' xmC <+> fullscreenEventHook
   , keys               = \c -> fromList xkM
   }
@@ -134,7 +134,7 @@ xmC = return mC
 scratchpads = [ NS bPad bRun (stringProperty "_NET_WM_NAME" =? "byobu_tmux") nonFloating ]
 bPad = "byobu"
 bRun = unwords ["BYOBU_WINDOWS=me", "urxvt", "-e", "byobu-tmux"]
-myDzenPP p = def
+myDzenPP = def
   { ppCurrent         = dzenColor myFFGColor myFBGColor
   , ppVisible         = dzenColor myVFGColor myVBGColor
   , ppHidden          = dzenColor myHFGColor myHBGColor . \w -> if w /= "NSP" then w else ""
@@ -143,8 +143,7 @@ myDzenPP p = def
   , ppTitle           = dzenColor myTFGColor myTBGColor . trim . shorten 100
   , ppLayout          = dzenColor myLFGColor myLBGColor . shorten 0
   , ppSep             = dzenColor sepFGColor sepBGColor " -||- "
-  , ppExtras          = [date "%a %b %d", logCmd "diskspace", logCmd "corezerot", logCmd "pymodoro-out"]
-  , ppOutput          = hPutStrLn p }
+  , ppExtras          = [date "%a %b %d", logCmd "diskspace", logCmd "corezerot", logCmd "pymodoro-out"] }
 
 kKPplus=0xffab :: KeySym
 kKPdot=0xff9f :: KeySym
