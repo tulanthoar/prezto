@@ -56,6 +56,7 @@ let g:LatexBox_viewer = 'evince'
 let g:tex_flavor = "latex"
 
 Plugin 'WolfgangMehner/perl-support'
+let g:Perl_CustomTemplateFile = '$ZDOTD/nvim/bundle/perl-support/templates/perl.templates'
 Plugin 'vim-perl/vim-perl'
 Plugin 'c9s/perlomni.vim'
 let g:perl_fold = 1
@@ -188,7 +189,7 @@ let g:airline#extensions#whitespace#symbol = ''
 let g:airline#extensions#wordcount#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_section_b = '%{getcwd()}'
-let g:airline_section_y = ''
+let g:airline_section_y = '%{ctrlspace#api#StatuslineTabSegment()}'
 let g:airline_theme = 'kolor'
 if !exists('g:airline_symbols') | let g:airline_symbols = {} | endif
 let g:airline_symbols.maxlinenr = ''
@@ -280,6 +281,8 @@ let g:syntastic_aggregate_errors = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
+Plugin 'chriskempson/base16-vim'
+let g:base16colorspace=256
 Plugin 'zeis/vim-kolor'
 let g:kolor_underline = 1
 let g:kolor_italic = 1
@@ -308,7 +311,7 @@ call vundle#end()
 filetype plugin indent on
 syntax enable
 
-colorscheme kolor
+colorscheme base16-google-dark
 set background=dark
 hi link CtrlSpaceNormal   PMenu
 hi link CtrlSpaceSelected PMenuSel
@@ -364,13 +367,13 @@ function! s:config_easyfuzzymotion(...) abort
   \ }), get(a:, 1, {}))
 endfunction
 
+noremap <silent><expr> j (v:count == 0 ? 'gj' : 'j')
+noremap <silent><expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <silent><expr> ;/ incsearch#go(<SID>config_easyfuzzymotion())
 onoremap <silent><expr> ;/ incsearch#go(<SID>config_easyfuzzymotion())
 xnoremap <silent><expr> ;/ incsearch#go(<SID>config_easyfuzzymotion())
 nmap g/ <Plug>(incsearch-fuzzy-/)
-nmap ? <Plug>(incsearch-fuzzy-?)
-nmap / <Plug>(incsearch-fuzzy-stay)
-nnoremap <unique><Leader>/ /
+nmap <unique>? <Plug>(incsearch-fuzzy-stay)
 nmap <unique><M-l> <Plug>MoveLineHalfPageDownzz
 nmap <unique><M-h> <Plug>MoveLineHalfPageUpzz
 vmap <unique><M-l> <Plug>MoveBlockHalfPageDownzz
@@ -384,7 +387,6 @@ map gz* <Plug>(asterisk-gz*)
 map z#  <Plug>(asterisk-z#)
 map gz# <Plug>(asterisk-gz#)
 map y <Plug>(operator-flashy)
-map Y <Plug>(operator-flashy)$
 inoremap <unique><F1>  <Delete>
 inoremap <unique><F4>  <esc>:w<cr>
 nnoremap <unique><F4>  <esc>:w<cr>
@@ -429,8 +431,8 @@ nnoremap <unique>0       ^
 nnoremap <unique><Down>  :vs<cr>
 nnoremap <unique><Up>    :sp<cr>
 xmap     <unique><CR>    <Plug>NrrwrgnDo
-nnoremap <unique><Left>  <esc>:CtrlSpace l[[]<CR>
-nnoremap <unique><Right> <esc>:CtrlSpace l]][<CR>
+nmap <unique><Left>  <esc>:CtrlSpace l[<CR>
+nmap <unique><Right> <esc>:CtrlSpace l]<CR>
 noremap  <unique><C-H>   <C-W>h
 noremap  <unique><C-J>   <C-W>j
 noremap  <unique><C-K>   <C-W>k
@@ -533,8 +535,8 @@ autocmd filetype  c,perl let b:delimitmate_insert_eol_marker = 2
 autocmd filetype  c,perl let b:delimitmate_eol_marker = ";"
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=darkgray
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=33
-autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=27
-autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=17
+autocmd VimEnter,Colorscheme * :hi CursorColumn ctermbg=236
+autocmd VimEnter,Colorscheme * :hi CursorLine ctermbg=236
 au VimEnter * command! -nargs=* -bar -complete=customlist,man#completion#run
       \ Man call man#get_page('tab', <f-args>)
 autocmd filetype  python let b:match_words =
