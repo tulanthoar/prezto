@@ -4,7 +4,7 @@ function fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/
 colors
 promptinit
 prompt "paradox"
-add-zsh-hook preexec _fasd_preexec
+add-zsh-hook preexec fasd_preexec
 add-zsh-hook preexec alias-tips-preexec
 
 function snippets-add() {
