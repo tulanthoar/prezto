@@ -31,10 +31,10 @@ import XMonad.Util.Paste (sendKey)
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.SpawnOnce (spawnOnce)
 
-myTerminal = "urxvt" :: String
+myTerminal = "termite" :: String
 myModMask = mod3Mask :: KeyMask
 wmNameM_ = setWMName "LG3D" :: X()
-uniqueInits = ["sudo updatedb", "modkey", "tilda", "maybeclipmenud", "mayberedshift"] :: [String]
+uniqueInits = ["sudo updatedb", "modkey", "tilda", "maybeclipmenud", "mayberedshift", "maybepymodoro"] :: [String]
 xInitM_ = mapM_ spawnOnce uniqueInits :: X()
 wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"] :: [WorkspaceId]
 menuH = 15 :: Int
@@ -133,7 +133,7 @@ xmC = return mC
 
 scratchpads = [ NS bPad bRun (stringProperty "_NET_WM_NAME" =? "byobu_tmux") nonFloating ]
 bPad = "byobu"
-bRun = unwords ["BYOBU_WINDOWS=me", "urxvt", "-e", "byobu-tmux"]
+bRun = unwords ["BYOBU_WINDOWS=me", myTerminal, "-e", "byobu-tmux"]
 myDzenPP = def
   { ppCurrent         = dzenColor myFFGColor myFBGColor
   , ppVisible         = dzenColor myVFGColor myVBGColor
