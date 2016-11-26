@@ -1,0 +1,2 @@
+#!/bin/env dash
+(ps -af --user "$USER" | grep -E "\bstart-pomodoro$") || start-pomodoro
