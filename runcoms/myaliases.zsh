@@ -32,3 +32,4 @@ alias ex='unarchive '
 alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 alias nvim="python $ZRCD/scripts/omnivim.py"
 alias j4-menu='j4-dmenu-desktop --display-binary --term=urxvt --dmenu="dmenu -w 600 -y 15 -z -p launch -l 50"'
+alias b16color='source ~/.base16_theme'
