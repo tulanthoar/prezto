@@ -1,8 +1,10 @@
-script_line1 = use Modern::Perl('2015')
-script_line2 = use utf8
-script_line3 = use Test::More
-script_line4 = use IO::All
-script_line5 = use DateTime
+script_line1 = use Modern::Perl('2015');
+script_line2 = use utf8;
+script_line3 = use Test::More;
+script_line4 = use IO::All;
+script_line5 = use DateTime;
+script_line6 = use Text::ParseWords;
+script_line7 = use Proc::Background;
 
 [ConfigurablePrompt]
 prompt="$history_count>"
