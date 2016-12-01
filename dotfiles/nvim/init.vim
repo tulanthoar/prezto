@@ -3,7 +3,6 @@ if &compatible | set nocompatible | endif
 filetype off
 let g:mapleader="\\"
 set rtp+=$HOME/.config/nvim/bundle/Vundle.vim
-set rtp+=$HOME/.config/nvim/rplugin/python
 call vundle#begin('$HOME/.config/nvim/bundle')
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -14,7 +13,7 @@ Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-operator-user'
 
 Plugin 'Shougo/deoplete.nvim'
-Plugin 'Shougo/neoinclude.vim'
+"Plugin 'Shougo/neoinclude.vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'zchee/deoplete-jedi'
 Plugin 'Shougo/context_filetype.vim'
@@ -24,8 +23,7 @@ endif
 let g:context_filetype#same_filetypes.cpp = 'c'
 " In gitconfig buffers, completes from all buffers.
 let g:context_filetype#same_filetypes.gitconfig = '_'
-" In default, completes from all buffers.
-let g:context_filetype#same_filetypes._ = '_'
+let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_start_length = 2
 let g:deoplete#enable_refresh_always = 1
 let g:deoplete#auto_refresh_delay = 10
@@ -222,7 +220,6 @@ let g:delimitMate_jump_expansion = 1
 Plugin 'mbbill/undotree'
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_WindowLayout = 2
-Plugin 'edsono/vim-matchit'
 Plugin 'Konfekt/FastFold'
 let g:fastfold_skip_filetypes=['plaintex', 'tex']
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -526,8 +523,6 @@ autocmd WinLeave       * set   nocursorline
 autocmd WinLeave       * set   nocursorcolumn
 autocmd InsertEnter    * set   nocursorline
 autocmd InsertLeave    * set   cursorline
-autocmd VimEnter       * call  deoplete#initialize()
-autocmd InsertEnter    * call  deoplete#enable()
 autocmd bufreadpost    * if line("'\"") >= 1 && line("'\"") <= line("$")
       \ | exe "normal! g`\"" | endif
 autocmd filetype haskell setlocal omnifunc=necoghc#omnifunc
