@@ -126,6 +126,8 @@ mC =
   , ("terminal", altTerm_ )
   , ("urxvt", byobucmd )
   , ("pomodoro", spawn "start-pomodoro" )
+  , ("redshift", spawn "redshift -c $ZDOTD/redshift/redshift.conf")
+  , ("clipmenud", spawn "clipmenud")
   , ("moveempty", mvNEmpty )
   , ("nextempty",(\t-> (withFocused . addTag) t >> mvNEmpty >> withTaggedGlobalP t shiftHere >> withTaggedGlobal t unTag) "shifter" )
   ]
