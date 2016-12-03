@@ -516,6 +516,7 @@ autocmd InsertLeave    * setlocal timeoutlen=2000
 autocmd TabLeave       * let   g:lasttab = tabpagenr()
 autocmd BufLeave       * let   g:lastbuff = bufnr("%")
 autocmd WinEnter       * AirlineRefresh
+autocmd BufEnter       * filetype detect
 
 autocmd WinEnter       * set   cursorline
 autocmd WinEnter       * set   cursorcolumn
