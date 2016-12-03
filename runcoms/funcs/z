@@ -1,1 +1,5 @@
-function z() { builtin cd $(fasd -Rdl $1 | fzf-tmux --no-sort +m|| echo ${PWD}) }
+function z() {
+  local ret_d=$(fasd -e 'printf %s' -Rdl $1)
+  [ -z "$ret_d" ] && return
+  builtin cd $(echo $ret_d | fzf-tmux --no-sort +m || pwd)
+}

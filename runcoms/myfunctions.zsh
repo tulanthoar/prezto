@@ -1,7 +1,11 @@
-autoload -U unarchive _fzf_compgen_path writecmd fhe f fss fp fk fzf-locate-widget u md cm v z j p n copyfile sudo-command-line c J nice_exit_code snippet-expand
-
-function _fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null }
-autoload -Uz add-zsh-hook && add-zsh-hook preexec _fasd_preexec
+autoload -U colors unarchive _fzf_compgen_path writecmd fhe f fss fp fk fzf-locate-widget u md cm v z j p n copyfile sudo-command-line c J nice_exit_code snippet-expand paste-primary
+autoload -Uz add-zsh-hook promptinit black red green yellow blue magenta cyan white alias-tips-preexec gencomp 256-color-test
+function fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null }
+colors
+promptinit
+prompt "paradox"
+add-zsh-hook preexec fasd_preexec
+add-zsh-hook preexec alias-tips-preexec
 
 function snippets-add() {
   typeset -Ag snippets
@@ -24,6 +28,7 @@ function bind_keys() {
   zle -N p
   zle -N n
   zle -N sudo-command-line
+  zle -N paste-primary
   bindkey -v
   bindkey -rM viins "^["
   bindkey -rM viins "^D"
@@ -32,7 +37,9 @@ function bind_keys() {
   bindkey -rM viins "^J"
   bindkey -rM viins "^K"
   bindkey -rM viins "^L"
+  bindkey -rM viins "^V"
   bindkey -rM viins "^Y"
+  bindkey -M viins "\C-V" paste-primary
   bindkey -M viins "^[w" vi-forward-word
   bindkey -M viins "^[i" fzf-locate-widget
   bindkey -M viins "^[p" p
@@ -54,6 +61,6 @@ function bind_keys() {
   bindkey -M viins "^U" undo
   bindkey -M viins "^R" redo
   bindkey -M viins "^F" vi-find-prev-char
-  bindkey -M viins "^S" vi-kill-eol
+  bindkey -M viins "\C-S" vi-kill-eol
   bindkey -M viins "^[[3~" vi-delete-char;
 }

@@ -3,36 +3,29 @@ import Graphics.X11.Xlib.Extras
 import System.Environment
 import System.IO
 import Data.Char
-import Control.Monad(unless)
+import Control.Monad(unless,forever)
 
 main :: IO ()
 main = parse True "XMONAD_COMMAND" =<< getArgs
 
 parse :: Bool -> String -> [String] -> IO ()
-parse input addr args = case args of
-  ["--"] | input -> repl addr
-    | otherwise -> return ()
-  ("--":xs) -> sendAll addr xs
-  ("-a":a:xs) -> parse input a xs
-  ("-h":_) -> showHelp
-  ("--help":_) -> showHelp
-  ("-?":_) -> showHelp
-  (a@('-':_):_) -> hPutStrLn stderr ("Unknown option " ++ a)
+parse input addr args = case args of 
+                          ["-e"] -> forever (myrepl addr)
+                          ["--"] | input -> repl addr
+                            | otherwise -> return ()
+                          ("--":xs) -> sendAll addr xs
+                          ("-a":a:xs) -> parse input a xs
+                          ("-h":_) -> showHelp
+                          ("--help":_) -> showHelp
+                          ("-?":_) -> showHelp
+                          (a@('-':_):_) -> hPutStrLn stderr ("Unknown option " ++ a)
 
-  (x:xs) -> sendCommand addr x >> parse False addr xs
-  [] | input -> repl addr
-    | otherwise -> return ()
-  ("--":xs) -> sendAll addr xs
-  ("-a":a:xs) -> parse input a xs
-  ("-h":_) -> showHelp
-  ("--help":_) -> showHelp
-  ("-?":_) -> showHelp
-  (a@('-':_):_) -> hPutStrLn stderr ("Unknown option " ++ a)
+                          (x:xs) -> sendCommand addr x >> parse False addr xs
+                          [] | input -> repl addr
+                            | otherwise -> return ()
 
-  (x:xs) -> sendCommand addr x >> parse False addr xs
-  [] | input -> repl addr
-    | otherwise -> return ()
-
+myrepl :: String -> IO ()
+myrepl addr = getLine >>= \x-> if length (words x) == 1 then sendCommand addr x else putStrLn x
 
 repl :: String -> IO ()
 repl addr = isEOF >>= \e -> unless e $

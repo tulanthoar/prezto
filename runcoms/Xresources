@@ -6,91 +6,99 @@ dzen2.font      : -*-hack-*-r-*-*-13-*-*-*-*-*-*-*
 dzen2.background: #330033
 dzen2.foreground: #ff5f00
 
+xmessage.buttons: ok
+xmessage.defultButton: ok
+xmessage.center: true
+
 URxvt.scrollBar     :false
 URxvt.visualBell    :true
 URxvt.internalBorder:0
 URxvt.externalBorder:0
-!urxvt*secondaryScroll:    true
 URxvt.saveLines     :5800
 URxvt.letterSpace   :0
-URxvt.font          :xft:hack:pixelsize=12:style=Regular
-URxvt.boldFont      :xft:hack:pixelsize=12:style=Bold
-URxvt.italicFont    :xft:hack:pixelsize=12:style=Italic
-URxvt.boldItalicFont:xft:hack:pixelsize=12:style=Bold Italic
+URxvt.font          :xft:hack:pixelsize=13:style=Regular
+URxvt.boldFont      :xft:hack:pixelsize=13:style=Bold
+URxvt.italicFont    :xft:hack:pixelsize=13:style=Italic
+URxvt.boldItalicFont:xft:hack:pixelsize=13:style=Bold Italic
 
-URxvt.perl-lib             : "/home/ant/.config/urxvt/perls"
 URxvt.modifier             : alt
-URxvt.perl-ext-common      : tabbed,reactivity,option-popup,background,autocomplete-ALL-the-things,fifo,keyboard-select,readline,selection,searchable-scrollback,clipboard,url-select,selection-popup,kuake
-URxvt.tabbed.tabbar-fg: 3
-URxvt.tabbed.tabbar-bg: 0
-URxvt.tabbed.tab-fg: 0
-URxvt.tabbed.tab-bg: 1
-!URxvt.tabbed.tab_title: true
-!URxvt.tabbed.autohide: false
-!URxvt.tabbedex.autohide: false
-!URxvt.tabbedex.title: true
-!URxvt.tabbed.title: true
-!URxvt.tabbedex.new-button: true
-!URxvt.tabbed.new-button: true
-!URxvt.keysym.M-1: perl:tabbedex:new_tab
-!URxvt.keysym.M-2: perl:tabbedex:next_tab
-!URxvt.keysym.M-3: perl:tabbedex:previous_tab
-URxvt.keysym.Mod4-e: perl:reactivity:vim
-URxvt.keysym.M-0x5d: perl:reactivity:smallerfont
-URxvt.keysym.M-0x5b: perl:reactivity:largerfont
-URxvt.kuake.hotkey         : F12
-URxvt.background.expr      : scale keep { load "/home/ant/bg.jpg" }
-URxvt.url-select.launcher  : chromium
-URxvt.url-select.underline : true
-!URxvt.keysym.M-u           : perl:url-select:select_next
-URxvt.keysym.Mod4-v        : perl:keyboard-select:activate
-URxvt.keysym.Mod4-0x2f        : perl:keyboard-select:search
-URxvt.keysym.M-0x2f:searchable-scrollback:start
-URxvt.keysym.C-semicolon   : perl:aAtt:fuzzy-complete
-URxvt.keysym.C-apostrophe  : perl:aAtt:surround-complete
-URxvt.keysym.C-period      : perl:aAtt:fuzzy-word-complete
-URxvt.keysym.C-comma       : perl:aAtt:fuzzy-WORD-complete
-urxvt.fifo.file            : /tmp/urxvt.fifo
-urxv.fifo.file             : /tmp/urxv.fifo
-per.fifo.file              : /tmp/urxvt-per.fifo
-ip.fifo.file               : /tmp/urxvt-python.fifo
-neovi.fifo.file            : /tmp/urxvt-neovi.fifo
-range.fifo.file            : /tmp/urxvt-range.fifo
+!URxvt.perl-ext-common      : tabbed,reactivity,option-popup,background,autocomplete-ALL-the-things,fifo,keyboard-select,readline,selection,searchable-scrollback,clipboard,url-select,selection-popup,kuake
+!URxvt.tabbed.tabbar-fg: 3
+!URxvt.tabbed.tabbar-bg: 0
+!URxvt.tabbed.tab-fg: 0
+!URxvt.tabbed.tab-bg: 1
+!!URxvt.tabbed.autohide:  yes
+!!URxvt.tabbed.new-button:  no
+!!URxvt.tabbed.title: yes
+!URxvt.keysym.Mod4-e: perl:reactivity:vim
+!URxvt.keysym.Mod4-0x5d: perl:reactivity:smallerfont
+!URxvt.keysym.Mod4-0x5b: perl:reactivity:largerfont
+!URxvt.kuake.hotkey         : F11
+!!URxvt.background.expr      : scale keep { load "/home/ant/bg.jpg" }
+!URxvt.url-select.launcher  : chromium
+!URxvt.url-select.underline : true
+!!URxvt.keysym.M-u           : perl:url-select:select_next
+!URxvt.keysym.Mod4-v        : perl:keyboard-select:activate
+!URxvt.keysym.Mod4-s        : perl:keyboard-select:search
+!URxvt.keysym.Mod4-0x2f:perl:searchable-scrollback:start
+!URxvt.keysym.Mod4-semicolon   : perl:aAtt:fuzzy-complete
+!URxvt.keysym.Mod4-apostrophe  : perl:aAtt:surround-complete
+!URxvt.keysym.Mod4-period      : perl:aAtt:fuzzy-word-complete
+!URxvt.keysym.Mod4-comma       : perl:aAtt:fuzzy-WORD-complete
+!URxvt.fifo.file            : /tmp/urxvt.fifo
 
 URxvt.cursorBlink    : true
 URxvt.cursorUnderline: true
+URxvt.underlineColor : #e628ba
+URxvt.highlightColor: #a6a6a
 
-!  - color scheme
-URxvt.foreground: #ffff80
-!urxv.background : #002533
-!ip.background   : #00284d
-!urxvt.background: #00384d
-!per.background  : #00331a
-!range.background: #000d1a
-! black + red
-URxvt*color0: #1a1a1a
-URxvt*color1: #e01010
-! green + yellow
-URxvt*color2: #71b900
-URxvt*color3: #FFFF00
-! blue + purple
-URxvt*color4: #0E7FA4
-URxvt*color5: #A020F0
-! cyan + white
-URxvt*color6: #5B5BC7
-URxvt*color7: #fefefe
-! bright-black + bright-red
-URxvt*color8: #6a6a6a
-URxvt*color9: #FF5555
-! bright-green + bright-yellow
-URxvt*color10: #90EE90
-URxvt*color11: #ffff2f
-! bright-blue + bright-purple
-URxvt*color12: #4d4dff
-URxvt*color13: #e628ba
-! bright-cyan + bright-white
-URxvt*color14: #7D7DFB
-URxvt*color15: #ffffff
+! Base16 Default Dark
+! Scheme: Chris Kempson (http://chriskempson.com)
 
-URxvt.highlightColor: #006600
-URxvt.cursorColor   : #ff00ff
+#define base00 #181818
+#define base01 #282828
+#define base02 #383838
+#define base03 #585858
+#define base04 #b8b8b8
+#define base05 #d8d8d8
+#define base06 #e8e8e8
+#define base07 #f8f8f8
+#define base08 #ab4642
+#define base09 #dc9656
+#define base0A #f7ca88
+#define base0B #a1b56c
+#define base0C #86c1b9
+#define base0D #7cafc2
+#define base0E #ba8baf
+#define base0F #a16946
+
+URxvt.foreground:   base05
+URxvt.background:   base00
+URxvt.cursorColor:  base05
+
+URxvt.color0:       base00
+URxvt.color1:       base08
+URxvt.color2:       base0B
+URxvt.color3:       base0A
+URxvt.color4:       base0D
+URxvt.color5:       base0E
+URxvt.color6:       base0C
+URxvt.color7:       base05
+
+URxvt.color8:       base03
+URxvt.color9:       base08
+URxvt.color10:      base0B
+URxvt.color11:      base0A
+URxvt.color12:      base0D
+URxvt.color13:      base0E
+URxvt.color14:      base0C
+URxvt.color15:      base07
+
+! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
+! use 'shell' template to set these if necessary
+URxvt.color16:      base09
+URxvt.color17:      base0F
+URxvt.color18:      base01
+URxvt.color19:      base02
+URxvt.color20:      base04
+URxvt.color21:      base06

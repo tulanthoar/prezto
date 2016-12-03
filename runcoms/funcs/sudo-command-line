@@ -1,4 +1,4 @@
 function sudo-command-line() {
   [[ -z $BUFFER ]] && zle up-history
-  [[ $BUFFER == sudo\ * ]] && LBUFFER=${LBUFFER#sudo } || LBUFFER="sudo $LBUFFER"
+  [[ $BUFFER == sudo\ * ]] && BUFFER=${BUFFER#sudo } || BUFFER="sudo $BUFFER"
 }

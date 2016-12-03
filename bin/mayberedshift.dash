@@ -1,2 +1,2 @@
 #!/bin/env dash
-ps aux | grep -E "\Wredshift\W-c" || redshift -c "$ZDOTD/redshift/redshift.conf"
+(ps -af --user "$USER" | grep -E "\Wredshift\W-c") || xmctl redshift

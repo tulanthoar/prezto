@@ -1,5 +1,4 @@
-new-session 'zsh' ;
-new-window nvim ;
-new-window ipython ;
-new-window reply ;
-select-window -t :=1
+new-session -As termite ;
+new-window -dn neovim nvim ;
+new-window -dn ipy ipython ;
+new-window -dn perl reply ;

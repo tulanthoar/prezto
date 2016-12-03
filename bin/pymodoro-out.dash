@@ -1,2 +1,2 @@
 #!/bin/env dash
-pymodoro -p '>' -b '_' -e '|' -l 40 -ltr -o
+head -n1 /tmp/pomodoro-status
