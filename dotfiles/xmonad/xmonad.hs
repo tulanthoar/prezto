@@ -51,6 +51,7 @@ mylayoutHook = fullscreenFull $ G.gaps [(G.U,menuH)] $ magnifiercz mag $ minimiz
 myManageHook = namedScratchpadManageHook scratchpads <+> manageDocks
   <+> composeAll
   [ className =? "Xmessage"  --> doIgnore
+  , className =? "Zenity"  --> doIgnore
   , className =? "stmenu" --> doFloat
   , className =? "Tilda" --> doFloat
   ]
@@ -97,6 +98,7 @@ xkM=
 myKeysP =
   [ ("<Insert>", spawn "xdotool click 2")
   , ("M-c", clipcmd)
+  , ("M-t", spawn "simpledate" )
   , ("M-<Space>", launchAct)
   , ("M-h", moveTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
   , ("M-l", moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
@@ -109,7 +111,6 @@ myKeysP =
   , ("M-<Tab>", toggleWS' ["NSP"])
   , ("M-p",  spawn "start-pomodoro" )
   , ("M-u",  byobucmd )
-  , ("M-t", altTerm_ )
   ]
 
 clipcmd = spawn "clipmenu -z -w 800 -l 50 -p 'clip'" :: X()
@@ -135,15 +136,15 @@ xmC = return mC
 
 scratchpads = [ NS bPad bRun (stringProperty "_NET_WM_NAME" =? "byobu_tmux") nonFloating ]
 bPad = "byobu"
-bRun = unwords ["BYOBU_WINDOWS=me", myTerminal, "-e", "byobu-tmux"]
+bRun = unwords ["BYOBU_WINDOWS=me", myTerminal, "-e", "byobu-tmux", "--config=$ZDOTD/termite/config"]
 myDzenPP = def
   { ppCurrent         = dzenColor myFFGColor myFBGColor
-  , ppVisible         = dzenColor myVFGColor myVBGColor
+  , ppVisible         = dzenColor myVFGColor myVBGColor . \w -> if w /= "NSP" then w else ""
   , ppHidden          = dzenColor myHFGColor myHBGColor . \w -> if w /= "NSP" then w else ""
-  , ppHiddenNoWindows = dzenColor myHNFGColor myHNBGColor
+  , ppHiddenNoWindows = dzenColor myHNFGColor myHNBGColor. \w -> if w /= "NSP" then w else ""
   , ppUrgent          = dzenColor myUFGColor myUBGColor
   , ppTitle           = dzenColor myTFGColor myTBGColor . trim . shorten 100
-  , ppLayout          = dzenColor myLFGColor myLBGColor . shorten 0
+  , ppLayout          = const ""
   , ppSep             = dzenColor sepFGColor sepBGColor " -||- "
   , ppExtras          = [date "%a %b %d", logCmd "diskspace", logCmd "corezerot", logCmd "pymodoro-out"] }
 
