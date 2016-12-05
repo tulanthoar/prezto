@@ -260,7 +260,7 @@ let g:EasyMotion_use_upper = 1
 Plugin 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'man']
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 4
 Plugin 'scrooloose/nerdtree'
@@ -505,6 +505,8 @@ au FileType nerdtree
       \ map <buffer> H :call nerdtree#ui_glue#invokeKeyMap("U")<CR>j
 au FileType nerdtree setlocal nocursorcolumn
 au FileType nerdtree setlocal nocursorline
+au FileType man setlocal nocursorcolumn
+au FileType man setlocal nocursorline
 function g:Undotree_CustomMap()
   nmap <buffer> J <plug>UndotreeGoNextState
   nmap <buffer> K <plug>UndotreeGoPreviousState
