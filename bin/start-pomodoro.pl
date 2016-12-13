@@ -1,27 +1,75 @@
-#!/bin/env perl
-use Modern::Perl('2015');
+#!/usr/bin/env perl
+#===============================================================================
+#
+#         FILE: loop.pl
+#
+#        USAGE: ./loop.pl
+#
+#  DESCRIPTION: run pymodoro using event loop
+#
+#      OPTIONS: ---
+# REQUIREMENTS: ---
+#         BUGS: ---
+#        NOTES: ---
+#       AUTHOR: Nathan Yonkee (Nate), tulanthoar@gmail.com
+# ORGANIZATION: N/A
+#      VERSION: 1.0
+#      CREATED: 12/12/2016 10:22:16 AM
+#     REVISION: ---
+#===============================================================================
+
+use Modern::Perl q#2015#;
+
+use AnyEvent::Subprocess;
 use IO::All;
 use Proc::Background;
+use Carp qw#croak#;
 
-my $h = "--height=500";
-my $w = "--width=500";
-my $t = "--timeout=";
-my $msg = "--text=";
-my $iofile = io->file('/tmp/pomodoro-status')->assert->touch;
-my $iotie = $iofile->tie;
-while($iofile->is_writable){
-    my $bar = io->pipe(q/pymodoro -p '>' -b '_' -e '|' -l 40 -ltr -i 5/);
-    io->file($ENV{HOME}.'/.pomodoro_session')->touch;
-    $iotie->[0] = $bar->getline;
-    my $p1 = Proc::Background->new("zenity", "--question",$msg."pomodoro started" , $t."5", $w, $h);
-    until($bar->getline =~ /B/){
-        $iotie->[0] = $bar->getline;
+my $t      = "--timeout=";
+my $msg    = "--text=";
+my $iofile = io->file('/tmp/pomodoro-status')->touch->assert;
+my $iotie  = $iofile->tie;
+
+# prepare the job
+my $job = AnyEvent::Subprocess->new(
+    delegates     => ['StandardHandles'],
+    on_completion => sub { croak 'bad exit status' unless $_[0]->is_success; },
+    code          => q#pymodoro -p '>' -b '_' -e '|' -l 20 -ltr -i 10#
+);
+my $run = $job->run;
+
+my $msgjob = AnyEvent::Subprocess->new(
+    delegates     => ['StandardHandles'],
+    on_completion => sub {
+        io->file( $ENV{HOME} . '/.pomodoro_session' )->touch;
+        $run->kill(18);
+    },
+    code => sub {
+        $run->kill(19);
+        my $ret = system( "zenity", "--info", $msg . "start anew",
+            "--width=100", "--height=100" );
+        exit $ret;
     }
-    my $p2 = Proc::Background->new("zenity","--question", $msg."break time", $t."300", $w, $h);
-    until($bar->getline =~ /B [0-9]{2}:[0-9]{2}/){
-        $iotie->[0] = $bar->getline;
+);
+
+$run->delegate(q#stdout#)->handle->on_read(
+    sub {
+        my ($hand) = @_;
+        $hand->push_read(
+            line => sub {
+                my ( $h, $line ) = @_;
+                if ( $line =~ /B .* 0[0-4]:[0-9]{2}/ ) {
+                    Proc::Background->new( "zenity", "--info",
+                        $msg . "break time " . $line,
+                        $t . "9", "--width=700", "--height=700" );
+                }
+                elsif ( $line =~ /B [0-9]{2}:[0-9]{2}/ ) {
+                    $msgjob->run;
+                }
+                else { $iotie->[0] = $line; }
+            }
+        );
     }
-    $p1->die;
-    $p2->die;
-    my $ret = system("zenity","--question", $msg."break over: start new timer", $w, $h);
-}
+);
+
+EV::loop();    # you can use any AnyEvent-compatible event loop, including POE
