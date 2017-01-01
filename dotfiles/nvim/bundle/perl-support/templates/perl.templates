@@ -10,10 +10,10 @@
 § =============================================================
 
 SetMacro( 'AUTHOR',       'Nathan Yonkee' )
-SetMacro( 'AUTHORREF',    '' )
+SetMacro( 'AUTHORREF',    'Nate' )
 SetMacro( 'EMAIL',        'tulanthoar@gmail.com' )
-SetMacro( 'ORGANIZATION', '' )
-SetMacro( 'COMPANY',      '' )
+SetMacro( 'ORGANIZATION', 'N/A' )
+SetMacro( 'COMPANY',      'N/A' )
 SetMacro( 'COPYRIGHT',    'Copyright (c) |YEAR|, |AUTHOR|' )
 SetMacro( 'LICENSE',      'GNU General Public License' )
 

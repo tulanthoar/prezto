@@ -52,7 +52,6 @@ TMPPREFIX=${TMPDIR%/}/zsh
 export FZF_DEFAULT_OPTS='-i --cycle --select-1 --exit-0 --inline-info --color=fg:102,bg:233,hl:65,fg+:15,bg+:234,hl+:108,info:108,prompt:109,spinner:108,pointer:168,marker:168'
 export FZF_TMUX_HEIGHT='60%'
 export KEYTIMEOUT=3
-export RANGER_LOAD_DEFAULT_RC=FALSE
 export LD_LIBRARY_PATH=${HOME}/.local/lib
 export ZPREZD=${HOME}/.zprezto
 export ZDOTD=${ZPREZD}/dotfiles
@@ -64,5 +63,6 @@ export FZFD=${HOME}/.fzf
 export GOPATH=$HOME/golang
 [[ -d ${GOPATH} ]] && export PATH="$PATH:$GOPATH/bin"
 export OMNIVIM_EDITOR=$(which nvim)
-export URXVT_PERL_LIB=${HOME}/.config/urxvt/perls
 export BYOBU_WINDOWS=me
+export PERL_UNICODE=AS
+export PERL5OPTS="-Mperl5i -MIO::All"

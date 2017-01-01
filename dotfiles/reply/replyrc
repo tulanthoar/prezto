@@ -1,15 +1,24 @@
-script_line1 = use Modern::Perl('2015');
-script_line2 = use utf8;
-script_line3 = use Test::More;
-script_line4 = use IO::All;
-script_line5 = use DateTime;
-script_line6 = use Text::ParseWords;
-script_line7 = use Proc::Background;
+script_line1 = use Data::Printer;
+script_line2 = use common::sense;
+script_line3 = use Smart::Comments;
+script_line4 = use perl5i::2;
+script_line5 = use Test::More;
+script_line6 = use IO::All;
+script_line7 = use DateTime;
+script_line8 = use Text::ParseWords;
+script_line10 = use Child;
 
+[AutoRefresh]
+track_require = 1
 [ConfigurablePrompt]
 prompt="$history_count>"
-[DataDumper]
+[DataPrinter]
 [Colors]
+error   = red
+warning = yellow
+result  = green
+
+
 [ReadLine]
 [Hints]
 [Packages]
@@ -27,5 +36,4 @@ prompt="$history_count>"
 [Autocomplete::Keywords]
 [Timer]
 mintime=0.001
-[AutoRefresh]
 [TypeTiny]

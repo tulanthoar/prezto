@@ -111,6 +111,7 @@ myKeysP =
   , ("M-<Tab>", toggleWS' ["NSP"])
   , ("M-p",  spawn "start-pomodoro" )
   , ("M-u",  byobucmd )
+  , ("M4-t", spawn myTerminal)
   ]
 
 clipcmd = spawn "clipmenu -z -w 800 -l 50 -p 'clip'" :: X()
