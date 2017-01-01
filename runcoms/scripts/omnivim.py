@@ -1,3 +1,4 @@
+"""send files to one instance of nvim in tmux"""
 import os
 import sys
 import subprocess
@@ -30,13 +31,12 @@ def call_neovim(editor, editor_flags, files, nvim_socket_path='/tmp'):
         editor (str): The editor command that should be called.
         editor_flags (str): A list of strings containing extra flags.
         files (str): A list of strings containing the files that should be opened.
-        nvim_socket_path (str): The path where socket files should be stored.
-"""
+        nvim_socket_path (str): The path where socket files should be stored.  """
 
     # Neovim instances in this script are formattted "/tmp/nvim-@n.omni"
     win = subprocess.check_output(["tmux", "display-message", "-p", "#{window_id}"])
     win = win.rstrip().strip().decode('utf-8')
-    socket_path = os.path.join(nvim_socket_path, ''.join(['.nvim-', win, '.omni']))
+    socket_path = os.path.join(nvim_socket_path, ''.join(['nvim.omni']))
 
     if os.path.exists(socket_path):
         # socket already associated with this window.
@@ -61,8 +61,7 @@ def call_vim(editor, flags, files):
     Args:
         editor (str): The editor command that should be called.
         flags (str): A list of strings containing extra flags
-        files (str): A list of strings containing the files that should be opened.
-"""
+        files (str): A list of strings containing the files that should be opened.  """
 
     # get the current tmux window in which this command was run
     win = subprocess.check_output(["tmux", "display-message", "-p", "#{window_id}"])
@@ -73,9 +72,9 @@ def call_vim(editor, flags, files):
 
     try:
         # if we find a running server, send the commands there
-        i = servs.index(name)
-        subprocess.call([editor] + flags + ["--servername", name, "--remote"] + files)
-    except:
+        servs.index(win)
+        subprocess.call([editor] + flags + ["--servername", win, "--remote"] + files)
+    except ValueError():
         # list.index throws an exception if there's nothing found
         # we didn't find a server, create a new Vim server with the necessary arguments
         command = [editor] + flags + ['--servername', win, '--remote-silent'] + files
@@ -85,19 +84,20 @@ def call_vim(editor, flags, files):
 
 
 def main():
+    """gather args and setup defaults"""
     # if the OMNIVIM_EDITOR environment variable is set, use it.
     # otherwise, use vim.
-    EDITOR = 'vim'
-    EDITOR_FLAGS = []
+    editor = 'nvim'
+    editor_flags = []
     omnivim_editor = os.environ.get('OMNIVIM_EDITOR')
     if omnivim_editor is not None and len(omnivim_editor) > 0:
-        EDITOR_FLAGS = str.split(os.environ.get('OMNIVIM_EDITOR'), ' ')
-        EDITOR = EDITOR_FLAGS.pop(0)
+        editor_flags = str.split(os.environ.get('OMNIVIM_EDITOR'), ' ')
+        editor = editor_flags.pop(0)
     nvim_socket = os.environ.get('NVIM_SOCKET_PATH')
     if nvim_socket is not None and len(nvim_socket) > 0:
-        NVIM_SOCKET_PATH = os.environ.get('NVIM_SOCKET_PATH')
+        nvim_socket_path = nvim_socket
     else:
-        NVIM_SOCKET_PATH = '/tmp/'
+        nvim_socket_path = '/tmp/'
 
     # read files from command line arguments
     # we remove the first, since this will always be omnivim.py
@@ -111,18 +111,17 @@ def main():
     if in_tmux is not None and lit_flag == 0:
         # if tmux is running, do different things if using neovim or another form of vim
         # use regex to work it out
-        is_neovim = re.search('n(eo)?vim', EDITOR)
+        is_neovim = re.search('n(eo)?vim', editor)
 
         if is_neovim is not None:
-            call_neovim(EDITOR, EDITOR_FLAGS, files, NVIM_SOCKET_PATH)
+            call_neovim(editor, editor_flags, files, nvim_socket_path)
         else:
-            call_vim(EDITOR, EDITOR_FLAGS, files)
+            call_vim(editor, editor_flags, files)
     else:
         # otherwise, just call the editor and flags with the requisite files
         while files.count("--lit") > 0:
             # if lit_flag was passed in, remove it from the list of files before calling
-            # TODO: this is pretty damn hacky.
             files.pop(files.index("--lit"))
-        subprocess.call([EDITOR] + EDITOR_FLAGS + files)
+        subprocess.call([editor] + editor_flags + files)
 
 main()
