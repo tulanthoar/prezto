@@ -472,10 +472,10 @@ nnoremap <unique>L     Lzz
 
 call denite#custom#var('grep', 'command', ['rg'])
 call denite#custom#var('grep', 'default_ops', ['--hidden', '-SL', '--glob', '!.git', '--glob', '!.gitignore', '--glob', '!.gitsubmodules', '--glob', '!.cache'])
-nnoremap <unique>F       :Denite -auto-highlight -cursor-wrap -vertical-preview grep<CR>
-nmap     <unique>f       <Plug>(easymotion-bd-fl)
-xmap     <unique>f       <Plug>(easymotion-bd-fl)
-omap     <unique>f       <Plug>(easymotion-bd-fl)
+nnoremap <unique>F       :Denite -auto-resize -cursor-wrap -vertical-preview grep<CR>
+map     <expr><unique>f       (v:count1 == 1 ? '<Plug>(easymotion-bd-fl)' : 'f')
+map     <expr><unique>t       (v:count1 == 1 ? '<Plug>(easymotion-bd-tl)' : 't')
+map     <expr><unique>w       (v:count1 == 1 ? '<Plug>(easymotion-bd-wl)' : 'w')
 nmap     <unique>s       <Plug>(easymotion-bd-f2)
 xmap     <unique>s       <Plug>(easymotion-bd-f2)
 omap     <unique>s       <Plug>(easymotion-bd-f2)
@@ -541,19 +541,19 @@ let g:mapleader="-"
 nmap     <unique><Leader><CR>     <Plug>NrrwrgnWinIncr
 nnoremap <unique><leader><leader> :exe "tabn ".g:lasttab<cr>
 nnoremap <unique><leader><Space>  :Startify<CR>
-nnoremap <unique><leader>b        :Denite -auto-highlight -cursor-wrap -vertical-preview buffer<CR>
-nnoremap <unique><leader>q        :Denite -auto-highlight -cursor-wrap -vertical-preview unite:quickfix<CR>
-nnoremap <unique><leader>c        :Denite -auto-highlight -cursor-wrap -vertical-preview unite:location_list<CR>
-noremap  <unique><leader>h        :Denite -auto-highlight -cursor-wrap -vertical-preview help<CR>
-noremap  <unique><leader>l        :Denite -auto-highlight -cursor-wrap -vertical-preview line<CR>
-noremap  <unique><leader>d        :Denite -auto-highlight -cursor-wrap -vertical-preview directory_rec<CR>
 call denite#custom#var('file_rec', 'command', ['rg', '--files', '--follow', '--hidden', '--glob', '!.git', '--glob', '!.gitignore', '--glob', '!.gitsubmodules', '--glob', '!.cache'])
 call denite#custom#var('menu', 'menus', g:denite_menus)
-noremap  <unique><leader>f        :Denite -auto-highlight -cursor-wrap -vertical-preview file_rec<CR>
-nnoremap <unique><Leader>g        :Denite menu:git<CR>
-nnoremap <unique><Leader>m        :Denite -vertical-preview unite:file_mru<CR>
-noremap  <unique><leader>:        :Denite -auto-highlight -cursor-wrap -vertical-preview command<CR>
-noremap  <unique><leader>o        :Denite -auto-highlight -cursor-wrap -vertical-preview outline<CR>
+nnoremap <unique><leader>b        :Denite -auto-resize -cursor-wrap -vertical-preview buffer<CR>
+nnoremap <unique><leader>q        :Denite -auto-resize -cursor-wrap -vertical-preview unite:quickfix<CR>
+nnoremap <unique><leader>c        :Denite -auto-resize -cursor-wrap -vertical-preview unite:location_list<CR>
+noremap  <unique><leader>h        :Denite -auto-resize -cursor-wrap -vertical-preview help<CR>
+noremap  <unique><leader>l        :Denite -auto-resize -cursor-wrap -vertical-preview line<CR>
+noremap  <unique><leader>d        :Denite -auto-resize -cursor-wrap -vertical-preview directory_rec<CR>
+noremap  <unique><leader>f        :Denite -auto-resize -cursor-wrap -vertical-preview file_rec<CR>
+nnoremap <unique><Leader>g        :Denite -auto-resize -cursor-wrap -vertical-preview menu:git<CR>
+nnoremap <unique><Leader>m        :Denite -auto-resize -cursor-wrap -vertical-preview unite:file_mru<CR>
+noremap  <unique><leader>:        :Denite -auto-resize -cursor-wrap -vertical-preview command<CR>
+noremap  <unique><leader>o        :Denite -auto-resize -cursor-wrap -vertical-preview outline<CR>
 nnoremap <unique><leader>p        :YRShow<cr>
 nnoremap <unique><leader>u        :UndotreeToggle<cr>
 noremap  <unique><leader>n        :<C-U>echo(system("tmux if -F '#{s/1/0/:window_panes}' 'join-pane -d -s:1.{top} -t:+' 'join-pane -vb -p 40 -t:1 -s:+.{bottom}'"))<CR>
