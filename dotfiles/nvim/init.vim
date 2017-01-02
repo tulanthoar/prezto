@@ -17,28 +17,28 @@ Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-repeat'
-Plugin 'matchit.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tmhedberg/matchit'
 Plugin 'tpope/vim-unimpaired.git'
 Plugin 'godlygeek/tabular'
 Plugin 'haya14busa/vim-asterisk'
 
-" TODO replace YR, maybe tags, download MRU plugin
 Plugin 'Shougo/denite.nvim'
+Plugin 'Shougo/unite.vim'
+Plugin 'Shougo/neomru.vim'
+Plugin 'osyo-manga/unite-quickfix'
 " TODO configure tabline
 Plugin 'mkitt/tabline.vim'
-" TODO install this plugin
-Plugin 'Shougo/neomru.vim'
 
 let g:startify_bookmarks = [ {'n':'~/.config/nvim/init.vim'}, {'r':'~/.zprezto/runcoms'}, {'z':'~/.zshrc'}, {'p':'~/code/pyrep'}, {'l':'~/code/perl'} ]
 let g:startify_session_dir = '~/.config/nvim/files/session'
 let g:startify_list_order = [['Sess'], 'sessions',['MRU'], 'files',['MRU in CWD'], 'dir',['Marks'], 'bookmarks',['CMD'], 'commands']
-let g:startify_commands = [ {'m': ['CtrlP MRU','CtrlPMRUFiles']}, {'h':['help','Denite -auto-highlight -cursor-wrap -vertical-preview help']}, {'g':['grep','Denite -auto-highlight -cursor-wrap -vertical-preview grep']}, {'d':['dir search','Denite -auto-highlight -cursor-wrap -vertical-preview directory_rec']}, {'f':['all files','Denite -auto-highlight -cursor-wrap -vertical-preview file_rec']}, {'c':[': search','Denite -auto-highlight -cursor-wrap -vertical-preview commands']}]
-let g:startify_files_number = 5
+let g:startify_commands = [ {'m': ['Unite MRU','Denite unite:file_mru']}, {'h':['help','Denite -auto-highlight -cursor-wrap -vertical-preview help']}, {'g':['grep','Denite -auto-highlight -cursor-wrap -vertical-preview grep']}, {'d':['dir search','Denite -auto-highlight -cursor-wrap -vertical-preview directory_rec']}, {'f':['all files','Denite -auto-highlight -cursor-wrap -vertical-preview file_rec']}, {'c':['cmd search','Denite -auto-highlight -cursor-wrap -vertical-preview commands']}, {'P': ['Plugins Update', 'PluginUpdate']}]
+let g:startify_files_number = 4
 let g:startify_session_before_save = [ 'silent! TagbarClose' ]
 let g:startify_session_persistence = 1
 let g:startify_enable_special = 0
 let g:startify_session_sort = 1
-let g:startify_custom_indices = ['jj', 'jf', 'jd', 'js', 'ja', 'ff', 'fj', 'fk', 'fl', 'f;']
 Plugin 'mhinz/vim-startify'
 
 let g:surround_indent = 1
@@ -321,7 +321,7 @@ Plugin 'vim-scripts/YankRing.vim'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_cache_dir = '$HOME/.config/nvim/files/cache/ctrlp'
 let g:ctrlp_clear_cache_on_exit = 1
-let g:ctrlp_cmd = 'CtrlPMRUFiles'
+let g:ctrlp_cmd = 'CtrlPBufTag'
 let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix']
 let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_lazy_update = 10
@@ -334,7 +334,7 @@ let g:ctrlp_prompt_mappings = {'ToggleType(1)': ['<M-n>', '<C-up>'],
                              \ 'PrtCurRight()': ['<right>']}
 let g:ctrlp_regexp = 1
 let g:ctrlp_tilde_homedir = 1
-let g:ctrlp_types = ['mru']
+let g:ctrlp_types = []
 let g:ctrlp_user_command  = 'ag -i --hidden -l --nocolor -g "" %s'
 let g:ctrlp_working_path_mode = 'a'
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -367,7 +367,7 @@ set expandtab
 set ffs=unix,dos,mac
 set foldclose=all
 set foldcolumn=2
-set foldlevel=1
+set foldlevel=2
 set foldminlines=2
 set hidden
 set helpheight=40
@@ -419,6 +419,24 @@ function! s:config_easyfuzzymotion(...) abort
                 \ }), get(a:, 1, {}))
 endfunction
 
+let g:denite_menus = {}
+let g:denite_menus.git = {'description': 'gestionar repositorios git'}
+let g:denite_menus.git.command_candidates = [
+    \['▷ git status       (Fugitive)                      ', 'Gstatus'],
+    \['▷ git diff         (Fugitive)                      ', 'Gdiff'],
+    \['▷ git commit       (Fugitive)                      ', 'Gcommit'],
+    \['▷ git log          (Fugitive)                      ', 'Glog'],
+    \['▷ git blame        (Fugitive)                      ', 'Gblame'],
+    \['▷ git stage        (Fugitive)                      ', 'Gwrite'],
+    \['▷ git checkout     (Fugitive)                      ', 'Gread'],
+    \['▷ git rm           (Fugitive)                      ', 'Gremove'],
+    \['▷ git push         (Fugitive, salida por buffer)   ', 'Git! push'],
+    \['▷ git pull         (Fugitive, salida por buffer)   ', 'Git! pull'],
+    \['▷ git cd           (Fugitive)                      ', 'Gcd'],
+\['▷ preview hunk           (GitGutter)                      ', 'GitGutterPreviewHunk'],
+\['▷ undo hunk           (GitGutter)                      ', 'GitGutterUndoHunk'],
+    \]
+
 noremap  <unique><silent><expr> ;<Space> incsearch#go(<SID>config_easyfuzzymotion())
 noremap  <unique><silent><expr> j        (v:count1 == 1 ? 'gj' : 'j')
 noremap  <unique><silent><expr> k        (v:count1 == 1 ? 'gk' : 'k')
@@ -427,8 +445,8 @@ nmap     <unique>?                       <Plug>(incsearch-fuzzy-stay)
 map      <unique>;                       <Plug>(easymotion-prefix)
 nmap     <unique><M-l>                   <Plug>MoveLineHalfPageDownzz
 nmap     <unique><M-h>                   <Plug>MoveLineHalfPageUpzz
-vmap     <unique><M-l>                   <Plug>MoveBlockHalfPageDownzz
-vmap     <unique><M-h>                   <Plug>MoveBlockHalfPageUpzz
+xmap     <unique><M-l>                   <Plug>MoveBlockHalfPageDownzz
+xmap     <unique><M-h>                   <Plug>MoveBlockHalfPageUpzz
 xmap     <unique>v                       <Plug>(expand_region_expand)
 map      <unique>*                       <Plug>(asterisk-z*)<Plug>(easymotion-bd-n)
 map      <unique>#                       <Plug>(asterisk-z#)<Plug>(easymotion-bd-n)
@@ -508,13 +526,9 @@ nmap <unique>[c      ]<space>yil:m+<cr>gcckp
 nmap <unique>]c      ]<space>yil:m+<cr>kpgccj
 
 let g:mapleader=","
-nmap     <unique><Leader>gu      <Plug>GitGutterUndoHunk
-nmap     <unique><Leader>g<CR>   <Plug>GitGutterPreviewHunk
 nmap     <unique><leader><CR>    MVz^ozzz+zb<cr>
 nnoremap <unique><leader>z       zjza
 nnoremap <unique><leader>r       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
-nnoremap <unique><leader>t       :CtrlPBufTag<CR>
-nnoremap <unique><leader>T       :CtrlPBufTagAll<CR>
 nmap     <unique><leader><Space> <Plug>(easymotion-bd-n)
 nnoremap <unique><Leader>v       <C-V>
 nnoremap <unique><leader>sp      :setlocal spell!<cr>
@@ -528,16 +542,21 @@ nmap     <unique><Leader><CR>     <Plug>NrrwrgnWinIncr
 nnoremap <unique><leader><leader> :exe "tabn ".g:lasttab<cr>
 nnoremap <unique><leader><Space>  :Startify<CR>
 nnoremap <unique><leader>b        :Denite -auto-highlight -cursor-wrap -vertical-preview buffer<CR>
+nnoremap <unique><leader>q        :Denite -auto-highlight -cursor-wrap -vertical-preview unite:quickfix<CR>
+nnoremap <unique><leader>c        :Denite -auto-highlight -cursor-wrap -vertical-preview unite:location_list<CR>
 noremap  <unique><leader>h        :Denite -auto-highlight -cursor-wrap -vertical-preview help<CR>
 noremap  <unique><leader>l        :Denite -auto-highlight -cursor-wrap -vertical-preview line<CR>
 noremap  <unique><leader>d        :Denite -auto-highlight -cursor-wrap -vertical-preview directory_rec<CR>
 call denite#custom#var('file_rec', 'command', ['rg', '--files', '--follow', '--hidden', '--glob', '!.git', '--glob', '!.gitignore', '--glob', '!.gitsubmodules', '--glob', '!.cache'])
+call denite#custom#var('menu', 'menus', g:denite_menus)
 noremap  <unique><leader>f        :Denite -auto-highlight -cursor-wrap -vertical-preview file_rec<CR>
+nnoremap <unique><Leader>g        :Denite menu:git<CR>
+nnoremap <unique><Leader>m        :Denite -vertical-preview unite:file_mru<CR>
 noremap  <unique><leader>:        :Denite -auto-highlight -cursor-wrap -vertical-preview command<CR>
 noremap  <unique><leader>o        :Denite -auto-highlight -cursor-wrap -vertical-preview outline<CR>
 nnoremap <unique><leader>p        :YRShow<cr>
 nnoremap <unique><leader>u        :UndotreeToggle<cr>
-noremap  <unique><leader>n        :<C-U>echo(system("tmux if -F '#{s/1/0/:window_panes}' 'join-pane -d -s:nvim.{top} -t ranger' 'join-pane -vb -p 40 -t nvim -s:ranger.{bottom}'"))<CR>
+noremap  <unique><leader>n        :<C-U>echo(system("tmux if -F '#{s/1/0/:window_panes}' 'join-pane -d -s:1.{top} -t:+' 'join-pane -vb -p 40 -t:1 -s:+.{bottom}'"))<CR>
 nmap     <unique><leader>t        <Plug>TaskListjj
 
 let g:mapleader="\\"
