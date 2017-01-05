@@ -46,6 +46,7 @@ export LESS='-F -g -i -M -R -S -w -X -z-4'
 
 export TMPDIR=/tmp/$LOGNAME
 [[ -d $TMPDIR ]]|| mkdir -p -m 700 $TMPDIR
+export NVIM_LISTEN_ADDRESS=$TMPDIR/nvim_omni
 
 TMPPREFIX=${TMPDIR%/}/zsh
 

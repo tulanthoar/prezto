@@ -1,3 +1,4 @@
+alias swappone='tmux swap-window -t:+'
 alias drun='docker run -it --rm'
 alias pl='perl '
 alias pli='sudo cpanm '

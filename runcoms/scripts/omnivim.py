@@ -36,7 +36,8 @@ def call_neovim(editor, editor_flags, files, nvim_socket_path='/tmp'):
     # Neovim instances in this script are formattted "/tmp/nvim-@n.omni"
     win = subprocess.check_output(["tmux", "display-message", "-p", "#{window_id}"])
     win = win.rstrip().strip().decode('utf-8')
-    socket_path = os.path.join(nvim_socket_path, ''.join(['nvim.omni']))
+    #socket_path = os.path.join(nvim_socket_path, ''.join(['nvim_omni']))
+    socket_path = os.environ.get("NVIM_LISTEN_ADDRESS")
 
     if os.path.exists(socket_path):
         # socket already associated with this window.
@@ -46,7 +47,7 @@ def call_neovim(editor, editor_flags, files, nvim_socket_path='/tmp'):
             nvim.command('e ' + os.path.join(os.path.abspath(os.curdir), file))
     else:
         # no associated socket. So we create a new Neovim instance
-        command = ['NVIM_LISTEN_ADDRESS=' + socket_path, editor] + editor_flags + files
+        command = [editor] + editor_flags + files
 
         # run tmux_send_keys, tmux recognises Vim is running, vim-tmux-navigator not break
         tmux_send_keys(command)
