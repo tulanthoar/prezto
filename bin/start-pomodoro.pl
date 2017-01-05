@@ -42,62 +42,69 @@ my $h      = q@--height=@;
 my $w      = q@--width=@;
 my $popts  = q@--no-cancel --auto-close@;
 my $iotie  = io->file(q@/tmp/pomodoro-status@)->tie->touch->assert;
+io->file(qq@$ENV{HOME}/.pomodoro_session@)->touch->assert;
+### number of arguments is: scalar @ARGV
+my $nameargs = (scalar @ARGV).q{};
+### as a string: $nameargs
+croak q@either 0 or 2 [work minutes:break minutes] arguments required@ unless ($nameargs =~ /[02]/);
+my $pomtime = 25;
+my $breaktime = 5;
+($pomtime, $breaktime) = @ARGV if $nameargs =~ /2/;
 
 # prepare the job
 my $job = AnyEvent::Subprocess->new(
     delegates     => [q@StandardHandles@],
-    on_completion => method()
-    {
-        croak q@bad exit status@ unless $self->is_success;
-    },
-    code => q@pymodoro -p '>' -b '_' -e '!' -l 20 -ltr -i 10@
+    code => qq@pymodoro -p '>' -b '_' -e '!' -l 20 -ltr -i 2 $pomtime $breaktime@
 );
 my $run = $job->run;
+
+my $unpause = AnyEvent::Subprocess::Job::Delegate::Callback->new(
+    name             => q@unpause@,
+    child_setup_hook => method( $runner, @args )
+    {
+        sleep ( 10 );
+        $run->kill(18);
+    },
+);
+
+my $progress = AnyEvent::Subprocess->new(
+    delegates     => [$unpause, q@StandardHandles@],
+    code => qq@${notify}progress ${msg}'break time' $popts ${w}500@
+);
+my $progressrun = $progress->run;
+$progressrun->delegate(q@stdin@)->handle->push_write(q@100@);
+$progressrun->delegate(q@stdin@)->handle->on_error(
+    sub {
+        my ( $hdl, $fatal, $m ) = @_;
+        say qq@fatal: ${fatal}; error: $m@;
+        # $hdl->close_fh;
+        # $progressrun = $progress->run;
+    }
+);
 
 my $cbdel = AnyEvent::Subprocess::Job::Delegate::Callback->new(
     name             => q@callback@,
     child_setup_hook => method( $runner, @args )
     {
-        $run->kill(19)
+        $run->kill(19);
     },
     completion_hook => method( $runner, @args )
     {
-        $run->kill(18)
-    }
-);
-
-my $progress = AnyEvent::Subprocess->new(
-    delegates     => [qw@StandardHandles@],
-    on_completion => method()
-    {
-        croak q@bad exit status@ unless $self->is_success;
-    },
-    code => qq@${notify}progress ${msg}'break time' $popts ${w}500@
-);
-my $progressrun = $progress->run;
-$progressrun->delegate(q@stdin@)->handle->on_error(
-    sub {
-        my ( $hdl, $fatal, $m ) = @_;
-        say qq@fatal: ${fatal}; error: $m@;
-        $progressrun = $progress->run;
-        $hdl->push_write($iotie->[0]);
+        $run->kill(18);
+        io->file(qq@$ENV{HOME}/.pomodoro_session@)->touch->assert;
     }
 );
 
 my $msgjob = AnyEvent::Subprocess->new(
     delegates     => [$cbdel],
-    on_completion => method()
-    {
-        croak q@bad exit status@ unless $self->is_success;
-        io->file(qq@$ENV{HOME}/.pomodoro_session@)->touch->assert;
-    },
-    code => qq@${notify}info ${msg}'start anew?' ${w}100 ${h}100@
+    code => qq@${notify}info ${msg}'start a new timer?' ${w}200 ${h}100@
 );
 
 sub elap_percen {
     my ( $minutes, $seconds ) = @_;
-    ### time percent : ($minutes * 60 + $seconds)*100/300
-    return ($minutes * 60 + $seconds)*100/300;
+    ### remaining time percent : ($minutes * 60 + $seconds)*100/ (60*$breaktime)
+    my $remain = ( $minutes * 60 + $seconds ) * 100 / (60*$breaktime);
+    return int(100 - $remain)
 }
 
 sub w_l {
@@ -105,28 +112,21 @@ sub w_l {
     my $elapsed = 0;
     ### pymodoro line: $line
     $iotie->[0] = $line;
-    if ( $line =~ /^B \h _{0,1}!+ \h 04:5([0-9])$/x ) {
-        ### Matched first regexp: $&
-        ### seconds captured: $1
-        $progressrun = $progress->run;
-        $elapsed = elap_percen( 4, 50 + $1 );
-### elapsed is: $elapsed
-        $progressrun->delegate(q@stdin@)->handle->push_write(qq@$elapsed\n@);
-    }
-    if ( $line =~ /^B \h [_!]+ \h 0([0-4]):([0-9]{2})$/x ) {
-### Matched second regexp: $&
+if ( $line =~ /^P \h [>!]+ \h 00:0[0-9]$/x ) {
+$run->kill(19);
+$progressrun = $progress->run;
+}
+    if ( $line =~ /^B \h [_!]+ \h 0([0-9]):([0-9]{2})$/x ) {
+        ### Matched second regexp: $&
         ### Matched minutes, seconds captured: $1.q{ }.$2.q{ }
         $elapsed = elap_percen( $1, $2 );
         ### elapsed is: $elapsed
-        $progressrun->delegate(q@stdin@)->handle->push_write(qq@$elapsed\n@);
-    }
-    elsif ( $line =~ /^B \h 05:0[0-9] \h min/x ) {
-        ### Matched third regexp: $&
-        $progressrun->delegate(q@stdin@)->handle->push_write(qq@100\n@);
-        $msgjob->run;
+        # $progressrun = $progress->run;
+        $progressrun->delegate(q@stdin@)->handle->push_write(qq@$elapsed\n@) if $elapsed < 100;
     }
     elsif ( $line =~ /^B \h [0-9]{2}:[0-9]{2} \h \w/x ) {
         ### Matched fourth regexp: $&
+        $progressrun->kill(9);
         $msgjob->run;
     }
     return $line;
