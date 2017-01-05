@@ -7,24 +7,24 @@ allow_bold = true
 dynamic_title = true
 urgent_on_bell = true
 clickable_url = true
-font = Hack 10
-scrollback_lines = 10000
+font = Hack 11
+scrollback_lines = 1000000
 search_wrap = true
 #icon_name = terminal
 #geometry = 640x480
 
 # "system", "on" or "off"
-cursor_blink = system
+cursor_blink = off
 
 # "block", "underline" or "ibeam"
-cursor_shape = block
+cursor_shape = ibeam
 
 # $BROWSER is used by default if set, with xdg-open as a fallback
 #browser = xdg-open
 
 # set size hints for the window
 #size_hints = false
-
+fullscreen = true
 # Hide links that are no longer valid in url select overlay mode
 filter_unmatched_urls = true
 
@@ -32,7 +32,7 @@ filter_unmatched_urls = true
 #modify_other_keys = false
 
 [colors]
-#cursor = #dcdccc
+cursor = #6a6a48
 #cursor_foreground = #dcdccc
 foreground = #d8d8d8
 foreground_bold = #ffffff
