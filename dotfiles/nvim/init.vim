@@ -4,6 +4,7 @@ filetype off
 let g:mapleader="\\"
 set rtp+=$HOME/.config/nvim/bundle/Vundle.vim
 call vundle#begin('$HOME/.config/nvim/bundle')
+
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'ascenator/L9'
@@ -23,6 +24,7 @@ Plugin 'tmhedberg/matchit'
 Plugin 'godlygeek/tabular'
 Plugin 'haya14busa/vim-asterisk'
 Plugin 'mkitt/tabline.vim'
+Plugin 'vim-utils/vim-man'
 
 let g:neomru#filename_format = ":p:s?^/usr/lib?/u/l?:s?^/etc/?/e/?:~"
 let g:neomru#update_interval = 60
@@ -33,7 +35,6 @@ Plugin 'Shougo/denite.nvim'
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/neomru.vim'
 Plugin 'osyo-manga/unite-quickfix'
-Plugin 'vim-utils/vim-man'
 
 let g:multi_cursor_next_key='<C-s>'
 let g:multi_cursor_prev_key='<C-p>'
@@ -423,20 +424,20 @@ au VimEnter * command! -nargs=* -bar -complete=customlist,man#completion#run
 let g:denite_menus = {}
 let g:denite_menus.git = {'description': 'git stuff'}
 let g:denite_menus.git.command_candidates = [
-    \['▷ git status       (Fugitive)                      ', 'Gstatus'],
-    \['▷ git diff         (Fugitive)                      ', 'Gdiff'],
-    \['▷ git commit       (Fugitive)                      ', 'Gcommit'],
-    \['▷ git log          (Fugitive)                      ', 'Glog'],
-    \['▷ git blame        (Fugitive)                      ', 'Gblame'],
-    \['▷ git stage        (Fugitive)                      ', 'Gwrite'],
-    \['▷ git checkout     (Fugitive)                      ', 'Gread'],
-    \['▷ git rm           (Fugitive)                      ', 'Gremove'],
-    \['▷ git push         (Fugitive)                      ', 'Git! push'],
-    \['▷ git pull         (Fugitive)                      ', 'Git! pull'],
-    \['▷ git cd           (Fugitive)                      ', 'Gcd'],
-    \['▷ preview hunk     (GitGutter)                     ', 'GitGutterPreviewHunk'],
-    \['▷ undo hunk        (GitGutter)                     ', 'GitGutterUndoHunk'],
-    \['▷ stage hunk       (GitGutter)                     ', 'GitGutterStageHunk'],
+    \['▷ git status       (Fugitive)    ', 'Gstatus'],
+    \['▷ git diff         (Fugitive)    ', 'Gdiff'],
+    \['▷ git commit       (Fugitive)    ', 'Gcommit'],
+    \['▷ git log          (Fugitive)    ', 'Glog'],
+    \['▷ git blame        (Fugitive)    ', 'Gblame'],
+    \['▷ git stage        (Fugitive)    ', 'Gwrite'],
+    \['▷ git checkout     (Fugitive)    ', 'Gread'],
+    \['▷ git rm           (Fugitive)    ', 'Gremove'],
+    \['▷ git push         (Fugitive)    ', 'Git! push'],
+    \['▷ git pull         (Fugitive)    ', 'Git! pull'],
+    \['▷ git cd           (Fugitive)    ', 'Gcd'],
+    \['▷ preview hunk     (GitGutter)   ', 'GitGutterPreviewHunk'],
+    \['▷ undo hunk        (GitGutter)   ', 'GitGutterUndoHunk'],
+    \['▷ stage hunk       (GitGutter)   ', 'GitGutterStageHunk'],
     \]
 
 let g:denite_menus.sh = {'description': 'shell cmds'}
@@ -451,7 +452,7 @@ let g:denite_menus.sh.command_candidates = [
             \]
 
 call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_ops', ['--vimgrep', '--no-heading' '--hidden', '-SL', '--glob', '!.git', '--glob', '!.gitignore', '--glob', '!.gitsubmodules', '--glob', '!.cache'])
+call denite#custom#var('grep', 'default_ops', ['--vimgrep', '--no-heading', '--hidden', '-SL', '--glob', '!.git', '--glob', '!.gitignore', '--glob', '!.gitsubmodules', '--glob', '!.cache'])
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
@@ -468,168 +469,171 @@ call denite#custom#var('grep', 'final_opts', [])
 "    execute 'vnoremap <silent>' key ':QuickRun' com '-mode v<CR>'
 "endfor
 
-map      <unique>;                       <Plug>(easymotion-prefix)
-map  <silent><expr><unique> j        (v:count1 == 1 ? '<Plug>(easymotion-j)' : 'j')
-map  <silent><expr><unique> k        (v:count1 == 1 ? '<Plug>(easymotion-k)' : 'k')
-map     <silent><expr><unique>f       (v:count1 == 1 ? '<Plug>(easymotion-bd-fl)' : 'f')
-map     <silent><expr><unique>t       (v:count1 == 1 ? '<Plug>(easymotion-bd-tl)' : 't')
-map     <silent><expr><unique>w       (v:count1 == 1 ? '<Plug>(easymotion-bd-wl)' : 'w')
-map     <unique>s       <Plug>(easymotion-bd-f2)
-map     <unique>K       <Plug>(easymotion-sol-bd-jk)
-noremap  <silent><expr><unique>;<Space> incsearch#go(<SID>config_easyfuzzymotion())
-nmap     <unique>g/                      <Plug>(incsearch-fuzzy-/)
-nmap     <unique>?                       <Plug>(incsearch-fuzzy-stay)
-map      <unique>*                       <Plug>(asterisk-z*)<Plug>(easymotion-bd-n)
-map      <unique>S                       <Plug>(asterisk-z*)<Plug>(easymotion-bd-n)
-map      <unique>#                       <Plug>(asterisk-z#)<Plug>(easymotion-bd-n)
-map      <unique>g*                      <Plug>(asterisk-gz*)<Plug>(easymotion-bd-n)
-map      <unique>gS                      <Plug>(asterisk-gz*)<Plug>(easymotion-bd-n)
-map      <unique>g#                      <Plug>(asterisk-gz#)<Plug>(easymotion-bd-n)
-nnoremap <unique>/                       :<C-U>Denite -cursor-wrap -vertical-preview line<CR>
+map                   <unique>;        <Plug>(easymotion-prefix)
+map     <silent><expr><unique>j        (v:count1 == 1 ? '<Plug>(easymotion-j)' : 'j')
+map     <silent><expr><unique>k        (v:count1 == 1 ? '<Plug>(easymotion-k)' : 'k')
+map     <silent><expr><unique>f        (v:count1 == 1 ? '<Plug>(easymotion-bd-fl)' : 'f')
+map     <silent><expr><unique>t        (v:count1 == 1 ? '<Plug>(easymotion-bd-tl)' : 't')
+map     <silent><expr><unique>w        (v:count1 == 1 ? '<Plug>(easymotion-bd-wl)' : 'w')
+map           <silent><unique>s        <Plug>(easymotion-bd-f2)
+map           <silent><unique>K        <Plug>(easymotion-sol-bd-jk)
+noremap <silent><expr><unique>;<Space> incsearch#go(<SID>config_easyfuzzymotion())
+nmap                  <unique>g/       <Plug>(incsearch-fuzzy-/)
+nmap                  <unique>?        <Plug>(incsearch-fuzzy-stay)
+map                   <unique>*        <Plug>(asterisk-z*)<Plug>(easymotion-bd-n)
+map                   <unique>S        <Plug>(asterisk-z*)<Plug>(easymotion-bd-n)
+map                   <unique>#        <Plug>(asterisk-z#)<Plug>(easymotion-bd-n)
+map                   <unique>g*       <Plug>(asterisk-gz*)<Plug>(easymotion-bd-n)
+map                   <unique>gS       <Plug>(asterisk-gz*)<Plug>(easymotion-bd-n)
+map                   <unique>g#       <Plug>(asterisk-gz#)<Plug>(easymotion-bd-n)
+nnoremap      <silent><unique>/        :<C-U>Denite -cursor-wrap -vertical-preview line<CR>
 
-nmap     <unique><M-l>                   <Plug>MoveLineHalfPageDownzz
-nmap     <unique><M-h>                   <Plug>MoveLineHalfPageUpzz
-xmap     <unique><M-l>                   <Plug>MoveBlockHalfPageDownzz
-xmap     <unique><M-h>                   <Plug>MoveBlockHalfPageUpzz
-xmap <unique>gc        <Plug>NERDCommenterInvert
-xmap <unique>gC        <Plug>NERDCommenterComment
-nmap <unique>gcc        <Plug>NERDCommenterInvert
-nmap <unique>gcl        <Plug>NERDCommenterAppend
-nmap <unique>gcL        <Plug>NERDCommenterToEOL
-nmap <unique>gcy        <Plug>NERDCommenterYank
-xmap     <unique>v                       <Plug>(expand_region_expand)
-nmap     <unique><CR>  <Plug>unimpairedBlankDown
-xmap     <unique><CR>   <Plug>NrrwrgnDo
-smap <expr><unique><CR> pumvisible() ? deoplete#close_popup() :
-            \ neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" :
-            \ delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" :
-            \ delimitMate#ShouldJump() ? "\<Plug>delimitMateS-Tab" : "\<C-C>"
-imap <expr><unique><CR> pumvisible() ? deoplete#close_popup() :
-            \ neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" :
-            \ delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" :
-            \ delimitMate#ShouldJump() ? "\<Plug>delimitMateS-Tab" : "\<C-C>"
-imap <unique><C-L>  <Plug>delimitMateS-Tab
-nmap <unique>[g      <Plug>GitGutterPrevHunk
-nmap <unique>]g      <Plug>GitGutterNextHunk
-omap <unique>ig      <Plug>GitGutterTextObjectInnerPending
-omap <unique>ag      <Plug>GitGutterTextObjectOuterPending
-xmap <unique>ig      <Plug>GitGutterTextObjectInnerVisual
-xmap <unique>ag      <Plug>GitGutterTextObjectOuterVisual
-nmap <unique><M-[>   yil<Plug>unimpairedPutBelowk
-nmap <unique><M-]>   yil<Plug>unimpairedPutBelow
-nmap <unique>[c      <Plug>NERDCommenterYank<Plug>unimpairedPutAbove
-nmap <unique>]c      <Plug>NERDCommenterYank<Plug>unimpairedPutBelow
-cnoremap <unique>t/   Tabularize /./l1c1l0
+xmap     <unique>gc    <Plug>NERDCommenterInvert
+xmap     <unique>gC    <Plug>NERDCommenterComment
+nmap     <unique>gcc   <Plug>NERDCommenterInvert
+nmap     <unique>gcl   <Plug>NERDCommenterAppend
+nmap     <unique>gcL   <Plug>NERDCommenterToEOL
+nmap     <unique>gcy   <Plug>NERDCommenterYank
+xmap     <unique>v     <Plug>(expand_region_expand)
+xmap     <unique><CR>  <Plug>NrrwrgnDo
+cnoremap <unique>t/    Tabularize /./l1c1l0
+imap     <unique><C-L> <Plug>delimitMateS-Tab
 
-nnoremap <unique>H     Hzz
-nnoremap <unique>L     Lzz
+smap <expr><unique><CR> pumvisible()              ? deoplete#close_popup() :
+            \ neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" :
+            \ delimitMate#WithinEmptyPair()       ? "\<Plug>delimitMateCR" :
+            \ delimitMate#ShouldJump()            ? "\<Plug>delimitMateS-Tab" : "\<C-C>"
+imap <expr><unique><CR> pumvisible()              ? deoplete#close_popup() :
+            \ neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" :
+            \ delimitMate#WithinEmptyPair()       ? "\<Plug>delimitMateCR" :
+            \ delimitMate#ShouldJump()            ? "\<Plug>delimitMateS-Tab" : "\<C-C>"
+
+nmap <unique><CR>  <Plug>unimpairedBlankDown
+omap <unique>ig    <Plug>GitGutterTextObjectInnerPending
+omap <unique>ag    <Plug>GitGutterTextObjectOuterPending
+xmap <unique>ig    <Plug>GitGutterTextObjectInnerVisual
+xmap <unique>ag    <Plug>GitGutterTextObjectOuterVisual
+nmap <unique><M-[> yil<Plug>unimpairedPutBelowk
+nmap <unique><M-]> yil<Plug>unimpairedPutBelow
+nmap <unique>[c    <Plug>NERDCommenterYank<Plug>unimpairedPutAbove
+nmap <unique>]c    <Plug>NERDCommenterYank<Plug>unimpairedPutBelow
+nmap <unique>[g    <Plug>GitGutterPrevHunk
+nmap <unique>]g    <Plug>GitGutterNextHunk
+nmap <unique><M-l> <Plug>MoveLineHalfPageDownzz
+nmap <unique><M-h> <Plug>MoveLineHalfPageUpzz
+xmap <unique><M-l> <Plug>MoveBlockHalfPageDownzz
+xmap <unique><M-h> <Plug>MoveBlockHalfPageUpzz
+
+nnoremap <unique>H       Hzz
+nnoremap <unique>L       Lzz
 nnoremap <unique><Space> <C-O>
-vnoremap <unique>J      <esc>
-inoremap <unique>jf     <esc>
-inoremap <unique>fj     <esc>
-inoremap <unique><C-C>  <esc>
-noremap <unique>^      0
-noremap <unique>0      ^
-noremap <unique>gs     ^
-noremap <unique>gl     $
+vnoremap <unique>J       <esc>
+inoremap <unique>jf      <esc>
+inoremap <unique>fj      <esc>
+inoremap <unique><C-C>   <esc>
+noremap  <unique>^       0
+noremap  <unique>0       ^
+noremap  <unique>gs      ^
+noremap  <unique>gl      $
 
-nnoremap  <unique><C-H>   :<C-U>TmuxNavigateLeft<cr>
-nnoremap  <unique><C-J>   :<C-U>TmuxNavigateDown<cr>
-nnoremap  <unique><C-K>   :<C-U>TmuxNavigateUp<cr>
-nnoremap  <unique><C-L>   :<C-U>TmuxNavigateRight<cr>
-nnoremap  <unique>g<Space>   :<C-U>TmuxNavigatePrevious<cr>
-nnoremap <unique>F       :<C-U>Denite -cursor-wrap -vertical-preview grep<CR>
-inoremap <unique><F1>  <Delete>
-inoremap <unique><F4>  <esc>:w<cr>
-noremap  <unique><F4>  <esc>:w<cr>
-nnoremap <unique><silent><C-]>           :ta<CR>
-nnoremap <unique><silent><C-[>           :po<CR>
-nnoremap <unique><silent><C-T>           g<C-]>
+nnoremap  <silent><unique><C-H>    :<C-U>TmuxNavigateLeft<CR>
+nnoremap  <silent><unique><C-J>    :<C-U>TmuxNavigateDown<CR>
+nnoremap  <silent><unique><C-K>    :<C-U>TmuxNavigateUp<CR>
+nnoremap  <silent><unique><C-L>    :<C-U>TmuxNavigateRight<CR>
+nnoremap  <silent><unique>g<Space> :<C-U>TmuxNavigatePrevious<CR>
+nnoremap  <silent><unique>F        :<C-U>Denite -cursor-wrap -vertical-preview grep<CR>
+inoremap  <silent><unique><F4>     <esc>:<C-U>w<CR>
+nnoremap  <silent><unique><F4>     <esc>:<C-U>w<CR>
+nnoremap  <silent><unique><C-]>    :<C-U>ta<CR>
+nnoremap  <silent><unique><C-[>    :<C-U>po<CR>
+nnoremap  <silent><unique><C-T>    g<C-]>
 
 let g:mapleader=","
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
-nmap <leader>h <Plug>AirlineSelectPrevTab
-nmap <leader>l <Plug>AirlineSelectNextTab
-nmap     <unique><leader><CR>    :<C-U>NW<CR>
-nnoremap <unique><leader>/       /
-nnoremap <unique><leader>z       zjzA
-nnoremap <unique><leader>r       :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
-nmap     <unique><leader><Space> <Plug>(easymotion-bd-n)
-nnoremap <unique><Leader>v       <C-V>
-nnoremap <unique><Leader>,       qj
-nnoremap <unique><Leader>.       @j
-noremap  <unique><leader>q       :q<CR>
-noremap  <unique><leader>d       :hide<CR>
-nnoremap <unique><leader>sv :vs<cr>
-nnoremap <unique><leader>sh   :sp<cr>
+nmap             <unique><leader>1       <Plug>AirlineSelectTab1
+nmap             <unique><leader>2       <Plug>AirlineSelectTab2
+nmap             <unique><leader>3       <Plug>AirlineSelectTab3
+nmap             <unique><leader>4       <Plug>AirlineSelectTab4
+nmap             <unique><leader>5       <Plug>AirlineSelectTab5
+nmap             <unique><leader>6       <Plug>AirlineSelectTab6
+nmap             <unique><leader>7       <Plug>AirlineSelectTab7
+nmap             <unique><leader>8       <Plug>AirlineSelectTab8
+nmap             <unique><leader>9       <Plug>AirlineSelectTab9
+nmap             <unique><leader>h       <Plug>AirlineSelectPrevTab
+nmap             <unique><leader>l       <Plug>AirlineSelectNextTab
+nmap     <silent><unique><leader><CR>    :<C-U>NW<CR>
+nnoremap         <unique><leader>/       /
+nnoremap         <unique><leader>z       zjzA
+nnoremap <silent><unique><leader>r       :<C-U>nohlsearch<CR>:<C-U>diffupdate<CR>: syntax sync fromstart<CR><c-l>
+nmap             <unique><leader><Space> <Plug>(easymotion-bd-n)
+nnoremap         <unique><leader>v       <C-V>
+nnoremap         <unique><leader>,       qj
+nnoremap         <unique><leader>.       @j
+noremap  <silent><unique><leader>q       :<C-U>q<CR>
+noremap  <silent><unique><leader>d       :<C-U>hide<CR>
+nnoremap <silent><unique><leader>sv      :<C-U>vs<CR>
+nnoremap <silent><unique><leader>sh      :<C-U>sp<CR>
 
 call denite#custom#map( 'insert', '<C-j>', '<denite:move_to_next_line>', 'noremap' )
 call denite#custom#map( 'insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
 call denite#custom#var('file_rec', 'command', ['rg', '--files', '--follow', '--hidden', '--glob', '!.git', '--glob', '!.gitignore', '--glob', '!.gitsubmodules', '--glob', '!.cache'])
 call denite#custom#var('menu', 'menus', g:denite_menus)
+
 let g:mapleader="-"
-nmap     <unique><Leader><CR>     <Plug>NrrwrgnWinIncr
-nnoremap <unique><leader><leader> :exe "tabn ".g:lasttab<cr>
-nnoremap <unique><leader><Space>  :Startify<CR>
-nnoremap <unique><leader>q        :Denite -cursor-wrap -vertical-preview unite:quickfix<CR>
-nnoremap  <unique><leader>f        :Denite -cursor-wrap -vertical-preview file_rec<CR>
-nnoremap  <unique><leader>F        :Denite -cursor-wrap -vertical-preview file_rec:~<CR>
-nnoremap  <unique><leader>o        :Denite -cursor-wrap -vertical-preview outline<CR>
-nnoremap <unique><leader>l        :Denite -cursor-wrap -vertical-preview unite:location_list<CR>
-nnoremap  <unique><leader>d        :Denite -cursor-wrap -vertical-preview directory_rec<CR>
-nnoremap  <unique><leader>D        :Denite -cursor-wrap -vertical-preview directory_rec:~<CR>
-nnoremap <unique><leader>b        :Denite -cursor-wrap -vertical-preview buffer<CR>
-nnoremap  <unique><leader>h        :Denite -cursor-wrap -vertical-preview help<CR>
-nnoremap <unique><Leader>g        :Denite -cursor-wrap -vertical-preview menu:git<CR>
-nnoremap <unique><Leader>s        :Denite -cursor-wrap -vertical-preview menu:sh<CR>
-nnoremap <unique><Leader>m        :Denite -cursor-wrap -vertical-preview unite:file_mru<CR>
-noremap  <unique><leader>:        :Denite -cursor-wrap -vertical-preview command<CR>
-nnoremap <unique><leader>y        :YRShow<cr>
-nnoremap <unique><leader>u        :UndotreeToggle<cr>
-nnoremap  <unique><leader>n        :<C-U>echo(system("tmux if -F '#{s/1/0/:window_panes}' 'join-pane -d -s:2.{top} -t:+' 'join-pane -vb -p 40 -t:2 -s:+.{bottom}'"))<CR>
-nmap     <unique><leader>t        <Plug>TaskListjj
+nmap              <unique><leader><CR>     <Plug>NrrwrgnWinIncr
+nnoremap  <silent><unique><leader><leader> :exe "tabn ".g:lasttab<CR>
+nnoremap  <silent><unique><leader><Space>  :Startify<CR>
+nnoremap  <silent><unique><leader>q        :Denite -cursor-wrap -vertical-preview unite:quickfix<CR>
+nnoremap  <silent><unique><leader>f        :Denite -cursor-wrap -vertical-preview file_rec<CR>
+nnoremap  <silent><unique><leader>F        :Denite -cursor-wrap -vertical-preview file_rec:~<CR>
+nnoremap  <silent><unique><leader>o        :Denite -cursor-wrap -vertical-preview outline<CR>
+nnoremap  <silent><unique><leader>l        :Denite -cursor-wrap -vertical-preview unite:location_list<CR>
+nnoremap  <silent><unique><leader>d        :Denite -cursor-wrap -vertical-preview directory_rec<CR>
+nnoremap  <silent><unique><leader>D        :Denite -cursor-wrap -vertical-preview directory_rec:~<CR>
+nnoremap  <silent><unique><leader>b        :Denite -cursor-wrap -vertical-preview buffer<CR>
+nnoremap  <silent><unique><leader>h        :Denite -cursor-wrap -vertical-preview help<CR>
+nnoremap  <silent><unique><leader>g        :Denite -cursor-wrap -vertical-preview menu:git<CR>
+nnoremap  <silent><unique><leader>s        :Denite -cursor-wrap -vertical-preview menu:sh<CR>
+nnoremap  <silent><unique><leader>m        :Denite -cursor-wrap -vertical-preview unite:file_mru<CR>
+noremap   <silent><unique><leader>:        :Denite -cursor-wrap -vertical-preview command<CR>
+nnoremap  <silent><unique><leader>y        :YRShow<CR>
+nnoremap  <silent><unique><leader>u        :UndotreeToggle<CR>
+nnoremap  <silent><unique><leader>n        :<C-U>echo(system("tmux if -F '#{s/1/0/:window_panes}' 'join-pane -d -s:2.{top} -t:+' 'join-pane -vb -p 40 -t:2 -s:+.{bottom}'"))<CR>
+nmap              <unique><leader>t        <Plug>TaskListjj
 
 let g:mapleader="\\"
 function g:Undotree_CustomMap()
-    nmap <buffer> K <plug>UndotreeGoNextState
-    nmap <buffer> J <plug>UndotreeGoPreviousState
-    nmap <buffer> N <plug>UndotreeGoNextSaved
-    nmap <buffer> P <plug>UndotreeGoPreviousSaved
+    nmap <buffer>K <plug>UndotreeGoNextState
+    nmap <buffer>J <plug>UndotreeGoPreviousState
+    nmap <buffer>N <plug>UndotreeGoNextSaved
+    nmap <buffer>P <plug>UndotreeGoPreviousSaved
 endfunc
-au FileType tex,plaintex imap <buffer> <Leader>]  <Plug>LatexCloseCurEnv
-au FileType tex,plaintex nmap <buffer> <Leader>*  <Plug>LatexToggleStarEnv
-au FileType tex,plaintex nmap <buffer> <Leader>ce <Plug>LatexChangeEnv
-au FileType tex,plaintex vmap <buffer> <Leader>}  <Plug>LatexWrapSelection
-au FileType tex,plaintex vmap <buffer> <Leader>se <Plug>LatexEnvWrapSelection
-au FileType  python let b:match_words =
-            \ '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
-au FileType  python setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr foldlevel=3 nonumber
-au FileType  vim,man if &foldmethod == "manual" | setlocal foldmethod=syntax | endif
-au FileType man setlocal nocursorline
-au WinEnter    * set   cursorline
-au WinLeave    * set   nocursorline
-au InsertEnter * setlocal timeoutlen=300
-au InsertLeave * setlocal timeoutlen=2000
-au VimEnter    * let   g:lasttab = tabpagenr()
-au TabLeave    * let   g:lasttab = tabpagenr()
+
+au FileType    tex,plaintex       imap <buffer><Leader>]  <Plug>LatexCloseCurEnv
+au FileType    tex,plaintex       nmap <buffer><Leader>*  <Plug>LatexToggleStarEnv
+au FileType    tex,plaintex       nmap <buffer><Leader>ce <Plug>LatexChangeEnv
+au FileType    tex,plaintex       vmap <buffer><Leader>}  <Plug>LatexWrapSelection
+au FileType    tex,plaintex       vmap <buffer><Leader>se <Plug>LatexEnvWrapSelection
+
+au WinEnter    *                  set   cursorline
+au WinLeave    *                  set   nocursorline
+au InsertEnter *                  setlocal timeoutlen=300
+au InsertLeave *                  setlocal timeoutlen=2000
+au VimEnter    *                  let   g:lasttab = tabpagenr()
+au TabLeave    *                  let   g:lasttab = tabpagenr()
+au VimEnter    *                  :call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
+au VimEnter    *                  :call deoplete#custom#set('_', 'converters', ['converter_auto_paren', 'converter_remove_overlap', 'converter_truncate_abbr', 'converter_truncate_menu'])
+au WinEnter    *                  AirlineRefresh
+au BufEnter    *                  filetype detect
+au BufWinEnter *                  if &previewwindow | setlocal nonumber | endif
+au BufReadPost *                  if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+au FileType    python             let b:delimitMate_nesting_quotes = ['"']
+au FileType    python             let b:delimitMate_expand_inside_quotes = 1
+au FileType    python,perl        let b:delimitMate_excluded_regions = ""
+au FileType    perl               let b:delimitmate_insert_eol_marker = 1
+au FileType    perl               let b:delimitMate_eol_marker = ";"
 au VimEnter    perl,python nested :call tagbar#autoopen(1)
 au BufWinEnter perl,python nested :call tagbar#autoopen(1)
-au VimEnter    * :call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
-au VimEnter    * :call deoplete#custom#set('_', 'converters', ['converter_auto_paren', 'converter_remove_overlap', 'converter_truncate_abbr', 'converter_truncate_menu'])
-au WinEnter    * AirlineRefresh
-au BufEnter    * filetype detect
-au BufWinEnter * if &previewwindow | setlocal nonumber | endif
-au BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-au FileType python let b:delimitMate_nesting_quotes = ['"']
-au FileType python let b:delimitMate_expand_inside_quotes = 1
-au FileType python,perl let b:delimitMate_excluded_regions = ""
-au FileType perl let b:delimitmate_insert_eol_marker = 1
-au FileType perl let b:delimitMate_eol_marker = ";"
+au FileType    python             let b:match_words = '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
+au FileType    python             setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr foldlevel=3 nonumber
+au FileType    vim,man            if &foldmethod == "manual" | setlocal foldmethod=syntax | endif
+au FileType    man                setlocal nocursorline
