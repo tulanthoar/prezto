@@ -22,14 +22,27 @@ Plugin 'tpope/vim-unimpaired.git'
 Plugin 'tmhedberg/matchit'
 Plugin 'godlygeek/tabular'
 Plugin 'haya14busa/vim-asterisk'
+Plugin 'mkitt/tabline.vim'
 
-" TODO configure Denite
+let g:neomru#filename_format = ":p:s?^/usr/lib?/u/l?:s?^/etc/?/e/?:~"
+let g:neomru#update_interval = 60
+let g:neomru#file_mru_path = expand("$HOME/.config/nvim/files/neo_mru")
+let g:neomru#directory_mru_path = expand("$HOME/.config/nvim/files/neo_dir_mru")
+let g:neomru#follow_links = 1
 Plugin 'Shougo/denite.nvim'
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/neomru.vim'
 Plugin 'osyo-manga/unite-quickfix'
+Plugin 'vim-utils/vim-man'
 
-Plugin 'mkitt/tabline.vim'
+let g:multi_cursor_next_key='<C-s>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+let g:multi_cursor_exit_from_visual_mode = 0
+let g:multi_cursor_exit_from_insert_mode = 0
+let g:multi_cursor_visual_maps = {'i':1,'a':1,'f':1,'F':1,'t':1,'T':1,'K':1,'S':1}
+Plugin 'terryma/vim-multiple-cursors'
 
 let g:NERDCreateDefaultMappings = 0
 let g:NERDRemoveExtraSpaces = 1
@@ -53,8 +66,6 @@ Plugin 'tpope/vim-surround'
 
 let g:tlWindowPosition = 1
 Plugin 'vim-scripts/TaskList.vim'
-
-Plugin 'vim-utils/vim-man'
 
 let g:neosnippet#enable_completed_snippet = 1
 let g:neosnippet#enable_conceal_markers = 1
@@ -306,15 +317,6 @@ Plugin 'tweekmonster/impsort.vim'
 " TODO configure neco-vim
 Plugin 'Shougo/neco-vim'
 
-let g:multi_cursor_next_key='<C-s>'
-let g:multi_cursor_prev_key='<C-p>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
-let g:multi_cursor_exit_from_visual_mode = 0
-let g:multi_cursor_exit_from_insert_mode = 0
-let g:multi_cursor_visual_maps = {'i':1,'a':1,'f':1,'F':1,'t':1,'T':1,'K':1,'S':1}
-Plugin 'terryma/vim-multiple-cursors'
-
 call vundle#end()
 filetype plugin indent on
 syntax enable
@@ -449,7 +451,11 @@ let g:denite_menus.sh.command_candidates = [
             \]
 
 call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_ops', ['--hidden', '-SL', '--glob', '!.git', '--glob', '!.gitignore', '--glob', '!.gitsubmodules', '--glob', '!.cache'])
+call denite#custom#var('grep', 'default_ops', ['--vimgrep', '--no-heading' '--hidden', '-SL', '--glob', '!.git', '--glob', '!.gitignore', '--glob', '!.gitsubmodules', '--glob', '!.cache'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
 
 " Set shortcut keys.
 "for [key, com] in items({
@@ -565,6 +571,8 @@ noremap  <unique><leader>d       :hide<CR>
 nnoremap <unique><leader>sv :vs<cr>
 nnoremap <unique><leader>sh   :sp<cr>
 
+call denite#custom#map( 'insert', '<C-j>', '<denite:move_to_next_line>', 'noremap' )
+call denite#custom#map( 'insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
 call denite#custom#var('file_rec', 'command', ['rg', '--files', '--follow', '--hidden', '--glob', '!.git', '--glob', '!.gitignore', '--glob', '!.gitsubmodules', '--glob', '!.cache'])
 call denite#custom#var('menu', 'menus', g:denite_menus)
 let g:mapleader="-"
@@ -623,5 +631,5 @@ au BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! 
 au FileType python let b:delimitMate_nesting_quotes = ['"']
 au FileType python let b:delimitMate_expand_inside_quotes = 1
 au FileType python,perl let b:delimitMate_excluded_regions = ""
-au FileType  perl let b:delimitmate_insert_eol_marker = 1
+au FileType perl let b:delimitmate_insert_eol_marker = 1
 au FileType perl let b:delimitMate_eol_marker = ";"
