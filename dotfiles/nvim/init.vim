@@ -1,7 +1,7 @@
 "init on 2016-05-26
 if &compatible | set nocompatible | endif
 filetype off
-let g:mapleader="\\"
+let g:mapleader='-'
 set rtp+=$HOME/.config/nvim/bundle/Vundle.vim
 call vundle#begin('$HOME/.config/nvim/bundle')
 
@@ -36,7 +36,7 @@ Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/neomru.vim'
 Plugin 'osyo-manga/unite-quickfix'
 
-let g:multi_cursor_next_key='<C-s>'
+let g:multi_cursor_next_key='<C-H>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
@@ -220,7 +220,7 @@ let g:yankring_max_element_length = 0
 let g:yankring_map_dot = 0
 let g:yankring_record_insert = 1
 let g:yankring_history_dir = '$HOME/.config/nvim/files'
-let g:yankring_zap_keys = 'gS w * S # g* g# f s K g/ t ,/ ?'
+let g:yankring_zap_keys = 'j gS w * S # g* g# f s K g/ t ,/ ?'
 let g:yankring_replace_n_nkey = '<C-n>'
 let g:yankring_replace_n_pkey = '<C-b>'
 let g:yankring_window_height = 12
@@ -279,36 +279,54 @@ let g:haskellmode_completion_ghc = 0
 Plugin 'neovimhaskell/haskell-vim.git'
 Plugin 'eagletmt/neco-ghc'
 
-" TODO configure pymode
+let g:jedi#goto_command = '<leader>g'
+let g:jedi#goto_assignments_command = '<leader>jf'
+let g:jedi#documentation_command = '<leader>d'
+let g:jedi#rename_command = '<leader>js'
+let g:jedi#usages_command = '<leader>8'
+let g:jedi#auto_close_doc = 0
+let g:jedi#show_call_signatures = 2 " show signatures in cmd line
+let g:jedi#show_call_signatures_delay = 100
+let g:jedi#use_splits_not_buffers = 'right'
+let g:jedi#force_py_version = 3
+let g:pymode_options = 0
+let g:pymode_options_max_line_length = 90 " it gets highlighting
 let g:pymode_python = 'python3'
-let g:pymode_doc = 1
-let g:pymode_doc_bind = '<C-o>'
+let g:pymode_folding = 0
+let g:pymode_doc_bind = '<leader>pd'
+let g:pymode_virtualenv = 0
+let g:pymode_run_bind = '<leader>pr'
+let g:pymode_breakpoint_bind = '<leader>pb'
 let g:pymode_lint = 0
-let g:pymode_motion = 1
-let g:pymode_options = 1
-let g:pymode_options_max_line_length = 90
-let g:pymode_rope = 1
-let g:pymode_rope_project_root = ""
-let g:pymode_rope_regenerate_on_write = 1
-let g:pymode_rope_completion = 1
-let g:pymode_rope_complete_on_dot = 1
-let g:pymode_rope_autoimport = 1
-let g:pymode_rope_autoimport_import_after_complete = 1
+let g:pymode_rope_lookup_project = 1
+let g:pymode_rope_show_doc_bind = '<leader>rd'
+let g:pymode_rope_completion = 0
+let g:pymode_rope_goto_definition_bind = '<leader>o'
 let g:pymode_rope_goto_definition_cmd = 'vnew'
-let g:pymode_rope_completion_bind = '<C-X><C-U>'
-let g:pymode_rope_autoimport_bind = '\i'
-let g:pymode_rope_goto_definition_bind = '\o'
-let g:pymode_rope_rename_bind = '\*'
-let g:pymode_rope_show_doc_bind = '<C-d>'
-let g:pymode_rope_extract_method_bind = '<C-c>rm'
-let g:pymode_rope_extract_variable_bind = '<C-c>rl'
+let g:pymode_rope_rename_bind = '<leader>s'
+let g:pymode_rope_rename_module_bind = '<leader>rsm'
+let g:pymode_rope_organize_imports_bind = '<leader>roi'
+let g:pymode_rope_autoimport_bind = '<leader>rai'
+let g:pymode_rope_module_to_package_bind = '<leader>rmk'
+let g:pymode_rope_extract_method_bind = '<leader>rem'
+let g:pymode_rope_extract_variable_bind = '<leader>rev'
+let g:pymode_rope_use_function_bind = '<leader>rf'
+let g:pymode_rope_move_bind = '<leader>rm'
+let g:pymode_rope_change_signature_bind = '<leader>rss'
 let g:pymode_syntax = 1
-let g:pymode_syntax_all = 1
 let g:pymode_syntax_slow_sync = 1
-let g:python3_host_prog = '/usr/bin/python3'
-let g:python_highlight_all = 1
-let g:pymode_syntax_print_as_function = 1
+let g:pymode_syntax_all = 1
+let g:deoplete#sources#jedi#show_docstring = 1
+let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
 let g:SimpylFold_docstring_preview = 1
+let g:SimpylFold_docstring_level = 99
+let g:impsort_relative_last = 1
+" nvim's builtin python.vim
+let g:python3_host_prog = '/usr/bin/python3'
+let python_no_builtin_highlight = 1
+let python_no_exception_highlight = 1
+let python_no_doctest_highlight = 1
+let python_no_doctest_code_highlight = 1
 Plugin 'klen/python-mode'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'zchee/deoplete-jedi'
@@ -322,32 +340,32 @@ call vundle#end()
 filetype plugin indent on
 syntax enable
 
-colorscheme base16-atelier-seaside
+colorscheme base16-seti-ui
 set background=dark
 au VimEnter,Colorscheme * :hi pythonFunctionTag ctermfg=9 ctermbg=23
 au VimEnter,Colorscheme * :hi pythonMethodTag ctermfg=12 ctermbg=23
 au VimEnter,Colorscheme * :hi pythonClassTag ctermfg=11 ctermbg=23
-au VimEnter,Colorscheme * :hi pythonImportedObject ctermfg=10 ctermbg=18
-au VimEnter,Colorscheme * :hi pythonImportedFuncDef ctermfg=9 ctermbg=18
-au VimEnter,Colorscheme * :hi pythonImportedClassDef ctermfg=11 ctermbg=18
+au VimEnter,Colorscheme * :hi pythonImportedObject ctermfg=10 ctermbg=22
+au VimEnter,Colorscheme * :hi pythonImportedFuncDef ctermfg=9 ctermbg=22
+au VimEnter,Colorscheme * :hi pythonImportedClassDef ctermfg=11 ctermbg=22
 au VimEnter,Colorscheme * :hi link perlFunctionTag pythonFunctionTag
 au VimEnter,Colorscheme * :hi link vimAutoGroupTag pythonClassTag
 au VimEnter,Colorscheme * :hi link vimCommandTag pythonFunctionTag
 au VimEnter,Colorscheme * :hi link vimFuncNameTag pythonMethodTag
 au VimEnter,Colorscheme * :hi link vimScriptFuncNameTag pythonMethodTag
-au VimEnter,Colorscheme * :hi SignColumn ctermbg=18
-au VimEnter,Colorscheme * :hi FoldColumn ctermbg=19
+au VimEnter,Colorscheme * :hi SignColumn ctermbg=25
+au VimEnter,Colorscheme * :hi FoldColumn ctermbg=26
 au VimEnter,Colorscheme * :hi Visual cterm=inverse ctermbg=233
 au VimEnter,Colorscheme * :hi WildMenu cterm=bold ctermbg=236
 au VimEnter,Colorscheme * :hi StatusLine ctermbg=234
 au VimEnter,Colorscheme * :hi Search ctermbg=53 ctermfg=117
-au VimEnter,Colorscheme * :hi MatchParen cterm=bold ctermbg=27 ctermfg=17
-au VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=24
+au VimEnter,Colorscheme * :hi MatchParen cterm=bold ctermbg=24 ctermfg=17
+au VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=142
 au VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=166
 au VimEnter,Colorscheme * :hi CursorColumn ctermbg=235
-au VimEnter,Colorscheme * :hi CursorLine cterm=bold ctermbg=232
-au InsertLeave * :hi CursorLine cterm=bold ctermbg=232
-au InsertEnter * :hi CursorLine cterm=NONE ctermbg=234
+au VimEnter,Colorscheme * :hi CursorLine cterm=bold ctermbg=237
+au InsertLeave * :hi CursorLine cterm=bold ctermbg=237
+au InsertEnter * :hi CursorLine cterm=NONE ctermbg=232
 
 set autoindent
 set backupdir=$HOME/.config/nvim/files/backup/
@@ -378,7 +396,7 @@ set mousemodel=popup_setpos
 set nonumber
 set noshowmode
 set scrolljump=2
-set scrolloff=3 "ensure 3 lines are above/below cursor when scrolling
+set scrolloff=6
 set shiftwidth=4
 set showcmd
 set showmatch
@@ -418,9 +436,6 @@ function! s:config_easyfuzzymotion(...) abort
                 \ }), get(a:, 1, {}))
 endfunction
 
-au VimEnter * command! -nargs=* -bar -complete=customlist,man#completion#run
-            \ Man call man#get_page('tab', <f-args>)
-
 let g:denite_menus = {}
 let g:denite_menus.git = {'description': 'git stuff'}
 let g:denite_menus.git.command_candidates = [
@@ -451,12 +466,6 @@ let g:denite_menus.sh.command_candidates = [
             \['▷ Sudo Write   ', 'SudoWrite'],
             \]
 
-call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_ops', ['--vimgrep', '--no-heading', '--hidden', '-SL', '--glob', '!.git', '--glob', '!.gitignore', '--glob', '!.gitsubmodules', '--glob', '!.cache'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
 
 " Set shortcut keys.
 "for [key, com] in items({
@@ -468,85 +477,90 @@ call denite#custom#var('grep', 'final_opts', [])
 "    execute 'nnoremap <silent>' key ':QuickRun' com '-mode n<CR>'
 "    execute 'vnoremap <silent>' key ':QuickRun' com '-mode v<CR>'
 "endfor
+function! YRRunAfterMaps()
+    au VimEnter * map     <silent><expr>j  v:count ? "j" : "\<Plug>(easymotion-j)"
+    au VimEnter * map     <silent><expr>k  v:count ? "k" : "\<Plug>(easymotion-k)"
+    au VimEnter * map     <silent><expr>f  v:count ? "f" : "\<Plug>(easymotion-bd-fl)"
+    au VimEnter * map     <silent><expr>t  v:count ? "t" : "\<Plug>(easymotion-bd-tl)"
+    au VimEnter * map     <silent><expr>w  v:count ? "w" : "\<Plug>(easymotion-bd-wl)"
+    au VimEnter * map     <silent><expr>e  v:count ? "e" : "\<Plug>(easymotion-bd-el)"
+    au VimEnter * map                   *  <Plug>(asterisk-z*)<Plug>(easymotion-bd-n)
+    au VimEnter * map           <silent>s  <Plug>(easymotion-bd-f2)
+    au VimEnter * map           <silent>K  <Plug>(easymotion-sol-bd-jk)
+    au VimEnter * noremap <silent><expr>g/ incsearch#go(<SID>config_easyfuzzymotion())
+    au VimEnter * nmap                  ?  <Plug>(incsearch-fuzzy-stay)
+    au VimEnter * map                   S  <Plug>(asterisk-z*)<Plug>(easymotion-bd-n)
+    au VimEnter * map                   #  <Plug>(asterisk-z#)<Plug>(easymotion-bd-n)
+    au VimEnter * map                   g* <Plug>(asterisk-gz*)<Plug>(easymotion-bd-n)
+    au VimEnter * map                   gS <Plug>(asterisk-gz*)<Plug>(easymotion-bd-n)
+    au VimEnter * map                   g# <Plug>(asterisk-gz#)<Plug>(easymotion-bd-n)
+    au VimEnter * nnoremap      <silent>/  :<C-U>Denite -cursor-wrap -vertical-preview line<CR>
+    au VimEnter * nnoremap      <silent>F  :<C-U>Denite -cursor-wrap -vertical-preview grep<CR>
+endfunction
 
-map                   <unique>;        <Plug>(easymotion-prefix)
-map     <silent><expr><unique>j        (v:count1 == 1 ? '<Plug>(easymotion-j)' : 'j')
-map     <silent><expr><unique>k        (v:count1 == 1 ? '<Plug>(easymotion-k)' : 'k')
-map     <silent><expr><unique>f        (v:count1 == 1 ? '<Plug>(easymotion-bd-fl)' : 'f')
-map     <silent><expr><unique>t        (v:count1 == 1 ? '<Plug>(easymotion-bd-tl)' : 't')
-map     <silent><expr><unique>w        (v:count1 == 1 ? '<Plug>(easymotion-bd-wl)' : 'w')
-map           <silent><unique>s        <Plug>(easymotion-bd-f2)
-map           <silent><unique>K        <Plug>(easymotion-sol-bd-jk)
-noremap <silent><expr><unique>;<Space> incsearch#go(<SID>config_easyfuzzymotion())
-nmap                  <unique>g/       <Plug>(incsearch-fuzzy-/)
-nmap                  <unique>?        <Plug>(incsearch-fuzzy-stay)
-map                   <unique>*        <Plug>(asterisk-z*)<Plug>(easymotion-bd-n)
-map                   <unique>S        <Plug>(asterisk-z*)<Plug>(easymotion-bd-n)
-map                   <unique>#        <Plug>(asterisk-z#)<Plug>(easymotion-bd-n)
-map                   <unique>g*       <Plug>(asterisk-gz*)<Plug>(easymotion-bd-n)
-map                   <unique>gS       <Plug>(asterisk-gz*)<Plug>(easymotion-bd-n)
-map                   <unique>g#       <Plug>(asterisk-gz#)<Plug>(easymotion-bd-n)
-nnoremap      <silent><unique>/        :<C-U>Denite -cursor-wrap -vertical-preview line<CR>
-
-xmap     <unique>gc    <Plug>NERDCommenterInvert
-xmap     <unique>gC    <Plug>NERDCommenterComment
-nmap     <unique>gcc   <Plug>NERDCommenterInvert
-nmap     <unique>gcl   <Plug>NERDCommenterAppend
-nmap     <unique>gcL   <Plug>NERDCommenterToEOL
-nmap     <unique>gcy   <Plug>NERDCommenterYank
-xmap     <unique>v     <Plug>(expand_region_expand)
-xmap     <unique><CR>  <Plug>NrrwrgnDo
-cnoremap <unique>t/    Tabularize /./l1c1l0
-imap     <unique><C-L> <Plug>delimitMateS-Tab
-
-smap <expr><unique><CR> pumvisible()              ? deoplete#close_popup() :
-            \ neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" :
-            \ delimitMate#WithinEmptyPair()       ? "\<Plug>delimitMateCR" :
-            \ delimitMate#ShouldJump()            ? "\<Plug>delimitMateS-Tab" : "\<C-C>"
-imap <expr><unique><CR> pumvisible()              ? deoplete#close_popup() :
-            \ neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" :
-            \ delimitMate#WithinEmptyPair()       ? "\<Plug>delimitMateCR" :
-            \ delimitMate#ShouldJump()            ? "\<Plug>delimitMateS-Tab" : "\<C-C>"
-
-nmap <unique><CR>  <Plug>unimpairedBlankDown
-omap <unique>ig    <Plug>GitGutterTextObjectInnerPending
-omap <unique>ag    <Plug>GitGutterTextObjectOuterPending
-xmap <unique>ig    <Plug>GitGutterTextObjectInnerVisual
-xmap <unique>ag    <Plug>GitGutterTextObjectOuterVisual
+nmap <unique><M-l> <Plug>MoveLineHalfPageDownzz
+nmap <unique><M-h> <Plug>MoveLineHalfPageUpzz
+vmap <unique><M-l> <Plug>MoveBlockHalfPageDownzz
+vmap <unique><M-h> <Plug>MoveBlockHalfPageUpzz
 nmap <unique><M-[> yil<Plug>unimpairedPutBelowk
 nmap <unique><M-]> yil<Plug>unimpairedPutBelow
 nmap <unique>[c    <Plug>NERDCommenterYank<Plug>unimpairedPutAbove
 nmap <unique>]c    <Plug>NERDCommenterYank<Plug>unimpairedPutBelow
 nmap <unique>[g    <Plug>GitGutterPrevHunk
 nmap <unique>]g    <Plug>GitGutterNextHunk
-nmap <unique><M-l> <Plug>MoveLineHalfPageDownzz
-nmap <unique><M-h> <Plug>MoveLineHalfPageUpzz
-xmap <unique><M-l> <Plug>MoveBlockHalfPageDownzz
-xmap <unique><M-h> <Plug>MoveBlockHalfPageUpzz
 
-nnoremap <unique>H       Hzz
-nnoremap <unique>L       Lzz
-nnoremap <unique><Space> <C-O>
-vnoremap <unique>J       <esc>
+nmap <unique>gcc  <Plug>NERDCommenterInvert
+nmap <unique>gcl  <Plug>NERDCommenterAppend
+nmap <unique>gcL  <Plug>NERDCommenterToEOL
+nmap <unique>gcy  <Plug>NERDCommenterYank
+xmap     <unique>gc        <Plug>NERDCommenterInvert
+xmap     <unique>gC        <Plug>NERDCommenterComment
+xmap     <unique>v         <Plug>(expand_region_expand)
+cnoremap <unique>t/        Tabularize /./l1c1l0
+omap <unique>ig    <Plug>GitGutterTextObjectInnerPending
+omap <unique>ag    <Plug>GitGutterTextObjectOuterPending
+xmap <unique>ig    <Plug>GitGutterTextObjectInnerVisual
+xmap <unique>ag    <Plug>GitGutterTextObjectOuterVisual
+
+
+smap <expr><unique><CR>
+                    \ delimitMate#ShouldJump()            ? "\<Plug>delimitMateS-Tab" :
+                    \ pumvisible()                        ? "\<Right>" :
+                    \ neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" :
+                    \ delimitMate#WithinEmptyPair()       ? "\<Plug>delimitMateCR" :
+                    \ "\<C-C>"
+
+imap <expr><unique><CR>
+                      \ delimitMate#ShouldJump()            ? "\<Plug>delimitMateS-Tab" :
+                      \ pumvisible()                        ? "\<Right>" :
+                      \ neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" :
+                      \ delimitMate#WithinEmptyPair()       ? "\<Plug>delimitMateCR" :
+                      \ "\<C-C>"
+
+noremap  <unique>gs      ^
+noremap  <unique>gl      $
+nnoremap <unique><C-S>   5<C-Y>
+nnoremap <unique><C-E>   5<C-E>
+xnoremap <unique>J       <esc>
 inoremap <unique>jf      <esc>
 inoremap <unique>fj      <esc>
 inoremap <unique><C-C>   <esc>
-noremap  <unique>^       0
-noremap  <unique>0       ^
-noremap  <unique>gs      ^
-noremap  <unique>gl      $
+nnoremap  <silent><unique><C-W>h    :<C-U>TmuxNavigateLeft<CR>
+nnoremap  <silent><unique><C-W>j    :<C-U>TmuxNavigateDown<CR>
+nnoremap  <silent><unique><C-W>k    :<C-U>TmuxNavigateUp<CR>
+nnoremap  <silent><unique><C-W>l    :<C-U>TmuxNavigateRight<CR>
 
-nnoremap  <silent><unique><C-H>    :<C-U>TmuxNavigateLeft<CR>
-nnoremap  <silent><unique><C-J>    :<C-U>TmuxNavigateDown<CR>
-nnoremap  <silent><unique><C-K>    :<C-U>TmuxNavigateUp<CR>
-nnoremap  <silent><unique><C-L>    :<C-U>TmuxNavigateRight<CR>
-nnoremap  <silent><unique>g<Space> :<C-U>TmuxNavigatePrevious<CR>
-nnoremap  <silent><unique>F        :<C-U>Denite -cursor-wrap -vertical-preview grep<CR>
+xmap     <unique><CR>      <Plug>NrrwrgnDo
+imap     <unique><C-L>     <Plug>delimitMateS-Tab
+nnoremap  <silent><unique><C-L>     :<C-U>TmuxNavigatePrevious<CR>
+nmap <unique><CR> <Plug>unimpairedBlankDown
+nnoremap <unique><Space> <C-O>
+nnoremap  <silent><unique><C-T>    g<C-]>
 inoremap  <silent><unique><F4>     <esc>:<C-U>w<CR>
-nnoremap  <silent><unique><F4>     <esc>:<C-U>w<CR>
+nnoremap  <silent><unique><F4>     :<C-U>w<CR>
+nnoremap  <silent><unique><C-J>     :<C-U>w<CR>
 nnoremap  <silent><unique><C-]>    :<C-U>ta<CR>
 nnoremap  <silent><unique><C-[>    :<C-U>po<CR>
-nnoremap  <silent><unique><C-T>    g<C-]>
 
 let g:mapleader=","
 nmap             <unique><leader>1       <Plug>AirlineSelectTab1
@@ -566,19 +580,15 @@ nnoremap         <unique><leader>z       zjzA
 nnoremap <silent><unique><leader>r       :<C-U>nohlsearch<CR>:<C-U>diffupdate<CR>: syntax sync fromstart<CR><c-l>
 nmap             <unique><leader><Space> <Plug>(easymotion-bd-n)
 nnoremap         <unique><leader>v       <C-V>
-nnoremap         <unique><leader>,       qj
+nnoremap         <unique><Leader><leader>       qj
 nnoremap         <unique><leader>.       @j
 noremap  <silent><unique><leader>q       :<C-U>q<CR>
 noremap  <silent><unique><leader>d       :<C-U>hide<CR>
 nnoremap <silent><unique><leader>sv      :<C-U>vs<CR>
 nnoremap <silent><unique><leader>sh      :<C-U>sp<CR>
 
-call denite#custom#map( 'insert', '<C-j>', '<denite:move_to_next_line>', 'noremap' )
-call denite#custom#map( 'insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
-call denite#custom#var('file_rec', 'command', ['rg', '--files', '--follow', '--hidden', '--glob', '!.git', '--glob', '!.gitignore', '--glob', '!.gitsubmodules', '--glob', '!.cache'])
-call denite#custom#var('menu', 'menus', g:denite_menus)
 
-let g:mapleader="-"
+let g:mapleader=';'
 nmap              <unique><leader><CR>     <Plug>NrrwrgnWinIncr
 nnoremap  <silent><unique><leader><leader> :exe "tabn ".g:lasttab<CR>
 nnoremap  <silent><unique><leader><Space>  :Startify<CR>
@@ -600,7 +610,7 @@ nnoremap  <silent><unique><leader>u        :UndotreeToggle<CR>
 nnoremap  <silent><unique><leader>n        :<C-U>echo(system("tmux if -F '#{s/1/0/:window_panes}' 'join-pane -d -s:2.{top} -t:+' 'join-pane -vb -p 40 -t:2 -s:+.{bottom}'"))<CR>
 nmap              <unique><leader>t        <Plug>TaskListjj
 
-let g:mapleader="\\"
+let g:mapleader='-'
 function g:Undotree_CustomMap()
     nmap <buffer>K <plug>UndotreeGoNextState
     nmap <buffer>J <plug>UndotreeGoPreviousState
@@ -613,6 +623,20 @@ au FileType    tex,plaintex       nmap <buffer><Leader>*  <Plug>LatexToggleStarE
 au FileType    tex,plaintex       nmap <buffer><Leader>ce <Plug>LatexChangeEnv
 au FileType    tex,plaintex       vmap <buffer><Leader>}  <Plug>LatexWrapSelection
 au FileType    tex,plaintex       vmap <buffer><Leader>se <Plug>LatexEnvWrapSelection
+au FileType    python             nmap <buffer><leader>f  :call pymode#rope#find_it()<CR>
+
+au VimEnter    *                  :call denite#custom#var('grep', 'command', ['rg'])
+au VimEnter    *                  :call denite#custom#var('grep', 'default_ops', ['--vimgrep', '--no-heading', '--hidden', '-SL', '--glob', '!.git', '--glob', '!.gitignore', '--glob', '!.gitsubmodules', '--glob', '!.cache'])
+au VimEnter    *                  :call denite#custom#var('grep', 'recursive_opts', [])
+au VimEnter    *                  :call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+au VimEnter    *                  :call denite#custom#var('grep', 'separator', ['--'])
+au VimEnter    *                  :call denite#custom#var('grep', 'final_opts', [])
+au VimEnter    *                  :call denite#custom#map( 'insert', '<C-j>', '<denite:move_to_next_line>', 'noremap' )
+au VimEnter    *                  :call denite#custom#map( 'insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
+au VimEnter    *                  :call denite#custom#var('file_rec', 'command', ['rg', '--files', '--follow', '--hidden', '--glob', '!.git', '--glob', '!.gitignore', '--glob', '!.gitsubmodules', '--glob', '!.cache'])
+au VimEnter    *                  :call denite#custom#var('menu', 'menus', g:denite_menus)
+au VimEnter    *                  :call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
+au VimEnter    *                  :call deoplete#custom#set('_', 'converters', ['converter_auto_paren', 'converter_remove_overlap', 'converter_truncate_abbr', 'converter_truncate_menu'])
 
 au WinEnter    *                  set   cursorline
 au WinLeave    *                  set   nocursorline
@@ -620,8 +644,7 @@ au InsertEnter *                  setlocal timeoutlen=300
 au InsertLeave *                  setlocal timeoutlen=2000
 au VimEnter    *                  let   g:lasttab = tabpagenr()
 au TabLeave    *                  let   g:lasttab = tabpagenr()
-au VimEnter    *                  :call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
-au VimEnter    *                  :call deoplete#custom#set('_', 'converters', ['converter_auto_paren', 'converter_remove_overlap', 'converter_truncate_abbr', 'converter_truncate_menu'])
+au VimEnter    *                  command! -nargs=* -bar -complete=customlist,man#completion#run Man call man#get_page('tab', <f-args>)
 au WinEnter    *                  AirlineRefresh
 au BufEnter    *                  filetype detect
 au BufWinEnter *                  if &previewwindow | setlocal nonumber | endif
@@ -635,5 +658,6 @@ au VimEnter    perl,python nested :call tagbar#autoopen(1)
 au BufWinEnter perl,python nested :call tagbar#autoopen(1)
 au FileType    python             let b:match_words = '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
 au FileType    python             setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr foldlevel=3 nonumber
+au FileType    python             setlocal define=^\s*\\(def\\\\|class\\) commentstring=#%s nowrap formatoptions-=t complete+=t
 au FileType    vim,man            if &foldmethod == "manual" | setlocal foldmethod=syntax | endif
 au FileType    man                setlocal nocursorline
