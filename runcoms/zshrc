@@ -63,7 +63,6 @@ snippets-add
 bind_keys
 # BASE16_SHELL=$ZPREZD/base16-shell
 # [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-export BASE16_THEME=base16-google-dark
 source $HOME/.base16_theme
 tf=$(date +%S%N)
 echo $(( ${tf[1,5]} - ${tinit[1,5]} ))
