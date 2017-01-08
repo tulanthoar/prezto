@@ -31,10 +31,9 @@ import XMonad.Util.Paste (sendKey)
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.SpawnOnce (spawnOnce)
 
-myTerminal = "termite" :: String
+myTerminal = "tilda" :: String
 myModMask = mod3Mask :: KeyMask
-wmNameM_ = setWMName "LG3D" :: X()
-uniqueInits = ["sudo updatedb", "modkey", "maybeclipmenud", "mayberedshift", "maybepymodoro"] :: [String]
+uniqueInits = ["modkey", "maybeclipmenud", "mayberedshift"] :: [String]
 xInitM_ = mapM_ spawnOnce uniqueInits :: X()
 wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"] :: [WorkspaceId]
 menuH = 15 :: Int
@@ -59,7 +58,7 @@ myManageHook = namedScratchpadManageHook scratchpads <+> manageDocks
 xmConf p = ewmh $ def
   { manageHook         = myManageHook <+> fullscreenManageHook <+> def
   , layoutHook         = mylayoutHook
-  , startupHook        = return() >> wmNameM_ >> xInitM_ >> corePadsM_
+  , startupHook        = xInitM_ >> byobucmd
   , terminal           = myTerminal
   , modMask            = myModMask
   , borderWidth        = 0
@@ -111,12 +110,13 @@ myKeysP =
   , ("M-<Tab>", toggleWS' ["NSP"])
   , ("M-p",  spawn "start-pomodoro" )
   , ("M-u",  byobucmd )
-  , ("M4-t", spawn myTerminal)
+  , ("M4-t", altTerm_)
   ]
 
 clipcmd = spawn "clipmenu -z -w 800 -l 50 -p 'clip'" :: X()
-byobucmd = namedScratchpadAction scratchpads bPad
-altTerm_ = spawn "konsole"
+{- byobucmd = namedScratchpadAction scratchpads bPad -}
+byobucmd = spawn myTerminal
+altTerm_ = spawn "termite"
 
 mC =
   [ ("minone", withFocused minimizeWindow )
@@ -135,7 +135,7 @@ mC =
   ]
 xmC = return mC
 
-scratchpads = [ NS bPad bRun (stringProperty "_NET_WM_NAME" =? "byobu_tmux") nonFloating ]
+scratchpads = [ NS bPad bRun (stringProperty "WM_CLASS" =? "tilda") nonFloating ]
 bPad = "byobu"
 bRun = "tilda"
 myDzenPP = def
