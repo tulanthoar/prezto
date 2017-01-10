@@ -26,6 +26,14 @@ Plugin 'haya14busa/vim-asterisk'
 Plugin 'mkitt/tabline.vim'
 Plugin 'vim-utils/vim-man'
 
+let g:indentLine_char='|'
+let g:indentLine_fileType = ['vim', 'perl', 'python']
+let g:indentLine_faster=1
+let g:indentLine_concealcursor='nc'
+let g:indentLine_leadingSpaceChar='-'
+let g:indentLine_leadingSpaceEnabled = 0
+Plugin 'Yggdroot/indentLine'
+
 let g:neomru#filename_format = ":p:s?^/usr/lib?/u/l?:s?^/etc/?/e/?:~"
 let g:neomru#update_interval = 60
 let g:neomru#file_mru_path = expand("$HOME/.config/nvim/files/neo_mru")
@@ -99,6 +107,7 @@ let g:tmux_navigator_save_on_switch = 1
 let g:tmux_navigator_no_mappings = 1
 Plugin 'christoomey/vim-tmux-navigator'
 
+let g:SignatureDeleteConfirmation = 1
 let g:SignatureForceMarkPlacement = 1
 let g:SignatureForceMarkerPlacement = 1
 let g:SignatureMarkTextHLDynamic = 1
@@ -150,14 +159,6 @@ let g:SuperTabLongestEnhanced = 1
 let g:SuperTabLongestHighlight = 1
 Plugin 'ervandew/supertab'
 
-let g:indent_guides_default_mapping = 0
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_exclude_filetypes = ['text', 'help', 'startify', 'nerdtree', 'man', 'tagbar']
-let g:indent_guides_guide_size = 1
-let g:indent_guides_start_level =1
-let g:indent_guides_tab_guides = 1
-Plugin 'nathanaelkane/vim-indent-guides'
-
 let g:base16colorspace=256
 Plugin 'chriskempson/base16-vim'
 
@@ -169,7 +170,7 @@ let g:airline#extensions#tagbar#flags = 's'
 let g:airline#extensions#hunks#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_splits = 1
-let g:airline#extensions#tabline#excludes = ['denite']
+let g:airline#extensions#tabline#excludes = ['denite', 'pydir.log', 'pyrun.log']
 let g:airline#extensions#tabline#exclude_preview = 1
 let g:airline#extensions#tabline#buffers_label = 'b'
 let g:airline#extensions#tabline#tabs_label = 't'
@@ -241,9 +242,8 @@ Plugin 'terryma/vim-expand-region'
 
 let g:easytags_async=1
 let g:easytags_syntax_keyword = 'auto'
-let g:easytags_file = '$HOME/.config/nvim/files/.easytags'
-let g:easytags_include_members = 1
-let g:easytags_always_enabled = 1
+let g:easytags_by_filetype = expand('$HOME/.config/nvim/files')
+let g:easytags_events = ['BufWritePost', 'BufReadPost']
 let g:easytags_resolve_links = 1
 Plugin 'xolox/vim-easytags'
 
@@ -298,7 +298,6 @@ let g:pymode_virtualenv = 0
 let g:pymode_run_bind = '<leader>pr'
 let g:pymode_breakpoint_bind = '<leader>pb'
 let g:pymode_lint = 0
-let g:pymode_rope_lookup_project = 1
 let g:pymode_rope_show_doc_bind = '<leader>rd'
 let g:pymode_rope_completion = 0
 let g:pymode_rope_goto_definition_bind = '<leader>o'
@@ -359,13 +358,11 @@ au VimEnter,Colorscheme * :hi Visual cterm=inverse ctermbg=233
 au VimEnter,Colorscheme * :hi WildMenu cterm=bold ctermbg=236
 au VimEnter,Colorscheme * :hi StatusLine ctermbg=234
 au VimEnter,Colorscheme * :hi Search ctermbg=53 ctermfg=117
-au VimEnter,Colorscheme * :hi MatchParen cterm=bold ctermbg=24 ctermfg=17
-au VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=142
-au VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=166
-au VimEnter,Colorscheme * :hi CursorColumn ctermbg=235
-au VimEnter,Colorscheme * :hi CursorLine cterm=bold ctermbg=237
-au InsertLeave * :hi CursorLine cterm=bold ctermbg=237
-au InsertEnter * :hi CursorLine cterm=NONE ctermbg=232
+au VimEnter,Colorscheme * :hi MatchParen ctermbg=24 ctermfg=17
+au VimEnter,Colorscheme * :hi CursorColumn ctermbg=239
+au VimEnter,Colorscheme * :hi CursorLine ctermbg=237
+au InsertLeave * :hi CursorLine ctermbg=237
+au InsertEnter * :hi CursorLine ctermbg=232
 
 set autoindent
 set backupdir=$HOME/.config/nvim/files/backup/
@@ -374,7 +371,7 @@ set completeopt="menu,preview,longest"
 if has('conceal')
   set conceallevel=2 concealcursor=niv
 endif
-set nocursorcolumn
+set cursorcolumn
 set cursorline
 set directory=$HOME/.config/nvim/files/swap/
 set encoding=utf8
@@ -394,7 +391,8 @@ set matchpairs=(:),[:],{:},<:>
 set mouse=a
 set mousemodel=popup_setpos
 set nonumber
-set noshowmode
+set showmode
+set previewheight=15
 set scrolljump=2
 set scrolloff=6
 set shiftwidth=4
@@ -414,7 +412,7 @@ set tildeop
 set timeoutlen=2000
 set undodir=$HOME/.config/nvim/files/undo/
 set undofile
-set updatetime=900
+set updatetime=2000
 set viewoptions=cursor,folds,slash,unix
 set viminfo='100,n$HOME/.config/nvim/files/info/viminfo
 set viminfo+=% " Remember info about open buffers on close
@@ -467,75 +465,70 @@ let g:denite_menus.sh.command_candidates = [
             \]
 
 
-" Set shortcut keys.
-"for [key, com] in items({
-"            \   '<Leader>x' : '>:',
-"            \   '<Leader>p' : '>!',
-"            \   '<Leader>w' : '>',
-"            \   '<Leader>q' : '>>',
-"            \ })
-"    execute 'nnoremap <silent>' key ':QuickRun' com '-mode n<CR>'
-"    execute 'vnoremap <silent>' key ':QuickRun' com '-mode v<CR>'
-"endfor
 function! YRRunAfterMaps()
-    au VimEnter * map     <silent><expr>j  v:count ? "j" : "\<Plug>(easymotion-j)"
-    au VimEnter * map     <silent><expr>k  v:count ? "k" : "\<Plug>(easymotion-k)"
-    au VimEnter * map     <silent><expr>f  v:count ? "f" : "\<Plug>(easymotion-bd-fl)"
-    au VimEnter * map     <silent><expr>t  v:count ? "t" : "\<Plug>(easymotion-bd-tl)"
-    au VimEnter * map     <silent><expr>w  v:count ? "w" : "\<Plug>(easymotion-bd-wl)"
-    au VimEnter * map     <silent><expr>e  v:count ? "e" : "\<Plug>(easymotion-bd-el)"
-    au VimEnter * map                   *  <Plug>(asterisk-z*)<Plug>(easymotion-bd-n)
-    au VimEnter * map           <silent>s  <Plug>(easymotion-bd-f2)
-    au VimEnter * map           <silent>K  <Plug>(easymotion-sol-bd-jk)
-    au VimEnter * noremap <silent><expr>g/ incsearch#go(<SID>config_easyfuzzymotion())
-    au VimEnter * nmap                  ?  <Plug>(incsearch-fuzzy-stay)
-    au VimEnter * map                   S  <Plug>(asterisk-z*)<Plug>(easymotion-bd-n)
-    au VimEnter * map                   #  <Plug>(asterisk-z#)<Plug>(easymotion-bd-n)
-    au VimEnter * map                   g* <Plug>(asterisk-gz*)<Plug>(easymotion-bd-n)
-    au VimEnter * map                   gS <Plug>(asterisk-gz*)<Plug>(easymotion-bd-n)
-    au VimEnter * map                   g# <Plug>(asterisk-gz#)<Plug>(easymotion-bd-n)
-    au VimEnter * nnoremap      <silent>/  :<C-U>Denite -cursor-wrap -vertical-preview line<CR>
-    au VimEnter * nnoremap      <silent>F  :<C-U>Denite -cursor-wrap -vertical-preview grep<CR>
+    au FileType * noremap <silent><expr>g/ incsearch#go(<SID>config_easyfuzzymotion())
+    au FileType * nmap                  ?  <Plug>(incsearch-fuzzy-stay)
+    for [k, c] in items({ 'j' : 'j',
+                        \ 'k' : 'k',
+                        \ 'f' : 'bd-fl',
+                        \ 't' : 'bd-tl',
+                        \ 'w' : 'bd-wl',
+                        \ 'e' : 'bd-el', })
+        execute 'au FileType * map     <silent><expr>'.k.' v:count ? '.k.' : "\<Plug>(easymotion-'.c.')"'
+    endfor
+    for [k, c] in items({ '*' : 'z*',
+                        \ 'S' : 'z*',
+                        \ '#' : 'z#',
+                        \ 'g*' : 'gz*',
+                        \ 'gS' : 'gz*',
+                        \ 'g#' : 'gz#', })
+        execute 'au FileType * map                   '.k.'  <Plug>(asterisk-'.c.')<Plug>(easymotion-bd-n)'
+    endfor
+    for [k, c] in items({ 's' : 'bd-f2',
+                        \ 'K' : 'sol-bd-jk', })
+        execute 'au FileType * map     <silent>'.k.' <Plug>(easymotion-'.c.')'
+    endfor
+    for [k, c] in items({ '/' : 'line',
+                        \ 'F' : 'grep', })
+        execute 'au FileType * map     <silent>'.k.' :<C-U>Denite -cursor-wrap -vertical-preview '.c.'<CR>'
+    endfor
 endfunction
 
 nmap <unique><M-l> <Plug>MoveLineHalfPageDownzz
 nmap <unique><M-h> <Plug>MoveLineHalfPageUpzz
 vmap <unique><M-l> <Plug>MoveBlockHalfPageDownzz
 vmap <unique><M-h> <Plug>MoveBlockHalfPageUpzz
-nmap <unique><M-[> yil<Plug>unimpairedPutBelowk
+nmap <unique><M-[> yil<Plug>unimpairedPutBelowgk
 nmap <unique><M-]> yil<Plug>unimpairedPutBelow
 nmap <unique>[c    <Plug>NERDCommenterYank<Plug>unimpairedPutAbove
 nmap <unique>]c    <Plug>NERDCommenterYank<Plug>unimpairedPutBelow
 nmap <unique>[g    <Plug>GitGutterPrevHunk
 nmap <unique>]g    <Plug>GitGutterNextHunk
-
-nmap <unique>gcc  <Plug>NERDCommenterInvert
-nmap <unique>gcl  <Plug>NERDCommenterAppend
-nmap <unique>gcL  <Plug>NERDCommenterToEOL
-nmap <unique>gcy  <Plug>NERDCommenterYank
-xmap     <unique>gc        <Plug>NERDCommenterInvert
-xmap     <unique>gC        <Plug>NERDCommenterComment
-xmap     <unique>v         <Plug>(expand_region_expand)
-cnoremap <unique>t/        Tabularize /./l1c1l0
 omap <unique>ig    <Plug>GitGutterTextObjectInnerPending
 omap <unique>ag    <Plug>GitGutterTextObjectOuterPending
 xmap <unique>ig    <Plug>GitGutterTextObjectInnerVisual
 xmap <unique>ag    <Plug>GitGutterTextObjectOuterVisual
 
+for [k, c] in items({ 'c' : 'Invert',
+                    \ 'l' : 'Append',
+                    \ 'y' : 'Yank',
+                    \ 'L' : 'ToEOL', })
+    execute 'nmap <unique>gc'.k.'  <Plug>NERDCommenter'.c
+endfor
 
-smap <expr><unique><CR>
-                    \ delimitMate#ShouldJump()            ? "\<Plug>delimitMateS-Tab" :
-                    \ pumvisible()                        ? "\<Right>" :
-                    \ neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" :
-                    \ delimitMate#WithinEmptyPair()       ? "\<Plug>delimitMateCR" :
-                    \ "\<C-C>"
+xmap     <unique>gc        <Plug>NERDCommenterInvert
+xmap     <unique>gC        <Plug>NERDCommenterComment
+xmap     <unique>v         <Plug>(expand_region_expand)
+cnoremap <unique>t/        Tabularize /./l1c1l0
 
-imap <expr><unique><CR>
-                      \ delimitMate#ShouldJump()            ? "\<Plug>delimitMateS-Tab" :
-                      \ pumvisible()                        ? "\<Right>" :
-                      \ neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" :
-                      \ delimitMate#WithinEmptyPair()       ? "\<Plug>delimitMateCR" :
-                      \ "\<C-C>"
+for m in ['imap', 'smap']
+    execute 'au VimEnter * '.m.' <expr><unique><CR> '.
+        \   'neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" : '.
+        \   'delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : '.
+        \   'delimitMate#ShouldJump() ? "\<Plug>delimitMateS-Tab" : '.
+        \   'pumvisible() ? "\<Right>" : '.
+        \   '"\<C-C>"'
+endfor
 
 noremap  <unique>gs      ^
 noremap  <unique>gl      $
@@ -550,10 +543,11 @@ nnoremap  <silent><unique><C-W>j    :<C-U>TmuxNavigateDown<CR>
 nnoremap  <silent><unique><C-W>k    :<C-U>TmuxNavigateUp<CR>
 nnoremap  <silent><unique><C-W>l    :<C-U>TmuxNavigateRight<CR>
 
+nmap     <unique>''      '[
 xmap     <unique><CR>      <Plug>NrrwrgnDo
 imap     <unique><C-L>     <Plug>delimitMateS-Tab
 nnoremap  <silent><unique><C-L>     :<C-U>TmuxNavigatePrevious<CR>
-nmap <unique><CR> <Plug>unimpairedBlankDown
+au FileType perl,vim,python nmap <buffer><CR> <Plug>unimpairedBlankDown
 nnoremap <unique><Space> <C-O>
 nnoremap  <silent><unique><C-T>    g<C-]>
 inoremap  <silent><unique><F4>     <esc>:<C-U>w<CR>
@@ -563,20 +557,11 @@ nnoremap  <silent><unique><C-]>    :<C-U>ta<CR>
 nnoremap  <silent><unique><C-[>    :<C-U>po<CR>
 
 let g:mapleader=","
-nmap             <unique><leader>1       <Plug>AirlineSelectTab1
-nmap             <unique><leader>2       <Plug>AirlineSelectTab2
-nmap             <unique><leader>3       <Plug>AirlineSelectTab3
-nmap             <unique><leader>4       <Plug>AirlineSelectTab4
-nmap             <unique><leader>5       <Plug>AirlineSelectTab5
-nmap             <unique><leader>6       <Plug>AirlineSelectTab6
-nmap             <unique><leader>7       <Plug>AirlineSelectTab7
-nmap             <unique><leader>8       <Plug>AirlineSelectTab8
-nmap             <unique><leader>9       <Plug>AirlineSelectTab9
 nmap             <unique><leader>h       <Plug>AirlineSelectPrevTab
 nmap             <unique><leader>l       <Plug>AirlineSelectNextTab
 nmap     <silent><unique><leader><CR>    :<C-U>NW<CR>
 nnoremap         <unique><leader>/       /
-nnoremap         <unique><leader>z       zjzA
+nnoremap         <unique><leader>z       zjza
 nnoremap <silent><unique><leader>r       :<C-U>nohlsearch<CR>:<C-U>diffupdate<CR>: syntax sync fromstart<CR><c-l>
 nmap             <unique><leader><Space> <Plug>(easymotion-bd-n)
 nnoremap         <unique><leader>v       <C-V>
@@ -587,28 +572,35 @@ noremap  <silent><unique><leader>d       :<C-U>hide<CR>
 nnoremap <silent><unique><leader>sv      :<C-U>vs<CR>
 nnoremap <silent><unique><leader>sh      :<C-U>sp<CR>
 
+for n in ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+    execute 'au VimEnter * nmap             <unique>'.g:mapleader.n.'       <Plug>AirlineSelectTab'.n
+endfor
 
 let g:mapleader=';'
 nmap              <unique><leader><CR>     <Plug>NrrwrgnWinIncr
 nnoremap  <silent><unique><leader><leader> :exe "tabn ".g:lasttab<CR>
 nnoremap  <silent><unique><leader><Space>  :Startify<CR>
-nnoremap  <silent><unique><leader>q        :Denite -cursor-wrap -vertical-preview unite:quickfix<CR>
-nnoremap  <silent><unique><leader>f        :Denite -cursor-wrap -vertical-preview file_rec<CR>
-nnoremap  <silent><unique><leader>F        :Denite -cursor-wrap -vertical-preview file_rec:~<CR>
-nnoremap  <silent><unique><leader>o        :Denite -cursor-wrap -vertical-preview outline<CR>
-nnoremap  <silent><unique><leader>l        :Denite -cursor-wrap -vertical-preview unite:location_list<CR>
-nnoremap  <silent><unique><leader>d        :Denite -cursor-wrap -vertical-preview directory_rec<CR>
-nnoremap  <silent><unique><leader>D        :Denite -cursor-wrap -vertical-preview directory_rec:~<CR>
-nnoremap  <silent><unique><leader>b        :Denite -cursor-wrap -vertical-preview buffer<CR>
-nnoremap  <silent><unique><leader>h        :Denite -cursor-wrap -vertical-preview help<CR>
-nnoremap  <silent><unique><leader>g        :Denite -cursor-wrap -vertical-preview menu:git<CR>
-nnoremap  <silent><unique><leader>s        :Denite -cursor-wrap -vertical-preview menu:sh<CR>
-nnoremap  <silent><unique><leader>m        :Denite -cursor-wrap -vertical-preview unite:file_mru<CR>
-noremap   <silent><unique><leader>:        :Denite -cursor-wrap -vertical-preview command<CR>
 nnoremap  <silent><unique><leader>y        :YRShow<CR>
 nnoremap  <silent><unique><leader>u        :UndotreeToggle<CR>
 nnoremap  <silent><unique><leader>n        :<C-U>echo(system("tmux if -F '#{s/1/0/:window_panes}' 'join-pane -d -s:2.{top} -t:+' 'join-pane -vb -p 40 -t:2 -s:+.{bottom}'"))<CR>
 nmap              <unique><leader>t        <Plug>TaskListjj
+nmap      <silent><unique><leader>'        :SignatureListBufferMarks 1<CR>:lopen 15<CR>
+
+for [k,c] in items({ 'q' : 'unite:quickfix',
+                    \'f' : 'file_rec',
+                    \'o' : 'outline',
+                    \'l' : 'unite:location_list',
+                    \'d' : 'directory_rec',
+                    \'D' : 'directory_rec:~',
+                    \'b' : 'buffer',
+                    \'h' : 'help',
+                    \'g' : 'menu:git',
+                    \'s' : 'menu:sh',
+                    \'m' : 'unite:file_mru',
+                    \':' : 'command',
+                    \'F' : 'file_rec:~' })
+    execute 'nnoremap  <silent><unique>'.g:mapleader.k.' :Denite -cursor-wrap -vertical-preview '.c.'<CR>'
+endfor
 
 let g:mapleader='-'
 function g:Undotree_CustomMap()
@@ -638,23 +630,25 @@ au VimEnter    *                  :call denite#custom#var('menu', 'menus', g:den
 au VimEnter    *                  :call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
 au VimEnter    *                  :call deoplete#custom#set('_', 'converters', ['converter_auto_paren', 'converter_remove_overlap', 'converter_truncate_abbr', 'converter_truncate_menu'])
 
-au WinEnter    *                  set   cursorline
-au WinLeave    *                  set   nocursorline
-au InsertEnter *                  setlocal timeoutlen=300
+au WinEnter    *                  setlocal   cursorline
+au WinEnter    *                  setlocal   cursorcolumn
+au WinLeave    *                  setlocal   nocursorline
+au WinLeave    *                  setlocal   nocursorcolumn
+au InsertEnter *                  setlocal timeoutlen=500
 au InsertLeave *                  setlocal timeoutlen=2000
 au VimEnter    *                  let   g:lasttab = tabpagenr()
 au TabLeave    *                  let   g:lasttab = tabpagenr()
 au VimEnter    *                  command! -nargs=* -bar -complete=customlist,man#completion#run Man call man#get_page('tab', <f-args>)
-au WinEnter    *                  AirlineRefresh
-au BufEnter    *                  filetype detect
-au BufWinEnter *                  if &previewwindow | setlocal nonumber | endif
+" au WinEnter    *                  AirlineRefresh
+" au BufEnter    *                  filetype detect
+" au BufWinEnter *                  if &previewwindow | setlocal nonumber | endif
 au BufReadPost *                  if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 au FileType    python             let b:delimitMate_nesting_quotes = ['"']
 au FileType    python             let b:delimitMate_expand_inside_quotes = 1
 au FileType    python,perl        let b:delimitMate_excluded_regions = ""
 au FileType    perl               let b:delimitmate_insert_eol_marker = 1
 au FileType    perl               let b:delimitMate_eol_marker = ";"
-au VimEnter    perl,python nested :call tagbar#autoopen(1)
+" au VimEnter    perl,python nested :call tagbar#autoopen(1)
 au BufWinEnter perl,python nested :call tagbar#autoopen(1)
 au FileType    python             let b:match_words = '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
 au FileType    python             setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr foldlevel=3 nonumber
