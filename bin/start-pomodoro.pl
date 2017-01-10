@@ -47,8 +47,8 @@ io->file(qq@$ENV{HOME}/.pomodoro_session@)->touch->assert;
 my $nameargs = (scalar @ARGV).q{};
 ### as a string: $nameargs
 croak q@either 0 or 2 [work minutes:break minutes] arguments required@ unless ($nameargs =~ /[02]/);
-my $pomtime = 25;
-my $breaktime = 5;
+my $pomtime = 20;
+my $breaktime = 7;
 ($pomtime, $breaktime) = @ARGV if $nameargs =~ /2/;
 
 # prepare the job
