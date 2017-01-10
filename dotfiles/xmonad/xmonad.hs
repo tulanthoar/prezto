@@ -33,7 +33,7 @@ import XMonad.Util.SpawnOnce (spawnOnce)
 
 myTerminal = "tilda" :: String
 myModMask = mod3Mask :: KeyMask
-uniqueInits = ["modkey", "maybeclipmenud", "mayberedshift"] :: [String]
+uniqueInits = [myTerminal, "modkey", "maybeclipmenud", "mayberedshift"] :: [String]
 xInitM_ = mapM_ spawnOnce uniqueInits :: X()
 wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"] :: [WorkspaceId]
 menuH = 15 :: Int
@@ -58,7 +58,7 @@ myManageHook = namedScratchpadManageHook scratchpads <+> manageDocks
 xmConf p = ewmh $ def
   { manageHook         = myManageHook <+> fullscreenManageHook <+> def
   , layoutHook         = mylayoutHook
-  , startupHook        = xInitM_ >> byobucmd
+  , startupHook        = xInitM_
   , terminal           = myTerminal
   , modMask            = myModMask
   , borderWidth        = 0
