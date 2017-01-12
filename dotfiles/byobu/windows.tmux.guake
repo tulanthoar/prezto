@@ -1,0 +1,4 @@
+new-session -As guake ;
+new-window -dn ipy ipython ;
+new-window -dn perl reply ;
+new-window -dn pom start-pomodoro ;
