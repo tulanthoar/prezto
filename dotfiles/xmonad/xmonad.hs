@@ -33,16 +33,16 @@ import XMonad.Util.SpawnOnce (spawnOnce)
 
 myTerminal = "tilda" :: String
 myModMask = mod3Mask :: KeyMask
-uniqueInits = [myTerminal, "modkey", "maybeclipmenud", "mayberedshift"] :: [String]
+uniqueInits = [myTerminal, "modkey", "maybeclipmenud", "mayberedshift", "guake"] :: [String]
 xInitM_ = mapM_ spawnOnce uniqueInits :: X()
-wsList =  map (\w -> "<"++w++">") ["W", "d", "t", "T"] :: [WorkspaceId]
+wsList =  map (\w -> "<"++w++">") ["W", "d"] :: [WorkspaceId]
 menuH = 15 :: Int
 mag = 1.3 :: Rational
 mvNEmpty = moveTo Next EmptyWS :: X()
 corePadsM_ = byobucmd :: X()
 launchAct = spawn $ "j4-dmenu-desktop --display-binary --term="++myTerminal++" --dmenu='dmenu -w 600 -y "++show menuH++" -z -p launch -l 50'" :: X()
 srchAct = spawn $  "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50" :: X()
-centrPtr = updatePointer (0.5, 0.5) (0, 0) :: X()
+centrPtr_ = updatePointer (0.5, 0.5) (0, 0) :: X()
 
 mylayoutHook = fullscreenFull $ G.gaps [(G.U,menuH)] $ magnifiercz mag $ minimize $ toggleLayouts (GV.SplitGrid GV.T 1 2 (1%2) (16%10) delta) $ Tall 1 delta (11%20)
   where delta = 3 % 100
@@ -66,7 +66,7 @@ xmConf p = ewmh $ def
   , normalBorderColor  = cDkDkGray
   , focusedBorderColor = limeGreen
   , workspaces         = wsList
-  , logHook            = dynamicLogWithPP ( myDzenPP {ppOutput = hPutStrLn p} ) >> workspaceHistoryHook >> centrPtr
+  , logHook            = dynamicLogWithPP ( myDzenPP {ppOutput = hPutStrLn p} ) >> workspaceHistoryHook >> centrPtr_
   , handleEventHook    = docksEventHook <+> minimizeEventHook <+> serverModeEventHookCmd' xmC <+> fullscreenEventHook
   , keys               = \c -> fromList xkM
   }
