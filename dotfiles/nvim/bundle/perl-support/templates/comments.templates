@@ -56,16 +56,39 @@
 #
 #  DESCRIPTION: <CURSOR>
 #
-#      OPTIONS: N/A
-# REQUIREMENTS: perl5i::2
-#         BUGS: N/A
-#        NOTES: N/A
-#       AUTHOR: |AUTHOR|, |EMAIL|
+#      OPTIONS: none
+# REQUIREMENTS: perl5i::2 IO::All Smart::Comments Time::HiRes Text::ParseWord
+#               Data::Printer Child
+#         BUGS: none
+#        NOTES: none
+#       AUTHOR: |AUTHOR| (|AUTHORREF|), |EMAIL|
+# ORGANIZATION: |ORGANIZATION|
+#      VERSION: 1.0
 #      CREATED: |DATE| |TIME|
+#     REVISION: alpha
 #===============================================================================
 
 use perl5i::2;
 use IO::All;
+use Smart::Comments q`###`;
+use DateTime::Tiny;
+use Time::HiRes qw`gettimeofday tv_interval`;
+use Text::ParseWords;
+use Data::Printer;
+use Child;
+
+my $dt = DateTime::Tiny->now;
+my $t0=[gettimeofday];
+my $d = io->curdir->absolute;
+### --------------------------------
+### Running |FILENAME|
+### From directory: "$d"
+### Date: $dt->as_string
+### ________________________________
+
+
+### Elapsed Time: tv_interval ($t0)
+
 
 == Comments.file description pm == map:chpm, sc:d, start, noindent ==
 #
@@ -87,7 +110,7 @@ use IO::All;
 
 use strict;
 use warnings;
- 
+
 == Comments.file description t == map:cht, sc:d, start, noindent ==
 #
 #===============================================================================
