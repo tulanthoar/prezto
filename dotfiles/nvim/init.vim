@@ -25,8 +25,34 @@ Plugin 'godlygeek/tabular'
 Plugin 'haya14busa/vim-asterisk'
 Plugin 'mkitt/tabline.vim'
 Plugin 'vim-utils/vim-man'
+Plugin 'Shougo/neco-vim'
+Plugin 'Shougo/neco-syntax'
 
-let g:indentLine_char='|'
+let g:Tlist_Auto_Open = 1
+let g:Tlist_Close_On_Select = 1
+let g:Tlist_Exit_OnlyWindow = 1
+let g:Tlist_Process_File_Always = 1
+let g:Tlist_File_Fold_Auto_Close = 1
+let g:Tlist_WinWidth = 30
+let g:Tlist_Compact_Format = 1
+let g:Tlist_Enable_Fold_Column = 0
+let g:Tlist_Display_Prototype = 1
+let g:Tlist_Auto_Update = 1
+let g:Tlist_GainFocus_On_ToggleOpen = 1
+let g:Tlist_Highlight_Tag_On_BufEnter = 1
+let g:Tlist_Inc_Winwidth = 0
+Plugin 'vim-scripts/taglist.vim'
+
+" let g:volatile_ftypes += ['taglist']
+Plugin 'kopischke/vim-stay'
+
+let g:echodoc_enable_at_startup = 1
+Plugin 'Shougo/echodoc.vim'
+
+let g:indentLine_char='┆'
+let g:indentLine_indentLevel = 2
+let g:indentLine_first_char = '┆'
+let g:indentLine_showFirstIndentLevel = 1
 let g:indentLine_fileType = ['vim', 'perl', 'python']
 let g:indentLine_faster=1
 let g:indentLine_concealcursor='nc'
@@ -51,6 +77,12 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:multi_cursor_exit_from_visual_mode = 0
 let g:multi_cursor_exit_from_insert_mode = 0
 let g:multi_cursor_visual_maps = {'i':1,'a':1,'f':1,'F':1,'t':1,'T':1,'K':1,'S':1}
+function g:Multiple_cursors_before()
+    let g:deoplete#disable_auto_complete = 1
+endfunction
+function g:Multiple_cursors_after()
+    let g:deoplete#disable_auto_complete = 0
+endfunction
 Plugin 'terryma/vim-multiple-cursors'
 
 let g:NERDCreateDefaultMappings = 0
@@ -63,8 +95,8 @@ let g:startify_bookmarks = [ {'n':'~/.config/nvim/init.vim'}, {'r':'~/.zprezto/r
 let g:startify_session_dir = '~/.config/nvim/files/session'
 let g:startify_list_order = [['Sess'], 'sessions',['MRU'], 'files',['MRU in CWD'], 'dir',['Marks'], 'bookmarks',['CMD'], 'commands']
 let g:startify_commands = [ {'m': ['Unite MRU','Denite unite:file_mru']}, {'h':['help','Denite -auto-highlight -cursor-wrap -vertical-preview help']}, {'g':['grep','Denite -auto-highlight -cursor-wrap -vertical-preview grep']}, {'d':['dir search','Denite -auto-highlight -cursor-wrap -vertical-preview directory_rec']}, {'f':['all files','Denite -auto-highlight -cursor-wrap -vertical-preview file_rec']}, {'c':['cmd search','Denite -auto-highlight -cursor-wrap -vertical-preview commands']}, {'P': ['Plugins Update', 'PluginUpdate']}]
-let g:startify_files_number = 4
-let g:startify_session_before_save = [ 'silent! TagbarClose' ]
+let g:startify_files_number = 6
+" let g:startify_session_before_save = [ 'silent! TagbarClose' ]
 let g:startify_session_persistence = 1
 let g:startify_enable_special = 0
 let g:startify_session_sort = 1
@@ -82,19 +114,19 @@ let g:neosnippet#expand_word_boundary = 1
 Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
 
-let g:tagbar_compact = 1
-let g:tagbar_autofocus = 0
-let g:tagbar_zoomwidth = 0
-let g:tagbar_width = 25
-let g:tagbar_indent = 0
-let g:tagbar_foldlevel = 0
-let g:tagbar_sort = 0
-let g:tagbar_iconchars = ['+', '-']
-let g:tagbar_autoshowtag = 1
-let g:tagbar_autopreview = 0
-let g:tagbar_silent = 0
-let g:tagbar_map_zoomwin = '<Tab>'
-Plugin 'majutsushi/tagbar'
+" let g:tagbar_compact = 1
+" let g:tagbar_autofocus = 0
+" let g:tagbar_zoomwidth = 0
+" let g:tagbar_width = 25
+" let g:tagbar_indent = 0
+" let g:tagbar_foldlevel = 0
+" let g:tagbar_sort = 0
+" let g:tagbar_iconchars = ['+', '-']
+" let g:tagbar_autoshowtag = 1
+" let g:tagbar_autopreview = 0
+" let g:tagbar_silent = 0
+" let g:tagbar_map_zoomwin = '<Tab>'
+" Plugin 'majutsushi/tagbar'
 
 let g:tex_fold_enabled=1
 let g:vimsyn_folding='af'
@@ -134,16 +166,32 @@ Plugin 'haya14busa/incsearch.vim'
 Plugin 'haya14busa/incsearch-fuzzy.vim'
 
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#enable_refresh_always = 1
-let g:deoplete#auto_refresh_delay = 5
+let g:deoplete#enable_ignore_case = 1
+let g:deoplete#enable_smart_case = 1
 let g:deoplete#enable_camel_case = 1
-let g:deoplete#auto_complete_delay = 5
-let g:deoplete#auto_refresh_delay = 5
+let g:deoplete#enable_refresh_always = 1
+" let g:deoplete#auto_complete_start_length = 1
+let g:deoplete#delimiters = ['/', '(']
+au FileType python let g:deoplete#delimiters = ['/', '.', '(']
+au FileType perl let g:deoplete#delimiters = ['/', '->', '(', '::', '$', '@', '%']
+au FileType vim let g:deoplete#delimiters = ['/', ':', '(', "\'"]
+let g:deoplete#auto_complete_delay = 30
+let g:deoplete#auto_refresh_delay = 30
 let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#max_menu_width = 100
 let g:deoplete#tag#cache_limit_size = 5000000
-let g:deoplete#delimiters = ['/', '.', '::', ':', '#', '->']
+let g:deoplete#sources = {}
+let g:deoplete#sources._ = []
+let g:deoplete#sources.python = ['buffer', 'member', 'tag', 'file', 'around', 'neosnippet', 'include', 'jedi', 'syntax']
+au FileType python :call deoplete#custom#set('jedi', 'rank', 99)
+au FileType python :call deoplete#custom#set('tag', 'rank', 90)
+au FileType python :call deoplete#custom#set('neosnippet', 'rank', 85)
+au FileType python :call deoplete#custom#set('member', 'rank', 83)
+au FileType python :call deoplete#custom#set('buffer', 'rank', 81)
+au FileType python :call deoplete#custom#set('syntax', 'rank', 80)
+au FileType python :call deoplete#custom#set('include', 'rank', 79)
+au FileType python :call deoplete#custom#set('around', 'rank', 69)
+au FileType python :call deoplete#custom#set('file', 'rank', 59)
 if !exists('g:neoinclude#reverse_exprs')
     let g:neoinclude#reverse_exprs = {}
 endif
@@ -154,11 +202,6 @@ Plugin 'Shougo/neoinclude.vim'
 Plugin 'SevereOverfl0w/deoplete-github'
 Plugin 'Shougo/context_filetype.vim'
 
-let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-let g:SuperTabLongestEnhanced = 1
-let g:SuperTabLongestHighlight = 1
-Plugin 'ervandew/supertab'
-
 let g:base16colorspace=256
 Plugin 'chriskempson/base16-vim'
 
@@ -166,7 +209,7 @@ let g:airline_exclude_preview = 1
 let g:airline_powerline_fonts = 1
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline#extensions#branch#enabled = 0
-let g:airline#extensions#tagbar#flags = 's'
+" let g:airline#extensions#tagbar#flags = 's'
 let g:airline#extensions#hunks#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_splits = 1
@@ -240,13 +283,6 @@ let g:expand_region_text_objects = {'iw':0, 'iW':0, 'i"':0, 'a"':0, 'i''':0, 'a'
             \  'iB':1, 'il':0, 'ii':1, 'ai':1, 'ip':0, 'ie':0}
 Plugin 'terryma/vim-expand-region'
 
-let g:easytags_async=1
-let g:easytags_syntax_keyword = 'auto'
-let g:easytags_by_filetype = expand('$HOME/.config/nvim/files')
-let g:easytags_events = ['BufWritePost', 'BufReadPost']
-let g:easytags_resolve_links = 1
-Plugin 'xolox/vim-easytags'
-
 " TODO configure LaTeXBox
 let g:LatexBox_completion_close_braces = 1
 let g:LatexBox_bibtex_wild_spaces = 1
@@ -259,35 +295,60 @@ let g:LatexBox_viewer = 'evince'
 let g:tex_flavor = "latex"
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
 
-" TODO configure perl-support
-let g:Perl_CustomTemplateFile = '$ZDOTD/nvim/bundle/perl-support/templates/perl.templates'
-let g:Perl_PerlTags = 'on'
+" TODO configure perl templates
+let tlist_perl_settings   = 'perl;c:constants;f:formats;l:labels;p:packages;'.
+            \ 's:subroutines;d:subroutines;o:POD;t:Keyword Comments'
+let g:Templates_InternetBrowserExec = 'chromium'
+let g:Perl_CustomTemplateFile = expand('$ZDOTD/nvim/bundle/perl-support/templates/perl.templates')
+let g:Perl_LoadMenus    = 'no'
+au FileType perl nnoremap    <buffer>  <silent>  K       i<C-R>=Perl_JumpCtrlJ()<CR>
+au FileType perl inoremap    <buffer>  <silent>  K  <C-g>u<C-R>=Perl_JumpCtrlJ()<CR>
+au FileType perl nnoremap    <buffer>  <silent>  <C-j>  :w<CR>
+au FileType perl inoremap    <buffer>  <silent>  <C-j>  <NL>
 let g:Perl_Ctrl_j = 'off'
+let g:Perl_PerlTags = 'on'
 Plugin 'WolfgangMehner/perl-support'
 Plugin 'vim-perl/vim-perl'
 Plugin 'c9s/perlomni.vim'
 
-" TODO configure haskell-vim
-let g:haddock_browser = "/usr/bin/firefox"
-let g:haskell_enable_arrowsyntax = 1
-let g:haskell_enable_pattern_synonyms = 1
 let g:haskell_enable_quantification = 1
 let g:haskell_enable_recursivedo = 1
-let g:haskell_enable_static_pointers = 1
+let g:haskell_enable_arrowsyntax = 1
+let g:haskell_enable_pattern_synonyms = 1
 let g:haskell_enable_typeroles = 1
+let g:haskell_enable_static_pointers = 1
+let g:haskell_indent_if = 3
+let g:haskell_indent_case = 2
+let g:haskell_indent_let = 4
+let g:haskell_indent_where = 6
+let g:haskell_indent_do = 3
+let g:haskell_indent_in = 1
+let g:haskell_indent_guard = 2
+let g:cabal_indent_section = 2
+let g:haddock_browser = "/usr/bin/chromium"
 let g:haskellmode_completion_ghc = 0
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+let g:necoghc_enable_detailed_browse = 1
 Plugin 'neovimhaskell/haskell-vim.git'
 Plugin 'eagletmt/neco-ghc'
 
+" may improve performance significantly - UNTESTED
+" set regexpengine=1
+" let g:loaded_matchparen = 1
+
+let g:jedi#completions_command = ''
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#popup_on_dot = 0
 let g:jedi#goto_command = '<leader>g'
 let g:jedi#goto_assignments_command = '<leader>jf'
 let g:jedi#documentation_command = '<leader>d'
 let g:jedi#rename_command = '<leader>js'
 let g:jedi#usages_command = '<leader>8'
 let g:jedi#auto_close_doc = 0
-let g:jedi#show_call_signatures = 2 " show signatures in cmd line
+let g:jedi#show_call_signatures = 0 " show signatures in cmd line
 let g:jedi#show_call_signatures_delay = 100
-let g:jedi#use_splits_not_buffers = 'right'
+let g:jedi#use_splits_not_buffers = 'winwidth'
+let g:jedi#completions_enabled = 0
 let g:jedi#force_py_version = 3
 let g:pymode_options = 0
 let g:pymode_options_max_line_length = 90 " it gets highlighting
@@ -300,6 +361,7 @@ let g:pymode_breakpoint_bind = '<leader>pb'
 let g:pymode_lint = 0
 let g:pymode_rope_show_doc_bind = '<leader>rd'
 let g:pymode_rope_completion = 0
+let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_goto_definition_bind = '<leader>o'
 let g:pymode_rope_goto_definition_cmd = 'vnew'
 let g:pymode_rope_rename_bind = '<leader>s'
@@ -332,8 +394,6 @@ Plugin 'zchee/deoplete-jedi'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'tweekmonster/impsort.vim'
 
-" TODO configure neco-vim
-Plugin 'Shougo/neco-vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -367,7 +427,7 @@ au InsertEnter * :hi CursorLine ctermbg=232
 set autoindent
 set backupdir=$HOME/.config/nvim/files/backup/
 set cmdheight=2
-set completeopt="menu,preview,longest"
+set completeopt="menuone,noselect"
 if has('conceal')
   set conceallevel=2 concealcursor=niv
 endif
@@ -391,7 +451,7 @@ set matchpairs=(:),[:],{:},<:>
 set mouse=a
 set mousemodel=popup_setpos
 set nonumber
-set showmode
+set noshowmode
 set previewheight=15
 set scrolljump=2
 set scrolloff=6
@@ -482,7 +542,8 @@ function! YRRunAfterMaps()
                         \ 'g*' : 'gz*',
                         \ 'gS' : 'gz*',
                         \ 'g#' : 'gz#', })
-        execute 'au FileType * map                   '.k.'  <Plug>(asterisk-'.c.')<Plug>(easymotion-bd-n)'
+        execute 'au FileType * nmap                   '.k.'  <Plug>(asterisk-'.c.')<Plug>(easymotion-bd-n)'
+        execute 'au FileType * omap                   '.k.'  <Plug>(asterisk-'.c.')<Plug>(easymotion-bd-n)'
     endfor
     for [k, c] in items({ 's' : 'bd-f2',
                         \ 'K' : 'sol-bd-jk', })
@@ -516,6 +577,7 @@ for [k, c] in items({ 'c' : 'Invert',
     execute 'nmap <unique>gc'.k.'  <Plug>NERDCommenter'.c
 endfor
 
+xnoremap     <unique>S<Space>  c<Space><Space><esc>P
 xmap     <unique>gc        <Plug>NERDCommenterInvert
 xmap     <unique>gC        <Plug>NERDCommenterComment
 xmap     <unique>v         <Plug>(expand_region_expand)
@@ -523,13 +585,22 @@ cnoremap <unique>t/        Tabularize /./l1c1l0
 
 for m in ['imap', 'smap']
     execute 'au VimEnter * '.m.' <expr><unique><CR> '.
-        \   'neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" : '.
+        \   'pumvisible() ? "\<Left>\<Right>" : '.
         \   'delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : '.
-        \   'delimitMate#ShouldJump() ? "\<Plug>delimitMateS-Tab" : '.
-        \   'pumvisible() ? "\<Right>" : '.
-        \   '"\<C-C>"'
+        \   '"\<C-O>"'
 endfor
 
+smap <expr><unique><Tab> pumvisible() ? "\<C-N>" :
+    \   neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" : "\<C-O>%"
+imap <expr><unique><Tab> pumvisible() ? "\<C-N>" :
+    \   neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" : "\<C-O>%"
+imap <expr><unique><S-Tab> pumvisible() ? "\<C-P>" :
+            \   delimitMate#ShouldJump() ? "\<Plug>delimitMateS-Tab" : "\<esc>:TmuxNavigatePrevious\<CR>"
+nmap <unique><S-Tab> :TmuxNavigatePrevious<CR>
+inoremap <unique>,       ,<Space>
+for k in ['=', '+']
+    execute 'inoremap <unique>'.k.' <Space>'.k.'<Space>'
+endfor
 noremap  <unique>gs      ^
 noremap  <unique>gl      $
 nnoremap <unique><C-S>   5<C-Y>
@@ -545,18 +616,20 @@ nnoremap  <silent><unique><C-W>l    :<C-U>TmuxNavigateRight<CR>
 
 nmap     <unique>''      '[
 xmap     <unique><CR>      <Plug>NrrwrgnDo
-imap     <unique><C-L>     <Plug>delimitMateS-Tab
-nnoremap  <silent><unique><C-L>     :<C-U>TmuxNavigatePrevious<CR>
 au FileType perl,vim,python nmap <buffer><CR> <Plug>unimpairedBlankDown
 nnoremap <unique><Space> <C-O>
 nnoremap  <silent><unique><C-T>    g<C-]>
 inoremap  <silent><unique><F4>     <esc>:<C-U>w<CR>
 nnoremap  <silent><unique><F4>     :<C-U>w<CR>
+nnoremap  <silent><unique><F2>     :cd %:p:h
+noremap <silent><unique><F3>       :Tlist<CR>
+inoremap <silent><unique><F3>  <C-C>:Tlist<CR>
 nnoremap  <silent><unique><C-J>     :<C-U>w<CR>
 nnoremap  <silent><unique><C-]>    :<C-U>ta<CR>
 nnoremap  <silent><unique><C-[>    :<C-U>po<CR>
 
 let g:mapleader=","
+inoremap <expr><unique><leader>u     deoplete#undo_completion()
 nmap             <unique><leader>h       <Plug>AirlineSelectPrevTab
 nmap             <unique><leader>l       <Plug>AirlineSelectNextTab
 nmap     <silent><unique><leader><CR>    :<C-U>NW<CR>
@@ -599,7 +672,7 @@ for [k,c] in items({ 'q' : 'unite:quickfix',
                     \'m' : 'unite:file_mru',
                     \':' : 'command',
                     \'F' : 'file_rec:~' })
-    execute 'nnoremap  <silent><unique>'.g:mapleader.k.' :Denite -cursor-wrap -vertical-preview '.c.'<CR>'
+    execute 'nnoremap  <silent><unique>'.g:mapleader.k.' :Denite -cursor-wrap '.c.'<CR>'
 endfor
 
 let g:mapleader='-'
@@ -628,7 +701,10 @@ au VimEnter    *                  :call denite#custom#map( 'insert', '<C-k>', '<
 au VimEnter    *                  :call denite#custom#var('file_rec', 'command', ['rg', '--files', '--follow', '--hidden', '--glob', '!.git', '--glob', '!.gitignore', '--glob', '!.gitsubmodules', '--glob', '!.cache'])
 au VimEnter    *                  :call denite#custom#var('menu', 'menus', g:denite_menus)
 au VimEnter    *                  :call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
-au VimEnter    *                  :call deoplete#custom#set('_', 'converters', ['converter_auto_paren', 'converter_remove_overlap', 'converter_truncate_abbr', 'converter_truncate_menu'])
+au VimEnter    *                  :call deoplete#custom#set('_', 'converters', ['converter_auto_paren', 'converter_remove_overlap', 'converter_truncate_abbr', 'converter_truncate_menu', 'converter_auto_delimiter'])
+call deoplete#custom#set('buffer', 'rank', 9)
+" Disable the candidates in Comment/String syntaxes.
+call deoplete#custom#set('_', 'disabled_syntaxes', ['Comment', 'String'])
 
 au WinEnter    *                  setlocal   cursorline
 au WinEnter    *                  setlocal   cursorcolumn
@@ -642,14 +718,12 @@ au VimEnter    *                  command! -nargs=* -bar -complete=customlist,ma
 " au WinEnter    *                  AirlineRefresh
 " au BufEnter    *                  filetype detect
 " au BufWinEnter *                  if &previewwindow | setlocal nonumber | endif
-au BufReadPost *                  if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+" au BufReadPost *                  if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 au FileType    python             let b:delimitMate_nesting_quotes = ['"']
 au FileType    python             let b:delimitMate_expand_inside_quotes = 1
 au FileType    python,perl        let b:delimitMate_excluded_regions = ""
 au FileType    perl               let b:delimitmate_insert_eol_marker = 1
 au FileType    perl               let b:delimitMate_eol_marker = ";"
-" au VimEnter    perl,python nested :call tagbar#autoopen(1)
-au BufWinEnter perl,python nested :call tagbar#autoopen(1)
 au FileType    python             let b:match_words = '\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>'
 au FileType    python             setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr foldlevel=3 nonumber
 au FileType    python             setlocal define=^\s*\\(def\\\\|class\\) commentstring=#%s nowrap formatoptions-=t complete+=t
