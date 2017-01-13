@@ -49,14 +49,14 @@ Plugin 'kopischke/vim-stay'
 let g:echodoc_enable_at_startup = 1
 Plugin 'Shougo/echodoc.vim'
 
+let g:indentLine_setColors = 0
 let g:indentLine_char='┆'
-let g:indentLine_indentLevel = 2
-let g:indentLine_first_char = '┆'
+let g:indentLine_indentLevel = 10
+let g:indentLine_first_char = '|'
 let g:indentLine_showFirstIndentLevel = 1
 let g:indentLine_fileType = ['vim', 'perl', 'python']
 let g:indentLine_faster=1
 let g:indentLine_concealcursor='nc'
-let g:indentLine_leadingSpaceChar='-'
 let g:indentLine_leadingSpaceEnabled = 0
 Plugin 'Yggdroot/indentLine'
 
@@ -94,9 +94,8 @@ Plugin 'scrooloose/nerdcommenter'
 let g:startify_bookmarks = [ {'n':'~/.config/nvim/init.vim'}, {'r':'~/.zprezto/runcoms'}, {'z':'~/.zshrc'}, {'p':'~/code/pyrep'}, {'l':'~/code/perl'} ]
 let g:startify_session_dir = '~/.config/nvim/files/session'
 let g:startify_list_order = [['Sess'], 'sessions',['MRU'], 'files',['MRU in CWD'], 'dir',['Marks'], 'bookmarks',['CMD'], 'commands']
-let g:startify_commands = [ {'m': ['Unite MRU','Denite unite:file_mru']}, {'h':['help','Denite -auto-highlight -cursor-wrap -vertical-preview help']}, {'g':['grep','Denite -auto-highlight -cursor-wrap -vertical-preview grep']}, {'d':['dir search','Denite -auto-highlight -cursor-wrap -vertical-preview directory_rec']}, {'f':['all files','Denite -auto-highlight -cursor-wrap -vertical-preview file_rec']}, {'c':['cmd search','Denite -auto-highlight -cursor-wrap -vertical-preview commands']}, {'P': ['Plugins Update', 'PluginUpdate']}]
+let g:startify_commands = [ {'m': ['Unite MRU','Denite unite:file_mru']}, {'h':['help','Denite -cursor-wrap help']}, {'g':['grep','Denite -cursor-wrap grep']}, {'d':['dir search','Denite -cursor-wrap directory_rec']}, {'f':['all files','Denite -cursor-wrap file_rec']}, {'c':['cmd search','Denite -cursor-wrap commands']}, {'P': ['Plugins Update', 'PluginUpdate']}]
 let g:startify_files_number = 6
-" let g:startify_session_before_save = [ 'silent! TagbarClose' ]
 let g:startify_session_persistence = 1
 let g:startify_enable_special = 0
 let g:startify_session_sort = 1
@@ -113,20 +112,6 @@ let g:neosnippet#enable_conceal_markers = 1
 let g:neosnippet#expand_word_boundary = 1
 Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
-
-" let g:tagbar_compact = 1
-" let g:tagbar_autofocus = 0
-" let g:tagbar_zoomwidth = 0
-" let g:tagbar_width = 25
-" let g:tagbar_indent = 0
-" let g:tagbar_foldlevel = 0
-" let g:tagbar_sort = 0
-" let g:tagbar_iconchars = ['+', '-']
-" let g:tagbar_autoshowtag = 1
-" let g:tagbar_autopreview = 0
-" let g:tagbar_silent = 0
-" let g:tagbar_map_zoomwin = '<Tab>'
-" Plugin 'majutsushi/tagbar'
 
 let g:tex_fold_enabled=1
 let g:vimsyn_folding='af'
@@ -170,28 +155,37 @@ let g:deoplete#enable_ignore_case = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#enable_camel_case = 1
 let g:deoplete#enable_refresh_always = 1
-" let g:deoplete#auto_complete_start_length = 1
 let g:deoplete#delimiters = ['/', '(']
 au FileType python let g:deoplete#delimiters = ['/', '.', '(']
 au FileType perl let g:deoplete#delimiters = ['/', '->', '(', '::', '$', '@', '%']
 au FileType vim let g:deoplete#delimiters = ['/', ':', '(', "\'"]
-let g:deoplete#auto_complete_delay = 30
-let g:deoplete#auto_refresh_delay = 30
+let g:deoplete#auto_complete_delay = 10
+let g:deoplete#auto_refresh_delay = 10
 let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#max_menu_width = 100
 let g:deoplete#tag#cache_limit_size = 5000000
 let g:deoplete#sources = {}
 let g:deoplete#sources._ = []
-let g:deoplete#sources.python = ['buffer', 'member', 'tag', 'file', 'around', 'neosnippet', 'include', 'jedi', 'syntax']
+let g:deoplete#sources.python = ['jedi', 'buffer', 'member', 'tag', 'file', 'around', 'neosnippet', 'include', 'syntax']
+let g:deoplete#sources.perl = ['omni', 'buffer', 'member', 'tag', 'file', 'around', 'neosnippet', 'include', 'syntax']
+let g:deoplete#sources.vim = ['vim', 'buffer', 'member', 'tag', 'file', 'around', 'neosnippet', 'include', 'syntax']
+let g:deoplete#sources.haskell = ['ghc', 'buffer', 'member', 'tag', 'file', 'around', 'neosnippet', 'include', 'syntax']
+let g:deoplete#omni#input_patterns = {}
+let g:deoplete#omni#input_patterns.perl = ['[a-zA-Z_]+->']
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.perl = 'PerlComplete'
 au FileType python :call deoplete#custom#set('jedi', 'rank', 99)
-au FileType python :call deoplete#custom#set('tag', 'rank', 90)
-au FileType python :call deoplete#custom#set('neosnippet', 'rank', 85)
-au FileType python :call deoplete#custom#set('member', 'rank', 83)
-au FileType python :call deoplete#custom#set('buffer', 'rank', 81)
-au FileType python :call deoplete#custom#set('syntax', 'rank', 80)
-au FileType python :call deoplete#custom#set('include', 'rank', 79)
-au FileType python :call deoplete#custom#set('around', 'rank', 69)
-au FileType python :call deoplete#custom#set('file', 'rank', 59)
+au FileType perl :call deoplete#custom#set('omni', 'rank', 99)
+au FileType vim :call deoplete#custom#set('vim', 'rank', 99)
+au FileType haskell :call deoplete#custom#set('ghc', 'rank', 99)
+au FileType haskell,perl,vim,python :call deoplete#custom#set('tag', 'rank', 90)
+au FileType haskell,perl,vim,python :call deoplete#custom#set('neosnippet', 'rank', 85)
+au FileType haskell,perl,vim,python :call deoplete#custom#set('member', 'rank', 83)
+au FileType haskell,perl,vim,python :call deoplete#custom#set('buffer', 'rank', 81)
+au FileType haskell,perl,vim,python :call deoplete#custom#set('syntax', 'rank', 80)
+au FileType haskell,perl,vim,python :call deoplete#custom#set('include', 'rank', 79)
+au FileType haskell,perl,vim,python :call deoplete#custom#set('around', 'rank', 69)
+au FileType haskell,perl,vim,python :call deoplete#custom#set('file', 'rank', 59)
 if !exists('g:neoinclude#reverse_exprs')
     let g:neoinclude#reverse_exprs = {}
 endif
@@ -209,7 +203,6 @@ let g:airline_exclude_preview = 1
 let g:airline_powerline_fonts = 1
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline#extensions#branch#enabled = 0
-" let g:airline#extensions#tagbar#flags = 's'
 let g:airline#extensions#hunks#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_splits = 1
@@ -378,6 +371,7 @@ let g:pymode_syntax = 1
 let g:pymode_syntax_slow_sync = 1
 let g:pymode_syntax_all = 1
 let g:deoplete#sources#jedi#show_docstring = 1
+let g:deoplete#sources#jedi#worker_threads = 2
 let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
 let g:SimpylFold_docstring_preview = 1
 let g:SimpylFold_docstring_level = 99
@@ -421,6 +415,9 @@ au VimEnter,Colorscheme * :hi Search ctermbg=53 ctermfg=117
 au VimEnter,Colorscheme * :hi MatchParen ctermbg=24 ctermfg=17
 au VimEnter,Colorscheme * :hi CursorColumn ctermbg=239
 au VimEnter,Colorscheme * :hi CursorLine ctermbg=237
+au FileType vim,perl,python :syntax region IndentLineSpace start=%^  %me=e-1 end=% [^ ]%me=e-1 containedin=ALL contains=IndentLine conceal
+au FileType vim,perl,python :syntax match IndentLine /^ / contained conceal cchar=|
+au FileType vim,perl,python :hi Conceal ctermfg=76 ctermbg=24
 au InsertLeave * :hi CursorLine ctermbg=237
 au InsertEnter * :hi CursorLine ctermbg=232
 
@@ -429,7 +426,7 @@ set backupdir=$HOME/.config/nvim/files/backup/
 set cmdheight=2
 set completeopt="menuone,noselect"
 if has('conceal')
-  set conceallevel=2 concealcursor=niv
+  set conceallevel=2 concealcursor=nc
 endif
 set cursorcolumn
 set cursorline
@@ -596,7 +593,8 @@ imap <expr><unique><Tab> pumvisible() ? "\<C-N>" :
     \   neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_jump_or_expand)" : "\<C-O>%"
 imap <expr><unique><S-Tab> pumvisible() ? "\<C-P>" :
             \   delimitMate#ShouldJump() ? "\<Plug>delimitMateS-Tab" : "\<esc>:TmuxNavigatePrevious\<CR>"
-nmap <unique><S-Tab> :TmuxNavigatePrevious<CR>
+nnoremap <unique><S-Tab> :TmuxNavigatePrevious<CR>
+nnoremap <unique><Tab>   %
 inoremap <unique>,       ,<Space>
 for k in ['=', '+']
     execute 'inoremap <unique>'.k.' <Space>'.k.'<Space>'
@@ -621,7 +619,7 @@ nnoremap <unique><Space> <C-O>
 nnoremap  <silent><unique><C-T>    g<C-]>
 inoremap  <silent><unique><F4>     <esc>:<C-U>w<CR>
 nnoremap  <silent><unique><F4>     :<C-U>w<CR>
-nnoremap  <silent><unique><F2>     :cd %:p:h
+nnoremap  <silent><unique><F2>     :cd %:p:h<CR>
 noremap <silent><unique><F3>       :Tlist<CR>
 inoremap <silent><unique><F3>  <C-C>:Tlist<CR>
 nnoremap  <silent><unique><C-J>     :<C-U>w<CR>
@@ -654,9 +652,10 @@ nmap              <unique><leader><CR>     <Plug>NrrwrgnWinIncr
 nnoremap  <silent><unique><leader><leader> :exe "tabn ".g:lasttab<CR>
 nnoremap  <silent><unique><leader><Space>  :Startify<CR>
 nnoremap  <silent><unique><leader>y        :YRShow<CR>
+nnoremap  <silent><unique><leader>p        :TlistOpen<CR>
 nnoremap  <silent><unique><leader>u        :UndotreeToggle<CR>
 nnoremap  <silent><unique><leader>n        :<C-U>echo(system("tmux if -F '#{s/1/0/:window_panes}' 'join-pane -d -s:2.{top} -t:+' 'join-pane -vb -p 40 -t:2 -s:+.{bottom}'"))<CR>
-nmap              <unique><leader>t        <Plug>TaskListjj
+nmap              <unique><leader>t        <Plug>TaskList<Down><Downj>
 nmap      <silent><unique><leader>'        :SignatureListBufferMarks 1<CR>:lopen 15<CR>
 
 for [k,c] in items({ 'q' : 'unite:quickfix',
@@ -715,10 +714,6 @@ au InsertLeave *                  setlocal timeoutlen=2000
 au VimEnter    *                  let   g:lasttab = tabpagenr()
 au TabLeave    *                  let   g:lasttab = tabpagenr()
 au VimEnter    *                  command! -nargs=* -bar -complete=customlist,man#completion#run Man call man#get_page('tab', <f-args>)
-" au WinEnter    *                  AirlineRefresh
-" au BufEnter    *                  filetype detect
-" au BufWinEnter *                  if &previewwindow | setlocal nonumber | endif
-" au BufReadPost *                  if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 au FileType    python             let b:delimitMate_nesting_quotes = ['"']
 au FileType    python             let b:delimitMate_expand_inside_quotes = 1
 au FileType    python,perl        let b:delimitMate_excluded_regions = ""
