@@ -44,17 +44,19 @@ my $popts  = q@--no-cancel --auto-close@;
 my $iotie  = io->file(q@/tmp/pomodoro-status@)->tie->touch->assert;
 io->file(qq@$ENV{HOME}/.pomodoro_session@)->touch->assert;
 ### number of arguments is: scalar @ARGV
-my $nameargs = (scalar @ARGV).q{};
+my $nameargs = ( scalar @ARGV ) . q{};
 ### as a string: $nameargs
-croak q@either 0 or 2 [work minutes:break minutes] arguments required@ unless ($nameargs =~ /[02]/);
-my $pomtime = 20;
+croak q@either 0 or 2 [work minutes:break minutes] arguments required@
+    unless ( $nameargs =~ /[02]/ );
+my $pomtime   = 20;
 my $breaktime = 7;
-($pomtime, $breaktime) = @ARGV if $nameargs =~ /2/;
-
-# prepare the job
+( $pomtime, $breaktime ) = @ARGV if $nameargs =~ /2/;
+### run time is: $pomtime
+### break ime is: $breaktime
 my $job = AnyEvent::Subprocess->new(
-    delegates     => [q@StandardHandles@],
-    code => qq@pymodoro -p '>' -b '_' -e '!' -l 20 -ltr -i 2 $pomtime $breaktime@
+    delegates => [q@StandardHandles@],
+    code =>
+        qq@pymodoro -p '>' -b '_' -e '!' -l 20 -ltr -i 2 $pomtime $breaktime@
 );
 my $run = $job->run;
 
@@ -62,25 +64,17 @@ my $unpause = AnyEvent::Subprocess::Job::Delegate::Callback->new(
     name             => q@unpause@,
     child_setup_hook => method( $runner, @args )
     {
-        sleep ( 10 );
+        sleep(10);
         $run->kill(18);
     },
 );
 
 my $progress = AnyEvent::Subprocess->new(
-    delegates     => [$unpause, q@StandardHandles@],
+    delegates => [ $unpause, q@StandardHandles@ ],
     code => qq@${notify}progress ${msg}'break time' $popts ${w}500@
 );
 my $progressrun = $progress->run;
-$progressrun->delegate(q@stdin@)->handle->push_write(q@100@);
-$progressrun->delegate(q@stdin@)->handle->on_error(
-    sub {
-        my ( $hdl, $fatal, $m ) = @_;
-        say qq@fatal: ${fatal}; error: $m@;
-        # $hdl->close_fh;
-        # $progressrun = $progress->run;
-    }
-);
+$progressrun->delegate(q@stdin@)->handle->push_write(qq@100\n@);
 
 my $cbdel = AnyEvent::Subprocess::Job::Delegate::Callback->new(
     name             => q@callback@,
@@ -96,15 +90,15 @@ my $cbdel = AnyEvent::Subprocess::Job::Delegate::Callback->new(
 );
 
 my $msgjob = AnyEvent::Subprocess->new(
-    delegates     => [$cbdel],
-    code => qq@${notify}info ${msg}'start a new timer?' ${w}200 ${h}100@
+    delegates => [$cbdel],
+    code      => qq@${notify}info ${msg}'start a new timer?' ${w}200 ${h}100@
 );
 
 sub elap_percen {
     my ( $minutes, $seconds ) = @_;
     ### remaining time percent : ($minutes * 60 + $seconds)*100/ (60*$breaktime)
-    my $remain = ( $minutes * 60 + $seconds ) * 100 / (60*$breaktime);
-    return int(100 - $remain)
+    my $remain = ( $minutes * 60 + $seconds ) * 100 / ( 60 * $breaktime );
+    return int( 100 - $remain );
 }
 
 sub w_l {
@@ -112,24 +106,23 @@ sub w_l {
     my $elapsed = 0;
     ### pymodoro line: $line
     $iotie->[0] = $line;
-if ( $line =~ /^P \h [>!]+ \h 00:0[0-9]$/x ) {
-$run->kill(19);
-$progressrun = $progress->run;
-}
+    if ( $line =~ /^P \h [>!]+ \h 00:0[0-9]$/x ) {
+        $run->kill(19);
+        $progressrun = $progress->run;
+    }
     if ( $line =~ /^B \h [_!]+ \h 0([0-9]):([0-9]{2})$/x ) {
         ### Matched second regexp: $&
         ### Matched minutes, seconds captured: $1.q{ }.$2.q{ }
         $elapsed = elap_percen( $1, $2 );
         ### elapsed is: $elapsed
-        # $progressrun = $progress->run;
-        $progressrun->delegate(q@stdin@)->handle->push_write(qq@$elapsed\n@) if $elapsed < 100;
+        $progressrun->delegate(q@stdin@)->handle->push_write(qq@$elapsed\n@)
+            if $elapsed < 100;
     }
     elsif ( $line =~ /^B \h [0-9]{2}:[0-9]{2} \h \w/x ) {
         ### Matched fourth regexp: $&
         $progressrun->kill(9);
         $msgjob->run;
     }
-    return $line;
 }
 
 $run->delegate(q@stdout@)->handle->on_read(
@@ -138,6 +131,5 @@ $run->delegate(q@stdout@)->handle->on_read(
         $self->push_read( line => \&w_l );
     }
 );
-$progressrun->delegate(q@stdin@)->handle->push_write(qq@100\n@);
 EV::loop();    # you can use any AnyEvent-compatible event loop, including POE
 ### Elapsed Time: tv_interval ($t0)
