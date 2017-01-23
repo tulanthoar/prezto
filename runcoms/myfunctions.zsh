@@ -21,7 +21,7 @@ function snippets-add() {
   snip s "startx"
 }
 
-function bind_keys() {
+function key_bind() {
   zle -N snippet-expand
   zle -N fzf-locate-widget
   zle -N h

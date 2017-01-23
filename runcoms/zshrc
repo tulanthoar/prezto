@@ -60,7 +60,7 @@ export ZSH_HIGHLIGHT_STYLES[assign]='fg=cyan,bold,underline'
 export ZSH_HIGHLIGHT_STYLES[redirection]='fg=red'
 source ${ZPREZD}/init.zsh
 snippets-add
-bind_keys
+key_bind
 # BASE16_SHELL=$ZPREZD/base16-shell
 # [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 source $HOME/.base16_theme
