@@ -67,3 +67,4 @@ export OMNIVIM_EDITOR=$(which nvim)
 export BYOBU_WINDOWS=me
 export PERL_UNICODE=AS
 export PERL5OPTS="-Mperl5i -MIO::All"
+RANGER_LOAD_DEFAULT_RC=FALSE
