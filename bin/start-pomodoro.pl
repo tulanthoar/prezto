@@ -71,7 +71,7 @@ my $unpause = AnyEvent::Subprocess::Job::Delegate::Callback->new(
 
 my $progress = AnyEvent::Subprocess->new(
     delegates => [ $unpause, q@StandardHandles@ ],
-    code => qq@${notify}progress ${msg}'break time' $popts ${w}500@
+    code => qq@${notify}progress ${msg}'break time' $popts ${w}900 ${h}100@
 );
 my $progressrun = $progress->run;
 $progressrun->delegate(q@stdin@)->handle->push_write(qq@100\n@);
@@ -91,7 +91,7 @@ my $cbdel = AnyEvent::Subprocess::Job::Delegate::Callback->new(
 
 my $msgjob = AnyEvent::Subprocess->new(
     delegates => [$cbdel],
-    code      => qq@${notify}info ${msg}'start a new timer?' ${w}200 ${h}100@
+    code      => qq@${notify}info ${msg}'start a new timer?' ${w}500 ${h}500@
 );
 
 sub elap_percen {
