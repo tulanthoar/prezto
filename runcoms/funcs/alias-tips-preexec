@@ -10,9 +10,11 @@ function alias-tips-preexec () {
       sed 's/ = !/ = /')
   fi
 
-  local shell_aliases=$(alias)
+  local shell_aliases
+  shell_aliases=$(alias)
 
-  local shell_functions=$(functions | grep '^[^'$'\t'' _-].\+ () {$')
+  local shell_functions
+  shell_functions=$(functions | grep -E '^[a-zA-Z\-_].+ () [{]$')
 
   echo $shell_functions "\n" $git_aliases "\n" $shell_aliases | \
     python $ZRCD/scripts/alias-tips.py $*

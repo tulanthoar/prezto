@@ -1,5 +1,5 @@
 autoload -U colors unarchive _fzf_compgen_path writecmd fhe f fss fp fk fzf-locate-widget u md cm v z j p n copyfile sudo-command-line c J nice_exit_code snippet-expand paste-primary
-autoload -Uz add-zsh-hook promptinit black red green yellow blue magenta cyan white alias-tips-preexec gencomp 256-color-test
+autoload -Uz add-zsh-hook promptinit black red green yellow blue magenta cyan white alias-tips-preexec gencomp 256-color-test color16_load
 function fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null }
 colors
 promptinit
@@ -33,34 +33,44 @@ function key_bind() {
   bindkey -rM viins "^["
   bindkey -rM viins "^D"
   bindkey -rM viins "^G"
+  # bindkey -rM viins "^C"
+  bindkey -rM viins "^X"
+  bindkey -rpM viins "^X"
   bindkey -rM viins "^H"
   bindkey -rM viins "^J"
   bindkey -rM viins "^K"
   bindkey -rM viins "^L"
   bindkey -rM viins "^V"
-  bindkey -rM viins "^Y"
-  bindkey -M viins "\C-V" paste-primary
-  bindkey -M viins "^[w" vi-forward-word
+  # bindkey -rM viins "^Y"
+  # bindkey -rM viins "^T"
   bindkey -M viins "^[i" fzf-locate-widget
   bindkey -M viins "^[p" p
   bindkey -M viins "^[n" n
   bindkey -M viins "^[h" h
-  bindkey -M viins "^[ " autosuggest-execute
   bindkey -M viins "^[s" sudo-command-line
-  bindkey -M viins "^@" snippet-expand
-  bindkey -M viins "^Z" vi-cmd-mode
-  bindkey -M viins "^A" vi-cmd-mode
-  bindkey -M viins "^E" vi-forward-blank-word
-  bindkey -M viins "^N" vi-forward-word
-  bindkey -M viins "^B" backward-word
-  bindkey -M viins "^Yb" vi-backward-kill-word
-  bindkey -M viins "^Ye" kill-word
-  bindkey -M viins "^Ys" kill-whole-line
-  bindkey -M viins "^\\" vi-end-of-line
-  bindkey -M viins "^_" beginning-of-line
-  bindkey -M viins "^U" undo
+  bindkey -M viins "^E" vi-forward-char
+  bindkey -M viins "^S" vi-backward-char
+  bindkey -M viins "^H" vi-backward-delete-char
+  bindkey -M viins "^K" vi-delete-char
+  bindkey -M viins "^U" vi-forward-word
+  bindkey -M viins "^D" vi-backward-word
+  bindkey -M viins "^B" vi-beginning-of-line
+  bindkey -M viins "^F" vi-end-of-line
+  bindkey -M viins "\C-W" vi-backward-kill-word
+  bindkey -M viins "\C-N" down-line-or-history
+  bindkey -M viins "\C-P" up-line-or-history
+  bindkey -M viins "^Z" undo
   bindkey -M viins "^R" redo
-  bindkey -M viins "^F" vi-find-prev-char
-  bindkey -M viins "\C-S" vi-kill-eol
-  bindkey -M viins "^[[3~" vi-delete-char;
+  bindkey -M viins "^@" snippet-expand
+  bindkey -M viins "^J" autosuggest-execute
+  bindkey -M viins "^M" accept-line
+  bindkey -M viins "\e" vi-cmd-mode
+  bindkey -M viins "^A" autosuggest-accept
+  bindkey -M viins "\C-Q" vi-kill-line
+  bindkey -M viins "\C-G" vi-kill-eol
+  bindkey -M viins "\C-V" paste-primary
+  bindkey -M viins "\C-O" vi-put-after
+  bindkey -M viins "\C-L" vi-put-before
+  bindkey -M viins "\C-X" kill-word
+  bindkey -M viins "^[[3~" vi-delete-char
 }
