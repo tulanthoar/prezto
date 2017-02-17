@@ -54,7 +54,6 @@ myManageHook = namedScratchpadManageHook scratchpads <+> manageDocks
     , className =? "Zenity"  --> doCenterFloat
     , className =? "stmenu" --> doFloat
     , className =? "guake" --> doFloat
-    , className =? "Tilda" --> doFloat
     ]
 
 xmConf p = ewmh $ def
