@@ -13,11 +13,14 @@ cal vundle#begin("$HOME/.config/nvim/bundle")
 
 Plugin 'VundleVim/Vundle.vim'
 
+let g:targets_pairs = "()b {}B []a <>A"
+let g:targets_quotes = "\"Q 'q `"
 Plugin 'kana/vim-textobj-entire'
 Plugin 'kana/vim-textobj-line'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'kana/vim-operator-user'
 Plugin 'kana/vim-textobj-user'
+Plugin 'wellle/targets.vim'
 
 Plugin 'tpope/vim-eunuch'
 
@@ -29,21 +32,20 @@ Plugin 'tpope/vim-abolish'
 
 Plugin 'tpope/vim-unimpaired.git'
 
+" XXX tabular
 Plugin 'godlygeek/tabular'
 
+" XXX asterisk
 Plugin 'haya14busa/vim-asterisk'
 
-Plugin 'mkitt/tabline.vim'
+Plugin 'nelstrom/vim-visual-star-search'
 
 Plugin 'benmills/vimux'
 
-au VimEnter * cabbrev Ag SideSearch
+" XXX sidesearch
 Plugin 'ddrscott/vim-side-search'
 
-let g:targets_pairs = "()b {}B []a <>A"
-let g:targets_quotes = "\"Q 'q `"
-Plugin 'wellle/targets.vim'
-
+" XXX swap
 let g:swap_no_default_key_mappings = 1
 Plugin 'machakann/vim-swap'
 
@@ -54,9 +56,6 @@ let g:hardtime_maxcount = 2
 let g:hardtime_default_on = 1
 let g:hardtime_timeout = 2000
 Plugin 'takac/vim-hardtime'
-
-" TODO settings for visual star
-Plugin 'nelstrom/vim-visual-star-search'
 
 au VimEnter * com! -nargs=+ -bar -complete=customlist,man#completion#run
             \ Man call man#get_page('tab', <f-args>)
@@ -205,9 +204,6 @@ let g:EasyMotion_keys = "ASDFGHJKLQWERUIO;"
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_use_upper = 1
-Plugin 'haya14busa/incsearch-easymotion.vim'
-Plugin 'haya14busa/incsearch.vim'
-Plugin 'haya14busa/incsearch-fuzzy.vim'
 Plugin 'easymotion/vim-easymotion'
 
 let g:deoplete#enable_at_startup = 1
@@ -223,16 +219,21 @@ let g:deoplete#auto_refresh_delay = 35
 let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#max_menu_width = 100
 let g:deoplete#tag#cache_limit_size = 5000000
-let g:deoplete#sources = {}
+if !exists("g:deoplete#sources") | let g:deoplete#sources = {} | endif
 let g:deoplete#sources._ = ["file", "around", "tag", "neosnippet", "member", "buffer", "syntax", "include",]
 let g:deoplete#sources.python = g:deoplete#sources._ + [ "jedi", ]
 let g:deoplete#sources.perl = g:deoplete#sources._ + [ "omni", ]
 let g:deoplete#sources.vim = g:deoplete#sources._ + [ "vim", ]
 let g:deoplete#sources.haskell = g:deoplete#sources._ + [ "ghc", ]
-let g:deoplete#omni#input_patterns = {}
+if !exists("g:deoplete#omni#input_patterns") | let g:deoplete#omni#input_patterns = {} | endif
 let g:deoplete#omni#input_patterns.perl = ["[a-zA-Z_]\+->",]
-let g:deoplete#omni#functions = {}
+if !exists("g:deoplete#omni#functions") | let g:deoplete#omni#functions = {} | endif
 let g:deoplete#omni#functions.perl = "PerlComplete"
+if !exists("g:neoinclude#reverse_exprs") | let g:neoinclude#reverse_exprs = {} | endif
+let g:neoinclude#reverse_exprs.perl = "fnamemodify(substitute(v:fname, \"/\", \"::\", \"g\"), \":r\")"
+let g:deoplete#sources#jedi#show_docstring = 1
+let g:deoplete#sources#jedi#worker_threads = 2
+let g:deoplete#sources#jedi#python_path = "/usr/bin/python3"
 au FileType * cal deoplete#custom#set("file", "rank", 159)
 au FileType python  cal deoplete#custom#set("jedi", "rank", 99)
 au FileType perl    cal deoplete#custom#set("omni", "rank", 99)
@@ -246,11 +247,6 @@ au FileType * cal deoplete#custom#set("buffer", "rank", 81)
 au FileType * cal deoplete#custom#set("syntax", "rank", 80)
 au FileType * cal deoplete#custom#set("include", "rank", 79)
 au VimEnter * cal deoplete#custom#set("_", "matchers", ["matcher_fuzzy",])
-if !exists("g:neoinclude#reverse_exprs") | let g:neoinclude#reverse_exprs = {} | endif
-let g:neoinclude#reverse_exprs.perl = "fnamemodify(substitute(v:fname, \"/\", \"::\", \"g\"), \":r\")"
-let g:deoplete#sources#jedi#show_docstring = 1
-let g:deoplete#sources#jedi#worker_threads = 2
-let g:deoplete#sources#jedi#python_path = "/usr/bin/python3"
 Plugin 'Shougo/neco-syntax'
 Plugin 'Shougo/neco-vim'
 Plugin 'Shougo/neoinclude.vim'
@@ -293,17 +289,17 @@ function! AirlineInit()
 endfunction
 au User AirlineAfterInit cal AirlineInit()
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'mkitt/tabline.vim'
 Plugin 'bling/vim-airline'
 
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 let g:delimitMate_jump_expansion = 1
 let g:delimitMate_balance_matchpairs = 1
-au FileType python      let b:delimitMate_nesting_quotes = ["\"",]
-au FileType python      let b:delimitMate_expand_inside_quotes = 1
-au FileType python,perl let b:delimitMate_excluded_regions = ""
-au FileType perl        let b:delimitmate_insert_eol_marker = 1
-au FileType perl        let b:delimitMate_eol_marker = ";"
+au FileType python let b:delimitMate_nesting_quotes = ["\"",]
+au FileType python let b:delimitMate_expand_inside_quotes = 1
+au FileType perl   let b:delimitmate_insert_eol_marker = 1
+au FileType perl   let b:delimitMate_eol_marker = ";"
 Plugin 'Raimondi/delimitMate'
 
 let g:undotree_SplitWidth = 40
@@ -346,7 +342,8 @@ let g:syntastic_enable_signs = 0
 let g:syntastic_python_checkers = ["pylint",]
 Plugin 'scrooloose/syntastic'
 
-let g:expand_region_text_objects = { "iw":0, "iW":0, "i\"":0, "a\"":0, "i\'":0, "a\'":0, "ib":1, "ab":1, "i]":1, "iB":1, "il":0, "ii":1, "ai":1, "ip":0, "ie":0, }
+let g:expand_region_text_objects = { "iw":0, "iW":0, "i\"":0, "a\"":0, "i'":0, "a'":0, "ib":1, "ab":1, "i]":1, "iB":1, "il":0, "ii":1, "ai":1, "ip":0, "ie":0, }
+let g:expand_region_text_objects_python = { "iA":0, "iB":0, "ai":1, }
 Plugin 'terryma/vim-expand-region'
 
 " TODO configure LaTeXBox
@@ -392,8 +389,6 @@ let g:necoghc_enable_detailed_browse = 1
 Plugin 'eagletmt/neco-ghc'
 Plugin 'neovimhaskell/haskell-vim.git'
 
-" may improve performance significantly - UNTESTED
-" set regexpengine=1
 let g:jedi#completions_command = ""
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#popup_on_dot = 0
@@ -447,7 +442,7 @@ let g:python_no_doctest_highlight = 1
 let g:python_no_doctest_code_highlight = 1
 au FileType python setl fde=SimpylFold(v:lnum) fdm=expr fdl=3 nonu
 au FileType python setl def=^\s*\\(def\\\\|class\\) cms=#%s nowrap fo-=t cpt+=t
-au FileType python let b:match_words = "\<def\>:\<return\>,\<if\>:\<elif\>:\<else\>,\<try\>:\<except\>,\<from\>:\<import\>"
+au FileType python let b:match_words = "def:return,if:elif:else,try:except,from:import"
 Plugin 'davidhalter/jedi-vim'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'tweekmonster/impsort.vim'
@@ -459,77 +454,78 @@ Plugin 'ryanoasis/vim-devicons'
 " Plugins&end
 cal vundle#end()
 
-filet plugin indent on
-sy enable
-colo base16-seti-ui
+filetype plugin indent on
+syntax enable
+colorscheme base16-seti-ui
 
-se background=dark
-se backupdir=${HOME}/.config/nvim/files/backup/
-se cmdheight=2
-se colorcolumn=+1
-se completeopt=menuone,noselect,preview
-se conceallevel=2
-se concealcursor=inc
-se cpoptions+=DEI$
-se cursorcolumn
-se directory=${HOME}/.config/nvim/files/swap/
-se errorbells
-se expandtab
-se fileformats=unix
-se foldclose=all
-se foldlevelstart=2
-se foldminlines=3
-se foldopen+=insert
-se gdefault
-se hidden
-se helpheight=30
-se ignorecase
-se isfname+={,}
-se list
-se listchars=tab:>┈,trail:┅,nbsp:+,extends:╡,precedes:╞,eol:┊,space:⋅
-se matchpairs=(:),[:],{:},<:>
-se matchtime=1
-se previewheight=15
-se scrolljump=4
-se scrolloff=6
-se shiftround
-se shiftwidth=0
-se showcmd
-se showmatch
-se noshowmode
-se showtabline=0
-se sidescroll=4
-se sidescrolloff=2
-se smartcase
-se smartindent
-se nostartofline
-se softtabstop=4
-se tabstop=4
-se tagcase=match
-se tags+=./perltags,${HOME}/.config/nvim/files/easy_tags/perl,${HOME}/.config/nvim/files/easy_tags/vim,${HOME}/.config/nvim/files/easy_tags/python
-se undodir=${HOME}/.config/nvim/files/.undo/
-se undofile
-se updatetime=2000
-se viewoptions=cursor,folds,slash,unix
-se virtualedit=block
-se visualbell
-se shada='100,h,s1000,n${HOME}/.config/nvim/files/info/viminfo
-se whichwrap+=<,>,h,l
-se wildignore=*.o,*~,*.pyc
-se wildmode=list:longest,list:full
-se nowrap
+set background=dark
+set backupdir=${HOME}/.config/nvim/files/backup/
+set cmdheight=2
+set colorcolumn=+1
+set completeopt=menuone,noselect,preview
+set conceallevel=2
+set concealcursor=inc
+set cpoptions+=DEI$
+set cursorcolumn
+set directory=${HOME}/.config/nvim/files/swap/
+set errorbells
+set expandtab
+set fileformats=unix
+set foldclose=all
+set foldlevelstart=2
+set foldminlines=3
+set foldopen+=insert
+set gdefault
+set hidden
+set helpheight=30
+set ignorecase
+set isfname+={,}
+set list
+set listchars=tab:>┈,trail:┅,nbsp:+,extends:╡,precedes:╞,eol:┊,space:⋅
+set matchpairs=(:),[:],{:},<:>
+set matchtime=2
+set previewheight=15
+set scrolljump=4
+set scrolloff=6
+set shiftround
+set shiftwidth=0
+set showcmd
+set showmatch
+set noshowmode
+set showtabline=0
+set sidescroll=4
+set sidescrolloff=2
+set smartcase
+set nostartofline
+set softtabstop=4
+set tabstop=4
+set tagcase=match
+set tags+=./perltags,${HOME}/.config/nvim/files/easy_tags/perl,${HOME}/.config/nvim/files/easy_tags/vim,${HOME}/.config/nvim/files/easy_tags/python
+set timeoutlen=1000
+set undodir=${HOME}/.config/nvim/files/.undo/
+set undofile
+set updatetime=2000
+set viewoptions=cursor,folds,slash,unix
+set virtualedit=block
+set visualbell
+set shada='100,h,s1000,n${HOME}/.config/nvim/files/info/viminfo
+set whichwrap+=<,>,h,l
+set wildignore=*.o,*~,*.pyc
+set wildmode=list:longest,list:full
+set nowrap
 
 exe 'au FileType haskell,vim,perl,python sy match IndentLine /^ / contained conceal cchar='.g:indentLine_first_char
 exe 'au FileType vim,perl,python sy match IndentLineSpace /^ \+/ containedin=TOP contained contains=IndentLine conceal cchar='.g:indentLine_leadingSpaceChar
 exe 'au FileType haskell sy match IndentLineSpace /^ \+/ containedin=TOP contains=IndentLine conceal cchar='.g:indentLine_leadingSpaceChar
+
+au WinLeave * se nocursorcolumn
+au WinEnter * se cursorcolumn
 
 au InsertEnter * setl timeoutlen=500
 au InsertLeave * setl timeoutlen=1000
 
 let g:lastwin = 1
 au WinLeave /*/[^\[]*[^\]] let g:lastwin = winnr()
-nn  <silent><unique><expr><S-Tab> winnr() == g:lastwin ? ":wincmd w\<CR>" : ":exe g:lastwin.'wincmd w'\<CR>"
-nn <silent><unique>/  :Denite -cursor-wrap line<CR>
 
 let g:startify_bookmarks = [ { 'n': '~/.config/nvim/init.vim' }, ]
 let g:startify_commands = [
@@ -538,22 +534,12 @@ let g:startify_commands = [
             \   { 'c':['cmds', 'Denite -cursor-wrap commands'] },
             \   { 'P':['Plugins Update', 'PluginUpdate'] }, ]
 
-function! s:config_easyfuzzymotion(...) abort
-    return extend(copy({
-                \   'converters': [ incsearch#config#fuzzy#converter() ],
-                \   'modules': [ incsearch#config#easymotion#module() ],
-                \   'keymap': { "\<CR>": '<Over>(easymotion)' },
-                \   'is_expr': 0,
-                \   'is_stay': 1
-                \ }), get(a:, 1, {}))
-endfunction
-
 for [k, c] in items({ "\<C-J>" : "\<denite:move_to_next_line>",
             \ "\<C-K>" : "\<denite:move_to_previous_line>", })
     exe "au VimEnter * cal denite#custom#map('insert','".k."','".c."','noremap')"
 endfor
 
-let g:denite_menus = {}
+if !exists("g:denite_menus") | let g:denite_menus = {} | endif
 let g:denite_menus.git = {'description': 'git stuff'}
 let g:denite_menus.git.command_candidates = [
             \['▷ preview hunk ', 'GitGutterPreviewHunk'],
@@ -602,21 +588,29 @@ hi link vimScriptFuncNameTag pythonMethodTag
 
 " colorscheme&end
 
-for [k, d] in items({'h': 'Left', 'j': 'Down', 'k': 'Up', 'l': 'Right'})
-    exe 'nn <silent><unique><M-'.k.'> :TmuxNavigate'.d.'<CR>'
-endfor
-
-no <silent><expr><unique>g/ incsearch#go(<SID>config_easyfuzzymotion())
-nm               <unique>?  <Plug>(incsearch-fuzzy-stay)
+cnoreabbrev T//  Tabularize //l1c1l0<left><left><left><left><left><left><left><c-h>
+cnoreabbrev w!!  SudoWrite
 
 for [k, c] in items({
-            \ 'j': 'j',
-            \ 'k': 'k',
+            \ 'w': 'bd-wl',
             \ 'f': 'bd-fl',
             \ 't': 'bd-tl',
-            \ 'w': 'bd-wl',
-            \ 'e': 'bd-el', })
+            \ 'j': 'bd-jk',
+            \ 'k': 'bd-jk', })
     exe 'map <expr><unique>'.k.' v:count ? "'.k.'" : "\<Plug>(easymotion-'.c.')"'
+endfor
+
+for [k, c] in items({
+            \ 'e': 'bd-el', })
+    exe 'nm <expr><unique>'.k.' v:count ? "'.k.'" : "\<Plug>(easymotion-'.c.')"'
+    exe 'xm <expr><unique>'.k.' v:count ? "'.k.'" : "\<Plug>(easymotion-'.c.')"'
+    exe 'om <expr><unique>'.k.' v:count ? "'.k.'" : "v\<Plug>(easymotion-'.c.')"'
+endfor
+
+for [k, c] in items({
+            \ 's': 'bd-f2',
+            \ 'K': 'overwin-line', })
+    exe 'map <unique>'.k.' <Plug>(easymotion-'.c.')'
 endfor
 
 for [k, c] in items({
@@ -630,38 +624,27 @@ for [k, c] in items({
     exe 'om <unique>'.k.' <Plug>(asterisk-'.c.')<Plug>(easymotion-bd-n)'
 endfor
 
-for [k, c] in items({
-            \ 's': 'bd-f2',
-            \ 'K': 'sol-bd-jk', })
-    exe 'map <unique>'.k.' <Plug>(easymotion-'.c.')'
-endfor
-
 for m in ['im', 'smap']
     exe m.' <expr><unique><CR> '.
-                \ 'pumvisible() ? "\<Left>\<Right>" : '.
+                \ 'neosnippet#expandable_or_jumpable() ? "\<C-G>u\<Plug>(neosnippet_jump_or_expand)" :'.
                 \ 'delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : '.
                 \ '"\<CR>"'
-    exe m.' <expr><unique><Tab> pumvisible() ? "\<C-N>" :'.
-                \ 'neosnippet#expandable_or_jumpable() ? "\<C-G>u\<Plug>(neosnippet_jump_or_expand)" :'.
-                \ '"\<C-O>%"'
 endfor
 
-im <expr><unique><S-Tab> pumvisible() ? "\<C-P>" :
-            \ delimitMate#ShouldJump() ? "\<Plug>delimitMateS-Tab" :
-            \ "\<C-w>p"
+inoremap <silent><expr><unique><C-K>   pumvisible() ? "\<C-P>" : "\<Del>"
+inoremap <silent><expr><unique><C-J>   pumvisible() ? "\<C-n>" : "\<C-J>"
+inoremap <silent><expr><unique><Space> pumvisible() ? "\<Left>\<Right>" : "\<Space>"
+imap     <silent><expr><unique><Tab>   delimitMate#ShouldJump() ? "\<Plug>delimitMateS-Tab" : "\<C-t>"
+inoremap               <unique><s-Tab> <C-d>
 
-for m in ['nn', 'xn', 'ono',]
+for m in ['nm', 'xm', 'om',]
     exe m.' <unique><tab> %'
 endfor
+snoremap <unique><Tab> <C-O>%
+nn <silent><expr><unique><S-Tab> winnr() == g:lastwin ? "\<c-w>W" : ":exe g:lastwin.'wincmd w'\<CR>"
 
 nm <unique><M-e> <Plug>MoveLineDown
 nm <unique><M-s> <Plug>MoveLineUp
-vm <unique><M-e> <Plug>MoveBlockDown
-vm <unique><M-s> <Plug>MoveBlockUp
-nm <unique><M-d> <Plug>MoveLineHalfPageDownzz
-nm <unique><M-u> <Plug>MoveLineHalfPageUpzz
-vm <unique><M-d> <Plug>MoveBlockHalfPageDownzz
-vm <unique><M-u> <Plug>MoveBlockHalfPageUpzz
 nm <unique><M-[> yil<Plug>unimpairedPutBelowgk
 nm <unique><M-]> yil<Plug>unimpairedPutBelow
 nm <unique>[c    <Plug>NERDCommenterYank<Plug>unimpairedPutAbove
@@ -673,52 +656,61 @@ om <unique>ag    <Plug>GitGutterTextObjectOuterPending
 xm <unique>ig    <Plug>GitGutterTextObjectInnerVisual
 xm <unique>ag    <Plug>GitGutterTextObjectOuterVisual
 
+nnoremap <unique>'[ `[
+nnoremap <unique>'] `]
+nnoremap <unique>'< `<
+nnoremap <unique>'> `>
+nnoremap <unique>`[ '[
+nnoremap <unique>`] ']
+nnoremap <unique>`< '<
+nnoremap <unique>`> '>
+
+nnoremap <unique>F     :SideSearch <C-r><C-w><CR> | wincmd p
+nnoremap <unique>Q    :Autoformat<CR>
+xmap     <unique>v     <Plug>(expand_region_expand)
+xmap <unique><CR> <Plug>NrrwrgnDo
+xmap <unique>gc   <Plug>NERDCommenterInvert
+xmap <unique>gC   <Plug>NERDCommenterComment
+nm <unique>g<   <Plug>(swap-prev)
+nm <unique>g>   <Plug>(swap-next)
+no <unique>gs   ^
+no <unique>gl   $
+
 for [k, c] in items({
             \ 'c' : 'Invert',
             \ 'l' : 'Append',
             \ 'y' : 'Yank',
             \ 'L' : 'ToEOL', })
-    exe 'nm <unique>gc'.k.' <Plug>NERDCommenter'.c
+    exe 'nmap <unique>gc'.k.' <Plug>NERDCommenter'.c
 endfor
 
-nn  <unique>gq   :Autoformat<CR>
-xm  <unique>gc   <Plug>NERDCommenterInvert
-xm  <unique>gC   <Plug>NERDCommenterComment
-xm  <unique>v    <Plug>(expand_region_expand)
-cnoreabbrev T//  Tabularize //l1c1l0<left><left><left><left><left><left><left>
-cnoreabbrev w!!  SudoWrite
-xm  <unique><CR> <Plug>NrrwrgnDo
-nm  <unique>g<   <Plug>(swap-prev)
-nm  <unique>g>   <Plug>(swap-next)
+nnoremap <unique>P  gP
+nnoremap <unique>v     viw
+nnoremap <unique><C-S> 5<C-Y>
+inoremap <unique><C-S> <C-Y>
+nnoremap <unique><C-E> 5<C-E>
+nnoremap <unique>D     <c-d>
+nnoremap <unique>U     <c-u>
+nnoremap <unique>B     <c-b>
+xnoremap <unique>J     <esc>
+inoremap <unique>jf    <esc>
+inoremap <unique>fj    <esc>
 
-no  <unique>gs    ^
-no  <unique>gl    $
-nn  <unique><C-S> 5<C-Y>
-nn  <unique><C-E> 5<C-E>
-nn  <unique>D     <c-d>
-nn  <unique>F     :SideSearch <C-r><C-w><CR> | wincmd p
-nn  <unique>U     <c-u>
-nn  <unique>B     <c-b>
-xn  <unique>J     <esc>
-ino <unique>jf    <esc>
-ino <unique>fj    <esc>
-nm  <unique>''    '[
-
-xn  <unique>S<Space>  c<Space><C-R>"<Space><C-C>
-nn  <unique><c-Space> <C-I>
-nn  <unique><Space>   <C-O>
-nn  <unique><c-t>     g<C-]>
-nn  <unique><C-K>     :w<CR>
-ino <unique><C-K>     <C-O>:w<CR>
-nn  <unique><M-n>     :ta<CR>
-nn  <unique><M-b>     :po<CR>
+xn <unique>S<Space>  c<Space><C-R>"<Space><C-C>
+nn <unique><c-Space> <C-I>
+ino <unique><c-Space> <C-@>
+nn <unique><Space>   <C-O>
+nn <unique><c-t>     g<C-]>
+nn <unique><C-K>     :w<CR>
+nn <unique><M-n>     :ta<CR>
+nn <unique><M-b>     :po<CR>
 
 let g:mapleader=","
 nm         <unique><leader>h       <Plug>AirlineSelectPrevTab
 nm         <unique><leader>l       <Plug>AirlineSelectNextTab
 nm <silent><unique><leader><CR>    :NW<CR>
 nn         <unique><leader>/       /
-nn         <unique><leader>z       zjza
+nn         <unique><leader>z       zjzo
 nn <silent><unique><leader>r       :noh<CR>:dif<CR>:syn sync fromstart<CR><C-L>
 nm         <unique><leader><Space> <Plug>(easymotion-bd-n)
 nn         <unique><leader>v       <C-V>
@@ -729,6 +721,14 @@ no         <unique><leader>d       :hide<CR>
 nn         <unique><leader>sv      :vs<CR>
 nn         <unique><leader>sh      :sp<CR>
 nn         <unique><leader>cd      :cd %:p:h<CR>
+
+for [k, d] in items({
+            \ 'h': 'Left',
+            \ 'j': 'Down',
+            \ 'k': 'Up',
+            \ 'l': 'Right' })
+    exe 'nn <silent><unique><M-'.k.'> :TmuxNavigate'.d.'<CR>'
+endfor
 
 for n in range(1,9)
     exe 'nm <unique>'.g:mapleader.n.' <Plug>AirlineSelectTab'.n
@@ -765,6 +765,8 @@ for [k,c] in items({
             \ 'o' : 'outline', })
     exe 'nn <unique>'.g:mapleader.k.' :Denite -vertical-preview -auto-preview -cursor-wrap '.c.'<CR>'
 endfor
+
+nn <silent><unique>/  :Denite -cursor-wrap line<CR>
 
 let g:mapleader='-'
 function g:Undotree_CustomMap()
@@ -803,5 +805,3 @@ endfunc
 au VimEnter * cal VimuxRunCommand("ranger")
 au VimEnter * cal _VimuxTmux("break-pane -d -t:0 -s {bottom}")
 au VimLeave * cal _VimuxTmux("kill-window -t:0")
-au WinLeave * se nocursorcolumn
-au WinEnter * se cursorcolumn

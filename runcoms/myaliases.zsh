@@ -33,7 +33,7 @@ alias czp="cd ${ZPREZD}; la"
 alias ex='unarchive'
 alias nvim="python3 ${ZRCD}/scripts/omnivim.py"
 alias j4-menu='j4-dmenu-desktop --display-binary --term=urxvt --dmenu="dmenu -w 600 -y 15 -z -p launch -l 50"'
-alias b16color="source ${HOME}/.base16_theme"
+alias colorb16="source ${HOME}/.base16_theme"
 alias aurinstall='makepkg -si'
 alias aurremove='makepkg -r'
 alias makearduino="make upload reset_stty"
