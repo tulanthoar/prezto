@@ -1,3 +1,4 @@
+set -g prefix C-Y
 unbind-key p
 unbind-key -n F1
 unbind-key -n F8
@@ -66,6 +67,7 @@ unbind-key k
 unbind-key 0
 unbind-key -
 unbind-key |
+bind-key 0 select-window -t :=0
 bind-key - split-window -v
 bind-key | split-window -h
 bind-key F1 list-keys
