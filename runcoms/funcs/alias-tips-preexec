@@ -14,7 +14,7 @@ function alias-tips-preexec () {
   shell_aliases=$(alias)
 
   local shell_functions
-  shell_functions=$(functions | grep -E '^[a-zA-Z\-_].+ () [{]$')
+  shell_functions=$(functions | grep -E '^[a-zA-Z_-].+ () [{]$')
 
   echo $shell_functions "\n" $git_aliases "\n" $shell_aliases | \
     python $ZRCD/scripts/alias-tips.py $*
