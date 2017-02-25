@@ -37,7 +37,7 @@ BYOBU_DISTRO=Debian
 #RELEASE_ABBREVIATED=1
 
 # Default: /
-MONITORED_DISK=/dev/mmcblk0
+MONITORED_DISK=/
 
 # Minimum disk throughput that triggers the notification (in kB/s)
 # Default: 50
