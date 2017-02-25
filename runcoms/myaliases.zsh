@@ -37,3 +37,4 @@ alias colorb16="source ${HOME}/.base16_theme"
 alias aurinstall='makepkg -si'
 alias aurremove='makepkg -r'
 alias makearduino="make upload reset_stty"
+alias heartbeat-off="echo 'none' | sudo tee /sys/class/leds/user_led1/trigger"
