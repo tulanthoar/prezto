@@ -1,0 +1,4 @@
+function mountmmc1p1 () {
+  sudo /bin/mount /dev/mmcblk1p1 ${HOME}/mmc
+  sudo chown -R linaro:linaro ${HOME}/mmc
+}
