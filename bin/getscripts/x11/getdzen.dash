@@ -1,3 +1,3 @@
-#!/bin/env dash
+#!/usr/bin/env dash
 git clone https://aur.archlinux.org/dzen2-git.git "${GITAPPSD}/dzen2-git"
 cd "${GITAPPSD}/dzen2-git" && makepkg -si --noconfirm

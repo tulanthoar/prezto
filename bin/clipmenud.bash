@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 cache_dir=/tmp/clipmenu.$USER/
 mkdir -p -m0700 "$cache_dir"

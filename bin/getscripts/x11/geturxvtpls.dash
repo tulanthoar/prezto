@@ -1,4 +1,4 @@
-#!/bin/env dash
+#!/usr/bin/env dash
 
 DEST=/usr/lib/urxvt/perl
 sudo mkdir -p ${DEST}

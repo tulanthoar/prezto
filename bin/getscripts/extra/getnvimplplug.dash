@@ -1,4 +1,4 @@
-#!/bin/env dash
+#!/usr/bin/env dash
 
 DEST=${HOME}/.config/nvim/bundle/perl-support
 if [ -d "${DEST}" ]; then

@@ -1,2 +1,2 @@
-#!/bin/env dash
+#!/usr/bin/env dash
 head -n1 /tmp/pomodoro-status

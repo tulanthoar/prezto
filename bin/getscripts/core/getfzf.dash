@@ -1,4 +1,4 @@
-#!/bin/env dash
+#!/usr/bin/env dash
 git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
 [ -d "$HOME/bin" ] || mkdir $HOME/bin
 ln -s $HOME/.fzf/fzf $HOME/bin/fzf

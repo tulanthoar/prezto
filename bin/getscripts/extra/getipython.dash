@@ -1,4 +1,4 @@
-#!/bin/env dash
+#!/usr/bin/env dash
 [ -e "$(which pip)" ] || sudo pacman --noconfirm -S pip
 sudo pip install pip --upgrade
 [ -e "$(which ptipython)" ] || sudo pip install ptipython --upgrade
