@@ -2,9 +2,9 @@
 [ -z ${ZDOTD+x} ] && source ${HOME}/.zprofile
 source $HOME/.base16_theme
 [[ -f ${HOME}/.terminfo/${TERM[1]}/${TERM} ]] || infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
-fpath=($ZRCD/funcs $ZPREZD/zsh-completions/src $fpath)
+fpath=($ZRCD/funcs $ZPREZD/modules/zsh-completions/src $fpath)
 source $ZRCD/myfunctions.zsh && source $ZRCD/myaliases.zsh
-source $ZPREZD/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $ZPREZD/modules/zsh-autosuggestions/zsh-autosuggestions.zsh
 export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
 setopt MULTIOS              # Write to multiple descriptors.
 setopt EXTENDED_GLOB        # Use extended globbing syntax.
@@ -43,7 +43,7 @@ setopt RC_QUOTES            # use `''` for single quotes in single quotes
 autoload -Uz compinit && compinit -i
 typeset -ga ZSH_HIGHLIGHT_HIGHLIGHTERS
 ZSH_HIGHLIGHT_HIGHLIGHTERS=( 'brackets' 'cursor' 'main' )
-source $ZPREZD/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZPREZD/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red,bg=black'
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=green,bold'
 ZSH_HIGHLIGHT_STYLES[function]='fg=10,underline'
