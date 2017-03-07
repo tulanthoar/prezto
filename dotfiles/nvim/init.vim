@@ -456,7 +456,7 @@ cal vundle#end()
 
 filetype plugin indent on
 syntax enable
-colorscheme base16-seti-ui
+colorscheme base16-seti
 
 set background=dark
 set backupdir=${HOME}/.config/nvim/files/backup/
