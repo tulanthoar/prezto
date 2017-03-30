@@ -6,12 +6,18 @@ let g:loaded_tarPlugin = "v29"
 let g:loaded_2html_plugin = "vim7.4_v2"
 let g:loaded_zipPlugin = "v27"
 filet off
-let g:mapleader="-"
 se rtp+=$HOME/.config/nvim/bundle/Vundle.vim
 cal vundle#begin("$HOME/.config/nvim/bundle")
-" preamble&end
-
 Plugin 'VundleVim/Vundle.vim'
+augroup nerdtree
+    autocmd!
+    au StdinReadPre * let s:std_in=1
+    au VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+    au BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
+let g:NERDTreeShowIgnoredStatus = 1
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'scrooloose/nerdtree'
 
 let g:targets_pairs = "()b {}B []a <>A"
 let g:targets_quotes = "\"Q 'q `"
@@ -20,10 +26,12 @@ Plugin 'kana/vim-textobj-line'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'kana/vim-operator-user'
 Plugin 'kana/vim-textobj-user'
+" XXX targets
 Plugin 'wellle/targets.vim'
 
 Plugin 'tpope/vim-eunuch'
 
+Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-repeat'
 
 Plugin 'tpope/vim-fugitive'
@@ -37,21 +45,18 @@ Plugin 'godlygeek/tabular'
 
 " XXX asterisk
 Plugin 'haya14busa/vim-asterisk'
-
 Plugin 'nelstrom/vim-visual-star-search'
-
 Plugin 'benmills/vimux'
-
 " XXX sidesearch
+let g:side_search_split_pct = 0.5
 Plugin 'ddrscott/vim-side-search'
 
 " XXX swap
 let g:swap_no_default_key_mappings = 1
 Plugin 'machakann/vim-swap'
-
 let g:list_of_insert_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>",]
 let g:list_of_visual_keys = ["h", "gj", "gk", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>",]
-let g:list_of_normal_keys = g:list_of_visual_keys
+let g:list_of_normal_keys = g:list_of_visual_keys + ["x"]
 let g:hardtime_maxcount = 2
 let g:hardtime_default_on = 1
 let g:hardtime_timeout = 2000
@@ -76,8 +81,8 @@ au BufEnter * cal rainbow_parentheses#load(2)
 au BufEnter * cal rainbow_parentheses#activate()
 Plugin 'kien/rainbow_parentheses.vim'
 
-let g:Tlist_Auto_Open = 1
-let g:Tlist_Close_On_Select = 1
+" let g:Tlist_Auto_Open = 1
+" let g:Tlist_Close_On_Select = 1
 let g:Tlist_Exit_OnlyWindow = 1
 let g:Tlist_Process_File_Always = 1
 let g:Tlist_File_Fold_Auto_Close = 1
@@ -87,6 +92,7 @@ let g:Tlist_Enable_Fold_Column = 0
 let g:Tlist_Display_Prototype = 1
 let g:Tlist_Auto_Update = 1
 let g:Tlist_GainFocus_On_ToggleOpen = 1
+
 let g:Tlist_Highlight_Tag_On_BufEnter = 1
 let g:Tlist_Inc_Winwidth = 0
 Plugin 'vim-scripts/taglist.vim'
@@ -148,12 +154,6 @@ function g:Multiple_cursors_after()
 endfunction
 Plugin 'terryma/vim-multiple-cursors'
 
-let g:NERDCreateDefaultMappings = 0
-let g:NERDRemoveExtraSpaces = 1
-let g:NERDSpaceDelims = 1
-let g:NERDTrimTrailingWhitespace = 1
-Plugin 'scrooloose/nerdcommenter'
-
 let g:startify_session_dir = "~/.config/nvim/files/session"
 let g:startify_list_order = [ "files", "dir", "bookmarks", "commands", "sessions", ]
 let g:startify_files_number = 6
@@ -205,7 +205,6 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_use_upper = 1
 Plugin 'easymotion/vim-easymotion'
-
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_camel_case = 1
 let g:deoplete#enable_refresh_always = 1
@@ -225,6 +224,7 @@ let g:deoplete#sources.python = g:deoplete#sources._ + [ "jedi", ]
 let g:deoplete#sources.perl = g:deoplete#sources._ + [ "omni", ]
 let g:deoplete#sources.vim = g:deoplete#sources._ + [ "vim", ]
 let g:deoplete#sources.haskell = g:deoplete#sources._ + [ "ghc", ]
+let g:deoplete#sources.cpp = g:deoplete#sources._ + [ "clang2", ]
 if !exists("g:deoplete#omni#input_patterns") | let g:deoplete#omni#input_patterns = {} | endif
 let g:deoplete#omni#input_patterns.perl = ["[a-zA-Z_]\+->",]
 if !exists("g:deoplete#omni#functions") | let g:deoplete#omni#functions = {} | endif
@@ -239,6 +239,7 @@ au FileType python  cal deoplete#custom#set("jedi", "rank", 99)
 au FileType perl    cal deoplete#custom#set("omni", "rank", 99)
 au FileType vim     cal deoplete#custom#set("vim", "rank", 99)
 au FileType haskell cal deoplete#custom#set("ghc", "rank", 99)
+au FileType cpp cal deoplete#custom#set("clang2", "rank", 99)
 au FileType * cal deoplete#custom#set("around", "rank", 89)
 au FileType * cal deoplete#custom#set("tag", "rank", 85)
 au FileType * cal deoplete#custom#set("neosnippet", "rank", 84)
@@ -253,6 +254,7 @@ Plugin 'Shougo/neoinclude.vim'
 Plugin 'SevereOverfl0w/deoplete-github'
 Plugin 'Shougo/context_filetype.vim'
 Plugin 'zchee/deoplete-jedi'
+Plugin 'tweekmonster/deoplete-clang2'
 Plugin 'Shougo/deoplete.nvim'
 
 let g:base16colorspace=256
@@ -340,6 +342,28 @@ let g:syntastic_loc_list_height = 5
 let g:syntastic_check_on_open = 0
 let g:syntastic_enable_signs = 0
 let g:syntastic_python_checkers = ["pylint",]
+let g:syntastic_cpp_compiler_options = "-std=gnu++98 -fno-rtti -Wvla -c -Wall
+            \ -Wextra -Wno-unused-parameter -Wno-missing-field-initializers
+            \ -fmessage-length=0 -fno-exceptions -fno-builtin -ffunction-sections
+            \ -fdata-sections -funsigned-char -MMD -fno-delete-null-pointer-checks
+            \ -fomit-frame-pointer -Os -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16
+            \ -mfloat-abi=softfp -DDEVICE_SPI=1 -DFEATURE_LWIP=1
+            \ -DMBED_BUILD_TIMESTAMP=1490469159.34 -DDEVICE_I2CSLAVE=1
+            \ -D__FPU_PRESENT=1 -DDEVICE_PORTOUT=1 -DTARGET_STM32F767ZI
+            \ -DDEVICE_PORTINOUT=1 -DTARGET_RTOS_M4_M7 -DDEVICE_LOWPOWERTIMER=1
+            \ -DTARGET_STM32F7 -DTOOLCHAIN_object -DDEVICE_SERIAL_ASYNCH=1
+            \ -D__CMSIS_RTOS -DTOOLCHAIN_GCC -DDEVICE_I2C_ASYNCH=1 -DARM_MATH_CM7
+            \ -DTARGET_CORTEX_M -DDEVICE_SERIAL=1 -DTARGET_LIKE_CORTEX_M7
+            \ -DDEVICE_ANALOGOUT=1 -DTARGET_NUCLEO_F767ZI -DTARGET_UVISOR_UNSUPPORTED
+            \ -DTARGET_M7 -DDEVICE_SPI_ASYNCH=1 -DDEVICE_PWMOUT=1 -D__MBED__=1
+            \ -DDEVICE_I2C=1 -DTRANSACTION_QUEUE_SIZE_SPI=2 -DDEVICE_STDIO_MESSAGES=1
+            \ -D__CORTEX_M7 -DTARGET_LIKE_MBED -DTARGET_FF_ARDUINO -DDEVICE_PORTIN=1
+            \ -DTARGET_STM32F767 -DTARGET_STM -DUSBHOST_OTHER -DTARGET_RELEASE
+            \ -DDEVICE_TRNG=1 -D__MBED_CMSIS_RTOS_CM -DDEVICE_SLEEP=1
+            \ -DTOOLCHAIN_GCC_ARM -DDEVICE_CAN=1 -DDEVICE_INTERRUPTIN=1
+            \ -DDEVICE_SPISLAVE=1 -DDEVICE_ANALOGIN=1 -DTARGET_STM32F767xI
+            \ -DDEVICE_RTC=1
+            \ @./BUILD/NUCLEO_F767ZI/GCC_ARM/.includes_0b36ecdf2da6b2a7b60fd80e803f0e74.txt"
 Plugin 'scrooloose/syntastic'
 
 let g:expand_region_text_objects = { "iw":0, "iW":0, "i\"":0, "a\"":0, "i'":0, "a'":0, "ib":1, "ab":1, "i]":1, "iB":1, "il":0, "ii":1, "ai":1, "ip":0, "ie":0, }
@@ -484,6 +508,7 @@ set list
 set listchars=tab:>┈,trail:┅,nbsp:+,extends:╡,precedes:╞,eol:┊,space:⋅
 set matchpairs=(:),[:],{:},<:>
 set matchtime=2
+set path+=/usr/local/include,mbed/${MBED_LIB_V},
 set previewheight=15
 set scrolljump=4
 set scrolloff=6
@@ -500,7 +525,7 @@ set nostartofline
 set softtabstop=4
 set tabstop=4
 set tagcase=match
-set tags+=./perltags,${HOME}/.config/nvim/files/easy_tags/perl,${HOME}/.config/nvim/files/easy_tags/vim,${HOME}/.config/nvim/files/easy_tags/python
+set tags=./tags,./perltags,${HOME}/.vimtags
 set timeoutlen=1000
 set undodir=${HOME}/.config/nvim/files/.undo/
 set undofile
@@ -586,9 +611,8 @@ hi link vimCommandTag        pythonFunctionTag
 hi link vimFuncNameTag       pythonMethodTag
 hi link vimScriptFuncNameTag pythonMethodTag
 
-" colorscheme&end
-
-cnoreabbrev T//  Tabularize //l1c1l0<left><left><left><left><left><left><left><c-h>
+cnoreabbrev T/  Tabularize //l1c1l0<left><left><left><left><left><left><left><c-h>
+cnoreabbrev NERD NERDtree
 cnoreabbrev w!!  SudoWrite
 
 for [k, c] in items({
@@ -596,22 +620,21 @@ for [k, c] in items({
             \ 'f': 'bd-fl',
             \ 't': 'bd-tl',
             \ 'j': 'bd-jk',
-            \ 'k': 'bd-jk', })
+            \ 'k': 'bd-jk',
+          \ })
     exe 'map <expr><unique>'.k.' v:count ? "'.k.'" : "\<Plug>(easymotion-'.c.')"'
 endfor
 
 for [k, c] in items({
-            \ 'e': 'bd-el', })
-    exe 'nm <expr><unique>'.k.' v:count ? "'.k.'" : "\<Plug>(easymotion-'.c.')"'
-    exe 'xm <expr><unique>'.k.' v:count ? "'.k.'" : "\<Plug>(easymotion-'.c.')"'
-    exe 'om <expr><unique>'.k.' v:count ? "'.k.'" : "v\<Plug>(easymotion-'.c.')"'
+            \ 'e': 'bd-el',
+          \ })
+    exe 'nmap <expr><unique>'.k.' v:count ? "'.k.'" : "\<Plug>(easymotion-'.c.')"'
+    exe 'xmap <expr><unique>'.k.' v:count ? "'.k.'" : "\<Plug>(easymotion-'.c.')"'
+    exe 'omap <expr><unique>'.k.' v:count ? "'.k.'" : "v\<Plug>(easymotion-'.c.')"'
 endfor
 
-for [k, c] in items({
-            \ 's': 'bd-f2',
-            \ 'K': 'overwin-line', })
-    exe 'map <unique>'.k.' <Plug>(easymotion-'.c.')'
-endfor
+map <unique>s <Plug>(easymotion-bd-f2)
+noremap <unique>gx s
 
 for [k, c] in items({
             \ '*': 'z*',
@@ -619,12 +642,13 @@ for [k, c] in items({
             \ '#': 'z#',
             \ 'g*': 'gz*',
             \ 'gS': 'gz*',
-            \ 'g#': 'gz#', })
-    exe 'nm <unique>'.k.' <Plug>(asterisk-'.c.')<Plug>(easymotion-bd-n)'
-    exe 'om <unique>'.k.' <Plug>(asterisk-'.c.')<Plug>(easymotion-bd-n)'
+            \ 'g#': 'gz#',
+          \ })
+    exe 'nmap <unique>'.k.' <Plug>(asterisk-'.c.')<Plug>(easymotion-bd-n)'
+    exe 'omap <unique>'.k.' <Plug>(asterisk-'.c.')<Plug>(easymotion-bd-n)'
 endfor
 
-for m in ['im', 'smap']
+for m in ['imap', 'smap']
     exe m.' <expr><unique><CR> '.
                 \ 'neosnippet#expandable_or_jumpable() ? "\<C-G>u\<Plug>(neosnippet_jump_or_expand)" :'.
                 \ 'delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : '.
@@ -633,28 +657,32 @@ endfor
 
 inoremap <silent><expr><unique><C-K>   pumvisible() ? "\<C-P>" : "\<Del>"
 inoremap <silent><expr><unique><C-J>   pumvisible() ? "\<C-n>" : "\<C-J>"
-inoremap <silent><expr><unique><Space> pumvisible() ? "\<Left>\<Right>" : "\<Space>"
-imap     <silent><expr><unique><Tab>   delimitMate#ShouldJump() ? "\<Plug>delimitMateS-Tab" : "\<C-t>"
+imap     <silent><expr><unique><Tab>   delimitMate#ShouldJump() ? "\<Plug>delimitMateS-Tab" : pumvisible() ? "\<Left>\<Right>" : "\<C-t>"
 inoremap               <unique><s-Tab> <C-d>
 
-for m in ['nm', 'xm', 'om',]
+for m in ['nmap', 'omap', 'xmap',]
     exe m.' <unique><tab> %'
 endfor
 snoremap <unique><Tab> <C-O>%
-nn <silent><expr><unique><S-Tab> winnr() == g:lastwin ? "\<c-w>W" : ":exe g:lastwin.'wincmd w'\<CR>"
+nnoremap <silent><expr><unique><S-Tab> winnr() == g:lastwin ? "\<c-w>W" : winnr('$') > g:lastwin ? "\<c-w>W" : ":exe g:lastwin.'wincmd w'\<CR>"
 
-nm <unique><M-e> <Plug>MoveLineDown
-nm <unique><M-s> <Plug>MoveLineUp
-nm <unique><M-[> yil<Plug>unimpairedPutBelowgk
-nm <unique><M-]> yil<Plug>unimpairedPutBelow
-nm <unique>[c    <Plug>NERDCommenterYank<Plug>unimpairedPutAbove
-nm <unique>]c    <Plug>NERDCommenterYank<Plug>unimpairedPutBelow
-nm <unique>[g    <Plug>GitGutterPrevHunk
-nm <unique>]g    <Plug>GitGutterNextHunk
-om <unique>ig    <Plug>GitGutterTextObjectInnerPending
-om <unique>ag    <Plug>GitGutterTextObjectOuterPending
-xm <unique>ig    <Plug>GitGutterTextObjectInnerVisual
-xm <unique>ag    <Plug>GitGutterTextObjectOuterVisual
+for [k, d] in items({
+            \ 'h': 'Left',
+            \ 'j': 'Down',
+            \ 'k': 'Up',
+            \ 'l': 'Right',
+          \ })
+    exe 'nn <silent><unique><M-'.k.'> :TmuxNavigate'.d.'<CR>'
+endfor
+
+nmap <unique><M-[> yil<Plug>unimpairedPutBelowgk
+nmap <unique><M-]> yil<Plug>unimpairedPutBelow
+nmap <unique>[g    <Plug>GitGutterPrevHunk
+nmap <unique>]g    <Plug>GitGutterNextHunk
+omap <unique>ig    <Plug>GitGutterTextObjectInnerPending
+omap <unique>ag    <Plug>GitGutterTextObjectOuterPending
+xmap <unique>ig    <Plug>GitGutterTextObjectInnerVisual
+xmap <unique>ag    <Plug>GitGutterTextObjectOuterVisual
 
 nnoremap <unique>'[ `[
 nnoremap <unique>'] `]
@@ -665,143 +693,121 @@ nnoremap <unique>`] ']
 nnoremap <unique>`< '<
 nnoremap <unique>`> '>
 
-nnoremap <unique>F     :SideSearch <C-r><C-w><CR> | wincmd p
-nnoremap <unique>Q    :Autoformat<CR>
-xmap     <unique>v     <Plug>(expand_region_expand)
-xmap <unique><CR> <Plug>NrrwrgnDo
-xmap <unique>gc   <Plug>NERDCommenterInvert
-xmap <unique>gC   <Plug>NERDCommenterComment
-nm <unique>g<   <Plug>(swap-prev)
-nm <unique>g>   <Plug>(swap-next)
-no <unique>gs   ^
-no <unique>gl   $
+nnoremap <unique> Q     :Autoformat<CR>
+nnoremap <unique> gq    :Autoformat<CR>
+xmap     <unique> v     <Plug>(expand_region_expand)
+xmap     <unique> <CR>  <Plug>NrrwrgnDo
+nmap     <unique> <M-\> <Plug>(swap-next)
+nmap     <unique> <M-Tab> <Plug>(swap-prev)
+noremap  <unique> h     ^
+noremap  <unique> gh    h
+noremap  <unique> l     $
+noremap  <unique> gl    l
+nnoremap <unique> gf    :cd %:p:h<CR>:normal! gf<CR>
+nnoremap <unique> v     viw
+nnoremap <unique> <C-S> 5<C-Y>
+inoremap <unique> <C-S> <C-Y>
+nnoremap <unique> <C-E> 5<C-E>
+nnoremap <unique> D     <c-d>
+nnoremap <unique> U     <c-u>
+nnoremap <unique> B     <c-b>
+xnoremap <unique> J     <esc>
+inoremap <unique> jf    <esc>
+inoremap <unique> fj    <esc>
 
-for [k, c] in items({
-            \ 'c' : 'Invert',
-            \ 'l' : 'Append',
-            \ 'y' : 'Yank',
-            \ 'L' : 'ToEOL', })
-    exe 'nmap <unique>gc'.k.' <Plug>NERDCommenter'.c
-endfor
+xnoremap <unique>S<Space>  c<Space><C-R>"<Space><C-C>
+nnoremap <unique><c-Space> <C-I>
+inoremap <unique><c-Space> <C-@>
+nnoremap <unique><Space>   <C-O>
+nnoremap <unique><c-t>     g<C-]>
+nnoremap <unique><C-K>     :w<CR>
+nnoremap <unique><M-n>     :ta<CR>
+nnoremap <unique><M-b>     :po<CR>
+inoremap <unique><C-V>     <C-R>*
+inoremap <unique><C-Q>     <C-V>
 
-nnoremap <unique>P  gP
-nnoremap <unique>v     viw
-nnoremap <unique><C-S> 5<C-Y>
-inoremap <unique><C-S> <C-Y>
-nnoremap <unique><C-E> 5<C-E>
-nnoremap <unique>D     <c-d>
-nnoremap <unique>U     <c-u>
-nnoremap <unique>B     <c-b>
-xnoremap <unique>J     <esc>
-inoremap <unique>jf    <esc>
-inoremap <unique>fj    <esc>
-
-xn <unique>S<Space>  c<Space><C-R>"<Space><C-C>
-nn <unique><c-Space> <C-I>
-ino <unique><c-Space> <C-@>
-nn <unique><Space>   <C-O>
-nn <unique><c-t>     g<C-]>
-nn <unique><C-K>     :w<CR>
-nn <unique><M-n>     :ta<CR>
-nn <unique><M-b>     :po<CR>
+nnoremap <unique><F10> <esc>:xa<cr>
 
 let g:mapleader=","
-nm         <unique><leader>h       <Plug>AirlineSelectPrevTab
-nm         <unique><leader>l       <Plug>AirlineSelectNextTab
-nm <silent><unique><leader><CR>    :NW<CR>
-nn         <unique><leader>/       /
-nn         <unique><leader>z       zjzo
-nn <silent><unique><leader>r       :noh<CR>:dif<CR>:syn sync fromstart<CR><C-L>
-nm         <unique><leader><Space> <Plug>(easymotion-bd-n)
-nn         <unique><leader>v       <C-V>
-nn         <unique><leader>,       qj
-nn         <unique><leader>.       :HardTimeOff<CR>@j:HardTimeOn<CR>
-no         <unique><leader>q       :qall<CR>
-no         <unique><leader>d       :hide<CR>
-nn         <unique><leader>sv      :vs<CR>
-nn         <unique><leader>sh      :sp<CR>
-nn         <unique><leader>cd      :cd %:p:h<CR>
-
-for [k, d] in items({
-            \ 'h': 'Left',
-            \ 'j': 'Down',
-            \ 'k': 'Up',
-            \ 'l': 'Right' })
-    exe 'nn <silent><unique><M-'.k.'> :TmuxNavigate'.d.'<CR>'
-endfor
+nnoremap          <unique><leader>/    /
+nnoremap          <unique><leader>z    zjzo
+nnoremap  <silent><unique><leader>r    :noh<CR>:dif<CR>:syn sync fromstart<CR><C-L>
+nmap              <unique><leader>n    <Plug>(easymotion-bd-n)
+nnoremap          <unique><leader>v    <C-V>
+nnoremap          <unique><leader>,    qj
+nnoremap          <unique><leader>.    :HardTimeOff<CR>@j:HardTimeOn<CR>
+noremap           <unique><leader>q    :qall<CR>
+noremap           <unique><leader>d    :hide<CR>
+nnoremap          <unique><leader>sv   :vs<CR>
+nnoremap          <unique><leader>sh   :sp<CR>
+nnoremap          <unique><leader>cd   :cd %:p:h<CR>
 
 for n in range(1,9)
-    exe 'nm <unique>'.g:mapleader.n.' <Plug>AirlineSelectTab'.n
+    exe 'nmap <unique>'.g:mapleader.n.' <Plug>AirlineSelectTab'.n
 endfor
 
 let g:mapleader=';'
-nn <unique><Leader>s        :SideSearch ""<left>
-nm <unique><leader><CR>     <Plug>NrrwrgnWinIncr
-nn <unique><leader><leader> :exe "buffer ".g:lastwin<CR>
-nn <unique><leader><Space>  :Startify<CR>
-nn <unique><leader>y        :YRShow<CR>
-nn <unique><leader>t        :TlistOpen<CR>
-nn <unique><leader>F        :CtrlP<CR>
-nn <unique><leader>p        :CtrlPRTS<CR>
-nn <unique><leader>m        :CtrlPMRUFiles<CR>
-nn <unique><leader>u        :UndotreeToggle<CR>
-nm <unique><leader>x        <Plug>TaskList<Down><Down>
-nn <unique><leader>'        :SignatureListBufferMarks 1<CR>:lclose<CR>:Denite -cursor-wrap unite:location_list<CR>
-
-nn <silent><unique><leader>n :cal VimuxRanger()<CR>
+nmap      <silent><unique><leader><CR> :NW<CR>
+nnoremap <unique><leader><tab>   :exe "buffer ".g:lastwin<CR>
+nnoremap <unique><leader><Space> :Startify<CR>
+nnoremap <unique><leader>y       :YRShow<CR>
+nnoremap <unique><leader>t       :TlistOpen<CR>
+nnoremap <unique><leader>f       :CtrlP<CR>
+nnoremap <unique><leader>p       :CtrlPRTS<CR>
+nnoremap <unique><leader>m       :CtrlPMRUFiles<CR>
+nnoremap <unique><leader>u       :UndotreeToggle<CR>
+nmap     <unique><leader>x       <Plug>TaskList<Down><Down>
+nnoremap <unique><leader>'       :SignatureListBufferMarks 1<CR>:lclose<CR>:Denite -cursor-wrap unite:location_list<CR>
+nnoremap <unique><leader>gf      :cd %:p:h<CR>:NERDTreeCWD<CR>
+nnoremap <silent><unique><leader>n :NERDTreeToggle<CR>
+nnoremap <unique><leader>o :Denite -vertical-preview -auto-preview -cursor-wrap outline<CR>
+nnoremap <unique><leader>ag    :SideSearch ""<Left>
+xnoremap <unique><leader>ag    y:SideSearch <C-r><C-r>"<CR> | wincmd p
 
 for [k,c] in items({
             \ 'l' : 'unite:location_list',
             \ 'q' : 'unite:quickfix',
             \ 'h' : 'help',
             \ 'b' : 'buffer',
-            \ 'g' : 'menu:git',
-            \ ':' : 'command', })
-    exe 'nn <unique>'.g:mapleader.k.' :Denite -cursor-wrap '.c.'<CR>'
+            \ 'G' : 'menu:git',
+            \ ':' : 'command',
+          \ '/' : 'line',
+          \ })
+    exe 'nnoremap <unique>'.g:mapleader.k.' :Denite -cursor-wrap '.c.'<CR>'
 endfor
 
-for [k,c] in items({
-            \ 'f' : 'file_rec',
-            \ 'o' : 'outline', })
-    exe 'nn <unique>'.g:mapleader.k.' :Denite -vertical-preview -auto-preview -cursor-wrap '.c.'<CR>'
-endfor
-
-nn <silent><unique>/  :Denite -cursor-wrap line<CR>
 
 let g:mapleader='-'
 function g:Undotree_CustomMap()
-    nm <buffer>K <plug>UndotreeGoNextState
-    nm <buffer>J <plug>UndotreeGoPreviousState
-    nm <buffer>N <plug>UndotreeGoNextSaved
-    nm <buffer>P <plug>UndotreeGoPreviousSaved
-    nm <buffer>q <Plug>UndotreeToggle
+    augroup undotree_bindings
+        autocmd!
+        nmap <buffer>K <plug>UndotreeGoNextState
+        nmap <buffer>J <plug>UndotreeGoPreviousState
+        nmap <buffer>N <plug>UndotreeGoNextSaved
+        nmap <buffer>P <plug>UndotreeGoPreviousSaved
+        nmap <buffer>q <Plug>UndotreeToggle
+    augroup END
 endfunc
 
-au FileType tex,plaintex im <buffer><leader>]  <Plug>LatexCloseCurEnv
-au FileType tex,plaintex nm <buffer><leader>*  <Plug>LatexToggleStarEnv
-au FileType tex,plaintex nm <buffer><leader>ce <Plug>LatexChangeEnv
-au FileType tex,plaintex vm <buffer><leader>}  <Plug>LatexWrapSelection
-au FileType tex,plaintex vm <buffer><leader>se <Plug>LatexEnvWrapSelection
+augroup mapsFiletype
+    autocmd!
+    au FileType tex,plaintex im <buffer><leader>]  <Plug>LatexCloseCurEnv
+    au FileType tex,plaintex nm <buffer><leader>*  <Plug>LatexToggleStarEnv
+    au FileType tex,plaintex nm <buffer><leader>ce <Plug>LatexChangeEnv
+    au FileType tex,plaintex vm <buffer><leader>}  <Plug>LatexWrapSelection
+    au FileType tex,plaintex vm <buffer><leader>se <Plug>LatexEnvWrapSelection
 
-au FileType python nm <buffer><leader>f :cal pymode#rope#find_it()<CR>
+    au FileType python nm <buffer><leader>f :cal pymode#rope#find_it()<CR>
 
-au FileType haskell,perl,vim,python nm <buffer><CR> <Plug>unimpairedBlankDown
-au FileType help nn <buffer><CR> <C-]>
-au FileType help nn <buffer><BS> <C-T>
-au FileType help nn <buffer>q    :q<CR>
+    au FileType cpp,haskell,perl,vim,python nm <buffer><CR> <Plug>unimpairedBlankDown
+    au FileType help nn <buffer><CR> <C-]>
+    au FileType help nn <buffer><BS> <C-T>
+    au FileType help nn <buffer>q    :q<CR>
 
-function! VimuxRanger() abort
-    if exists("s:vimux_ranger")
-        cal _VimuxTmux("break-pane")
-        unl s:vimux_ranger
-    else
-        cal _VimuxTmux("join-pane -b -p 80 -t:0")
-        TmuxNavigateDown
-        cal VimuxSendText(":")
-        cal VimuxSendText("cd ".getcwd())
-        let s:vimux_ranger = 1
-    endif
-endfunc
-au VimEnter * cal VimuxRunCommand("ranger")
-au VimEnter * cal _VimuxTmux("break-pane -d -t:0 -s {bottom}")
-au VimLeave * cal _VimuxTmux("kill-window -t:0")
+augroup END
+
+augroup cppFiletype
+    autocmd!
+    au BufRead,BufNewFile *.h,*.c set filetype=cpp.doxygen
+    au FileType cpp set filetype=cpp.doxygen
+augroup END
