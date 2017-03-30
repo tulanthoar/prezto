@@ -1,0 +1,3 @@
+function taghere(){
+  ctags --append=yes --recurse=yes -f ${HOME}/.vimtags ${PWD}
+}
