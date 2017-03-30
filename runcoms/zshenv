@@ -9,3 +9,4 @@ if [[ $SHLVL -eq 1 && ! -o LOGIN && -s ${ZDOTDIR:-$HOME}/.zprofile ]]; then
   source ${ZDOTDIR:-$HOME}/.zprofile
 fi
 export PATH="$HOME/.cargo/bin:$PATH"
+export MBED_LIB_V="e1686b8d5b90"
