@@ -34,13 +34,12 @@ import           XMonad.Util.SpawnOnce         (spawnOnce)
 
 myTerminal = "tilda" :: String
 myModMask = mod3Mask :: KeyMask
-uniqueInits = [myTerminal, "keymod", "maybeclipmenud", "mayberedshift", "guake"] :: [String]
-xInitM_ = mapM_ spawnOnce uniqueInits :: X()
+-- uniqueInits = [myTerminal, "keymod", "maybeclipmenud", "mayberedshift"] :: [String]
+-- xInitM_ = mapM_ spawnOnce uniqueInits :: X()
 wsList =  map (\w -> "<"++w++">") ["W", "d"] :: [WorkspaceId]
 menuH = 15 :: Int
 mag = 1.3 :: Rational
 mvNEmpty = moveTo Next EmptyWS :: X()
-corePadsM_ = byobucmd :: X()
 launchAct = spawn $ "j4-dmenu-desktop --display-binary --term="++myTerminal++" --dmenu='dmenu -w 600 -y "++show menuH++" -z -p launch -l 50'" :: X()
 srchAct = spawn $  "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50" :: X()
 centrPtr_ = updatePointer (0.5, 0.5) (0, 0) :: X()
@@ -48,18 +47,17 @@ centrPtr_ = updatePointer (0.5, 0.5) (0, 0) :: X()
 mylayoutHook = fullscreenFull $ G.gaps [(G.U,menuH)] $ magnifiercz mag $ minimize $ toggleLayouts (GV.SplitGrid GV.T 1 2 (1%2) (16%10) delta) $ Tall 1 delta (11%20)
     where delta = 3 % 100
 
-myManageHook = namedScratchpadManageHook scratchpads <+> manageDocks
+myManageHook = manageDocks
     <+> composeAll
     [ className =? "Xmessage"  --> doIgnore
     , className =? "Zenity"  --> doCenterFloat
     , className =? "stmenu" --> doFloat
-    , className =? "guake" --> doFloat
     ]
 
 xmConf p = ewmh $ def
     { manageHook         = myManageHook <+> fullscreenManageHook <+> def
     , layoutHook         = mylayoutHook
-    , startupHook        = xInitM_
+    -- , startupHook        = xInitM_
     , terminal           = myTerminal
     , modMask            = myModMask
     , borderWidth        = 0
@@ -68,7 +66,7 @@ xmConf p = ewmh $ def
     , focusedBorderColor = limeGreen
     , workspaces         = wsList
     , logHook            = dynamicLogWithPP ( myDzenPP {ppOutput = hPutStrLn p} ) >> workspaceHistoryHook >> centrPtr_
-    , handleEventHook    = docksEventHook <+> minimizeEventHook <+> serverModeEventHookCmd' xmC <+> fullscreenEventHook
+    , handleEventHook    = docksEventHook <+> minimizeEventHook <+> fullscreenEventHook
     , keys               = \c -> fromList xkM
     }
 
@@ -98,7 +96,7 @@ xkM=
 myKeysP =
     [ ("<Insert>", spawn "xdotool click 2")
     , ("M-c", clipcmd)
-    , ("M-t", spawn "simpledate" )
+    , ("M-t", spawn myTerminal)
     , ("M-<Space>", launchAct)
     , ("M-h", moveTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
     , ("M-l", moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
@@ -110,35 +108,12 @@ myKeysP =
     , ("M-q",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
     , ("M-<Tab>", toggleWS' ["NSP"])
     , ("M-p",  spawn "start-pomodoro" )
-    , ("M-u",  byobucmd )
     , ("M4-t", altTerm_)
     ]
 
 clipcmd = spawn "clipmenu -z -w 800 -l 50 -p 'clip'" :: X()
-{- byobucmd = namedScratchpadAction scratchpads bPad -}
-byobucmd = spawn myTerminal
 altTerm_ = spawn "termite"
 
-mC =
-    [ ("minone", withFocused minimizeWindow )
-    , ("tagterm", withFocused $ addTag "myterm")
-    , ("rest",  sendMessage RestoreNextMinimizedWin )
-    , ("jmenu", launchAct )
-    , ("srmenu", srchAct )
-    , ("clipmenu", clipcmd)
-    , ("terminal", altTerm_ )
-    , ("urxvt", byobucmd )
-    , ("pomodoro", spawn "start-pomodoro" )
-    , ("redshift", spawn "redshift -c $ZDOTD/redshift/redshift.conf")
-    , ("clipmenud", spawn "clipmenud")
-    , ("moveempty", mvNEmpty )
-    , ("nextempty",(\t-> (withFocused . addTag) t >> mvNEmpty >> withTaggedGlobalP t shiftHere >> withTaggedGlobal t unTag) "shifter" )
-    ]
-xmC = return mC
-
-scratchpads = [ NS bPad bRun (stringProperty "WM_CLASS" =? "tilda") nonFloating ]
-bPad = "byobu"
-bRun = "tilda"
 myDzenPP = def
     { ppCurrent         = dzenColor myFFGColor myFBGColor
     , ppVisible         = dzenColor myVFGColor myVBGColor . \w -> if w /= "NSP" then w else ""
