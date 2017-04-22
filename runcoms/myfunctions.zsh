@@ -57,8 +57,8 @@ function key_bind() {
   bindkey -M viins "^B" vi-beginning-of-line
   bindkey -M viins "^F" vi-end-of-line
   bindkey -M viins "\C-W" vi-backward-kill-word
-  bindkey -M viins "\C-N" down-line-or-history
-  bindkey -M viins "\C-P" up-line-or-history
+  bindkey -M viins "\C-P" history-substring-search-up
+  bindkey -M viins "\C-N" history-substring-search-down
   bindkey -M viins "^Z" undo
   bindkey -M viins "^R" redo
   bindkey -M viins "^@" snippet-expand
