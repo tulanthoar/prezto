@@ -60,6 +60,8 @@ export ZBIND=${ZPREZD}/bin
 export ZRCD=${ZPREZD}/runcoms
 export GITAPPSD=${HOME}/apps-git
 export FZFD=${HOME}/.fzf
+export FZF_COMPLETION_TRIGGER=,
+[[ $- == *i* ]] && source "/home/ant/.fzf/shell/completion.zsh" 2> /dev/null
 # export JAVA_HOME="/usr/lib/jvm/default-jvm"
 export GOPATH=$HOME/golang
 [[ -d ${GOPATH} ]] && export PATH="$PATH:$GOPATH/bin"
