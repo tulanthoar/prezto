@@ -9,6 +9,15 @@ filet off
 se rtp+=$HOME/.config/nvim/bundle/Vundle.vim
 cal vundle#begin("$HOME/.config/nvim/bundle")
 Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'DoxygenToolkit.vim'
+let g:DoxygenToolkit_blockFooter = "------------------------------------------"
+let g:DoxygenToolkit_compactDoc = "yes"
+let g:DoxygenToolkit_authorName = "Nathan Yonkee"
+let g:DoxygenToolkit_briefTag_funcName = "yes"
+let g:DoxygenToolkit_briefTag_post = ": "
+let g:DoxygenToolkit_briefTag_className = "yes"
+
 augroup nerdtree
     autocmd!
     au StdinReadPre * let s:std_in=1
@@ -76,6 +85,8 @@ Plugin 'machakann/vim-highlightedyank'
 
 let g:formatters_python = ["yapf"]
 let g:autoformat_autoindent = 0 " don't use vims formatter for indentation
+let g:formatdef_custom_cpp = '"astyle"'
+let g:formatters_cpp = ['custom_cpp']
 Plugin 'Chiel92/vim-autoformat'
 
 let g:rbpt_colorpairs = [ ["1", "#4B5056"], ["4",  "#4B5056"],
@@ -113,7 +124,7 @@ let g:indentLine_char = "┴"
 let g:indentLine_indentLevel = 10
 let g:indentLine_first_char = "╠"
 let g:indentLine_showFirstIndentLevel = "1"
-let g:indentLine_fileType = ["vim", "perl", "python",]
+let g:indentLine_fileType = ["vim", "perl", "python", "cpp",]
 let g:indentLine_faster = 1
 let g:indentLine_concealcursor="inc"
 let g:indentLine_leadingSpaceChar = "◦"
@@ -511,7 +522,7 @@ set ignorecase
 set isfname+={,}
 set list
 set listchars=tab:>┈,trail:┅,nbsp:+,extends:╡,precedes:╞,eol:┊,space:⋅
-set matchpairs=(:),[:],{:},<:>
+set matchpairs=(:),[:],{:}
 set matchtime=2
 set path+=/usr/local/include,mbed/${MBED_LIB_V},
 set previewheight=15
@@ -544,6 +555,7 @@ set wildignore=*.o,*~,*.pyc
 set wildmode=list:longest,list:full
 set nowrap
 
+au FileType vim setl matchpairs=(:),[:],{:},<:>
 exe 'au FileType haskell,vim,perl,python sy match IndentLine /^ / contained conceal cchar='.g:indentLine_first_char
 exe 'au FileType vim,perl,python sy match IndentLineSpace /^ \+/ containedin=TOP contained contains=IndentLine conceal cchar='.g:indentLine_leadingSpaceChar
 exe 'au FileType haskell sy match IndentLineSpace /^ \+/ containedin=TOP contains=IndentLine conceal cchar='.g:indentLine_leadingSpaceChar
@@ -561,6 +573,7 @@ let g:startify_bookmarks = [ { 'n': '~/.config/nvim/init.vim' }, ]
 let g:startify_commands = [
             \   { 'h':['help', 'Denite -cursor-wrap help'] },
             \   { 'f':['all files', 'Denite -cursor-wrap file_rec:~'] },
+            \   { 'm':['MRU', 'CtrlPMRUFiles'] },
             \   { 'c':['cmds', 'Denite -cursor-wrap commands'] },
             \   { 'P':['Plugins Update', 'PluginUpdate'] }, ]
 
@@ -639,7 +652,7 @@ for [k, c] in items({
 endfor
 
 map <unique>s <Plug>(easymotion-bd-f2)
-noremap <unique>gx s
+noremap <unique>gs s
 
 for [k, c] in items({
             \ '*': 'z*',
@@ -655,15 +668,15 @@ endfor
 
 for m in ['imap', 'smap']
     exe m.' <expr><unique><CR> '.
-                \ 'neosnippet#expandable_or_jumpable() ? "\<C-G>u\<Plug>(neosnippet_jump_or_expand)" :'.
                 \ 'delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : '.
                 \ '"\<CR>"'
 endfor
 
-inoremap <silent><expr><unique><C-K>   pumvisible() ? "\<C-P>" : "\<Del>"
-inoremap <silent><expr><unique><C-J>   pumvisible() ? "\<C-n>" : "\<C-J>"
-imap     <silent><expr><unique><Tab>   delimitMate#ShouldJump() ? "\<Plug>delimitMateS-Tab" : pumvisible() ? "\<Left>\<Right>" : "\<C-t>"
-inoremap               <unique><s-Tab> <C-d>
+inoremap <silent><expr><unique> <C-K>   pumvisible() ? "\<C-P>" : "\<Del>"
+inoremap <silent><expr><unique> <C-J>   pumvisible() ? "\<C-n>" : "\<C-J>"
+imap     <silent>      <unique> <Tab>   <Plug>delimitMateS-Tab
+imap                   <unique> <s-Tab> <Plug>(neosnippet_jump_or_expand)
+smap                   <unique> <s-Tab> <Plug>(neosnippet_jump_or_expand)
 
 for m in ['nmap', 'omap', 'xmap',]
     exe m.' <unique><tab> %'
@@ -671,23 +684,15 @@ endfor
 snoremap <unique><Tab> <C-O>%
 nnoremap <silent><expr><unique><S-Tab> winnr() == g:lastwin ? "\<c-w>W" : winnr('$') > g:lastwin ? "\<c-w>W" : ":exe g:lastwin.'wincmd w'\<CR>"
 
-for [k, d] in items({
-            \ 'h': 'Left',
-            \ 'j': 'Down',
-            \ 'k': 'Up',
-            \ 'l': 'Right',
-          \ })
-    exe 'nn <silent><unique><M-'.k.'> :TmuxNavigate'.d.'<CR>'
-endfor
 
-nmap <unique><M-[> yil<Plug>unimpairedPutBelowgk
-nmap <unique><M-]> yil<Plug>unimpairedPutBelow
-nmap <unique>[g    <Plug>GitGutterPrevHunk
-nmap <unique>]g    <Plug>GitGutterNextHunk
-omap <unique>ig    <Plug>GitGutterTextObjectInnerPending
-omap <unique>ag    <Plug>GitGutterTextObjectOuterPending
-xmap <unique>ig    <Plug>GitGutterTextObjectInnerVisual
-xmap <unique>ag    <Plug>GitGutterTextObjectOuterVisual
+nmap <unique> ], <Plug>(swap-next)
+nmap <unique> [, <Plug>(swap-prev)
+nmap <unique> [g <Plug>GitGutterPrevHunk
+nmap <unique> ]g <Plug>GitGutterNextHunk
+omap <unique> ig <Plug>GitGutterTextObjectInnerPending
+omap <unique> ag <Plug>GitGutterTextObjectOuterPending
+xmap <unique> ig <Plug>GitGutterTextObjectInnerVisual
+xmap <unique> ag <Plug>GitGutterTextObjectOuterVisual
 
 nnoremap <unique>'[ `[
 nnoremap <unique>'] `]
@@ -702,8 +707,6 @@ nnoremap <unique> Q     :Autoformat<CR>
 nnoremap <unique> gq    :Autoformat<CR>
 xmap     <unique> v     <Plug>(expand_region_expand)
 xmap     <unique> <CR>  <Plug>NrrwrgnDo
-nmap     <unique> <M-\> <Plug>(swap-next)
-nmap     <unique> <M-Tab> <Plug>(swap-prev)
 noremap  <unique> h     ^
 noremap  <unique> gh    h
 noremap  <unique> l     $
@@ -725,6 +728,7 @@ nnoremap <unique><c-Space> <C-I>
 inoremap <unique><c-Space> <C-@>
 nnoremap <unique><Space>   <C-O>
 nnoremap <unique><c-t>     g<C-]>
+nnoremap <unique><BS> <C-T>
 nnoremap <unique><C-K>     :w<CR>
 nnoremap <unique><M-n>     :ta<CR>
 nnoremap <unique><M-b>     :po<CR>
@@ -746,9 +750,20 @@ noremap           <unique><leader>d    :hide<CR>
 nnoremap          <unique><leader>sv   :vs<CR>
 nnoremap          <unique><leader>sh   :sp<CR>
 nnoremap          <unique><leader>cd   :cd %:p:h<CR>
+nmap <unique><leader>b <Plug>AirlineSelectPrevTab
+nmap <unique><leader>f <Plug>AirlineSelectNextTab
 
 for n in range(1,9)
     exe 'nmap <unique>'.g:mapleader.n.' <Plug>AirlineSelectTab'.n
+endfor
+
+for [k, d] in items({
+            \ 'h': 'Left',
+            \ 'j': 'Down',
+            \ 'k': 'Up',
+            \ 'l': 'Right',
+          \ })
+    exe 'nnoremap <silent><unique><leader>'.k.' :TmuxNavigate'.d.'<CR>'
 endfor
 
 let g:mapleader=';'
