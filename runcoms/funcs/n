@@ -7,4 +7,5 @@ function n() {
     [[ $value -gt 0 ]] && eval "n $value"
     unset value
   fi
+  zle reset-prompt
 }

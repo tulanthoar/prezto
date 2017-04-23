@@ -1,4 +1,4 @@
-autoload -U colors unarchive _fzf_compgen_path writecmd fhe f fss fp fk fzf-locate-widget u md cm v z j p n copyfile sudo-command-line c J nice_exit_code snippet-expand paste-primary
+autoload -U colors unarchive _fzf_compgen_path writecmd fhe f fss fp fk fzf-locate-widget u md cm v z j p n h copyfile sudo-command-line c J nice_exit_code snippet-expand paste-primary
 autoload -Uz add-zsh-hook tagthis taghere promptinit black red green yellow blue magenta cyan white alias-tips-preexec gencomp 256-color-test color16_load mountmmc1p1
 function fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null }
 colors
@@ -19,25 +19,45 @@ if [[ $- == *i* ]]; then
             -o -type l -print 2> /dev/null | sed 1d | cut -b3-"}"
         setopt localoptions pipefail 2> /dev/null
         eval "$cmd | $(__fzfcmd) -m $FZF_CTRL_T_OPTS" | while read item; do
-        echo -n "${(q)item} "
-    done
-    local ret=$?
-    echo
-    return $ret
-}
+            echo -n "${(q)item} "
+        done
+        local ret=$?
+        echo
+        return $ret
+    }
 
-__fzfcmd() {
-    [ ${FZF_TMUX:-1} -eq 1 ] && echo "fzf-tmux -d${FZF_TMUX_HEIGHT:-40%}" || echo "fzf"
-}
+    __fzfcmd() {
+        [ ${FZF_TMUX:-1} -eq 1 ] && echo "fzf-tmux -d${FZF_TMUX_HEIGHT:-40%}" || echo "fzf"
+    }
 
-fzf-file-widget() {
-LBUFFER="${LBUFFER}$(__fsel)"
-local ret=$?
-zle redisplay
-typeset -f zle-line-init >/dev/null && zle zle-line-init
-return $ret
-}
-zle     -N   fzf-file-widget
+    fzf-file-widget() {
+        LBUFFER="${LBUFFER}$(__fsel)"
+        local ret=$?
+        zle redisplay
+        typeset -f zle-line-init >/dev/null && zle zle-line-init
+        return $ret
+    }
+    zle -N fzf-file-widget
+
+    # CTRL-R - Paste the selected command from history into the command line
+    fzf-history-widget() {
+        local selected num
+        setopt localoptions noglobsubst pipefail 2> /dev/null
+        # selected=( $(fc -l 1 | eval "$(__fzfcmd) +s --tac +m -n2..,.. --tiebreak=index --toggle-sort=ctrl-r $FZF_CTRL_R_OPTS -q ${(q)LBUFFER}") )
+        selected=( $(fc -ln 1 | eval "$(__fzfcmd) +s --tac +m -n2..,.. --tiebreak=index --toggle-sort=ctrl-r $FZF_CTRL_R_OPTS") )
+        LBUFFER="${LBUFFER}${selected}"
+        local ret=$?
+        # if [ -n "$selected" ]; then
+        #     num=$selected[1]
+        #     if [ -n "$num" ]; then
+        #         zle vi-fetch-history -n $num
+        #     fi
+        # fi
+        zle redisplay
+        typeset -f zle-line-init >/dev/null && zle zle-line-init
+        return $ret
+    }
+    zle     -N   fzf-history-widget
 fi
 
 function snippets-add() {
@@ -66,7 +86,6 @@ function key_bind() {
     bindkey -rM viins "^["
     bindkey -rM viins "^D"
     bindkey -rM viins "^G"
-    # bindkey -rM viins "^C"
     bindkey -rM viins "^X"
     bindkey -rpM viins "^X"
     bindkey -rM viins "^H"
@@ -74,35 +93,42 @@ function key_bind() {
     bindkey -rM viins "^K"
     bindkey -rM viins "^L"
     bindkey -rM viins "^V"
+    #disable arrow keys!
+    bindkey -rM viins "^[OA"
+    bindkey -rM viins "^[OB"
+    bindkey -rM viins "^[OC"
+    bindkey -rM viins "^[OD"
     # bindkey -rM viins "^Y"
-    # bindkey -rM viins "^T"
+    # bindkey -rM viins "^G"
+    # bindkey -M viins "\e" vi-cmd-mode
+    # ^? is backspace
+    bindkey -M viins "^?" h
     bindkey -M viins "^[i" fzf-locate-widget
-    bindkey -M viins "^I" fzf-completion
     bindkey -M viins "^[p" p
     bindkey -M viins "^[n" n
-    bindkey -M viins "^[h" h
     bindkey -M viins "^[s" sudo-command-line
-    bindkey -M viins "^E" vi-forward-char
-    bindkey -M viins "^S" vi-backward-char
-    bindkey -M viins "^H" vi-backward-delete-char
-    bindkey -M viins "^K" vi-delete-char
-    bindkey -M viins "^U" vi-forward-word
-    bindkey -M viins "^D" vi-backward-word
-    bindkey -M viins "^B" vi-beginning-of-line
-    bindkey -M viins "^F" vi-end-of-line
+    bindkey -M viins "^]" copy-prev-shell-word
+    bindkey -M viins "^\\\\" fzf-history-widget
+    bindkey -M viins "\C-I" fzf-completion
+    bindkey -M viins "\C-E" vi-forward-char
+    bindkey -M viins "\C-S" vi-backward-char
+    bindkey -M viins "\C-H" vi-backward-delete-char
+    bindkey -M viins "\C-K" vi-delete-char
+    bindkey -M viins "\C-U" vi-forward-word
+    bindkey -M viins "\C-D" vi-backward-word
+    bindkey -M viins "\C-B" vi-beginning-of-line
+    bindkey -M viins "\C-F" vi-end-of-line
     bindkey -M viins "\C-W" vi-backward-kill-word
     bindkey -M viins "\C-P" history-substring-search-up
     bindkey -M viins "\C-N" history-substring-search-down
-    bindkey -M viins "^Z" undo
-    bindkey -M viins "^R" redo
-    bindkey -M viins "^@" snippet-expand
-    bindkey -M viins "^J" autosuggest-execute
-    bindkey -M viins "^M" accept-line
-    bindkey -M viins "\e" vi-cmd-mode
-    # bindkey -M viins "^A" autosuggest-accept
-    bindkey -M viins '^A' fzf-file-widget
+    bindkey -M viins "\C-Z" undo
+    bindkey -M viins "\C-R" redo
+    bindkey -M viins "\C-@" snippet-expand
+    bindkey -M viins "\C-J" autosuggest-execute
+    bindkey -M viins "\C-M" accept-line
+    bindkey -M viins "\C-A" fzf-file-widget
     bindkey -M viins "\C-Q" vi-kill-line
-    bindkey -M viins "\C-G" vi-kill-eol
+    bindkey -M viins "\C-T" vi-kill-eol
     bindkey -M viins "\C-V" paste-primary
     bindkey -M viins "\C-O" vi-put-after
     bindkey -M viins "\C-L" vi-put-before
