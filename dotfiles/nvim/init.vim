@@ -1,17 +1,17 @@
 "init on 2016-05-26
-if &cp | se nocp | endif
+if &cp | set nocp | en
 let g:loaded_gzip = 1
 let g:loaded_man = 1
 let g:loaded_tarPlugin = "v29"
 let g:loaded_2html_plugin = "vim7.4_v2"
 let g:loaded_zipPlugin = "v27"
-filet off
-se rtp+=$HOME/.config/nvim/bundle/Vundle.vim
-cal vundle#begin("$HOME/.config/nvim/bundle")
+filetype off
+set rtp+=$HOME/.config/nvim/bundle/Vundle.vim
+call vundle#begin("$HOME/.config/nvim/bundle")
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'DoxygenToolkit.vim'
-let g:DoxygenToolkit_blockFooter = "------------------------------------------"
+let g:DoxygenToolkit_blockFooter = "-----------------------------------------"
 let g:DoxygenToolkit_compactDoc = "yes"
 let g:DoxygenToolkit_authorName = "Nathan Yonkee"
 let g:DoxygenToolkit_briefTag_funcName = "yes"
@@ -21,15 +21,15 @@ let g:DoxygenToolkit_briefTag_className = "yes"
 augroup nerdtree
     autocmd!
     au StdinReadPre * let s:std_in=1
-    au VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-    au BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+    au VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") |
+                \ exe 'NERDTree' argv()[0] | wincmd p | enew | endif
+    " au BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END
-let g:NERDTreeShowIgnoredStatus = 1
-" NERDTress File highlighting
-function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
- exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
- exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+function! NERDTreeHighlightFile(ext, fg, bg)
+ exe 'au filetype nerdtree hi '.a:ext.' ctermbg='.a:bg.' ctermfg='.a:fg
+ exe 'au filetype nerdtree syn match '.a:ext.' #^\s\+.*'.a:ext.'$#'
 endfunction
+let g:NERDTreeShowIgnoredStatus = 1
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'scrooloose/nerdtree'
 
@@ -44,14 +44,10 @@ Plugin 'kana/vim-textobj-user'
 Plugin 'wellle/targets.vim'
 
 Plugin 'tpope/vim-eunuch'
-
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-repeat'
-
 Plugin 'tpope/vim-fugitive'
-
 Plugin 'tpope/vim-abolish'
-
 Plugin 'tpope/vim-unimpaired.git'
 
 " XXX tabular
@@ -60,7 +56,9 @@ Plugin 'godlygeek/tabular'
 " XXX asterisk
 Plugin 'haya14busa/vim-asterisk'
 Plugin 'nelstrom/vim-visual-star-search'
+
 Plugin 'benmills/vimux'
+
 " XXX sidesearch
 let g:side_search_split_pct = 0.5
 Plugin 'ddrscott/vim-side-search'
@@ -68,16 +66,20 @@ Plugin 'ddrscott/vim-side-search'
 " XXX swap
 let g:swap_no_default_key_mappings = 1
 Plugin 'machakann/vim-swap'
+
 let g:list_of_insert_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>",]
-let g:list_of_visual_keys = ["h", "gj", "gk", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>",]
+let g:list_of_visual_keys = ["gh", "gj", "gk", "gl",] + g:list_of_insert_keys
 let g:list_of_normal_keys = g:list_of_visual_keys + ["x"]
 let g:hardtime_maxcount = 2
 let g:hardtime_default_on = 1
 let g:hardtime_timeout = 2000
 Plugin 'takac/vim-hardtime'
 
-au VimEnter * com! -nargs=+ -bar -complete=customlist,man#completion#run
-            \ Man call man#get_page('tab', <f-args>)
+augroup manpages
+    autocmd!
+    au VimEnter * com! -nargs=+ -bar -complete=customlist,man#completion#run
+                \ Man call man#get_page('tab', <f-args>)
+augroup end
 Plugin 'vim-utils/vim-man'
 
 let g:highlightedyank_highlight_duration = -1
@@ -89,16 +91,18 @@ let g:formatdef_custom_cpp = '"astyle"'
 let g:formatters_cpp = ['custom_cpp']
 Plugin 'Chiel92/vim-autoformat'
 
-let g:rbpt_colorpairs = [ ["1", "#4B5056"], ["4",  "#4B5056"],
-            \ ["3", "#4B5056"], ["2", "#4B5056"], ["16", "#4B5056"], ]
-au BufEnter * cal rainbow_parentheses#load(0)
-au BufEnter * cal rainbow_parentheses#load(1)
-au BufEnter * cal rainbow_parentheses#load(2)
-au BufEnter * cal rainbow_parentheses#activate()
+augroup rainbowparen
+    autocmd!
+    au BufEnter * cal rainbow_parentheses#load(0)
+    au BufEnter * cal rainbow_parentheses#load(1)
+    au BufEnter * cal rainbow_parentheses#load(2)
+    au BufEnter * cal rainbow_parentheses#activate()
+augroup end
+let s:dummy = "#4B5056"
+let g:rbpt_colorpairs = [ ["1", s:dummy,], ["4", s:dummy,], ["3", s:dummy,],
+            \ ["2", s:dummy,], ["16", s:dummy,], ]
 Plugin 'kien/rainbow_parentheses.vim'
 
-" let g:Tlist_Auto_Open = 1
-" let g:Tlist_Close_On_Select = 1
 let g:Tlist_Exit_OnlyWindow = 1
 let g:Tlist_Process_File_Always = 1
 let g:Tlist_File_Fold_Auto_Close = 1
@@ -108,12 +112,14 @@ let g:Tlist_Enable_Fold_Column = 0
 let g:Tlist_Display_Prototype = 1
 let g:Tlist_Auto_Update = 1
 let g:Tlist_GainFocus_On_ToggleOpen = 1
-
 let g:Tlist_Highlight_Tag_On_BufEnter = 1
 let g:Tlist_Inc_Winwidth = 0
 Plugin 'vim-scripts/taglist.vim'
 
-au VimEnter * cal extend(g:volatile_ftypes, ["taglist", "rst",])
+augroup vimstay
+    autocmd!
+    au VimEnter * cal extend(g:volatile_ftypes, ["taglist", "rst",])
+augroup end
 Plugin 'kopischke/vim-stay'
 
 let g:echodoc_enable_at_startup = 1
@@ -151,28 +157,58 @@ let g:easytags_resolve_links = 1
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-easytags'
 
+if !exists("g:denite_menus") | let g:denite_menus = {} | endif
+let g:denite_menus.git = {'description': 'git stuff'}
+let g:denite_menus.git.command_candidates = [
+            \['▷ preview hunk ', 'GitGutterPreviewHunk'],
+            \['▷ undo hunk    ', 'GitGutterUndoHunk'],
+            \['▷ stage hunk   ', 'GitGutterStageHunk'],
+            \['▷ git status   ', 'Gstatus'],
+            \['▷ git diff     ', 'Gdiff'],
+            \['▷ git commit   ', 'Gcommit'],
+            \['▷ git log      ', 'Glog'],
+            \['▷ git blame    ', 'Gblame'],
+            \['▷ git stage    ', 'Gwrite'],
+            \['▷ git checkout ', 'Gread'],
+            \['▷ git rm       ', 'Gremove'],
+            \['▷ git push     ', 'Git! push'],
+            \['▷ git pull     ', 'Git! pull'],
+            \['▷ git cd       ', 'Gcd'],
+            \]
+augroup denitesettings
+    autocmd!
+    au VimEnter * cal denite#custom#var('menu', 'menus', g:denite_menus)
+    au VimEnter * cal denite#custom#var('file_rec', 'command', ['ag', '--hidden', '--follow', '--nocolor', '--nogroup', '-g', ''])
+augroup END
 Plugin 'osyo-manga/unite-quickfix'
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/denite.nvim'
 
-let g:multi_cursor_next_key="\<C-h>"
-let g:multi_cursor_prev_key="\<C-p>"
-let g:multi_cursor_skip_key="\<C-x>"
-let g:multi_cursor_quit_key="\<Esc>"
-let g:multi_cursor_exit_from_visual_mode = 0
-let g:multi_cursor_exit_from_insert_mode = 0
-let g:multi_cursor_visual_maps = {"i":1,"a":1,"f":1,"t":1,}
 function g:Multiple_cursors_before()
     let g:deoplete#disable_auto_complete = 1
 endfunction
 function g:Multiple_cursors_after()
     let g:deoplete#disable_auto_complete = 0
 endfunction
+let g:multi_cursor_next_key="\<C-h>"
+let g:multi_cursor_prev_key="\<C-p>"
+let g:multi_cursor_skip_key="\<C-n>"
+let g:multi_cursor_quit_key="\<Esc>"
+let g:multi_cursor_exit_from_visual_mode = 0
+let g:multi_cursor_exit_from_insert_mode = 0
+let g:multi_cursor_visual_maps = {"i":1,"a":1,"f":1,"t":1,}
 Plugin 'terryma/vim-multiple-cursors'
 
+let g:startify_bookmarks = [ { 'n': '~/.config/nvim/init.vim' }, ]
+let g:startify_commands = [
+            \   { 'h':['help', 'Denite -cursor-wrap help'] },
+            \   { 'f':['all files', 'Denite -cursor-wrap file_rec:~'] },
+            \   { 'm':['MRU', 'CtrlPMRUFiles'] },
+            \   { 'c':['cmds', 'Denite -cursor-wrap commands'] },
+            \   { 'P':['Plugins Update', 'PluginUpdate'] }, ]
 let g:startify_session_dir = "~/.config/nvim/files/session"
 let g:startify_list_order = [ "files", "dir", "bookmarks", "commands", "sessions", ]
-let g:startify_files_number = 6
+let g:startify_files_number = 10
 let g:startify_session_persistence = 1
 let g:startify_enable_special = 0
 let g:startify_session_sort = 1
@@ -205,6 +241,7 @@ let g:SignatureForceMarkPlacement = 1
 let g:SignatureForceMarkerPlacement = 1
 let g:SignatureMarkTextHLDynamic = 1
 let g:SignatureMarkerTextHLDynamic = 1
+let g:SignatureMarkLineHL = "TermCursorNC"
 Plugin 'kshenoy/vim-signature'
 
 let g:gitgutter_highlight_lines = 0
@@ -221,16 +258,14 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_use_upper = 1
 Plugin 'easymotion/vim-easymotion'
+
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_camel_case = 1
 let g:deoplete#enable_refresh_always = 1
 let g:deoplete#auto_complete_start_length = 1
 let g:deoplete#delimiters = ["/", "(",]
-au FileType python let g:deoplete#delimiters = ["/", ".", "(",]
-au FileType perl   let g:deoplete#delimiters = ["/", "->", "(", "::", "$", "@", "%",]
-au FileType vim    let g:deoplete#delimiters = ["/", ":", "(", "'",]
-let g:deoplete#auto_complete_delay = 25
-let g:deoplete#auto_refresh_delay = 35
+let g:deoplete#auto_complete_delay = 1
+let g:deoplete#auto_refresh_delay = 1
 let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#max_menu_width = 100
 let g:deoplete#tag#cache_limit_size = 5000000
@@ -250,20 +285,27 @@ let g:neoinclude#reverse_exprs.perl = "fnamemodify(substitute(v:fname, \"/\", \"
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#worker_threads = 2
 let g:deoplete#sources#jedi#python_path = "/usr/bin/python3"
-au FileType * cal deoplete#custom#set("file", "rank", 159)
-au FileType python  cal deoplete#custom#set("jedi", "rank", 99)
-au FileType perl    cal deoplete#custom#set("omni", "rank", 99)
-au FileType vim     cal deoplete#custom#set("vim", "rank", 99)
-au FileType haskell cal deoplete#custom#set("ghc", "rank", 99)
-au FileType cpp cal deoplete#custom#set("clang2", "rank", 99)
-au FileType * cal deoplete#custom#set("around", "rank", 89)
-au FileType * cal deoplete#custom#set("tag", "rank", 85)
-au FileType * cal deoplete#custom#set("neosnippet", "rank", 84)
-au FileType * cal deoplete#custom#set("member", "rank", 83)
-au FileType * cal deoplete#custom#set("buffer", "rank", 81)
-au FileType * cal deoplete#custom#set("syntax", "rank", 80)
-au FileType * cal deoplete#custom#set("include", "rank", 79)
-au VimEnter * cal deoplete#custom#set("_", "matchers", ["matcher_fuzzy",])
+augroup deopletecommands
+    autocmd!
+    au FileType python let g:deoplete#delimiters = ["/", ".", "(",]
+    au FileType perl   let g:deoplete#delimiters = ["/", "->", "(", "::", "$", "@", "%",]
+    au FileType vim    let g:deoplete#delimiters = ["/", ":", "(", "'",]
+    au FileType cpp    let g:deoplete#delimiters = ["/", ":", "(", ".",]
+    au FileType * cal deoplete#custom#set("file", "rank", 159)
+    au FileType python  cal deoplete#custom#set("jedi", "rank", 99)
+    au FileType perl    cal deoplete#custom#set("omni", "rank", 99)
+    au FileType vim     cal deoplete#custom#set("vim", "rank", 99)
+    au FileType haskell cal deoplete#custom#set("ghc", "rank", 99)
+    au FileType cpp cal deoplete#custom#set("clang2", "rank", 99)
+    au FileType * cal deoplete#custom#set("member", "rank", 90)
+    au FileType * cal deoplete#custom#set("around", "rank", 89)
+    au FileType * cal deoplete#custom#set("neosnippet", "rank", 84)
+    au FileType * cal deoplete#custom#set("buffer", "rank", 81)
+    au FileType * cal deoplete#custom#set("tag", "rank", 80)
+    au FileType * cal deoplete#custom#set("syntax", "rank", 79)
+    au FileType * cal deoplete#custom#set("include", "rank", 78)
+    au VimEnter * cal deoplete#custom#set("_", "matchers", ["matcher_fuzzy",])
+augroup end
 Plugin 'Shougo/neco-syntax'
 Plugin 'Shougo/neco-vim'
 Plugin 'Shougo/neoinclude.vim'
@@ -310,16 +352,29 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'mkitt/tabline.vim'
 Plugin 'bling/vim-airline'
 
+augroup delimitemate
+    autocmd!
+    au FileType python let b:delimitMate_nesting_quotes = ["\"",]
+    au FileType python let b:delimitMate_expand_inside_quotes = 1
+    au FileType perl,cpp   let b:delimitmate_insert_eol_marker = 1
+    au FileType perl,cpp   let b:delimitMate_eol_marker = ";"
+augroup end
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 let g:delimitMate_jump_expansion = 1
 let g:delimitMate_balance_matchpairs = 1
-au FileType python let b:delimitMate_nesting_quotes = ["\"",]
-au FileType python let b:delimitMate_expand_inside_quotes = 1
-au FileType perl   let b:delimitmate_insert_eol_marker = 1
-au FileType perl   let b:delimitMate_eol_marker = ";"
 Plugin 'Raimondi/delimitMate'
 
+function g:Undotree_CustomMap()
+    augroup undotree_bindings
+        autocmd!
+        nmap <buffer>K <plug>UndotreeGoNextState
+        nmap <buffer>J <plug>UndotreeGoPreviousState
+        nmap <buffer>N <plug>UndotreeGoNextSaved
+        nmap <buffer>P <plug>UndotreeGoPreviousSaved
+        nmap <buffer>q <Plug>UndotreeToggle
+    augroup END
+endfunc
 let g:undotree_SplitWidth = 40
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_DiffpanelHeight = 15
@@ -332,6 +387,13 @@ let g:nrrw_rgn_vert = 1
 let b:nrrw_aucmd_written = ":update"
 Plugin 'chrisbra/NrrwRgn'
 
+augroup yankring
+    autocmd!
+    au TextYankPost * YRPush
+augroup end
+function! YRRunAfterMaps()
+    nun @
+endfunction
 let g:yankring_min_element_length = 2
 let g:yankring_max_element_length = 0
 let g:yankring_map_dot = 0
@@ -345,10 +407,6 @@ let g:yankring_zap_keys = ""
 let g:yankring_replace_n_nkey = "\<C-o>"
 let g:yankring_replace_n_pkey = "\<C-l>"
 let g:yankring_window_height = 12
-au TextYankPost * YRPush
-function! YRRunAfterMaps()
-    nun @
-endfunction
 Plugin 'vim-scripts/YankRing.vim'
 
 let g:syntastic_aggregate_errors = 1
@@ -480,9 +538,12 @@ let g:python_no_builtin_highlight = 1
 let g:python_no_exception_highlight = 1
 let g:python_no_doctest_highlight = 1
 let g:python_no_doctest_code_highlight = 1
-au FileType python setl fde=SimpylFold(v:lnum) fdm=expr fdl=3 nonu
-au FileType python setl def=^\s*\\(def\\\\|class\\) cms=#%s nowrap fo-=t cpt+=t
-au FileType python let b:match_words = "def:return,if:elif:else,try:except,from:import"
+augroup pythonmode
+    autocmd!
+    au FileType python setl fde=SimpylFold(v:lnum) fdm=expr fdl=3 nonu
+    au FileType python setl def=^\s*\\(def\\\\|class\\) cms=#%s nowrap fo-=t cpt+=t
+    au FileType python let b:match_words = "def:return,if:elif:else,try:except,from:import"
+augroup end
 Plugin 'davidhalter/jedi-vim'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'tweekmonster/impsort.vim'
@@ -492,7 +553,7 @@ Plugin 'klen/python-mode'
 Plugin 'ryanoasis/vim-devicons'
 
 " Plugins&end
-cal vundle#end()
+call vundle#end()
 
 filetype plugin indent on
 syntax enable
@@ -505,8 +566,9 @@ set colorcolumn=+1
 set completeopt=menuone,noselect,preview
 set conceallevel=2
 set concealcursor=inc
-set cpoptions+=DEI$
+set cpoptions+=Dt$
 set cursorcolumn
+set cursorline
 set directory=${HOME}/.config/nvim/files/swap/
 set errorbells
 set expandtab
@@ -524,7 +586,7 @@ set list
 set listchars=tab:>┈,trail:┅,nbsp:+,extends:╡,precedes:╞,eol:┊,space:⋅
 set matchpairs=(:),[:],{:}
 set matchtime=2
-set path+=/usr/local/include,mbed/${MBED_LIB_V},
+set path+=/usr/local/include,mbed-os
 set previewheight=15
 set scrolljump=4
 set scrolloff=6
@@ -555,58 +617,21 @@ set wildignore=*.o,*~,*.pyc
 set wildmode=list:longest,list:full
 set nowrap
 
-au FileType vim setl matchpairs=(:),[:],{:},<:>
+augroup autooptions
+    autocmd!
+    au WinEnter * se cursorline
+    au WinEnter * se cursorcolumn
+    au WinLeave * se nocursorcolumn
+    au WinLeave * se nocursorline
+    au InsertEnter * setl timeoutlen=500
+    au InsertLeave * setl timeoutlen=1000
+    au FileType vim setl matchpairs=(:),[:],{:},<:>
+augroup END
+
 exe 'au FileType haskell,vim,perl,python sy match IndentLine /^ / contained conceal cchar='.g:indentLine_first_char
 exe 'au FileType vim,perl,python sy match IndentLineSpace /^ \+/ containedin=TOP contained contains=IndentLine conceal cchar='.g:indentLine_leadingSpaceChar
 exe 'au FileType haskell sy match IndentLineSpace /^ \+/ containedin=TOP contains=IndentLine conceal cchar='.g:indentLine_leadingSpaceChar
 
-au WinLeave * se nocursorcolumn
-au WinEnter * se cursorcolumn
-
-au InsertEnter * setl timeoutlen=500
-au InsertLeave * setl timeoutlen=1000
-
-let g:lastwin = 1
-au WinLeave /*/[^\[]*[^\]] let g:lastwin = winnr()
-
-let g:startify_bookmarks = [ { 'n': '~/.config/nvim/init.vim' }, ]
-let g:startify_commands = [
-            \   { 'h':['help', 'Denite -cursor-wrap help'] },
-            \   { 'f':['all files', 'Denite -cursor-wrap file_rec:~'] },
-            \   { 'm':['MRU', 'CtrlPMRUFiles'] },
-            \   { 'c':['cmds', 'Denite -cursor-wrap commands'] },
-            \   { 'P':['Plugins Update', 'PluginUpdate'] }, ]
-
-for [k, c] in items({ "\<C-J>" : "\<denite:move_to_next_line>",
-            \ "\<C-K>" : "\<denite:move_to_previous_line>", })
-    exe "au VimEnter * cal denite#custom#map('insert','".k."','".c."','noremap')"
-endfor
-
-if !exists("g:denite_menus") | let g:denite_menus = {} | endif
-let g:denite_menus.git = {'description': 'git stuff'}
-let g:denite_menus.git.command_candidates = [
-            \['▷ preview hunk ', 'GitGutterPreviewHunk'],
-            \['▷ undo hunk    ', 'GitGutterUndoHunk'],
-            \['▷ stage hunk   ', 'GitGutterStageHunk'],
-            \['▷ git status   ', 'Gstatus'],
-            \['▷ git diff     ', 'Gdiff'],
-            \['▷ git commit   ', 'Gcommit'],
-            \['▷ git log      ', 'Glog'],
-            \['▷ git blame    ', 'Gblame'],
-            \['▷ git stage    ', 'Gwrite'],
-            \['▷ git checkout ', 'Gread'],
-            \['▷ git rm       ', 'Gremove'],
-            \['▷ git push     ', 'Git! push'],
-            \['▷ git pull     ', 'Git! pull'],
-            \['▷ git cd       ', 'Gcd'],
-            \]
-
-au VimEnter * cal denite#custom#var('menu', 'menus', g:denite_menus)
-au VimEnter * cal denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-
-" settings&end
-
-hi HighlightedyankRegion  ctermbg=28
 hi pythonFunctionTag      ctermbg=23  cterm=bold ctermfg=9
 hi pythonMethodTag        ctermbg=23  cterm=bold ctermfg=12
 hi pythonClassTag         ctermbg=23  cterm=bold ctermfg=11
@@ -618,10 +643,13 @@ hi FoldColumn             ctermbg=26
 hi Visual                 ctermbg=233 cterm=inverse
 hi WildMenu               ctermbg=236 cterm=bold
 hi StatusLine             ctermbg=234
-hi Search                 ctermbg=53  ctermfg=117
+hi Search                 ctermbg=30  ctermfg=14 cterm=bold
 hi MatchParen             ctermbg=20  ctermfg=25
 hi Conceal                            ctermfg=27
-hi CursorColumn           ctermbg=29
+hi CursorColumn           cterm=inverse,bold
+hi CursorLine             cterm=standout
+hi HighlightedyankRegion  ctermbg=28  ctermfg=none
+hi TermCursorNC           ctermbg=236 ctermfg=none
 
 hi link perlFunctionTag      pythonFunctionTag
 hi link vimAutoGroupTag      pythonClassTag
@@ -630,8 +658,12 @@ hi link vimFuncNameTag       pythonMethodTag
 hi link vimScriptFuncNameTag pythonMethodTag
 
 cnoreabbrev T/  Tabularize //l1c1l0<left><left><left><left><left><left><left><c-h>
-cnoreabbrev NERD NERDtree
 cnoreabbrev w!!  SudoWrite
+
+for [k, c] in items({ "\<C-J>" : "\<denite:move_to_next_line>",
+            \ "\<C-K>" : "\<denite:move_to_previous_line>", })
+    exe "au VimEnter * cal denite#custom#map('insert','".k."','".c."','noremap')"
+endfor
 
 for [k, c] in items({
             \ 'w': 'bd-wl',
@@ -651,6 +683,23 @@ for [k, c] in items({
     exe 'omap <expr><unique>'.k.' v:count ? "'.k.'" : "v\<Plug>(easymotion-'.c.')"'
 endfor
 
+for m in ['imap', 'smap']
+    exe m.' <expr><unique><CR> '.
+                \ 'delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : '.
+                \ '"\<CR>"'
+endfor
+
+inoremap <silent><expr><unique> <C-K>   pumvisible() ? "\<C-P>" : "\<Del>"
+inoremap <silent><expr><unique> <C-J>   pumvisible() ? "\<C-n>" : "\<C-J>"
+imap     <silent>      <unique> <Tab>   <Plug>delimitMateS-Tab
+imap                   <unique> <s-Tab> <Plug>(neosnippet_jump_or_expand)
+smap                   <unique> <s-Tab> <Plug>(neosnippet_jump_or_expand)
+snoremap <unique><Tab> <C-O>%
+inoremap <unique> <C-S> <C-Y>
+inoremap <unique><c-Space> <C-@>
+inoremap <unique><C-V>     <C-R>*
+inoremap <unique><C-Q>     <C-V>
+
 map <unique>s <Plug>(easymotion-bd-f2)
 noremap <unique>gs s
 
@@ -666,24 +715,13 @@ for [k, c] in items({
     exe 'omap <unique>'.k.' <Plug>(asterisk-'.c.')<Plug>(easymotion-bd-n)'
 endfor
 
-for m in ['imap', 'smap']
-    exe m.' <expr><unique><CR> '.
-                \ 'delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : '.
-                \ '"\<CR>"'
-endfor
-
-inoremap <silent><expr><unique> <C-K>   pumvisible() ? "\<C-P>" : "\<Del>"
-inoremap <silent><expr><unique> <C-J>   pumvisible() ? "\<C-n>" : "\<C-J>"
-imap     <silent>      <unique> <Tab>   <Plug>delimitMateS-Tab
-imap                   <unique> <s-Tab> <Plug>(neosnippet_jump_or_expand)
-smap                   <unique> <s-Tab> <Plug>(neosnippet_jump_or_expand)
-
 for m in ['nmap', 'omap', 'xmap',]
     exe m.' <unique><tab> %'
 endfor
-snoremap <unique><Tab> <C-O>%
-nnoremap <silent><expr><unique><S-Tab> winnr() == g:lastwin ? "\<c-w>W" : winnr('$') > g:lastwin ? "\<c-w>W" : ":exe g:lastwin.'wincmd w'\<CR>"
 
+let g:lastwin = 1
+au WinLeave /*/[^\[]*[^\]] let g:lastwin = winnr()
+nnoremap <silent><expr><unique><S-Tab> winnr() == g:lastwin ? "\<c-w>W" : winnr('$') > g:lastwin ? "\<c-w>W" : ":exe g:lastwin.'wincmd w'\<CR>"
 
 nmap <unique> ], <Plug>(swap-next)
 nmap <unique> [, <Plug>(swap-prev)
@@ -714,31 +752,25 @@ noremap  <unique> gl    l
 nnoremap <unique> gf    :cd %:p:h<CR>:normal! gf<CR>
 nnoremap <unique> v     viw
 nnoremap <unique> <C-S> 5<C-Y>
-inoremap <unique> <C-S> <C-Y>
 nnoremap <unique> <C-E> 5<C-E>
 nnoremap <unique> D     <c-d>
 nnoremap <unique> U     <c-u>
 nnoremap <unique> B     <c-b>
+
 xnoremap <unique> J     <esc>
 inoremap <unique> jf    <esc>
 inoremap <unique> fj    <esc>
 
 xnoremap <unique>S<Space>  c<Space><C-R>"<Space><C-C>
 nnoremap <unique><c-Space> <C-I>
-inoremap <unique><c-Space> <C-@>
 nnoremap <unique><Space>   <C-O>
 nnoremap <unique><c-t>     g<C-]>
 nnoremap <unique><BS> <C-T>
 nnoremap <unique><C-K>     :w<CR>
-nnoremap <unique><M-n>     :ta<CR>
-nnoremap <unique><M-b>     :po<CR>
-inoremap <unique><C-V>     <C-R>*
-inoremap <unique><C-Q>     <C-V>
 
 nnoremap <unique><F10> <esc>:xa<cr>
 
 let g:mapleader=","
-nnoremap          <unique><leader>/    /
 nnoremap          <unique><leader>z    zjzo
 nnoremap  <silent><unique><leader>r    :noh<CR>:dif<CR>:syn sync fromstart<CR><C-L>
 nmap              <unique><leader>n    <Plug>(easymotion-bd-n)
@@ -768,7 +800,6 @@ endfor
 
 let g:mapleader=';'
 nmap      <silent><unique><leader><CR> :NW<CR>
-nnoremap <unique><leader><tab>   :exe "buffer ".g:lastwin<CR>
 nnoremap <unique><leader><Space> :Startify<CR>
 nnoremap <unique><leader>y       :YRShow<CR>
 nnoremap <unique><leader>t       :TlistOpen<CR>
@@ -796,18 +827,7 @@ for [k,c] in items({
     exe 'nnoremap <unique>'.g:mapleader.k.' :Denite -cursor-wrap '.c.'<CR>'
 endfor
 
-
 let g:mapleader='-'
-function g:Undotree_CustomMap()
-    augroup undotree_bindings
-        autocmd!
-        nmap <buffer>K <plug>UndotreeGoNextState
-        nmap <buffer>J <plug>UndotreeGoPreviousState
-        nmap <buffer>N <plug>UndotreeGoNextSaved
-        nmap <buffer>P <plug>UndotreeGoPreviousSaved
-        nmap <buffer>q <Plug>UndotreeToggle
-    augroup END
-endfunc
 
 augroup mapsFiletype
     autocmd!
@@ -816,14 +836,11 @@ augroup mapsFiletype
     au FileType tex,plaintex nm <buffer><leader>ce <Plug>LatexChangeEnv
     au FileType tex,plaintex vm <buffer><leader>}  <Plug>LatexWrapSelection
     au FileType tex,plaintex vm <buffer><leader>se <Plug>LatexEnvWrapSelection
-
     au FileType python nm <buffer><leader>f :cal pymode#rope#find_it()<CR>
-
     au FileType cpp,haskell,perl,vim,python nm <buffer><CR> <Plug>unimpairedBlankDown
     au FileType help nn <buffer><CR> <C-]>
     au FileType help nn <buffer><BS> <C-T>
     au FileType help nn <buffer>q    :q<CR>
-
 augroup END
 
 augroup cppFiletype
@@ -831,16 +848,17 @@ augroup cppFiletype
     au BufRead,BufNewFile *.h,*.c set filetype=cpp.doxygen
     au FileType cpp set filetype=cpp.doxygen
 augroup END
-call NERDTreeHighlightFile('h', 'green', 'none', 'green', '#151515')
-call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
-call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('cpp', 'cyan', 'none', 'cyan', '#151515')
-call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
-call NERDTreeHighlightFile('py', 'Red', 'none', 'red', '#151515')
-call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
-call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+
+call NERDTreeHighlightFile('h', 'green', 'none')
+call NERDTreeHighlightFile('ini', 'yellow', 'none')
+call NERDTreeHighlightFile('md', 'blue', 'none')
+call NERDTreeHighlightFile('yaml', 'yellow', 'none')
+call NERDTreeHighlightFile('config', 'yellow', 'none')
+call NERDTreeHighlightFile('conf', 'yellow', 'none')
+call NERDTreeHighlightFile('vim', 'yellow', 'none')
+call NERDTreeHighlightFile('html', 'yellow', 'none')
+call NERDTreeHighlightFile('cpp', 'cyan', 'none')
+call NERDTreeHighlightFile('css', 'cyan', 'none')
+call NERDTreeHighlightFile('py', 'Red', 'none')
+call NERDTreeHighlightFile('js', 'Red', 'none')
+call NERDTreeHighlightFile('php', 'Magenta', 'none')
