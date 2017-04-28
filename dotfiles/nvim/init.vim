@@ -696,7 +696,11 @@ imap                   <unique> <s-Tab> <Plug>(neosnippet_jump_or_expand)
 smap                   <unique> <s-Tab> <Plug>(neosnippet_jump_or_expand)
 snoremap <unique><Tab> <C-O>%
 inoremap <unique> <C-S> <C-Y>
-inoremap <unique><c-Space> <C-@>
+inoremap <unique><C-A> <C-@>
+inoremap <unique><C-G><C-A> <C-A>
+" inoremap <unique><C-B>
+" inoremap <unique><C-L>
+" inoremap <unique><C-Z>
 inoremap <unique><C-V>     <C-R>*
 inoremap <unique><C-Q>     <C-V>
 

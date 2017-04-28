@@ -88,5 +88,9 @@ bind-key -n C-F11 set window-active-style bg=colour235 \; copy-mode
 bind-key -n C-F9 run-shell "tmux capturep -p > /tmp/nvimbuffer" \; new-window "nvim -RMu \"~/.zprezto/dotfiles/nvim/ro.vim\" /tmp/nvimbuffer"
 bind-key m select-pane -m
 bind-key M swap-pane
+bind -n M-h run "(tmux display-message -p '#{pane_current_command}' | grep -iq nvim && tmux send-keys M-h) || tmux select-pane -L"
+bind -n M-j run "(tmux display-message -p '#{pane_current_command}' | grep -iq nvim && tmux send-keys M-j) || tmux select-pane -D"
+bind -n M-k run "(tmux display-message -p '#{pane_current_command}' | grep -iq nvim && tmux send-keys M-k) || tmux select-pane -U"
+bind -n M-l run "(tmux display-message -p '#{pane_current_command}' | grep -iq nvim && tmux send-keys M-l) || tmux select-pane -R"
 bind-key -n PPage copy-mode -ue
 bind-key -t vi-copy Enter copy-pipe "xclip -i -sel primary > /dev/null ; tmux set window-active-style bg=default"

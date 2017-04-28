@@ -98,17 +98,16 @@ function key_bind() {
     bindkey -rM viins "^[OB"
     bindkey -rM viins "^[OC"
     bindkey -rM viins "^[OD"
+    # ^Y is byobu prefix
     # bindkey -rM viins "^Y"
-    # bindkey -rM viins "^G"
     # bindkey -M viins "\e" vi-cmd-mode
     # ^? is backspace
-    bindkey -M viins "^?" h
+    bindkey -M viins "^?" fzf-history-widget
     bindkey -M viins "^[i" fzf-locate-widget
     bindkey -M viins "^[p" p
     bindkey -M viins "^[n" n
     bindkey -M viins "^[s" sudo-command-line
-    bindkey -M viins "^]" copy-prev-shell-word
-    bindkey -M viins "^\\\\" fzf-history-widget
+    bindkey -M viins "^\\\\" h
     bindkey -M viins "\C-I" fzf-completion
     bindkey -M viins "\C-E" vi-forward-char
     bindkey -M viins "\C-S" vi-backward-char
@@ -126,7 +125,8 @@ function key_bind() {
     bindkey -M viins "\C-@" snippet-expand
     bindkey -M viins "\C-J" autosuggest-execute
     bindkey -M viins "\C-M" accept-line
-    bindkey -M viins "\C-A" fzf-file-widget
+    bindkey -M viins "\C-G" fzf-file-widget
+    bindkey -M viins "\C-A" copy-prev-shell-word
     bindkey -M viins "\C-Q" vi-kill-line
     bindkey -M viins "\C-T" vi-kill-eol
     bindkey -M viins "\C-V" paste-primary
