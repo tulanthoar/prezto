@@ -23,12 +23,24 @@ augroup nerdtree
     au StdinReadPre * let s:std_in=1
     au VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") |
                 \ exe 'NERDTree' argv()[0] | wincmd p | enew | endif
-    " au BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END
 function! NERDTreeHighlightFile(ext, fg, bg)
  exe 'au filetype nerdtree hi '.a:ext.' ctermbg='.a:bg.' ctermfg='.a:fg
  exe 'au filetype nerdtree syn match '.a:ext.' #^\s\+.*'.a:ext.'$#'
 endfunction
+call NERDTreeHighlightFile('h', 'green', 'none')
+call NERDTreeHighlightFile('ini', 'yellow', 'none')
+call NERDTreeHighlightFile('md', 'blue', 'none')
+call NERDTreeHighlightFile('yaml', 'yellow', 'none')
+call NERDTreeHighlightFile('config', 'yellow', 'none')
+call NERDTreeHighlightFile('conf', 'yellow', 'none')
+call NERDTreeHighlightFile('vim', 'yellow', 'none')
+call NERDTreeHighlightFile('html', 'yellow', 'none')
+call NERDTreeHighlightFile('cpp', 'cyan', 'none')
+call NERDTreeHighlightFile('css', 'cyan', 'none')
+call NERDTreeHighlightFile('py', 'Red', 'none')
+call NERDTreeHighlightFile('js', 'Red', 'none')
+call NERDTreeHighlightFile('php', 'Magenta', 'none')
 let g:NERDTreeShowIgnoredStatus = 1
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'scrooloose/nerdtree'
@@ -98,9 +110,8 @@ augroup rainbowparen
     au BufEnter * cal rainbow_parentheses#load(2)
     au BufEnter * cal rainbow_parentheses#activate()
 augroup end
-let s:dummy = "#4B5056"
-let g:rbpt_colorpairs = [ ["1", s:dummy,], ["4", s:dummy,], ["3", s:dummy,],
-            \ ["2", s:dummy,], ["16", s:dummy,], ]
+let g:rbpt_colorpairs = [ ["1"],["4"],["3"],["2"],["16"],]
+cal map(g:rbpt_colorpairs,'v:val+["#4B5056"]')
 Plugin 'kien/rainbow_parentheses.vim'
 
 let g:Tlist_Exit_OnlyWindow = 1
@@ -142,7 +153,7 @@ let g:ctrlp_match_window = "order:ttb"
 let g:ctrlp_by_filename = 1
 let g:ctrlp_switch_buffer = "et"
 let g:ctrlp_use_caching = 0
-let g:ctrlp_user_command = "ag %s -l --nocolor -g \"\""
+let g:ctrlp_user_command = "ag %s -l --hidden --ignore \"\.undo\" --ignore \"\.local\" --nocolor -g \"\""
 let g:ctrlp_types = ["fil", "mru"]
 let g:ctrlp_tilde_homedir = 1
 let g:ctrlp_brief_prompt = 1
@@ -808,6 +819,7 @@ nnoremap <unique><leader><Space> :Startify<CR>
 nnoremap <unique><leader>y       :YRShow<CR>
 nnoremap <unique><leader>t       :TlistOpen<CR>
 nnoremap <unique><leader>f       :CtrlP<CR>
+nnoremap <unique><leader>F       :cd ~<CR>:CtrlP<CR>
 nnoremap <unique><leader>p       :CtrlPRTS<CR>
 nnoremap <unique><leader>m       :CtrlPMRUFiles<CR>
 nnoremap <unique><leader>u       :UndotreeToggle<CR>
@@ -853,16 +865,3 @@ augroup cppFiletype
     au FileType cpp set filetype=cpp.doxygen
 augroup END
 
-call NERDTreeHighlightFile('h', 'green', 'none')
-call NERDTreeHighlightFile('ini', 'yellow', 'none')
-call NERDTreeHighlightFile('md', 'blue', 'none')
-call NERDTreeHighlightFile('yaml', 'yellow', 'none')
-call NERDTreeHighlightFile('config', 'yellow', 'none')
-call NERDTreeHighlightFile('conf', 'yellow', 'none')
-call NERDTreeHighlightFile('vim', 'yellow', 'none')
-call NERDTreeHighlightFile('html', 'yellow', 'none')
-call NERDTreeHighlightFile('cpp', 'cyan', 'none')
-call NERDTreeHighlightFile('css', 'cyan', 'none')
-call NERDTreeHighlightFile('py', 'Red', 'none')
-call NERDTreeHighlightFile('js', 'Red', 'none')
-call NERDTreeHighlightFile('php', 'Magenta', 'none')
