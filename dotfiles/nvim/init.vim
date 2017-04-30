@@ -168,6 +168,13 @@ let g:easytags_resolve_links = 1
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-easytags'
 
+for [k, c] in items({
+            \ "\<C-J>" : "\<denite:move_to_next_line>",
+            \ "\<C-K>" : "\<denite:move_to_previous_line>",
+            \ })
+    exe "au VimEnter * cal
+                \ denite#custom#map('insert','".k."','".c."','noremap')"
+endfor
 if !exists("g:denite_menus") | let g:denite_menus = {} | endif
 let g:denite_menus.git = {'description': 'git stuff'}
 let g:denite_menus.git.command_candidates = [
@@ -189,7 +196,6 @@ let g:denite_menus.git.command_candidates = [
 augroup denitesettings
     autocmd!
     au VimEnter * cal denite#custom#var('menu', 'menus', g:denite_menus)
-    au VimEnter * cal denite#custom#var('file_rec', 'command', ['ag', '--hidden', '--follow', '--nocolor', '--nogroup', '-g', ''])
 augroup END
 Plugin 'osyo-manga/unite-quickfix'
 Plugin 'Shougo/unite.vim'
@@ -213,12 +219,13 @@ Plugin 'terryma/vim-multiple-cursors'
 let g:startify_bookmarks = [ { 'n': '~/.config/nvim/init.vim' }, ]
 let g:startify_commands = [
             \   { 'h':['help', 'Denite -cursor-wrap help'] },
-            \   { 'f':['all files', 'Denite -cursor-wrap file_rec:~'] },
+            \   { 'f':['all files', 'CtrlP'] },
             \   { 'm':['MRU', 'CtrlPMRUFiles'] },
             \   { 'c':['cmds', 'Denite -cursor-wrap commands'] },
             \   { 'P':['Plugins Update', 'PluginUpdate'] }, ]
 let g:startify_session_dir = "~/.config/nvim/files/session"
-let g:startify_list_order = [ "files", "dir", "bookmarks", "commands", "sessions", ]
+let g:startify_list_order =
+            \ [ "files", "dir", "bookmarks", "commands", "sessions", ]
 let g:startify_files_number = 10
 let g:startify_session_persistence = 1
 let g:startify_enable_special = 0
@@ -240,7 +247,8 @@ let g:tex_fold_enabled=1
 let g:vimsyn_folding="af"
 let g:perl_fold = 1
 let g:fastfold_savehook = 1
-let g:fastfold_skip_filetypes = [ "taglist", "gitcommit", "startify", "man", "rst", ]
+let g:fastfold_skip_filetypes =
+            \ [ "taglist", "gitcommit", "startify", "man", "rst", ]
 Plugin 'Konfekt/FastFold'
 
 let g:tmux_navigator_save_on_switch = 1
@@ -281,25 +289,41 @@ let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#max_menu_width = 100
 let g:deoplete#tag#cache_limit_size = 5000000
 if !exists("g:deoplete#sources") | let g:deoplete#sources = {} | endif
-let g:deoplete#sources._ = ["file", "around", "tag", "neosnippet", "member", "buffer", "syntax", "include",]
+let g:deoplete#sources._ = ["file",
+            \ "around",
+            \ "tag",
+            \ "neosnippet",
+            \ "member",
+            \ "buffer",
+            \ "syntax",
+            \ "include",
+            \ ]
 let g:deoplete#sources.python = g:deoplete#sources._ + [ "jedi", ]
 let g:deoplete#sources.perl = g:deoplete#sources._ + [ "omni", ]
 let g:deoplete#sources.vim = g:deoplete#sources._ + [ "vim", ]
 let g:deoplete#sources.haskell = g:deoplete#sources._ + [ "ghc", ]
 let g:deoplete#sources.cpp = g:deoplete#sources._ + [ "clang2", ]
-if !exists("g:deoplete#omni#input_patterns") | let g:deoplete#omni#input_patterns = {} | endif
+if !exists("g:deoplete#omni#input_patterns")
+    let g:deoplete#omni#input_patterns = {}
+endif
 let g:deoplete#omni#input_patterns.perl = ["[a-zA-Z_]\+->",]
-if !exists("g:deoplete#omni#functions") | let g:deoplete#omni#functions = {} | endif
+if !exists("g:deoplete#omni#functions")
+    let g:deoplete#omni#functions = {}
+endif
 let g:deoplete#omni#functions.perl = "PerlComplete"
-if !exists("g:neoinclude#reverse_exprs") | let g:neoinclude#reverse_exprs = {} | endif
-let g:neoinclude#reverse_exprs.perl = "fnamemodify(substitute(v:fname, \"/\", \"::\", \"g\"), \":r\")"
+if !exists("g:neoinclude#reverse_exprs")
+    let g:neoinclude#reverse_exprs = {}
+endif
+let g:neoinclude#reverse_exprs.perl =
+            \ "fnamemodify(substitute(v:fname, \"/\", \"::\", \"g\"), \":r\")"
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#worker_threads = 2
 let g:deoplete#sources#jedi#python_path = "/usr/bin/python3"
 augroup deopletecommands
     autocmd!
     au FileType python let g:deoplete#delimiters = ["/", ".", "(",]
-    au FileType perl   let g:deoplete#delimiters = ["/", "->", "(", "::", "$", "@", "%",]
+    au FileType perl   let g:deoplete#delimiters =
+                \ ["/", "->", "(", "::", "$", "@", "%",]
     au FileType vim    let g:deoplete#delimiters = ["/", ":", "(", "'",]
     au FileType cpp    let g:deoplete#delimiters = ["/", ":", "(", ".",]
     au FileType * cal deoplete#custom#set("file", "rank", 159)
@@ -336,27 +360,29 @@ let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#hunks#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_splits = 1
-let g:airline#extensions#tabline#excludes = [ "pydir.log", "pyrun.log", "'__doc__'",]
+let g:airline#extensions#tabline#excludes =
+            \ [ "pydir.log", "pyrun.log", "'__doc__'",]
 let g:airline#extensions#tabline#exclude_preview = 1
 let g:airline#extensions#tabline#buffers_label = "b"
 let g:airline#extensions#tabline#tabs_label = "t"
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#formatter = "unique_tail"
 let g:airline#extensions#tabline#buffer_min_count = 2
-let g:airline#extensions#whitespace#checks = ["indent", "trailing", "long", "mixed-indent-file",]
+let g:airline#extensions#whitespace#checks =
+            \ ["indent", "trailing", "long", "mixed-indent-file",]
 let g:airline#extensions#whitespace#symbol = ""
 let g:airline#extensions#wordcount#enabled = 0
 let g:airline_theme = "kolor"
 if !exists("g:airline_symbols") | let g:airline_symbols = {} | endif
 let g:airline_symbols.maxlinenr = ""
 function! AirlineInit()
-    let g:airline_section_b = airline#section#create(["%{fnamemodify(getcwd(), \":p:~\")}"])
-    let g:airline_section_c = airline#section#create(["%{bufname(\"%\")} (%{fnamemodify(bufname(winbufnr(g:lastwin)), \":p:t\")})"])
-    if winwidth(0) > 80
-        let g:airline_section_z = airline#section#create( [ "windowswap", "obsession", "linenr", "maxlinenr", ":%2v" ] )
-    else
-        let g:airline_section_z = airline#section#create([ "linenr", ":%3v"])
-    endif
+    let g:airline_section_b =
+                \ airline#section#create(["%{fnamemodify(getcwd(), \":p:~\")}"])
+    let g:airline_section_c =
+                \ airline#section#create(["%{bufname(\"%\")}".
+                \ "(%{fnamemodify(bufname(winbufnr(g:lastwin)), \":p:t\")})"])
+    let g:airline_section_z =
+                \ airline#section#create( [ "linenr", "maxlinenr", ":%2v" ] )
 endfunction
 au User AirlineAfterInit cal AirlineInit()
 Plugin 'vim-airline/vim-airline-themes'
@@ -659,7 +685,7 @@ hi MatchParen             ctermbg=20  ctermfg=25
 hi Conceal                            ctermfg=27
 hi CursorColumn           cterm=inverse,bold
 hi CursorLine             cterm=standout
-hi HighlightedyankRegion  ctermbg=28  ctermfg=none
+hi HighlightedyankRegion  ctermbg=28  ctermfg=none cterm=bold
 hi TermCursorNC           ctermbg=236 ctermfg=none
 
 hi link perlFunctionTag      pythonFunctionTag
@@ -671,10 +697,6 @@ hi link vimScriptFuncNameTag pythonMethodTag
 cnoreabbrev T/  Tabularize //l1c1l0<left><left><left><left><left><left><left><c-h>
 cnoreabbrev w!!  SudoWrite
 
-for [k, c] in items({ "\<C-J>" : "\<denite:move_to_next_line>",
-            \ "\<C-K>" : "\<denite:move_to_previous_line>", })
-    exe "au VimEnter * cal denite#custom#map('insert','".k."','".c."','noremap')"
-endfor
 
 for [k, c] in items({
             \ 'w': 'bd-wl',
@@ -686,19 +708,9 @@ for [k, c] in items({
     exe 'map <expr><unique>'.k.' v:count ? "'.k.'" : "\<Plug>(easymotion-'.c.')"'
 endfor
 
-for [k, c] in items({
-            \ 'e': 'bd-el',
-          \ })
-    exe 'nmap <expr><unique>'.k.' v:count ? "'.k.'" : "\<Plug>(easymotion-'.c.')"'
-    exe 'xmap <expr><unique>'.k.' v:count ? "'.k.'" : "\<Plug>(easymotion-'.c.')"'
-    exe 'omap <expr><unique>'.k.' v:count ? "'.k.'" : "v\<Plug>(easymotion-'.c.')"'
-endfor
-
-for m in ['imap', 'smap']
-    exe m.' <expr><unique><CR> '.
-                \ 'delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : '.
-                \ '"\<CR>"'
-endfor
+nmap <expr><unique> e v:count ? e : "\<Plug>(easymotion-bd-el)"
+xmap <expr><unique> e v:count ? e : "\<Plug>(easymotion-bd-el)"
+omap <expr><unique> e v:count ? e : "v\<Plug>(easymotion-bd-el)"
 
 inoremap <silent><expr><unique> <C-K>   pumvisible() ? "\<C-P>" : "\<Del>"
 inoremap <silent><expr><unique> <C-J>   pumvisible() ? "\<C-n>" : "\<C-J>"
