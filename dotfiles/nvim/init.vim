@@ -136,16 +136,17 @@ Plugin 'kopischke/vim-stay'
 let g:echodoc_enable_at_startup = 1
 Plugin 'Shougo/echodoc.vim'
 
+let g:indentLine_char = "⁅"
+" let g:indentLine_char = "├"
 let g:indentLine_setColors = 0
-let g:indentLine_char = "┴"
-let g:indentLine_indentLevel = 10
 let g:indentLine_first_char = "╠"
+let g:indentLine_indentLevel = 10
 let g:indentLine_showFirstIndentLevel = "1"
 let g:indentLine_fileType = ["vim", "perl", "python", "cpp",]
-let g:indentLine_faster = 1
+let g:indentLine_faster = 0
 let g:indentLine_concealcursor="inc"
-let g:indentLine_leadingSpaceChar = "◦"
-let g:indentLine_leadingSpaceEnabled = 0
+    let g:indentLine_leadingSpaceChar = "⥎"
+let g:indentLine_leadingSpaceEnabled = 1
 Plugin 'Yggdroot/indentLine'
 
 let g:ctrlp_cmd = "CtrlPBufTagAll"
@@ -453,7 +454,7 @@ let g:syntastic_loc_list_height = 5
 let g:syntastic_check_on_open = 0
 let g:syntastic_enable_signs = 0
 let g:syntastic_python_checkers = ["pylint",]
-let g:syntastic_cpp_compiler_options = "-std=gnu++98 -fno-rtti -Wvla -c -Wall
+let g:syntastic_cpp_compiler_options = "-std=gnu++11 -fno-rtti -Wvla -c -Wall
             \ -Wextra -Wno-unused-parameter -Wno-missing-field-initializers
             \ -fmessage-length=0 -fno-exceptions -fno-builtin -ffunction-sections
             \ -fdata-sections -funsigned-char -MMD -fno-delete-null-pointer-checks
@@ -665,9 +666,10 @@ augroup autooptions
     au FileType vim setl matchpairs=(:),[:],{:},<:>
 augroup END
 
-exe 'au FileType haskell,vim,perl,python sy match IndentLine /^ / contained conceal cchar='.g:indentLine_first_char
-exe 'au FileType vim,perl,python sy match IndentLineSpace /^ \+/ containedin=TOP contained contains=IndentLine conceal cchar='.g:indentLine_leadingSpaceChar
-exe 'au FileType haskell sy match IndentLineSpace /^ \+/ containedin=TOP contains=IndentLine conceal cchar='.g:indentLine_leadingSpaceChar
+" exe 'au FileType haskell,vim,perl,python sy match IndentLine /^ / contained conceal cchar='.g:indentLine_first_char
+" exe 'au FileType vim,perl,python sy match IndentLineSpace /^ \+/  contained contains=IndentLine conceal cchar=o'
+" exe 'au FileType vim,perl,python sy match IndentLineSpace /^ \+/  contained contains=IndentLine conceal cchar='.g:indentLine_leadingSpaceChar
+" exe 'au FileType haskell sy match IndentLineSpace /^ \+/ containedin=TOP contains=IndentLine conceal cchar='.g:indentLine_leadingSpaceChar
 
 hi pythonFunctionTag      ctermbg=23  cterm=bold ctermfg=9
 hi pythonMethodTag        ctermbg=23  cterm=bold ctermfg=12
