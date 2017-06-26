@@ -107,7 +107,7 @@ function key_bind() {
     bindkey -M viins "^[p" p
     bindkey -M viins "^[n" n
     bindkey -M viins "^[s" sudo-command-line
-    bindkey -M viins "^\\\\" h
+    bindkey -M viins "^\\\\" snippet-expand
     bindkey -M viins "\C-I" fzf-completion
     bindkey -M viins "\C-E" vi-forward-char
     bindkey -M viins "\C-S" vi-backward-char
@@ -122,7 +122,7 @@ function key_bind() {
     bindkey -M viins "\C-N" history-substring-search-down
     bindkey -M viins "\C-Z" undo
     bindkey -M viins "\C-R" redo
-    bindkey -M viins "\C-@" snippet-expand
+    bindkey -M viins "\C-@" h
     bindkey -M viins "\C-J" autosuggest-execute
     bindkey -M viins "\C-M" accept-line
     bindkey -M viins "\C-G" fzf-file-widget
