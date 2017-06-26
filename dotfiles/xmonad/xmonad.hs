@@ -34,14 +34,14 @@ import           XMonad.Util.SpawnOnce         (spawnOnce)
 
 myTerminal = "tilda" :: String
 myModMask = mod3Mask :: KeyMask
-uniqueInits = [myTerminal, "keymod", "maybeclipmenud", "mayberedshift"] :: [String]
-xInitM_ = mapM_ spawnOnce uniqueInits :: X()
+uniqueInits = ["maybepymodoro", myTerminal, "keymod", "maybeclipmenud", "mayberedshift"] :: [String]
+xInitM_ = mapM_ spawn uniqueInits :: X()
 wsList =  map (\w -> "<"++w++">") ["W", "d"] :: [WorkspaceId]
 menuH = 15 :: Int
 mag = 1.3 :: Rational
 mvNEmpty = moveTo Next EmptyWS :: X()
 launchAct = spawn $ "j4-dmenu-desktop --display-binary --term="++myTerminal++" --dmenu='dmenu -w 600 -y "++show menuH++" -z -p launch -l 50'" :: X()
-srchAct = spawn $  "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50" :: X()
+srchAct = spawn $ "srsearch -w 600 -x 200 -y "++show menuH++" -z -p 'search' -l 50" :: X()
 centrPtr_ = updatePointer (0.5, 0.5) (0, 0) :: X()
 
 mylayoutHook = fullscreenFull $ G.gaps [(G.U,menuH)] $ magnifiercz mag $ minimize $ toggleLayouts (GV.SplitGrid GV.T 1 2 (1%2) (16%10) delta) $ Tall 1 delta (11%20)
@@ -57,7 +57,7 @@ myManageHook = manageDocks
 xmConf p = ewmh $ def
     { manageHook         = myManageHook <+> fullscreenManageHook <+> def
     , layoutHook         = mylayoutHook
-      , startupHook        = xInitM_ >> altTerm_
+    , startupHook        = xInitM_ >> altTerm_
     , terminal           = myTerminal
     , modMask            = myModMask
     , borderWidth        = 0
@@ -66,7 +66,7 @@ xmConf p = ewmh $ def
     , focusedBorderColor = limeGreen
     , workspaces         = wsList
     , logHook            = dynamicLogWithPP ( myDzenPP {ppOutput = hPutStrLn p} ) >> workspaceHistoryHook >> centrPtr_
-    , handleEventHook    = docksEventHook <+> minimizeEventHook <+> fullscreenEventHook
+    , handleEventHook    = docksEventHook <+> minimizeEventHook <+> fullscreenEventHook <+> serverModeEventHookCmd' xmC
     , keys               = \c -> fromList xkM
     }
 
@@ -91,6 +91,9 @@ xkM=
     ] ++
     [ ((0, k), focusNth w)
     | (w, k) <- zip [0 .. 8] [xK_KP_End, 0xff99, 0xff9b, 0xff96, 0xff9d, 0xff98, 0xff95, 0xff97, 0xff9a ]
+  ] ++
+    [ ((myModMask, k), focusNth w)
+      | (w, k) <- zip [0 .. 8] [xK_a, xK_s, xK_d, xK_f, xK_g, xK_h, xK_j, xK_k ]
     ]
 
 myKeysP =
@@ -102,10 +105,10 @@ myKeysP =
     , ("M-l", moveTo Next (WSIs $ return (('<' `elem`) . W.tag)))
     , ("M-j", withFocused minimizeWindow)
     , ("M-k", sendMessage RestoreNextMinimizedWin)
-    , ("M-d", kill)
+    , ("M-q", kill)
     , ("M-b", shiftTo Prev (WSIs $ return (('<' `elem`) . W.tag)))
     , ("M-n", shiftTo Next (WSIs $ return (('<' `elem`) . W.tag)))
-    , ("M-q",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
+    , ("M-r",       spawn "killall dzen2; xmonad --recompile && xmonad --restart" )
     , ("M-<Tab>", toggleWS' ["NSP"])
     , ("M-p",  spawn "start-pomodoro" )
     , ("M4-t", altTerm_)
@@ -113,6 +116,21 @@ myKeysP =
 
 clipcmd = spawn "clipmenu -z -w 800 -l 50 -p 'clip'" :: X()
 altTerm_ = spawn "termite"
+
+mC =
+    [ ("minone", withFocused minimizeWindow )
+    , ("tagterm", withFocused $ addTag "myterm")
+    , ("rest",  sendMessage RestoreNextMinimizedWin )
+    , ("jmenu", launchAct )
+    , ("clipmenu", clipcmd)
+    , ("terminal", altTerm_ )
+    , ("pomodoro", spawn "start-pomodoro" )
+    , ("redshift", spawn "redshift -c $ZDOTD/redshift/redshift.conf")
+    , ("clipmenud", spawn "clipmenud")
+    , ("moveempty", mvNEmpty )
+    , ("nextempty",(\t-> (withFocused . addTag) t >> mvNEmpty >> withTaggedGlobalP t shiftHere >> withTaggedGlobal t unTag) "shifter" )
+    ]
+xmC = return mC
 
 myDzenPP = def
     { ppCurrent         = dzenColor myFFGColor myFBGColor
