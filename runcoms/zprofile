@@ -29,6 +29,7 @@ path=(
   $path
   $HOME/bin
   $HOME/.gem/ruby/2.3.0/bin
+  ${HOME}/.fzf/bin
 )
 
 # Set the default Less options.
@@ -50,8 +51,8 @@ export NVIM_LISTEN_ADDRESS=$TMPDIR/nvim_omni
 
 TMPPREFIX=${TMPDIR%/}/zsh
 
-export FZF_DEFAULT_OPTS='-i --cycle --select-1 --exit-0 --inline-info --color=fg:102,bg:233,hl:65,fg+:15,bg+:234,hl+:108,info:108,prompt:109,spinner:108,pointer:168,marker:168'
-export FZF_TMUX_HEIGHT='60%'
+export FZF_DEFAULT_OPTS='--reverse -i --cycle --select-1 --exit-0 --inline-info --color=fg:102,bg:233,hl:65,fg+:15,bg+:234,hl+:108,info:108,prompt:109,spinner:108,pointer:168,marker:168'
+export FZF_TMUX_HEIGHT='80%'
 export FZF_COMPLETION_TRIGGER=','
 export FZF_COMPLETION_OPTS='+c -x'
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'

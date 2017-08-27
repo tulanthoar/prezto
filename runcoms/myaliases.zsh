@@ -41,3 +41,6 @@ alias heartbeat-off="echo 'none' | sudo tee /sys/class/leds/user_led1/trigger"
 alias st-flash-767='st-flash write "BUILD/NUCLEO_F767ZI/GCC_ARM/${PWD:A:t}.bin" 0x8000000'
 alias st-flash-432='st-flash write "BUILD/NUCLEO_L432KC/GCC_ARM/${PWD:A:t}.bin" 0x8000000'
 alias st-flash-96B='st-flash write "BUILD/B96B_F446VE/GCC_ARM/${PWD:A:t}.bin" 0x8000000'
+alias nvf='nvim $(fzf --preview "cat {}")'
+alias cdf='cd $(find $PWD -type d | fzf --preview "ls -al {}")'
+alias untar='unarchive';

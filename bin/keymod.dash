@@ -1,4 +1,3 @@
 #!/usr/bin/env dash
 setxkbmap -option shift:both_shiftlock;
 xmodmap "${ZRCD}/xmodm";
-numlockx on
