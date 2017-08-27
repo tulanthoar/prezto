@@ -5,7 +5,6 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
-# export PATH="$PATH:$HOME/bin:$HOME/.gem/ruby/2.3.0/bin"
 export EDITOR='nvim'
 export VISUAL='nvim'
 export PAGER='less'
@@ -28,6 +27,7 @@ typeset -gU fpath path
 path=(
   $path
   $HOME/bin
+  $HOME/.local/bin
   $HOME/.gem/ruby/2.3.0/bin
   ${HOME}/.fzf/bin
 )
@@ -76,5 +76,4 @@ export PERL5OPTS="-Mperl5i -MIO::All"
 export RANGER_LOAD_DEFAULT_RC=FALSE
 export JAVA_TOOL_OPTIONS="-Dgnu.io.rxtx.SerialPorts=/dev/tty96B0"
 export MONITOR_PORT="/dev/tty96B0"
-export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python2.7/site-packages"
 export BYOBU_CONFIG_DIR="${HOME}/.config/byobu"

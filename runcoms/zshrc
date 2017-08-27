@@ -1,5 +1,6 @@
 #tinit=$(date +%S%N)
 [ -z ${ZDOTD+x} ] && source ${HOME}/.zprofile
+source ${HOME}/.local/venv/bin/activate
 source $ZPREZD/modules/base16-shell/scripts/base16-seti-ui.sh
 [[ $- == *i* ]] && source "$HOME/.fzf/shell/completion.zsh" 2> /dev/null
 [[ -f ${HOME}/.terminfo/${TERM[1]}/${TERM} ]] || infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -

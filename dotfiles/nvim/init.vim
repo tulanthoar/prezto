@@ -319,7 +319,7 @@ let g:neoinclude#reverse_exprs.perl =
             \ "fnamemodify(substitute(v:fname, \"/\", \"::\", \"g\"), \":r\")"
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#worker_threads = 2
-let g:deoplete#sources#jedi#python_path = "/usr/bin/python3"
+let g:deoplete#sources#jedi#python_path = expand("$VIRTUAL_ENV/bin/python3")
 augroup deopletecommands
     autocmd!
     au FileType python let g:deoplete#delimiters = ["/", ".", "(",]
@@ -349,7 +349,7 @@ Plugin 'SevereOverfl0w/deoplete-github'
 Plugin 'Shougo/context_filetype.vim'
 Plugin 'zchee/deoplete-jedi'
 Plugin 'tweekmonster/deoplete-clang2'
-Plugin 'Shougo/deoplete.nvim'
+Plugin 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 
 let g:base16colorspace=256
 Plugin 'chriskempson/base16-vim'
@@ -571,7 +571,7 @@ let g:impsort_relative_last = 1
 let g:impsort_textwidth = g:pymode_options_max_line_length
 let g:impsort_highlight_star_imports = 1
 " nvim's builtin python.vim
-let g:python3_host_prog = "/usr/bin/python3"
+let g:python3_host_prog = expand("$VIRTUAL_ENV/bin/python3")
 let g:python_no_builtin_highlight = 1
 let g:python_no_exception_highlight = 1
 let g:python_no_doctest_highlight = 1
