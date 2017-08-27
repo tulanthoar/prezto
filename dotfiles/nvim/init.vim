@@ -595,7 +595,7 @@ call vundle#end()
 
 filetype plugin indent on
 syntax enable
-colorscheme base16-seti
+colorscheme base16-seti-ui
 
 set background=dark
 set backupdir=${HOME}/.config/nvim/files/backup/

@@ -13,3 +13,9 @@
 [submodule "modules/base16-shell"]
 	path = modules/base16-shell
 	url = https://github.com/tulanthoar/base16-shell.git
+[submodule "modules/fzf"]
+	path = modules/fzf
+	url = https://github.com/junegunn/fzf.git
+[submodule "modules/fasd"]
+	path = modules/fasd
+	url = https://github.com/clvv/fasd
