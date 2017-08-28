@@ -19,3 +19,9 @@
 [submodule "modules/fasd"]
 	path = modules/fasd
 	url = https://github.com/clvv/fasd
+[submodule "modules/zsh-interactive-cd"]
+	path = modules/zsh-interactive-cd
+	url = https://github.com/changyuheng/zsh-interactive-cd
+[submodule "modules/PathPicker"]
+	path = modules/PathPicker
+	url = https://github.com/facebook/PathPicker
