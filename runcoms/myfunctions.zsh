@@ -1,10 +1,11 @@
 autoload -U colors unarchive _fzf_compgen_path writecmd fhe f fss fp fk fzf-locate-widget u md cm v z j p n h copyfile sudo-command-line c J nice_exit_code snippet-expand paste-primary
 autoload -Uz add-zsh-hook tagthis taghere promptinit black red green yellow blue magenta cyan white alias-tips-preexec gencomp 256-color-test color16_load mountmmc1p1
 function fasd_preexec() { { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null }
+add-zsh-hook preexec fasd_preexec
+eval "$(fasd --init auto)"
 colors
 promptinit
 prompt "paradox"
-add-zsh-hook preexec fasd_preexec
 add-zsh-hook preexec alias-tips-preexec
 
 # Key bindings
@@ -74,6 +75,14 @@ function snippets-add() {
     snip s "startx"
 }
 
+function cdf(){
+    local target_path=$(find ${1:-.} -maxdepth 4 -type d | fzf --preview "ls -Al {}")
+    [[ -d $target_path ]] && cd $target_path && zle reset-prompt&>/dev/null
+    # pwd
+    # ls -Al
+}
+zle -N cdf
+
 function key_bind() {
     zle -N snippet-expand
     zle -N fzf-locate-widget
@@ -128,7 +137,7 @@ function key_bind() {
     bindkey -M viins "\C-G" fzf-file-widget
     bindkey -M viins "\C-A" copy-prev-shell-word
     bindkey -M viins "\C-Q" vi-kill-line
-    bindkey -M viins "\C-T" vi-kill-eol
+    bindkey -M viins "\C-T" cdf
     bindkey -M viins "\C-V" paste-primary
     bindkey -M viins "\C-O" vi-put-after
     bindkey -M viins "\C-L" vi-put-before

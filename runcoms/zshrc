@@ -65,5 +65,6 @@ ZSH_HIGHLIGHT_STYLES[redirection]='fg=red'
 source ${ZPREZD}/init.zsh
 snippets-add
 key_bind
+source $ZPREZD/modules/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
 #tf=$(date +%S%N)
 #echo $(( ${tf[1,5]} - ${tinit[1,5]} ))
