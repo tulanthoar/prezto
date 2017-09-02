@@ -45,4 +45,4 @@ alias nvf='nvim $(fzf --preview "highlight -O ansi -l {}" || +q)'
 alias untar='unarchive';
 alias keym='keymod'
 [[ $(astyle -V) = 'Artistic Style Version 3.0.1' ]] && alias astyle='astyle --style=allman --indent=spaces=4 --attach-closing-while --attach-extern-c --indent-switches --indent-cases --indent-preproc-block --indent-preproc-cond --indent-preproc-define --indent-col1-comments --break-blocks=all --pad-oper --pad-comma --pad-paren-in --unpad-paren --delete-empty-lines --align-pointer=type --add-one-line-braces --convert-tabs --close-templates ';
-[[ $(astyle -V) = 'Artistic Style Version 2.02.1' ]] && alias astyle='astyle --style=allman --indent=spaces=4 --indent-switches --indent-cases --indent-col1-comments --break-blocks=all --pad-oper --pad-paren-in --unpad-paren --delete-empty-lines --align-pointer=type --convert-tabs ';
+[[ -x $(which astyle) ]] && alias astyle='astyle --style=allman --indent=spaces=4 --indent-switches --indent-cases --indent-col1-comments --break-blocks=all --pad-oper --pad-paren-in --unpad-paren --delete-empty-lines --align-pointer=type --convert-tabs ';
