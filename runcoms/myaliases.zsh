@@ -44,7 +44,7 @@ alias st-flash-96B='st-flash write "BUILD/B96B_F446VE/GCC_ARM/${PWD:A:t}.bin" 0x
 alias nvf='nvim $(fzf --preview "highlight -O ansi -l {}" || +q)'
 alias untar='unarchive';
 alias keym='keymod'
-if [[ $(astyle -V) = 'Artistic Style Version 3.0.1' ]]; then
+if [[ $(astyle -V 2>&1) = 'Artistic Style Version 3.0.1' ]]; then
     alias astyle='astyle --style=allman --indent=spaces=4 --attach-closing-while --attach-extern-c --indent-switches --indent-cases --indent-preproc-block --indent-preproc-cond --indent-preproc-define --indent-col1-comments --break-blocks=all --pad-oper --pad-comma --pad-paren-in --unpad-paren --delete-empty-lines --align-pointer=type --add-one-line-braces --convert-tabs --close-templates ';
 else
     alias astyle='astyle --style=allman --indent=spaces=4 --indent-switches --indent-cases --indent-col1-comments --break-blocks=all --pad-oper --pad-paren-in --unpad-paren --delete-empty-lines --align-pointer=type --convert-tabs ';

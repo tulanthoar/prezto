@@ -25,3 +25,6 @@
 [submodule "modules/PathPicker"]
 	path = modules/PathPicker
 	url = https://github.com/facebook/PathPicker
+[submodule "modules/hightlight"]
+	path = modules/hightlight
+	url = http://github.com/reconquest/highlight.git
