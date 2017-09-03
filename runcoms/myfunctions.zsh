@@ -76,10 +76,8 @@ function snippets-add() {
 }
 
 function cdf(){
-    local target_path=$(find ${1:-.} -maxdepth 4 -type d | fzf --preview "ls -Al {}")
+    local target_path=$(fasd -ld | fzf --preview "ls -Al {}")
     [[ -d $target_path ]] && cd $target_path && zle reset-prompt&>/dev/null
-    # pwd
-    # ls -Al
 }
 zle -N cdf
 autoload -Uz cdf
