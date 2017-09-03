@@ -82,6 +82,7 @@ function cdf(){
     # ls -Al
 }
 zle -N cdf
+autoload -Uz cdf
 
 function key_bind() {
     zle -N snippet-expand
