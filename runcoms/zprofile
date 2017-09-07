@@ -78,4 +78,3 @@ export RANGER_LOAD_DEFAULT_RC=FALSE
 export JAVA_TOOL_OPTIONS="-Dgnu.io.rxtx.SerialPorts=/dev/tty96B0"
 export MONITOR_PORT="/dev/tty96B0"
 export BYOBU_CONFIG_DIR="${HOME}/.config/byobu"
-[[ -d ${HOME}/.local/share/highlight ]] && export HIGHLIGHT_DATADIR="${HOME}/.local/share/highlight"
