@@ -454,28 +454,7 @@ let g:syntastic_loc_list_height = 5
 let g:syntastic_check_on_open = 0
 let g:syntastic_enable_signs = 0
 let g:syntastic_python_checkers = ["pylint",]
-let g:syntastic_cpp_compiler_options = "-std=gnu++11 -fno-rtti -Wvla -c -Wall
-            \ -Wextra -Wno-unused-parameter -Wno-missing-field-initializers
-            \ -fmessage-length=0 -fno-exceptions -fno-builtin -ffunction-sections
-            \ -fdata-sections -funsigned-char -MMD -fno-delete-null-pointer-checks
-            \ -fomit-frame-pointer -Os -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16
-            \ -mfloat-abi=softfp -DDEVICE_SPI=1 -DFEATURE_LWIP=1
-            \ -DMBED_BUILD_TIMESTAMP=1490469159.34 -DDEVICE_I2CSLAVE=1
-            \ -D__FPU_PRESENT=1 -DDEVICE_PORTOUT=1 -DTARGET_STM32F767ZI
-            \ -DDEVICE_PORTINOUT=1 -DTARGET_RTOS_M4_M7 -DDEVICE_LOWPOWERTIMER=1
-            \ -DTARGET_STM32F7 -DTOOLCHAIN_object -DDEVICE_SERIAL_ASYNCH=1
-            \ -D__CMSIS_RTOS -DTOOLCHAIN_GCC -DDEVICE_I2C_ASYNCH=1 -DARM_MATH_CM7
-            \ -DTARGET_CORTEX_M -DDEVICE_SERIAL=1 -DTARGET_LIKE_CORTEX_M7
-            \ -DDEVICE_ANALOGOUT=1 -DTARGET_NUCLEO_F767ZI -DTARGET_UVISOR_UNSUPPORTED
-            \ -DTARGET_M7 -DDEVICE_SPI_ASYNCH=1 -DDEVICE_PWMOUT=1 -D__MBED__=1
-            \ -DDEVICE_I2C=1 -DTRANSACTION_QUEUE_SIZE_SPI=2 -DDEVICE_STDIO_MESSAGES=1
-            \ -D__CORTEX_M7 -DTARGET_LIKE_MBED -DTARGET_FF_ARDUINO -DDEVICE_PORTIN=1
-            \ -DTARGET_STM32F767 -DTARGET_STM -DUSBHOST_OTHER -DTARGET_RELEASE
-            \ -DDEVICE_TRNG=1 -D__MBED_CMSIS_RTOS_CM -DDEVICE_SLEEP=1
-            \ -DTOOLCHAIN_GCC_ARM -DDEVICE_CAN=1 -DDEVICE_INTERRUPTIN=1
-            \ -DDEVICE_SPISLAVE=1 -DDEVICE_ANALOGIN=1 -DTARGET_STM32F767xI
-            \ -DDEVICE_RTC=1
-            \ @./BUILD/NUCLEO_F767ZI/GCC_ARM/.includes_0b36ecdf2da6b2a7b60fd80e803f0e74.txt"
+let g:syntastic_cpp_compiler_options = ""
 Plugin 'scrooloose/syntastic'
 
 let g:expand_region_text_objects = { "iw":0, "iW":0, "i\"":0, "a\"":0, "i'":0, "a'":0, "ib":1, "ab":1, "i]":1, "iB":1, "il":0, "ii":1, "ai":1, "ip":0, "ie":0, }
