@@ -1,1 +1,1 @@
-style=otbs indent=spaces=2 attach-closing-while attach-extern-c indent-switches indent-cases indent-preproc-block indent-preproc-cond indent-preproc-define indent-col1-comments break-blocks=all pad-oper pad-comma pad-paren-in unpad-paren delete-empty-lines align-pointer=type add-one-line-braces convert-tabs close-templates
+style=whitesmith -s8 indent-col1-comments break-blocks=all pad-oper pad-paren-in unpad-paren add-brackets align-pointer=type convert-tabs

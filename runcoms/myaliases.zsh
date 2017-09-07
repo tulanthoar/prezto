@@ -22,7 +22,7 @@ alias mkdir='mkdir -p'
 alias gparted='sudo gparted'
 alias bluectl='sudo bluetoothctl'
 alias suspendnow="systemctl suspend"
-alias czp="cd ${ZPREZD}; la"
+alias czp="cd ${ZPREZD}; l"
 alias ex='unarchive'
 alias nvim="python3 ${ZRCD}/scripts/omnivim.py"
 alias j4-menu='j4-dmenu-desktop --display-binary --term=urxvt --dmenu="dmenu -w 600 -y 15 -z -p launch -l 50"'
@@ -38,7 +38,5 @@ alias nvf='nvim $(fzf --preview "highlight -O ansi -l {}" || echo "+qall")'
 alias untar='unarchive';
 alias keym='keymod'
 if [[ $(astyle -V 2>&1) = 'Artistic Style Version 3.0.1' ]]; then
-    alias astyle='astyle --style=allman --indent=spaces=4 --attach-closing-while --attach-extern-c --indent-switches --indent-cases --indent-preproc-block --indent-preproc-cond --indent-preproc-define --indent-col1-comments --break-blocks=all --pad-oper --pad-comma --pad-paren-in --unpad-paren --delete-empty-lines --align-pointer=type --add-one-line-braces --convert-tabs --close-templates ';
-else
-    alias astyle='astyle --style=allman --indent=spaces=4 --indent-switches --indent-cases --indent-col1-comments --break-blocks=all --pad-oper --pad-paren-in --unpad-paren --delete-empty-lines --align-pointer=type --convert-tabs ';
+    alias astyle='astyle --attach-extern-c --indent-switches --indent-cases --indent-preproc-block --indent-preproc-cond --indent-preproc-define --pad-comma --close-templates ';
 fi
