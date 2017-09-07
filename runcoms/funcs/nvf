@@ -1,4 +1,4 @@
 function nvf(){
-nvim $(fzf --multi --query=${1:-} --preview-window="down:70%" --preview "highlight -O ansi -l --force {}" || echo "+qall")
+nvim $(fzf --multi --query="${1:-} " --preview-window="down:70%" --preview "highlight -l --style=solarized-light -O xterm256 --force {}" || echo "+qall")
 
 }
