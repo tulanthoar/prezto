@@ -1,4 +1,20 @@
 "init on 2016-05-26
+profile start syntastic.log                                                
+profile! file */.config/nvim/bundle/syntastic/*
+let iCanHazVundle=1
+let s:vundle_path=expand("$HOME/.config/nvim/bundle/Vundle.vim")
+if !isdirectory(s:vundle_path)
+    echo "Making Vundle Path - " . s:vundle_path
+    echo ""
+    silent !mkdir -p s:vundle_path
+endif
+let vundle_readme=s:vundle_path . '/README.md'
+if !filereadable(vundle_readme)
+    echo "Installing Vundle.."
+    echo ""
+    silent !git clone --depth=1 https://github.com/VundleVim/Vundle.vim ~/.config/nvim/bundle/Vundle.vim
+    let iCanHazVundle=0
+endif
 if &cp | set nocp | en
 let g:loaded_gzip = 1
 let g:loaded_man = 1
@@ -6,17 +22,20 @@ let g:loaded_tarPlugin = "v29"
 let g:loaded_2html_plugin = "vim7.4_v2"
 let g:loaded_zipPlugin = "v27"
 filetype off
-set rtp+=$HOME/.config/nvim/bundle/Vundle.vim
-call vundle#begin("$HOME/.config/nvim/bundle")
+set rtp+=~/.config/nvim/bundle/Vundle.vim
+let s:bundle_path = substitute(s:vundle_path, '/Vundle\.vim$', '', '')
+call vundle#begin(s:bundle_path)
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'DoxygenToolkit.vim'
-let g:DoxygenToolkit_blockFooter = "-----------------------------------------"
-let g:DoxygenToolkit_compactDoc = "yes"
-let g:DoxygenToolkit_authorName = "Nathan Yonkee"
-let g:DoxygenToolkit_briefTag_funcName = "yes"
-let g:DoxygenToolkit_briefTag_post = ": "
-let g:DoxygenToolkit_briefTag_className = "yes"
+" Plugin 'w0rp/ale'
+
+" Plugin 'DoxygenToolkit.vim'
+" let g:DoxygenToolkit_blockFooter = "-----------------------------------------"
+" let g:DoxygenToolkit_compactDoc = "yes"
+" let g:DoxygenToolkit_authorName = "Nathan Yonkee"
+" let g:DoxygenToolkit_briefTag_funcName = "yes"
+" let g:DoxygenToolkit_briefTag_post = ": "
+" let g:DoxygenToolkit_briefTag_className = "yes"
 
 augroup nerdtree
     autocmd!
@@ -25,8 +44,8 @@ augroup nerdtree
                 \ exe 'NERDTree' argv()[0] | wincmd p | enew | endif
 augroup END
 function! NERDTreeHighlightFile(ext, fg, bg)
- exe 'au filetype nerdtree hi '.a:ext.' ctermbg='.a:bg.' ctermfg='.a:fg
- exe 'au filetype nerdtree syn match '.a:ext.' #^\s\+.*'.a:ext.'$#'
+    exe 'au filetype nerdtree hi '.a:ext.' ctermbg='.a:bg.' ctermfg='.a:fg
+    exe 'au filetype nerdtree syn match '.a:ext.' #^\s\+.*'.a:ext.'$#'
 endfunction
 call NERDTreeHighlightFile('h', 'green', 'none')
 call NERDTreeHighlightFile('ini', 'yellow', 'none')
@@ -69,7 +88,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'haya14busa/vim-asterisk'
 Plugin 'nelstrom/vim-visual-star-search'
 
-Plugin 'benmills/vimux'
+" Plugin 'benmills/vimux'
 
 " XXX sidesearch
 let g:side_search_split_pct = 0.5
@@ -98,7 +117,9 @@ let g:highlightedyank_highlight_duration = -1
 Plugin 'machakann/vim-highlightedyank'
 
 let g:formatters_python = ["yapf"]
+let g:formatters_zsh = ["shfmt"]
 let g:autoformat_autoindent = 0 " don't use vims formatter for indentation
+let g:autoformat_remove_trailing_spaces = 1
 let g:formatdef_custom_cpp = '"astyle"'
 let g:formatters_cpp = ['custom_cpp']
 Plugin 'Chiel92/vim-autoformat'
@@ -139,13 +160,14 @@ Plugin 'Shougo/echodoc.vim'
 let g:indentLine_char = "⁅"
 " let g:indentLine_char = "├"
 let g:indentLine_setColors = 0
+let g:indentLine_color_term=256
 let g:indentLine_first_char = "╠"
 let g:indentLine_indentLevel = 10
 let g:indentLine_showFirstIndentLevel = "1"
 let g:indentLine_fileType = ["vim", "perl", "python", "cpp",]
-let g:indentLine_faster = 0
+let g:indentLine_faster = 1
 let g:indentLine_concealcursor="inc"
-    let g:indentLine_leadingSpaceChar = "⥎"
+let g:indentLine_leadingSpaceChar = "⥎"
 let g:indentLine_leadingSpaceEnabled = 1
 Plugin 'Yggdroot/indentLine'
 
@@ -161,13 +183,13 @@ let g:ctrlp_brief_prompt = 1
 let g:ctrlp_extensions = ["buffertag", "quickfix", "rtscript", ]
 Plugin 'ctrlpvim/ctrlp.vim'
 
-let g:easytags_async = 1
-let g:easytags_by_filetype = expand("$HOME/.config/nvim/files/easy_tags")
-let g:easytags_events = ["BufWritePost", "BufWinEnter",]
-let g:easytags_include_members = 1
-let g:easytags_resolve_links = 1
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags'
+" let g:easytags_async = 1
+" let g:easytags_by_filetype = expand("$HOME/.config/nvim/files/easy_tags")
+" let g:easytags_events = ["BufWritePost", "BufWinEnter",]
+" let g:easytags_include_members = 1
+" let g:easytags_resolve_links = 1
+" Plugin 'xolox/vim-misc'
+" Plugin 'xolox/vim-easytags'
 
 for [k, c] in items({
             \ "\<C-J>" : "\<denite:move_to_next_line>",
@@ -236,15 +258,17 @@ Plugin 'mhinz/vim-startify'
 let g:surround_indent = 1
 Plugin 'tpope/vim-surround'
 
-let g:tlWindowPosition = 1
-Plugin 'vim-scripts/TaskList.vim'
+" let g:tlWindowPosition = 1
+" Plugin 'vim-scripts/TaskList.vim'
 
-let g:neosnippet#enable_completed_snippet = 1
-let g:neosnippet#expand_word_boundary = 1
-Plugin 'Shougo/neosnippet-snippets'
-Plugin 'Shougo/neosnippet'
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsExpandTrigger="<s-tab>"
+let g:UltiSnipsJumpForwardTrigger="<s-tab>"
+let g:UltiSnipsJumpBackwardTrigger="<CR>"
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
-let g:tex_fold_enabled=1
+" let g:tex_fold_enabled=1
 let g:vimsyn_folding="af"
 let g:perl_fold = 1
 let g:fastfold_savehook = 1
@@ -252,9 +276,9 @@ let g:fastfold_skip_filetypes =
             \ [ "taglist", "gitcommit", "startify", "man", "rst", ]
 Plugin 'Konfekt/FastFold'
 
-let g:tmux_navigator_save_on_switch = 1
-let g:tmux_navigator_no_mappings = 1
-Plugin 'christoomey/vim-tmux-navigator'
+" let g:tmux_navigator_save_on_switch = 1
+" let g:tmux_navigator_no_mappings = 1
+" Plugin 'christoomey/vim-tmux-navigator'
 
 let g:SignatureDeleteConfirmation = 1
 let g:SignatureForceMarkPlacement = 1
@@ -298,6 +322,7 @@ let g:deoplete#sources._ = ["file",
             \ "buffer",
             \ "syntax",
             \ "include",
+            \ "ultisnips"
             \ ]
 let g:deoplete#sources.python = g:deoplete#sources._ + [ "jedi", ]
 let g:deoplete#sources.perl = g:deoplete#sources._ + [ "omni", ]
@@ -336,6 +361,7 @@ augroup deopletecommands
     au FileType * cal deoplete#custom#set("member", "rank", 90)
     au FileType * cal deoplete#custom#set("around", "rank", 89)
     au FileType * cal deoplete#custom#set("neosnippet", "rank", 84)
+    au FileType * cal deoplete#custom#set("ultisnips", "rank", 83)
     au FileType * cal deoplete#custom#set("buffer", "rank", 81)
     au FileType * cal deoplete#custom#set("tag", "rank", 80)
     au FileType * cal deoplete#custom#set("syntax", "rank", 79)
@@ -418,12 +444,12 @@ let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_DiffpanelHeight = 15
 Plugin 'mbbill/undotree'
 
-let g:nrrw_rgn_nomap_nr = 1
-let g:nrrw_rgn_nomap_Nr = 1
-let g:nrrw_rgn_wdth = 80
-let g:nrrw_rgn_vert = 1
-let b:nrrw_aucmd_written = ":update"
-Plugin 'chrisbra/NrrwRgn'
+" let g:nrrw_rgn_nomap_nr = 1
+" let g:nrrw_rgn_nomap_Nr = 1
+" let g:nrrw_rgn_wdth = 80
+" let g:nrrw_rgn_vert = 1
+" let b:nrrw_aucmd_written = ":update"
+" Plugin 'chrisbra/NrrwRgn'
 
 augroup yankring
     autocmd!
@@ -448,61 +474,117 @@ let g:yankring_window_height = 12
 Plugin 'vim-scripts/YankRing.vim'
 
 let g:syntastic_aggregate_errors = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_cursor_column = 0
+let g:syntastic_error_symbol = "E>"
+let g:syntastic_warning_symbol = "W>"
+let g:syntastic_enable_balloons = 0
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_loc_list_height = 5
-let g:syntastic_check_on_open = 0
-let g:syntastic_enable_signs = 0
+let g:syntastic_loc_list_height = 8
+let g:syntastic_exit_checks=0
+let g:syntastic_check_on_open = 1
+let g:syntastic_enable_signs = 1
+let g:syntastic_asm_checkers = ["gcc",]
+let g:syntastic_asm_compiler = "arm-none-eabi-gcc"
+let g:syntastic_asm_remove_include_errors = 1
+let g:syntastic_asm_compiler_options = "-mcpu=cortex-m4 -mthumb -mfloat-abi=softfp"
+let g:syntastic_cpp_checkers = ["clang_check","clang_tidy","cppcheck","cppclean","cpplint","flawfinder","gcc","oclint"]
+let g:syntastic_cpp_cpplint_exec = "cpplint"
+let g:syntastic_cpp_remove_include_errors=1
+let g:syntastic_cpp_include_dirs = ["mbed", "../Inc"]
+let g:syntastic_cpp_auto_refresh_includes = 1
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cmake_checkers = ["cmakelint",]
+let g:syntastic_json_checkers = ["jsonlint","jsonvalue"]
+let g:syntastic_perl_checkers = ["perl","perlcritic"]
+let g:syntastic_perl_interpreter="perl"
+let g:syntastic_enable_perl_checker = 1
+let g:syntastic_perl_lib_path=[]
+let g:pymode_lint_on_write = 0
 let g:syntastic_python_checkers = ["pylint",]
-let g:syntastic_cpp_compiler_options = ""
-Plugin 'scrooloose/syntastic'
+let g:syntastic_sh_checkers = ["bashate","checkbashisms"]
+let g:syntastic_tex_checkers = ["ChkTex","lacheck","proselint", "text/language_check"]
+let g:syntastic_zshcheckers = ["zsh",]
+" let g:syntastic_cpp_compiler_options = " -Wno-unused-parameter -Wno-missing-field-initializers
+" \ -fmessage-length=0 -fno-exceptions -fno-builtin -ffunction-sections -fdata-sections -funsigned-char
+" \ -MMD -fno-delete-null-pointer-checks -fomit-frame-pointer -Os -mcpu=cortex-m4 -mthumb
+" \ -mfpu=fpv4-sp-d16 -mfloat-abi=softfp "
+let g:syntastic_cpp_compiler_options = "-std=gnu++11  -Wvla -c
+            \ -include -DTARGET_NUCLEO_L432KC -DARM_MATH_CM4  -DDEVICE_ANALOGIN=1 -DDEVICE_PWMOUT=1
+            \ -DDEVICE_CAN=1 -DDEVICE_INTERRUPTIN=1 -DDEVICE_SPISLAVE=1 -DMBED_BUILD_TIMESTAMP=1506392061.97 -DTOOLCHAIN_GCC_ARM
+            \ -DDEVICE_SERIAL_FC=1 -DDEVICE_TRNG=1 -D__MBED_CMSIS_RTOS_CM -DTARGET_RELEASE -DTARGET_STM -DTARGET_STM32L432KC
+            \ -D__FPU_PRESENT=1 -DDEVICE_SLEEP=1 -DDEVICE_PORTIN=1 -DTARGET_STM32L432xC -DDEVICE_I2C=1
+            \ -DTRANSACTION_QUEUE_SIZE_SPI=2 -D__CORTEX_M4 -DDEVICE_STDIO_MESSAGES=1
+            \ -DTARGET_STM32L4 -DDEVICE_SPI_ASYNCH=1 -DDEVICE_SERIAL=1 -DDEVICE_SPI=1
+            \ -DDEVICE_ANALOGOUT=1 -DTARGET_M4 -DTARGET_UVISOR_UNSUPPORTED
+            \ -DDEVICE_I2C_ASYNCH=1 -DTARGET_CORTEX_M -DTARGET_LIKE_CORTEX_M4
+            \ -DTOOLCHAIN_object -D__CMSIS_RTOS -DTARGET_FF_ARDUINO -DTOOLCHAIN_GCC
+            \ -DDEVICE_PORTINOUT=1 -DTARGET_RTOS_M4_M7 -DDEVICE_LOWPOWERTIMER=1 -DDEVICE_RTC=1
+            \ -D__MBED__=1 -DDEVICE_I2CSLAVE=1 -DTARGET_LIKE_MBED -DDEVICE_PORTOUT=1 "
+let g:syntastic_shell = "/bin/dash"
+" Plugin 'scrooloose/syntastic'
 
 let g:expand_region_text_objects = { "iw":0, "iW":0, "i\"":0, "a\"":0, "i'":0, "a'":0, "ib":1, "ab":1, "i]":1, "iB":1, "il":0, "ii":1, "ai":1, "ip":0, "ie":0, }
 let g:expand_region_text_objects_python = { "iA":0, "iB":0, "ai":1, }
 Plugin 'terryma/vim-expand-region'
 
-" TODO configure LaTeXBox
-let g:LatexBox_completion_close_braces = 1
-let g:LatexBox_bibtex_wild_spaces = 1
-let g:LatexBox_complete_inlineMath = 1
-let g:LatexBox_latexmk_async = 1
-let g:LatexBox_latexmk_preview_continuously = 1
-let g:LatexBox_quickfix = 2
-let g:LatexBox_fold_automatic = 1
-let g:LatexBox_viewer = "evince"
-let g:tex_flavor = "latex"
-Plugin 'LaTeX-Box-Team/LaTeX-Box'
+let g:gutentags_project_root=['.git', '.gutentagthis', 'Makefile', 'develop.json', '.hg']
+let g:gutentags_ctags_exclude = ['TARGET']
+let g:gutentags_generate_on_empty_buffer=1
+let g:gutentags_resolve_symlinks=1
+let g:gutentags_add_default_project_roots=0
+if !exists("g:gutentags_project_info")
+    let g:gutentags_project_info = []
+endif
+call add(g:gutentags_project_info, {'type': 'python', 'file': 'setup.py'})
+call add(g:gutentags_project_info, {'type': 'cpp', 'file': 'Makefile'})
+Plugin 'ludovicchabant/vim-gutentags'
 
-" TODO configure perl templates
-let g:tlist_perl_settings = "perl;c:constants;f:formats;l:labels;p:packages;s:subroutines;d:subroutines;o:POD;t:Keyword Comments"
-let g:Templates_InternetBrowserExec = "chromium"
-let g:Perl_CustomTemplateFile = expand("${ZDOTD}/nvim/bundle/perl-support/templates/perl.templates")
-let g:Perl_LoadMenus = "no"
-let g:Perl_Ctrl_j = "on"
-let g:Perl_PerlTags = "on"
-Plugin 'vim-perl/vim-perl'
-Plugin 'c9s/perlomni.vim'
-Plugin 'WolfgangMehner/perl-support'
+Plugin 'lervag/vimtex'
+Plugin 'neomake/neomake'
+let g:neomake_cpp_mbed_maker = {
+    \ 'exe': 'mbed',
+    \ 'cwd': '',
+    \ 'args': ['compile', '--profile', 'develop.json'],
+    \ 'append_file': 0,
+    \ 'errorformat': '%f:%l:%c: %m',
+    \ }
+let g:neomake_open_list = 2
+Plugin 'xuhdev/vim-latex-live-preview'
+let g:livepreview_previewer = 'tabbed -f -r 2 zathura -e ""'
+let g:livepreview_engine = 'latexmk' . ' -pdf -shell-escape'
 
-let g:haskell_enable_quantification = 1
-let g:haskell_enable_recursivedo = 1
-let g:haskell_enable_arrowsyntax = 1
-let g:haskell_enable_pattern_synonyms = 1
-let g:haskell_enable_typeroles = 1
-let g:haskell_enable_static_pointers = 1
-let g:haskell_indent_if = 3
-let g:haskell_indent_case = 2
-let g:haskell_indent_let = 4
-let g:haskell_indent_where = 6
-let g:haskell_indent_do = 3
-let g:haskell_indent_in = 1
-let g:haskell_indent_guard = 2
-let g:cabal_indent_section = 2
-let g:haddock_browser = "/usr/bin/chromium"
-let g:haskellmode_completion_ghc = 0
-let g:necoghc_enable_detailed_browse = 1
-Plugin 'eagletmt/neco-ghc'
-Plugin 'neovimhaskell/haskell-vim.git'
+" " TODO configure perl templates
+" let g:tlist_perl_settings = "perl;c:constants;f:formats;l:labels;p:packages;s:subroutines;d:subroutines;o:POD;t:Keyword Comments"
+" let g:Templates_InternetBrowserExec = "chromium"
+" let g:Perl_CustomTemplateFile = expand("${ZDOTD}/nvim/bundle/perl-support/templates/perl.templates")
+" let g:Perl_LoadMenus = "no"
+" let g:Perl_Ctrl_j = "on"
+" let g:Perl_PerlTags = "on"
+" Plugin 'vim-perl/vim-perl'
+" Plugin 'c9s/perlomni.vim'
+" Plugin 'WolfgangMehner/perl-support'
+
+" let g:haskell_enable_quantification = 1
+" let g:haskell_enable_recursivedo = 1
+" let g:haskell_enable_arrowsyntax = 1
+" let g:haskell_enable_pattern_synonyms = 1
+" let g:haskell_enable_typeroles = 1
+" let g:haskell_enable_static_pointers = 1
+" let g:haskell_indent_if = 3
+" let g:haskell_indent_case = 2
+" let g:haskell_indent_let = 4
+" let g:haskell_indent_where = 6
+" let g:haskell_indent_do = 3
+" let g:haskell_indent_in = 1
+" let g:haskell_indent_guard = 2
+" let g:cabal_indent_section = 2
+" let g:haddock_browser = "/usr/bin/chromium"
+" let g:haskellmode_completion_ghc = 0
+" let g:necoghc_enable_detailed_browse = 1
+" Plugin 'eagletmt/neco-ghc'
+" Plugin 'neovimhaskell/haskell-vim.git'
 
 let g:jedi#completions_command = ""
 let g:jedi#auto_vim_configuration = 0
@@ -571,13 +653,16 @@ Plugin 'ryanoasis/vim-devicons'
 
 " Plugins&end
 call vundle#end()
+call neomake#configure#automake('nw', 750)
 
 filetype plugin indent on
 syntax enable
-colorscheme base16-seti-ui
+colorscheme base16-seti
 
+set autowrite
 set background=dark
 set backupdir=${HOME}/.config/nvim/files/backup/
+set clipboard+="unnamed,unnamedplus,autoselect"
 set cmdheight=2
 set colorcolumn=+1
 set completeopt=menuone,noselect,preview
@@ -620,11 +705,12 @@ set nostartofline
 set softtabstop=4
 set tabstop=4
 set tagcase=match
-set tags=./tags,./perltags,${HOME}/.vimtags
+" set tags=./tags,./perltags,${HOME}/.vimtags
+set tags=
 set timeoutlen=1000
 set undodir=${HOME}/.config/nvim/files/.undo/
 set undofile
-set updatetime=2000
+set updatetime=4000
 set viewoptions=cursor,folds,slash,unix
 set virtualedit=block
 set visualbell
@@ -643,6 +729,7 @@ augroup autooptions
     au InsertEnter * setl timeoutlen=500
     au InsertLeave * setl timeoutlen=1000
     au FileType vim setl matchpairs=(:),[:],{:},<:>
+    au FileType tex setl conceallevel=0
 augroup END
 
 " exe 'au FileType haskell,vim,perl,python sy match IndentLine /^ / contained conceal cchar='.g:indentLine_first_char
@@ -668,12 +755,29 @@ hi CursorColumn           cterm=inverse,bold
 hi CursorLine             cterm=standout
 hi HighlightedyankRegion  ctermbg=28  ctermfg=none cterm=bold
 hi TermCursorNC           ctermbg=236 ctermfg=none
+hi SyntasticErrorLine     ctermbg=126 cterm=underline
+hi SyntasticWarningLine     ctermbg=136 cterm=underline
+hi SpellBad               cterm=standout
+hi SpellCap               cterm=bold,underline
 
 hi link perlFunctionTag      pythonFunctionTag
 hi link vimAutoGroupTag      pythonClassTag
 hi link vimCommandTag        pythonFunctionTag
 hi link vimFuncNameTag       pythonMethodTag
 hi link vimScriptFuncNameTag pythonMethodTag
+
+let g:clipboard = {
+            \ 'name':'myClipboard',
+            \ 'copy':{
+            \  '+':'xsel --nodetach -i -b',
+            \  '*':'xsel --nodetach -i -p',
+            \ },
+            \ 'paste': {
+            \ '+':'xsel -o -b',
+            \ '*':'xsel -o -p',
+            \ },
+            \ 'cache_enabled':1,
+            \ }
 
 cnoreabbrev T/  Tabularize //l1c1l0<left><left><left><left><left><left><left><c-h>
 cnoreabbrev w!!  SudoWrite
@@ -685,7 +789,7 @@ for [k, c] in items({
             \ 't': 'bd-tl',
             \ 'j': 'bd-jk',
             \ 'k': 'bd-jk',
-          \ })
+            \ })
     exe 'map <expr><unique>'.k.' v:count ? "'.k.'" : "\<Plug>(easymotion-'.c.')"'
 endfor
 
@@ -696,29 +800,24 @@ omap <expr><unique> e v:count ? e : "v\<Plug>(easymotion-bd-el)"
 inoremap <silent><expr><unique> <C-K>   pumvisible() ? "\<C-P>" : "\<Del>"
 inoremap <silent><expr><unique> <C-J>   pumvisible() ? "\<C-n>" : "\<C-J>"
 imap     <silent>      <unique> <Tab>   <Plug>delimitMateS-Tab
-imap                   <unique> <s-Tab> <Plug>(neosnippet_jump_or_expand)
-smap                   <unique> <s-Tab> <Plug>(neosnippet_jump_or_expand)
 snoremap <unique><Tab> <C-O>%
 inoremap <unique> <C-S> <C-Y>
 inoremap <unique><C-A> <C-@>
 inoremap <unique><C-G><C-A> <C-A>
-" inoremap <unique><C-B>
-" inoremap <unique><C-L>
-" inoremap <unique><C-Z>
 inoremap <unique><C-V>     <C-R>*
 inoremap <unique><C-Q>     <C-V>
 
 map <unique>s <Plug>(easymotion-bd-f2)
 noremap <unique>gs s
 
+" \ '*': 'z*',
+" \ '#': 'z#',
+" \ 'g*': 'gz*',
+" \ 'gS': 'gz*',
+" \ 'g#': 'gz#',
 for [k, c] in items({
-            \ '*': 'z*',
             \ 'S': 'z*',
-            \ '#': 'z#',
-            \ 'g*': 'gz*',
-            \ 'gS': 'gz*',
-            \ 'g#': 'gz#',
-          \ })
+            \ })
     exe 'nmap <unique>'.k.' <Plug>(asterisk-'.c.')<Plug>(easymotion-bd-n)'
     exe 'omap <unique>'.k.' <Plug>(asterisk-'.c.')<Plug>(easymotion-bd-n)'
 endfor
@@ -752,7 +851,7 @@ nnoremap <unique>`> '>
 nnoremap <unique> Q     :Autoformat<CR>
 nnoremap <unique> gq    :Autoformat<CR>
 xmap     <unique> v     <Plug>(expand_region_expand)
-xmap     <unique> <CR>  <Plug>NrrwrgnDo
+" xmap     <unique> <CR>  <Plug>NrrwrgnDo
 noremap  <unique> h     ^
 noremap  <unique> gh    h
 noremap  <unique> l     $
@@ -797,22 +896,20 @@ for n in range(1,9)
     exe 'nmap <unique>'.g:mapleader.n.' <Plug>AirlineSelectTab'.n
 endfor
 
-for [k, d] in items({
-            \ 'h': 'Left',
-            \ 'j': 'Down',
-            \ 'k': 'Up',
-            \ 'l': 'Right',
-          \ })
-    exe 'nnoremap <silent><unique><leader>'.k.' :TmuxNavigate'.d.'<CR>'
-endfor
+" for [k, d] in items({
+"             \ 'h': 'Left',
+"             \ 'j': 'Down',
+"             \ 'k': 'Up',
+"             \ 'l': 'Right',
+"             \ })
+"     exe 'nnoremap <silent><unique><leader>'.k.' :TmuxNavigate'.d.'<CR>'
+" endfor
 
 let g:mapleader=';'
-nmap      <silent><unique><leader><CR> :NW<CR>
+" nmap      <silent><unique><leader><CR> :NW<CR>
 nnoremap <unique><leader><Space> :Startify<CR>
 nnoremap <unique><leader>y       :YRShow<CR>
 nnoremap <unique><leader>t       :TlistOpen<CR>
-nnoremap <unique><leader>f       :CtrlP<CR>
-nnoremap <unique><leader>F       :cd ~<CR>:CtrlP<CR>
 nnoremap <unique><leader>p       :CtrlPRTS<CR>
 nnoremap <unique><leader>m       :CtrlPMRUFiles<CR>
 nnoremap <unique><leader>u       :UndotreeToggle<CR>
@@ -831,8 +928,8 @@ for [k,c] in items({
             \ 'b' : 'buffer',
             \ 'G' : 'menu:git',
             \ ':' : 'command',
-          \ '/' : 'line',
-          \ })
+            \ '/' : 'line',
+            \ })
     exe 'nnoremap <unique>'.g:mapleader.k.' :Denite -cursor-wrap '.c.'<CR>'
 endfor
 
@@ -840,11 +937,11 @@ let g:mapleader='-'
 
 augroup mapsFiletype
     autocmd!
-    au FileType tex,plaintex im <buffer><leader>]  <Plug>LatexCloseCurEnv
-    au FileType tex,plaintex nm <buffer><leader>*  <Plug>LatexToggleStarEnv
-    au FileType tex,plaintex nm <buffer><leader>ce <Plug>LatexChangeEnv
-    au FileType tex,plaintex vm <buffer><leader>}  <Plug>LatexWrapSelection
-    au FileType tex,plaintex vm <buffer><leader>se <Plug>LatexEnvWrapSelection
+    " au FileType tex,plaintex im <buffer><leader>]  <Plug>LatexCloseCurEnv
+    " au FileType tex,plaintex nm <buffer><leader>*  <Plug>LatexToggleStarEnv
+    " au FileType tex,plaintex nm <buffer><leader>ce <Plug>LatexChangeEnv
+    " au FileType tex,plaintex vm <buffer><leader>}  <Plug>LatexWrapSelection
+    " au FileType tex,plaintex vm <buffer><leader>se <Plug>LatexEnvWrapSelection
     au FileType python nm <buffer><leader>f :cal pymode#rope#find_it()<CR>
     au FileType cpp,haskell,perl,vim,python nm <buffer><CR> <Plug>unimpairedBlankDown
     au FileType help nn <buffer><CR> <C-]>
@@ -857,4 +954,3 @@ augroup cppFiletype
     au BufRead,BufNewFile *.h,*.c set filetype=cpp.doxygen
     au FileType cpp set filetype=cpp.doxygen
 augroup END
-
