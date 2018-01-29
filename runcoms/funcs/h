@@ -1,3 +1,0 @@
-function h(){
-    highlight  --line-number-length=3 -l --style=solarized-light -O xterm256 --force $@
-}

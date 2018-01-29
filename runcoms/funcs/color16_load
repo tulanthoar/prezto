@@ -1,4 +1,4 @@
 function color16_load () {
-    BASE16_SHELL=$ZPREZD/base16-shell
+    BASE16_SHELL=$ZPREZD/modules/base16-shell
     [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 }

@@ -1,4 +1,14 @@
-function sudo-command-line() {
-  [[ -z $BUFFER ]] && zle up-history
-  [[ $BUFFER == sudo\ * ]] && BUFFER=${BUFFER#sudo } || BUFFER="sudo $BUFFER"
+function sudo-command-line()
+{
+    if [[ "$BUFFER" != su(do|)\ * && -n "$BUFFER" ]]; then
+        BUFFER="sudo $BUFFER"
+            (( CURSOR += 5 ))
+            return
+            else
+            [[ $BUFFER == sudo\ * ]] && BUFFER=${BUFFER#sudo}
+            fi
+            [[ -z "$BUFFER" ]] && zle history-substring-search-up
+            zle -R
+              BUFFER="sudo $BUFFER"
+              (( CURSOR += 5 ))
 }
