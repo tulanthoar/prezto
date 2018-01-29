@@ -31,3 +31,21 @@
 [submodule "modules/highlight"]
 	path = modules/highlight
 	url = https://github.com/andre-simon/highlight
+[submodule "modules/auto-ls"]
+	path = modules/auto-ls
+	url = https://github.com/desyncr/auto-ls.git
+[submodule "modules/auto-fu"]
+	path = modules/auto-fu
+	url = https://github.com/hchbaw/auto-fu.zsh.git
+[submodule "modules/fast-syntax-highlighting"]
+	path = modules/fast-syntax-highlighting
+	url = https://github.com/zdharma/fast-syntax-highlighting.git
+[submodule "modules/history-search-multi-word"]
+	path = modules/history-search-multi-word
+	url = https://github.com/zdharma/history-search-multi-word.git
+[submodule "modules/fz"]
+	path = modules/fz
+	url = https://github.com/changyuheng/fz.git
+[submodule "modules/z"]
+	path = modules/z
+	url = https://github.com/rupa/z.git
