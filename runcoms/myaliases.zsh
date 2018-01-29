@@ -13,7 +13,7 @@ alias fzf='fzf-tmux'
 alias sx='startx'
 alias x='exit'
 alias cpf='copyfile'
-alias cpd='echo -n ${PWD}|xsel -i &> /dev/null'
+alias cpd='echo -n ${PWD}|xsel -i &> /dev/null && echo -n ${PWD}|xsel -ib &>/dev/null'
 alias ln='ln -i'
 alias rm='rm -I'
 alias cp='cp -i'
@@ -21,6 +21,7 @@ alias mv='mv -i'
 alias mkdir='mkdir -p'
 alias gparted='sudo gparted'
 alias bluectl='sudo bluetoothctl'
+alias html='hget --no-paging'
 alias suspendnow="systemctl suspend"
 alias czp="cd ${ZPREZD}; l"
 alias ex='unarchive'
@@ -39,3 +40,10 @@ alias keym='keymod'
 if [[ $(astyle -V 2>&1) = 'Artistic Style Version 3.0.1' ]]; then
     alias astyle='astyle --attach-extern-c --indent-switches --indent-cases --indent-preproc-block --indent-preproc-cond --indent-preproc-define --pad-comma --close-templates ';
 fi
+alias sprung="curl -F 'sprunge=<-' http://sprunge.us"
+alias json='jq'
+alias ec="echo"
+alias llog='/usr/bin/log'
+alias padtext="/usr/bin/map"
+alias cmd-reference="nixar"
+alias ag='ag --hidden --ignore "\.hg*" --ignore "\.git*"'

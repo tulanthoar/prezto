@@ -30,7 +30,9 @@ path=(
   $HOME/.local/bin
   $HOME/.gem/ruby/2.3.0/bin
   ${HOME}/.fzf/bin
-)
+  ${HOME}/golang/bin
+  ${HOME}/gcc-arm-none/gcc-arm-none-eabi-7-2017-q4-major/bin
+  )
 
 # Set the default Less options.
 # Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
@@ -51,16 +53,19 @@ export NVIM_LISTEN_ADDRESS=$TMPDIR/nvim_omni
 
 TMPPREFIX=${TMPDIR%/}/zsh
 
-export FZF_DEFAULT_OPTS='--reverse -i --cycle --select-1 --exit-0 --inline-info --color=fg:102,bg:233,hl:65,fg+:15,bg+:234,hl+:108,info:108,prompt:109,spinner:108,pointer:168,marker:168'
+typeset -g FZF_DEFAULT_OPTS='--reverse --cycle --select-1 --exit-0 --color=fg:102,bg:233,hl:65,fg+:15,bg+:234,hl+:108,info:108,prompt:109,spinner:108,pointer:168,marker:168'
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --tiebreak=begin --filepath-word --height=90% --ansi --tabstop=4"
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --bind \"ctrl-s:backward-char,ctrl-w:backward-kill-word,ctrl-d:backward-word,ctrl-b:beginning-of-line,ctrl-k:delete-char,ctrl-f:end-of-line\""
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --bind \"ctrl-e:forward-char,ctrl-u:forward-word,ctrl-space:jump,ctrl-q:kill-line,ctrl-x:kill-word\""
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --bind \"ctrl-o:half-page-up,ctrl-l:half-page-down,ctrl-g:top,[:preview-page-up,]:preview-page-down,alt-/:execute(cat {})\""
 export FZF_TMUX_HEIGHT='80%'
-export FZF_COMPLETION_TRIGGER=','
-export FZF_COMPLETION_OPTS='+c -x'
+export FZF_COMPLETION_TRIGGER=',,'
+export FZF_COMPLETION_OPTS='+c'
 which pt &> /dev/null && export FZF_DEFAULT_COMMAND='pt --hidden --ignore .git --ignore .snapshot . -g ""'
 which ag &> /dev/null && export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
 export KEYTIMEOUT=3
-export LD_LIBRARY_PATH=${HOME}/.local/lib
 export ZPREZD=${HOME}/.zprezto
 export ZDOTD=${ZPREZD}/dotfiles
 export ZBIND=${ZPREZD}/bin
@@ -69,7 +74,6 @@ export GITAPPSD=${HOME}/apps-git
 export FZFD=${HOME}/.fzf
 # export JAVA_HOME="/usr/lib/jvm/default-jvm"
 export GOPATH=$HOME/golang
-[[ -d ${GOPATH} ]] && export PATH="$PATH:$GOPATH/bin"
 export OMNIVIM_EDITOR=$(which nvim)
 export BYOBU_WINDOWS=me
 export PERL_UNICODE=AS
@@ -78,3 +82,8 @@ export RANGER_LOAD_DEFAULT_RC=FALSE
 export JAVA_TOOL_OPTIONS="-Dgnu.io.rxtx.SerialPorts=/dev/tty96B0"
 export MONITOR_PORT="/dev/tty96B0"
 export BYOBU_CONFIG_DIR="${HOME}/.config/byobu"
+export AUTO_LS_COMMANDS=(${HOME}/bin/l git-status)
+export AUTO_LS_PATH="${PATH}"
+export ZSH_HIGHLIGHT_MAXLENGTH=1000
+export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
