@@ -4,6 +4,7 @@
 [[ -f ${HOME}/.terminfo/${TERM[1]}/${TERM} ]] || infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 [[ -s ${HOME}/.local/venv/bin/activate ]] && source ${HOME}/.local/venv/bin/activate
 fpath=($ZRCD/funcs $ZPREZD/modules/zsh-completions/src $fpath)
+ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=(accept-and-infer-next-history accept-and-run)
 source $ZPREZD/modules/base16-shell/scripts/base16-seti-ui.sh
 source ${ZRCD}/myfunctions.zsh
 source ${ZRCD}/myaliases.zsh

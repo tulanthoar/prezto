@@ -1,28 +1,27 @@
-"init on 2016-05-26
-profile start syntastic.log                                                
-profile! file */.config/nvim/bundle/syntastic/*
-let iCanHazVundle=1
-let s:vundle_path=expand("$HOME/.config/nvim/bundle/Vundle.vim")
+set encoding=utf-8
+scriptencoding utf-8
+" init on 2016-05-26
+let s:iCanHazVundle=1
+let s:vundle_path=expand('$HOME/.config/nvim/bundle/Vundle.vim')
 if !isdirectory(s:vundle_path)
-    echo "Making Vundle Path - " . s:vundle_path
-    echo ""
+    echo 'Making Vundle Path - ' . s:vundle_path
+    echo ''
     silent !mkdir -p s:vundle_path
 endif
-let vundle_readme=s:vundle_path . '/README.md'
-if !filereadable(vundle_readme)
-    echo "Installing Vundle.."
-    echo ""
+let s:vundle_readme=s:vundle_path . '/README.md'
+if !filereadable(s:vundle_readme)
+    echo 'Installing Vundle..'
+    echo ''
     silent !git clone --depth=1 https://github.com/VundleVim/Vundle.vim ~/.config/nvim/bundle/Vundle.vim
-    let iCanHazVundle=0
+    let s:iCanHazVundle=0
 endif
-if &cp | set nocp | en
 let g:loaded_gzip = 1
 let g:loaded_man = 1
-let g:loaded_tarPlugin = "v29"
-let g:loaded_2html_plugin = "vim7.4_v2"
-let g:loaded_zipPlugin = "v27"
+let g:loaded_tarPlugin = 'v29'
+let g:loaded_2html_plugin = 'vim7.4_v2'
+let g:loaded_zipPlugin = 'v27'
 filetype off
-set rtp+=~/.config/nvim/bundle/Vundle.vim
+set runtimepath+=~/.config/nvim/bundle/Vundle.vim
 let s:bundle_path = substitute(s:vundle_path, '/Vundle\.vim$', '', '')
 call vundle#begin(s:bundle_path)
 Plugin 'VundleVim/Vundle.vim'
@@ -64,7 +63,7 @@ let g:NERDTreeShowIgnoredStatus = 1
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'scrooloose/nerdtree'
 
-let g:targets_pairs = "()b {}B []a <>A"
+let g:targets_pairs = '()b {}B []a <>A'
 let g:targets_quotes = "\"Q 'q `"
 Plugin 'kana/vim-textobj-entire'
 Plugin 'kana/vim-textobj-line'
@@ -98,9 +97,9 @@ Plugin 'ddrscott/vim-side-search'
 let g:swap_no_default_key_mappings = 1
 Plugin 'machakann/vim-swap'
 
-let g:list_of_insert_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>",]
-let g:list_of_visual_keys = ["gh", "gj", "gk", "gl",] + g:list_of_insert_keys
-let g:list_of_normal_keys = g:list_of_visual_keys + ["x"]
+let g:list_of_insert_keys = ['<UP>', '<DOWN>', '<LEFT>', '<RIGHT>',]
+let g:list_of_visual_keys = ['gh', 'gj', 'gk', 'gl',] + g:list_of_insert_keys
+let g:list_of_normal_keys = g:list_of_visual_keys + ['x']
 let g:hardtime_maxcount = 2
 let g:hardtime_default_on = 1
 let g:hardtime_timeout = 2000
@@ -116,8 +115,8 @@ Plugin 'vim-utils/vim-man'
 let g:highlightedyank_highlight_duration = -1
 Plugin 'machakann/vim-highlightedyank'
 
-let g:formatters_python = ["yapf"]
-let g:formatters_zsh = ["shfmt"]
+let g:formatters_python = ['yapf']
+let g:formatters_zsh = ['shfmt']
 let g:autoformat_autoindent = 0 " don't use vims formatter for indentation
 let g:autoformat_remove_trailing_spaces = 1
 let g:formatdef_custom_cpp = '"astyle"'
@@ -131,7 +130,7 @@ augroup rainbowparen
     au BufEnter * cal rainbow_parentheses#load(2)
     au BufEnter * cal rainbow_parentheses#activate()
 augroup end
-let g:rbpt_colorpairs = [ ["1"],["4"],["3"],["2"],["16"],]
+let g:rbpt_colorpairs = [ ['1'],['4'],['3'],['2'],['16'],]
 cal map(g:rbpt_colorpairs,'v:val+["#4B5056"]')
 Plugin 'kien/rainbow_parentheses.vim'
 
@@ -150,37 +149,37 @@ Plugin 'vim-scripts/taglist.vim'
 
 augroup vimstay
     autocmd!
-    au VimEnter * cal extend(g:volatile_ftypes, ["taglist", "rst",])
+    au VimEnter * cal extend(g:volatile_ftypes, ['taglist', 'rst',])
 augroup end
 Plugin 'kopischke/vim-stay'
 
 let g:echodoc_enable_at_startup = 1
 Plugin 'Shougo/echodoc.vim'
 
-let g:indentLine_char = "⁅"
-" let g:indentLine_char = "├"
+let g:indentLine_char = '⁅'
+" let g:indentLine_char = '├'
 let g:indentLine_setColors = 0
 let g:indentLine_color_term=256
-let g:indentLine_first_char = "╠"
+let g:indentLine_first_char = '╠'
 let g:indentLine_indentLevel = 10
-let g:indentLine_showFirstIndentLevel = "1"
-let g:indentLine_fileType = ["vim", "perl", "python", "cpp",]
+let g:indentLine_showFirstIndentLevel = '1'
+let g:indentLine_fileType = ['vim', 'perl', 'python', 'cpp',]
 let g:indentLine_faster = 1
-let g:indentLine_concealcursor="inc"
-let g:indentLine_leadingSpaceChar = "⥎"
+let g:indentLine_concealcursor='inc'
+let g:indentLine_leadingSpaceChar = '⥎'
 let g:indentLine_leadingSpaceEnabled = 1
 Plugin 'Yggdroot/indentLine'
 
-let g:ctrlp_cmd = "CtrlPBufTagAll"
-let g:ctrlp_match_window = "order:ttb"
+let g:ctrlp_cmd = 'CtrlPBufTagAll'
+let g:ctrlp_match_window = 'order:ttb'
 let g:ctrlp_by_filename = 1
-let g:ctrlp_switch_buffer = "et"
+let g:ctrlp_switch_buffer = 'et'
 let g:ctrlp_use_caching = 0
 let g:ctrlp_user_command = "ag %s -l --hidden --ignore \"\.undo\" --ignore \"\.local\" --nocolor -g \"\""
-let g:ctrlp_types = ["fil", "mru"]
+let g:ctrlp_types = ['fil', 'mru']
 let g:ctrlp_tilde_homedir = 1
 let g:ctrlp_brief_prompt = 1
-let g:ctrlp_extensions = ["buffertag", "quickfix", "rtscript", ]
+let g:ctrlp_extensions = ['buffertag', 'quickfix', 'rtscript', ]
 Plugin 'ctrlpvim/ctrlp.vim'
 
 " let g:easytags_async = 1
@@ -191,14 +190,14 @@ Plugin 'ctrlpvim/ctrlp.vim'
 " Plugin 'xolox/vim-misc'
 " Plugin 'xolox/vim-easytags'
 
-for [k, c] in items({
+for [s:k, s:c] in items({
             \ "\<C-J>" : "\<denite:move_to_next_line>",
             \ "\<C-K>" : "\<denite:move_to_previous_line>",
             \ })
     exe "au VimEnter * cal
-                \ denite#custom#map('insert','".k."','".c."','noremap')"
+                \ denite#custom#map('insert','".s:k."','".s:c."','noremap')"
 endfor
-if !exists("g:denite_menus") | let g:denite_menus = {} | endif
+if !exists('g:denite_menus') | let g:denite_menus = {} | endif
 let g:denite_menus.git = {'description': 'git stuff'}
 let g:denite_menus.git.command_candidates = [
             \['▷ preview hunk ', 'GitGutterPreviewHunk'],
@@ -221,6 +220,7 @@ augroup denitesettings
     au VimEnter * cal denite#custom#var('menu', 'menus', g:denite_menus)
 augroup END
 Plugin 'osyo-manga/unite-quickfix'
+Plugin 'rhysd/unite-redpen.vim'
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/denite.nvim'
 
@@ -236,7 +236,7 @@ let g:multi_cursor_skip_key="\<C-n>"
 let g:multi_cursor_quit_key="\<Esc>"
 let g:multi_cursor_exit_from_visual_mode = 0
 let g:multi_cursor_exit_from_insert_mode = 0
-let g:multi_cursor_visual_maps = {"i":1,"a":1,"f":1,"t":1,}
+let g:multi_cursor_visual_maps = {'i':1,'a':1,'f':1,'t':1,}
 Plugin 'terryma/vim-multiple-cursors'
 
 let g:startify_bookmarks = [ { 'n': '~/.config/nvim/init.vim' }, ]
@@ -246,9 +246,9 @@ let g:startify_commands = [
             \   { 'm':['MRU', 'CtrlPMRUFiles'] },
             \   { 'c':['cmds', 'Denite -cursor-wrap commands'] },
             \   { 'P':['Plugins Update', 'PluginUpdate'] }, ]
-let g:startify_session_dir = "~/.config/nvim/files/session"
+let g:startify_session_dir = expand('$HOME/.config/nvim/files/session')
 let g:startify_list_order =
-            \ [ "files", "dir", "bookmarks", "commands", "sessions", ]
+            \ [ 'files', 'dir', 'bookmarks', 'commands', 'sessions', ]
 let g:startify_files_number = 10
 let g:startify_session_persistence = 1
 let g:startify_enable_special = 0
@@ -261,19 +261,19 @@ Plugin 'tpope/vim-surround'
 " let g:tlWindowPosition = 1
 " Plugin 'vim-scripts/TaskList.vim'
 
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsExpandTrigger="<s-tab>"
-let g:UltiSnipsJumpForwardTrigger="<s-tab>"
-let g:UltiSnipsJumpBackwardTrigger="<CR>"
+let g:UltiSnipsEditSplit='vertical'
+let g:UltiSnipsExpandTrigger='<s-tab>'
+let g:UltiSnipsJumpForwardTrigger='<s-tab>'
+let g:UltiSnipsJumpBackwardTrigger='<CR>'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
 " let g:tex_fold_enabled=1
-let g:vimsyn_folding="af"
+let g:vimsyn_folding='af'
 let g:perl_fold = 1
 let g:fastfold_savehook = 1
 let g:fastfold_skip_filetypes =
-            \ [ "taglist", "gitcommit", "startify", "man", "rst", ]
+            \ [ 'taglist', 'gitcommit', 'startify', 'man', 'rst', ]
 Plugin 'Konfekt/FastFold'
 
 " let g:tmux_navigator_save_on_switch = 1
@@ -285,7 +285,7 @@ let g:SignatureForceMarkPlacement = 1
 let g:SignatureForceMarkerPlacement = 1
 let g:SignatureMarkTextHLDynamic = 1
 let g:SignatureMarkerTextHLDynamic = 1
-let g:SignatureMarkLineHL = "TermCursorNC"
+let g:SignatureMarkLineHL = 'TermCursorNC'
 Plugin 'kshenoy/vim-signature'
 
 let g:gitgutter_highlight_lines = 0
@@ -297,7 +297,7 @@ Plugin 'matze/vim-move'
 
 let g:EasyMotion_space_jump_first = 1
 let g:EasyMotion_use_smartsign_us = 1
-let g:EasyMotion_keys = "ASDFGHJKLQWERUIO;"
+let g:EasyMotion_keys = 'ASDFGHJKLQWERUIO;'
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_use_upper = 1
@@ -307,44 +307,44 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_camel_case = 1
 let g:deoplete#enable_refresh_always = 1
 let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#delimiters = ["/", "(",]
+let g:deoplete#delimiters = ['/', '(',]
 let g:deoplete#auto_complete_delay = 1
 let g:deoplete#auto_refresh_delay = 1
 let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#max_menu_width = 100
 let g:deoplete#tag#cache_limit_size = 5000000
-if !exists("g:deoplete#sources") | let g:deoplete#sources = {} | endif
-let g:deoplete#sources._ = ["file",
-            \ "around",
-            \ "tag",
-            \ "neosnippet",
-            \ "member",
-            \ "buffer",
-            \ "syntax",
-            \ "include",
-            \ "ultisnips"
+if !exists('g:deoplete#sources') | let g:deoplete#sources = {} | endif
+let g:deoplete#sources._ = ['file',
+            \ 'around',
+            \ 'tag',
+            \ 'neosnippet',
+            \ 'member',
+            \ 'buffer',
+            \ 'syntax',
+            \ 'include',
+            \ 'ultisnips'
             \ ]
-let g:deoplete#sources.python = g:deoplete#sources._ + [ "jedi", ]
-let g:deoplete#sources.perl = g:deoplete#sources._ + [ "omni", ]
-let g:deoplete#sources.vim = g:deoplete#sources._ + [ "vim", ]
-let g:deoplete#sources.haskell = g:deoplete#sources._ + [ "ghc", ]
-let g:deoplete#sources.cpp = g:deoplete#sources._ + [ "clang2", ]
-if !exists("g:deoplete#omni#input_patterns")
+let g:deoplete#sources.python = g:deoplete#sources._ + [ 'jedi', ]
+let g:deoplete#sources.perl = g:deoplete#sources._ + [ 'omni', ]
+let g:deoplete#sources.vim = g:deoplete#sources._ + [ 'vim', ]
+let g:deoplete#sources.haskell = g:deoplete#sources._ + [ 'ghc', ]
+let g:deoplete#sources.cpp = g:deoplete#sources._ + [ 'clang2', ]
+if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
 endif
-let g:deoplete#omni#input_patterns.perl = ["[a-zA-Z_]\+->",]
-if !exists("g:deoplete#omni#functions")
+let g:deoplete#omni#input_patterns.perl = ['[a-zA-Z_]\+->',]
+if !exists('g:deoplete#omni#functions')
     let g:deoplete#omni#functions = {}
 endif
-let g:deoplete#omni#functions.perl = "PerlComplete"
-if !exists("g:neoinclude#reverse_exprs")
+let g:deoplete#omni#functions.perl = 'PerlComplete'
+if !exists('g:neoinclude#reverse_exprs')
     let g:neoinclude#reverse_exprs = {}
 endif
 let g:neoinclude#reverse_exprs.perl =
             \ "fnamemodify(substitute(v:fname, \"/\", \"::\", \"g\"), \":r\")"
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#worker_threads = 2
-let g:deoplete#sources#jedi#python_path = expand("$VIRTUAL_ENV/bin/python3")
+let g:deoplete#sources#jedi#python_path = expand('$VIRTUAL_ENV/bin/python3')
 augroup deopletecommands
     autocmd!
     au FileType python let g:deoplete#delimiters = ["/", ".", "(",]
@@ -381,27 +381,28 @@ let g:base16colorspace=256
 Plugin 'chriskempson/base16-vim'
 
 let g:airline_exclude_preview = 1
+let g:airline_exclude_filenames = ['__doc__']
 let g:airline_powerline_fonts = 1
-let g:airline#parts#ffenc#skip_expected_string="utf-8[unix]"
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#hunks#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_splits = 1
 let g:airline#extensions#tabline#excludes =
-            \ [ "pydir.log", "pyrun.log", "'__doc__'",]
+            \ [ 'pydir.log', 'pyrun.log', "'__doc__'",]
 let g:airline#extensions#tabline#exclude_preview = 1
-let g:airline#extensions#tabline#buffers_label = "b"
-let g:airline#extensions#tabline#tabs_label = "t"
+let g:airline#extensions#tabline#buffers_label = 'b'
+let g:airline#extensions#tabline#tabs_label = 't'
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#tabline#formatter = "unique_tail"
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#whitespace#checks =
-            \ ["indent", "trailing", "long", "mixed-indent-file",]
-let g:airline#extensions#whitespace#symbol = ""
+            \ ['indent', 'trailing', 'long', 'mixed-indent-file',]
+let g:airline#extensions#whitespace#symbol = ''
 let g:airline#extensions#wordcount#enabled = 0
-let g:airline_theme = "kolor"
-if !exists("g:airline_symbols") | let g:airline_symbols = {} | endif
-let g:airline_symbols.maxlinenr = ""
+let g:airline_theme = 'kolor'
+if !exists('g:airline_symbols') | let g:airline_symbols = {} | endif
+let g:airline_symbols.maxlinenr = ''
 function! AirlineInit()
     let g:airline_section_b =
                 \ airline#section#create(["%{fnamemodify(getcwd(), \":p:~\")}"])
@@ -409,7 +410,7 @@ function! AirlineInit()
                 \ airline#section#create(["%{bufname(\"%\")}".
                 \ "(%{fnamemodify(bufname(winbufnr(g:lastwin)), \":p:t\")})"])
     let g:airline_section_z =
-                \ airline#section#create( [ "linenr", "maxlinenr", ":%2v" ] )
+                \ airline#section#create( [ 'linenr', 'maxlinenr', ':%2v' ] )
 endfunction
 au User AirlineAfterInit cal AirlineInit()
 Plugin 'vim-airline/vim-airline-themes'
@@ -461,72 +462,72 @@ endfunction
 let g:yankring_min_element_length = 2
 let g:yankring_max_element_length = 0
 let g:yankring_map_dot = 0
-let g:yankring_history_dir = "$HOME/.config/nvim/files"
+let g:yankring_history_dir = '$HOME/.config/nvim/files'
 let g:yankring_manual_clipboard_check = 1
-let g:yankring_n_keys = ""
-let g:yankring_o_keys = ""
-let g:yankring_v_key = ""
-let g:yankring_del_v_key = ""
-let g:yankring_zap_keys = ""
+let g:yankring_n_keys = ''
+let g:yankring_o_keys = ''
+let g:yankring_v_key = ''
+let g:yankring_del_v_key = ''
+let g:yankring_zap_keys = ''
 let g:yankring_replace_n_nkey = "\<C-o>"
 let g:yankring_replace_n_pkey = "\<C-l>"
 let g:yankring_window_height = 12
 Plugin 'vim-scripts/YankRing.vim'
 
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_cursor_column = 0
-let g:syntastic_error_symbol = "E>"
-let g:syntastic_warning_symbol = "W>"
-let g:syntastic_enable_balloons = 0
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_loc_list_height = 8
-let g:syntastic_exit_checks=0
-let g:syntastic_check_on_open = 1
-let g:syntastic_enable_signs = 1
-let g:syntastic_asm_checkers = ["gcc",]
-let g:syntastic_asm_compiler = "arm-none-eabi-gcc"
-let g:syntastic_asm_remove_include_errors = 1
-let g:syntastic_asm_compiler_options = "-mcpu=cortex-m4 -mthumb -mfloat-abi=softfp"
-let g:syntastic_cpp_checkers = ["clang_check","clang_tidy","cppcheck","cppclean","cpplint","flawfinder","gcc","oclint"]
-let g:syntastic_cpp_cpplint_exec = "cpplint"
-let g:syntastic_cpp_remove_include_errors=1
-let g:syntastic_cpp_include_dirs = ["mbed", "../Inc"]
-let g:syntastic_cpp_auto_refresh_includes = 1
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cmake_checkers = ["cmakelint",]
-let g:syntastic_json_checkers = ["jsonlint","jsonvalue"]
-let g:syntastic_perl_checkers = ["perl","perlcritic"]
-let g:syntastic_perl_interpreter="perl"
-let g:syntastic_enable_perl_checker = 1
-let g:syntastic_perl_lib_path=[]
-let g:pymode_lint_on_write = 0
-let g:syntastic_python_checkers = ["pylint",]
-let g:syntastic_sh_checkers = ["bashate","checkbashisms"]
-let g:syntastic_tex_checkers = ["ChkTex","lacheck","proselint", "text/language_check"]
-let g:syntastic_zshcheckers = ["zsh",]
+" let g:syntastic_aggregate_errors = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_cursor_column = 0
+" let g:syntastic_error_symbol = "E>"
+" let g:syntastic_warning_symbol = "W>"
+" let g:syntastic_enable_balloons = 0
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_loc_list_height = 8
+" let g:syntastic_exit_checks=0
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_enable_signs = 1
+" let g:syntastic_asm_checkers = ["gcc",]
+" let g:syntastic_asm_compiler = "arm-none-eabi-gcc"
+" let g:syntastic_asm_remove_include_errors = 1
+" let g:syntastic_asm_compiler_options = "-mcpu=cortex-m4 -mthumb -mfloat-abi=softfp"
+" let g:syntastic_cpp_checkers = ["clang_check","clang_tidy","cppcheck","cppclean","cpplint","flawfinder","gcc","oclint"]
+" let g:syntastic_cpp_cpplint_exec = "cpplint"
+" let g:syntastic_cpp_remove_include_errors=1
+" let g:syntastic_cpp_include_dirs = ["mbed", "../Inc"]
+" let g:syntastic_cpp_auto_refresh_includes = 1
+" let g:syntastic_cpp_check_header = 1
+" let g:syntastic_cmake_checkers = ["cmakelint",]
+" let g:syntastic_json_checkers = ["jsonlint","jsonvalue"]
+" let g:syntastic_perl_checkers = ["perl","perlcritic"]
+" let g:syntastic_perl_interpreter="perl"
+" let g:syntastic_enable_perl_checker = 1
+" let g:syntastic_perl_lib_path=[]
+" let g:pymode_lint_on_write = 0
+" let g:syntastic_python_checkers = ["pylint",]
+" let g:syntastic_sh_checkers = ["bashate","checkbashisms"]
+" let g:syntastic_tex_checkers = ["ChkTex","lacheck","proselint", "text/language_check"]
+" let g:syntastic_zshcheckers = ["zsh",]
 " let g:syntastic_cpp_compiler_options = " -Wno-unused-parameter -Wno-missing-field-initializers
 " \ -fmessage-length=0 -fno-exceptions -fno-builtin -ffunction-sections -fdata-sections -funsigned-char
 " \ -MMD -fno-delete-null-pointer-checks -fomit-frame-pointer -Os -mcpu=cortex-m4 -mthumb
 " \ -mfpu=fpv4-sp-d16 -mfloat-abi=softfp "
-let g:syntastic_cpp_compiler_options = "-std=gnu++11  -Wvla -c
-            \ -include -DTARGET_NUCLEO_L432KC -DARM_MATH_CM4  -DDEVICE_ANALOGIN=1 -DDEVICE_PWMOUT=1
-            \ -DDEVICE_CAN=1 -DDEVICE_INTERRUPTIN=1 -DDEVICE_SPISLAVE=1 -DMBED_BUILD_TIMESTAMP=1506392061.97 -DTOOLCHAIN_GCC_ARM
-            \ -DDEVICE_SERIAL_FC=1 -DDEVICE_TRNG=1 -D__MBED_CMSIS_RTOS_CM -DTARGET_RELEASE -DTARGET_STM -DTARGET_STM32L432KC
-            \ -D__FPU_PRESENT=1 -DDEVICE_SLEEP=1 -DDEVICE_PORTIN=1 -DTARGET_STM32L432xC -DDEVICE_I2C=1
-            \ -DTRANSACTION_QUEUE_SIZE_SPI=2 -D__CORTEX_M4 -DDEVICE_STDIO_MESSAGES=1
-            \ -DTARGET_STM32L4 -DDEVICE_SPI_ASYNCH=1 -DDEVICE_SERIAL=1 -DDEVICE_SPI=1
-            \ -DDEVICE_ANALOGOUT=1 -DTARGET_M4 -DTARGET_UVISOR_UNSUPPORTED
-            \ -DDEVICE_I2C_ASYNCH=1 -DTARGET_CORTEX_M -DTARGET_LIKE_CORTEX_M4
-            \ -DTOOLCHAIN_object -D__CMSIS_RTOS -DTARGET_FF_ARDUINO -DTOOLCHAIN_GCC
-            \ -DDEVICE_PORTINOUT=1 -DTARGET_RTOS_M4_M7 -DDEVICE_LOWPOWERTIMER=1 -DDEVICE_RTC=1
-            \ -D__MBED__=1 -DDEVICE_I2CSLAVE=1 -DTARGET_LIKE_MBED -DDEVICE_PORTOUT=1 "
-let g:syntastic_shell = "/bin/dash"
+" let g:syntastic_cpp_compiler_options = "-std=gnu++11  -Wvla -c
+"             \ -include -DTARGET_NUCLEO_L432KC -DARM_MATH_CM4  -DDEVICE_ANALOGIN=1 -DDEVICE_PWMOUT=1
+"             \ -DDEVICE_CAN=1 -DDEVICE_INTERRUPTIN=1 -DDEVICE_SPISLAVE=1 -DMBED_BUILD_TIMESTAMP=1506392061.97 -DTOOLCHAIN_GCC_ARM
+"             \ -DDEVICE_SERIAL_FC=1 -DDEVICE_TRNG=1 -D__MBED_CMSIS_RTOS_CM -DTARGET_RELEASE -DTARGET_STM -DTARGET_STM32L432KC
+"             \ -D__FPU_PRESENT=1 -DDEVICE_SLEEP=1 -DDEVICE_PORTIN=1 -DTARGET_STM32L432xC -DDEVICE_I2C=1
+"             \ -DTRANSACTION_QUEUE_SIZE_SPI=2 -D__CORTEX_M4 -DDEVICE_STDIO_MESSAGES=1
+"             \ -DTARGET_STM32L4 -DDEVICE_SPI_ASYNCH=1 -DDEVICE_SERIAL=1 -DDEVICE_SPI=1
+"             \ -DDEVICE_ANALOGOUT=1 -DTARGET_M4 -DTARGET_UVISOR_UNSUPPORTED
+"             \ -DDEVICE_I2C_ASYNCH=1 -DTARGET_CORTEX_M -DTARGET_LIKE_CORTEX_M4
+"             \ -DTOOLCHAIN_object -D__CMSIS_RTOS -DTARGET_FF_ARDUINO -DTOOLCHAIN_GCC
+"             \ -DDEVICE_PORTINOUT=1 -DTARGET_RTOS_M4_M7 -DDEVICE_LOWPOWERTIMER=1 -DDEVICE_RTC=1
+"             \ -D__MBED__=1 -DDEVICE_I2CSLAVE=1 -DTARGET_LIKE_MBED -DDEVICE_PORTOUT=1 "
+" let g:syntastic_shell = "/bin/dash"
 " Plugin 'scrooloose/syntastic'
 
-let g:expand_region_text_objects = { "iw":0, "iW":0, "i\"":0, "a\"":0, "i'":0, "a'":0, "ib":1, "ab":1, "i]":1, "iB":1, "il":0, "ii":1, "ai":1, "ip":0, "ie":0, }
-let g:expand_region_text_objects_python = { "iA":0, "iB":0, "ai":1, }
+let g:expand_region_text_objects = { 'iw':0, 'iW':0, "i\"":0, "a\"":0, "i'":0, "a'":0, 'ib':1, 'ab':1, 'i]':1, 'iB':1, 'il':0, 'ii':1, 'ai':1, 'ip':0, 'ie':0, }
+let g:expand_region_text_objects_python = { 'iA':0, 'iB':0, 'ai':1, }
 Plugin 'terryma/vim-expand-region'
 
 let g:gutentags_project_root=['.git', '.gutentagthis', 'Makefile', 'develop.json', '.hg']
@@ -534,15 +535,58 @@ let g:gutentags_ctags_exclude = ['TARGET']
 let g:gutentags_generate_on_empty_buffer=1
 let g:gutentags_resolve_symlinks=1
 let g:gutentags_add_default_project_roots=0
-if !exists("g:gutentags_project_info")
+if !exists('g:gutentags_project_info')
     let g:gutentags_project_info = []
 endif
 call add(g:gutentags_project_info, {'type': 'python', 'file': 'setup.py'})
 call add(g:gutentags_project_info, {'type': 'cpp', 'file': 'Makefile'})
 Plugin 'ludovicchabant/vim-gutentags'
 
+let g:grammarous#default_comments_only_filetypes = {
+            \ '*' : 1, 'help' : 0, 'markdown' : 0, 'tex' : 0
+            \ }
+let g:grammarous#show_first_error = 1
+Plugin 'rhysd/vim-grammarous'
+Plugin 'rhysd/vim-fixjson'
+Plugin 'rhysd/clever-split.vim'
+Plugin 'rhysd/vim-textobj-lastinserted'
+Plugin 'rhysd/vim-textobj-continuous-line'
+Plugin 'rhysd/tmpwin.vim'
+Plugin 'rhysd/vim-operator-filled-with-blank'
+Plugin 'rhysd/committia.vim'
 Plugin 'lervag/vimtex'
 Plugin 'neomake/neomake'
+let g:neomake_tex_enabled_makers = ['chktex', 'lacheck', 'rubberinfo', 'proselint', 'writegood', 'redpen', 'alex']
+function TexWritegoodPostprocess(entry)
+            if a:entry.text !~# '".*"'
+                call extend(a:entry,{'valid':-1})
+            endif
+        endfunction
+let g:neomake_tex_writegood_maker = {
+            \ 'exe': 'writegood',
+            \ 'args': '',
+            \ 'output_stream' : 'stdout',
+            \ 'append_file': 1,
+            \ 'errorformat': '%m line %l at column %c',
+            \ 'postprocess': function('TexWritegoodPostprocess'),
+            \ }
+
+let g:neomake_tex_alex_maker = {
+            \ 'exe': 'alex',
+            \ 'args': '',
+            \ 'output_stream' : 'both',
+            \ 'append_file': 1,
+            \ 'errorformat': '%+P%f,%*[\ ]%l:%c-%*[0-9]:%v%*[\ ]%m,%-Q',
+            \ }
+let g:neomake_tex_redpen_maker = {
+            \ 'exe': 'redpen',
+            \ 'args': ['-c', expand('$HOME/.redpenrc'), '-f', 'latex', '-r', 'plain', '-l', '100',],
+            \ 'output_stream' : 'both',
+            \ 'append_file': 1,
+            \ 'errorformat': '%f:%l: %m',
+            \ }
+            " \ 'postprocess': function('TexWritegoodPostprocess'),
+
 let g:neomake_cpp_mbed_maker = {
     \ 'exe': 'mbed',
     \ 'cwd': '',
@@ -586,7 +630,26 @@ let g:livepreview_engine = 'latexmk' . ' -pdf -shell-escape'
 " Plugin 'eagletmt/neco-ghc'
 " Plugin 'neovimhaskell/haskell-vim.git'
 
-let g:jedi#completions_command = ""
+function! Jedi_doc_imp()
+    PythonJedi if jedi_vim.show_documentation() is None: vim.command('return')
+    call pymode#tempbuffer_open('__doc__')
+    silent $put=l:doc
+    silent normal! gg
+    silent normal! 3dd
+    setlocal nomodifiable
+    setlocal nomodified
+    setlocal filetype=rst
+    setlocal foldlevel=200 " do not fold in __doc__
+
+    wincmd p
+endfunction
+
+augroup autojedi
+    autocmd!
+    autocmd CursorHold *.py call Jedi_doc_imp()
+augroup end
+
+let g:jedi#completions_command = ''
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#goto_command = "\<leader>g"
@@ -595,12 +658,12 @@ let g:jedi#documentation_command = "\<leader>d"
 let g:jedi#rename_command = "\<leader>js"
 let g:jedi#usages_command = "\<leader>8"
 let g:jedi#auto_close_doc = 0
-let g:jedi#use_splits_not_buffers = "winwidth"
+let g:jedi#use_splits_not_buffers = 'winwidth'
 let g:jedi#completions_enabled = 0
 let g:jedi#force_py_version = 3
 let g:pymode_options = 0
 let g:pymode_options_max_line_length = 90
-let g:pymode_python = "python3"
+let g:pymode_python = 'python3'
 let g:pymode_folding = 0
 let g:pymode_doc_bind = "\<leader>pd"
 let g:pymode_virtualenv = 0
@@ -612,7 +675,7 @@ let g:pymode_rope_show_doc_bind = "\<leader>rd"
 let g:pymode_rope_completion = 0
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_goto_definition_bind = "\<leader>o"
-let g:pymode_rope_goto_definition_cmd = "vnew"
+let g:pymode_rope_goto_definition_cmd = 'vnew'
 let g:pymode_rope_rename_bind = "\<leader>s"
 let g:pymode_rope_rename_module_bind = "\<leader>rsm"
 let g:pymode_rope_organize_imports_bind = "\<leader>roi"
@@ -632,7 +695,7 @@ let g:impsort_relative_last = 1
 let g:impsort_textwidth = g:pymode_options_max_line_length
 let g:impsort_highlight_star_imports = 1
 " nvim's builtin python.vim
-let g:python3_host_prog = expand("$VIRTUAL_ENV/bin/python3")
+let g:python3_host_prog = expand('$VIRTUAL_ENV/bin/python3')
 let g:python_no_builtin_highlight = 1
 let g:python_no_exception_highlight = 1
 let g:python_no_doctest_highlight = 1
@@ -783,14 +846,14 @@ cnoreabbrev T/  Tabularize //l1c1l0<left><left><left><left><left><left><left><c-
 cnoreabbrev w!!  SudoWrite
 
 
-for [k, c] in items({
+for [s:k, s:c] in items({
             \ 'w': 'bd-wl',
             \ 'f': 'bd-fl',
             \ 't': 'bd-tl',
             \ 'j': 'bd-jk',
             \ 'k': 'bd-jk',
             \ })
-    exe 'map <expr><unique>'.k.' v:count ? "'.k.'" : "\<Plug>(easymotion-'.c.')"'
+    exe 'map <expr><unique>'.s:k.' v:count ? "'.s:k.'" : "\<Plug>(easymotion-'.s:c.')"'
 endfor
 
 nmap <expr><unique> e v:count ? e : "\<Plug>(easymotion-bd-el)"
@@ -804,30 +867,27 @@ snoremap <unique><Tab> <C-O>%
 inoremap <unique> <C-S> <C-Y>
 inoremap <unique><C-A> <C-@>
 inoremap <unique><C-G><C-A> <C-A>
-inoremap <unique><C-V>     <C-R>*
 inoremap <unique><C-Q>     <C-V>
 
 map <unique>s <Plug>(easymotion-bd-f2)
 noremap <unique>gs s
 
-" \ '*': 'z*',
-" \ '#': 'z#',
-" \ 'g*': 'gz*',
-" \ 'gS': 'gz*',
-" \ 'g#': 'gz#',
-for [k, c] in items({
+for [s:k, s:c] in items({
             \ 'S': 'z*',
             \ })
-    exe 'nmap <unique>'.k.' <Plug>(asterisk-'.c.')<Plug>(easymotion-bd-n)'
-    exe 'omap <unique>'.k.' <Plug>(asterisk-'.c.')<Plug>(easymotion-bd-n)'
+    exe 'nmap <unique>'.s:k.' <Plug>(asterisk-'.s:c.')'
+    exe 'omap <unique>'.s:k.' <Plug>(asterisk-'.s:c.')'
 endfor
 
-for m in ['nmap', 'omap', 'xmap',]
-    exe m.' <unique><tab> %'
+for s:m in ['nmap', 'omap', 'xmap',]
+    exe s:m.' <unique><tab> %'
 endfor
 
 let g:lastwin = 1
-au WinLeave /*/[^\[]*[^\]] let g:lastwin = winnr()
+augroup window_autos
+    autocmd!
+autocmd WinLeave /*/[^\[]*[^\]] let g:lastwin = winnr()
+augroup end
 nnoremap <silent><expr><unique><S-Tab> winnr() == g:lastwin ? "\<c-w>W" : winnr('$') > g:lastwin ? "\<c-w>W" : ":exe g:lastwin.'wincmd w'\<CR>"
 
 nmap <unique> ], <Plug>(swap-next)
@@ -851,7 +911,6 @@ nnoremap <unique>`> '>
 nnoremap <unique> Q     :Autoformat<CR>
 nnoremap <unique> gq    :Autoformat<CR>
 xmap     <unique> v     <Plug>(expand_region_expand)
-" xmap     <unique> <CR>  <Plug>NrrwrgnDo
 noremap  <unique> h     ^
 noremap  <unique> gh    h
 noremap  <unique> l     $
@@ -871,13 +930,13 @@ inoremap <unique> fj    <esc>
 xnoremap <unique>S<Space>  c<Space><C-R>"<Space><C-C>
 nnoremap <unique><c-Space> <C-I>
 nnoremap <unique><Space>   <C-O>
-nnoremap <unique><c-t>     g<C-]>
-nnoremap <unique><BS> <C-T>
-nnoremap <unique><C-K>     :w<CR>
+nnoremap <unique>K     g<C-]>
+nnoremap <unique><C-K> <C-T>
 
 nnoremap <unique><F10> <esc>:xa<cr>
 
-let g:mapleader=","
+let g:mapleader=','
+nnoremap <unique><leader>k     :w<CR>
 nnoremap          <unique><leader>z    zjzo
 nnoremap  <silent><unique><leader>r    :noh<CR>:dif<CR>:syn sync fromstart<CR><C-L>
 nmap              <unique><leader>n    <Plug>(easymotion-bd-n)
@@ -886,27 +945,19 @@ nnoremap          <unique><leader>,    qj
 nnoremap          <unique><leader>.    :HardTimeOff<CR>@j:HardTimeOn<CR>
 noremap           <unique><leader>q    :qall<CR>
 noremap           <unique><leader>d    :hide<CR>
+nnoremap <silent><leader><Space>       :<C-U>call tmpwin#toggle(      'normal! gg'     )<CR>
+nnoremap          <unique><leader>ss   :<C-U>CleverSplit<CR>
 nnoremap          <unique><leader>sv   :vs<CR>
 nnoremap          <unique><leader>sh   :sp<CR>
 nnoremap          <unique><leader>cd   :cd %:p:h<CR>
 nmap <unique><leader>b <Plug>AirlineSelectPrevTab
 nmap <unique><leader>f <Plug>AirlineSelectNextTab
 
-for n in range(1,9)
-    exe 'nmap <unique>'.g:mapleader.n.' <Plug>AirlineSelectTab'.n
+for s:n in range(1,9)
+    exe 'nmap <unique>'.g:mapleader.s:n.' <Plug>AirlineSelectTab'.s:n
 endfor
 
-" for [k, d] in items({
-"             \ 'h': 'Left',
-"             \ 'j': 'Down',
-"             \ 'k': 'Up',
-"             \ 'l': 'Right',
-"             \ })
-"     exe 'nnoremap <silent><unique><leader>'.k.' :TmuxNavigate'.d.'<CR>'
-" endfor
-
 let g:mapleader=';'
-" nmap      <silent><unique><leader><CR> :NW<CR>
 nnoremap <unique><leader><Space> :Startify<CR>
 nnoremap <unique><leader>y       :YRShow<CR>
 nnoremap <unique><leader>t       :TlistOpen<CR>
@@ -921,7 +972,7 @@ nnoremap <unique><leader>o :Denite -vertical-preview -auto-preview -cursor-wrap 
 nnoremap <unique><leader>ag    :SideSearch ""<Left>
 xnoremap <unique><leader>ag    y:SideSearch <C-r><C-r>"<CR> | wincmd p
 
-for [k,c] in items({
+for [s:k,s:c] in items({
             \ 'l' : 'unite:location_list',
             \ 'q' : 'unite:quickfix',
             \ 'h' : 'help',
@@ -930,7 +981,7 @@ for [k,c] in items({
             \ ':' : 'command',
             \ '/' : 'line',
             \ })
-    exe 'nnoremap <unique>'.g:mapleader.k.' :Denite -cursor-wrap '.c.'<CR>'
+    exe 'nnoremap <unique>'.g:mapleader.s:k.' :Denite -cursor-wrap '.s:c.'<CR>'
 endfor
 
 let g:mapleader='-'

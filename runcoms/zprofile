@@ -32,6 +32,7 @@ path=(
   ${HOME}/.fzf/bin
   ${HOME}/golang/bin
   ${HOME}/gcc-arm-none/gcc-arm-none-eabi-7-2017-q4-major/bin
+  ${HOME}/.cargo/bin
   )
 
 # Set the default Less options.
@@ -77,7 +78,7 @@ export GOPATH=$HOME/golang
 export OMNIVIM_EDITOR=$(which nvim)
 export BYOBU_WINDOWS=me
 export PERL_UNICODE=AS
-export PERL5OPTS="-Mperl5i -MIO::All"
+# export PERL5OPTS="-Mperl5i -MIO::All"
 export RANGER_LOAD_DEFAULT_RC=FALSE
 export JAVA_TOOL_OPTIONS="-Dgnu.io.rxtx.SerialPorts=/dev/tty96B0"
 export MONITOR_PORT="/dev/tty96B0"
@@ -87,3 +88,4 @@ export AUTO_LS_PATH="${PATH}"
 export ZSH_HIGHLIGHT_MAXLENGTH=1000
 export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
+export CACA_GEOMETRY=172x56

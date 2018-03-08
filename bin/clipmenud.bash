@@ -10,7 +10,7 @@ if type -p xsel >/dev/null; then
 else
   clipmenucmd="xclip -o -sel "
 fi
-while sleep "${CLIPMENUD_SLEEP:-2}"; do
+while sleep "${CLIPMENUD_SLEEP:-1}"; do
   for selection in clipboard primary; do
     data="$(${clipmenucmd}${selection}; printf x)"
 
