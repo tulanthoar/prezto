@@ -8,7 +8,7 @@ ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=(accept-and-infer-next-history accept-and-run)
 source $ZPREZD/modules/base16-shell/scripts/base16-seti-ui.sh
 source ${ZRCD}/myfunctions.zsh
 source ${ZRCD}/myaliases.zsh
-[[ $- == *i* ]] && source "$HOME/.fzf/shell/completion.zsh" 2> /dev/null
+[[ $- == *i* ]] && source "$ZPREZD/modules/fzf/shell/completion.zsh" 2> /dev/null
 source ${ZPREZD}/modules/z/z.sh
 source ${ZPREZD}/modules/fz/fz.plugin.zsh
 source ${ZPREZD}/modules/auto-ls/auto-ls.zsh
