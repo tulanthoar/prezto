@@ -5,6 +5,7 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+[[ $TERM = "xterm" ]] && export TERM='xterm-256color'
 export EDITOR='nvim'
 export VISUAL='nvim'
 export PAGER='less'
@@ -83,7 +84,7 @@ export RANGER_LOAD_DEFAULT_RC=FALSE
 export JAVA_TOOL_OPTIONS="-Dgnu.io.rxtx.SerialPorts=/dev/tty96B0"
 export MONITOR_PORT="/dev/tty96B0"
 export BYOBU_CONFIG_DIR="${HOME}/.config/byobu"
-export AUTO_LS_COMMANDS=(${HOME}/bin/l git-status)
+export AUTO_LS_COMMANDS=(${HOME}/.local/bin/l git-status)
 export AUTO_LS_PATH="${PATH}"
 export ZSH_HIGHLIGHT_MAXLENGTH=1000
 export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
