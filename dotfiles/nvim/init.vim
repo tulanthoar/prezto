@@ -890,8 +890,8 @@ autocmd WinLeave /*/[^\[]*[^\]] let g:lastwin = winnr()
 augroup end
 nnoremap <silent><expr><unique><S-Tab> winnr() == g:lastwin ? "\<c-w>W" : winnr('$') > g:lastwin ? "\<c-w>W" : ":exe g:lastwin.'wincmd w'\<CR>"
 
-nmap <unique> ], <Plug>(swap-next)
-nmap <unique> [, <Plug>(swap-prev)
+nmap <unique> g. <Plug>(swap-next)
+nmap <unique> g, <Plug>(swap-prev)
 nmap <unique> [g <Plug>GitGutterPrevHunk
 nmap <unique> ]g <Plug>GitGutterNextHunk
 omap <unique> ig <Plug>GitGutterTextObjectInnerPending
