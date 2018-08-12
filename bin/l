@@ -1,0 +1,2 @@
+#/usr/bin/env dash
+exa -hulTaF --color=always --color-scale --group-directories-first --git-ignore --level=2 --sort=size --git --time-style long-iso "$@"
