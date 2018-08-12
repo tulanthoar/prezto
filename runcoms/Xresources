@@ -5,13 +5,17 @@ Xft.hinting: 1
 Xft.antialias: true
 Xft.rgba     : rgb
 
-XTerm*vt100.font:       xft:hack:pixelsize=15:style=Regular
-Xterm*vt100.boldFont:       xft:hack:pixelsize=15:style=Bold
-Xterm*vt100.italicFont:     xft:hack:pixelsize=15:style=Italic
-Xterm*vt100.boldItalicFont: xft:hack:pixelsize=15:style=Bold Italic
-XTerm*vt100.jumpScroll:   true
-XTerm*vt100.fastScroll:   true
-XTerm*vt100.decTerminalID: 340
+XTerm*font:       xft:hack:pixelsize=15:antialias=true:style=Regular
+XTerm*boldFont:       xft:hack:pixelsize=15:bold
+XTerm*italicFont:     xft:hack:pixelsize=15:style=Italic
+XTerm*boldItalicFont: xft:hack:pixelsize=15:style=Bold Italic
+XTerm*jumpScroll:   true
+XTerm*fastScroll:   true
+XTerm*decTerminalID: vt340
+XTerm*numColorRegisters: 256
+XTerm*underlineColor : #e628ba
+XTerm*highlightColor: #a6a6a6
+XTerm*saveLines     :18000
 
 dmenu.font      : -*-hack-*-r-*-*-18-*-*-*-*-*-*-*
 dzen2.font      : -*-hack-*-r-*-*-13-*-*-*-*-*-*-*
@@ -50,7 +54,7 @@ URxvt.scrollBar     :false
 URxvt.visualBell    :true
 URxvt.internalBorder:0
 URxvt.externalBorder:0
-URxvt.saveLines     :1800
+URxvt.saveLines     :18000
 URxvt.letterSpace   :0
 URxvt.font:           xft:hack:pixelsize=15:style=Regular
 URxvt.boldFont:       xft:hack:pixelsize=15:style=Bold
