@@ -1,6 +1,7 @@
+alias dfu-bitsy='sudo dfu-util -d 0483:df11 -c 1 -a 0 -s 0x08000000:leave -D '
 alias swappone='tmux swap-window -t:+'
 alias drun='docker run -it --rm'
-alias pl='perl'
+alias pl='perl5i'
 alias pli='sudo cpanm'
 alias pld='perldoc'
 alias py='python'
