@@ -1,92 +1,100 @@
 # vim: set ft=zsh:
-#tinit=$(date +%S%N)
-[ -z ${ZDOTD+x} ] && source ${HOME}/.zprofile
-[[ -f ${HOME}/.terminfo/${TERM[1]}/${TERM} ]] || infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
-[[ -s ${HOME}/.local/venv/bin/activate ]] && source ${HOME}/.local/venv/bin/activate
-fpath=($ZRCD/funcs $ZPREZD/modules/zsh-completions/src $fpath)
-ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=(accept-and-infer-next-history accept-and-run)
-source $ZPREZD/modules/base16-shell/scripts/base16-seti-ui.sh
-source ${ZRCD}/myfunctions.zsh
-source ${ZRCD}/myaliases.zsh
-[[ $- == *i* ]] && source "$ZPREZD/modules/fzf/shell/completion.zsh" 2> /dev/null
-source ${ZPREZD}/modules/z/z.sh
-source ${ZPREZD}/modules/fz/fz.plugin.zsh
-source ${ZPREZD}/modules/auto-ls/auto-ls.zsh
-setopt MULTIOS              # Write to multiple descriptors.
-setopt EXTENDED_GLOB        # Use extended globbing syntax.
-setopt AUTO_CD              # Auto changes to a directory without typing cd.
-setopt AUTO_NAME_DIRS       # Auto add variable-stored paths to ~ list.
-setopt AUTO_PUSHD           # Push the old directory onto the stack on cd.
-setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
-setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
-setopt PUSHD_TO_HOME        # Push to home directory when no argument is given.
-setopt CDABLE_VARS          #add a ~ to bare directory commands
-setopt ALWAYS_TO_END        # Move cursor to the end of a completed word.
-setopt AUTO_LIST            # list menu complete on first <Tab>
-setopt AUTO_PARAM_KEYS      #automaically delete spaces before a } or ,
-setopt AUTO_PARAM_SLASH     # If completed parameter is a directory, add a trailing slash.
-setopt AUTO_REMOVE_SLASH    #remove trailing / if not needed
-setopt LIST_AMBIGUOUS       # automatically inset ambiguous compeltions
-setopt LIST_PACKED          # use variable length width completion columns
-setopt LIST_TYPES           # include file types when autocompletin
-setopt CSH_NULL_GLOB        # remove unused glob patters without report errors
-#setopt GLOB_STAR_SHORT      # ** is shorthand for **/*
-setopt MARK_DIRS            # add trailing / to filename (directory) generation
-setopt NUMERIC_GLOB_SORT    # sort by numbers when prefixed
-# setopt HIST_IGNORE_ALL_DUPS # don\'t show duplicated lines in history
-setopt HIST_NO_STORE        # don\'t include the history "fc -l" command
-setopt HIST_REDUCE_BLANKS   # let zsh trim blanks automagically
-setopt HIST_VERIFY          # first substitute history before allowing execution
-setopt BANG_HIST            # Treat the '!' character specially during expansion.
-setopt INC_APPEND_HISTORY   # Write to the history file immediately, not when the shell exits.
-setopt SHARE_HISTORY        # Share history between all sessions.
-setopt HIST_BEEP            # Beep when accessing non-existent history.
-setopt CORRECT              # correct command spelling
-unsetopt FLOW_CONTROL       # Disable start/stop characters in shell editor.
-setopt PATH_DIRS            # Perform path search even on command names with slashes.
-setopt PRINT_EXIT_VALUE     # print exit values
-setopt RC_QUOTES            # use `''` for single quotes in single quotes
-autoload -Uz compinit && compinit -i
-source ${ZPREZD}/modules/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $ZPREZD/modules/history-search-multi-word/history-search-multi-word.plugin.zsh
-source $ZPREZD/modules/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-zstyle ":history-search-multi-word" page-size "25"
-zstyle ":history-search-multi-word" highlight-color "fg=93,standout,underline"
-zstyle ":plugin:history-search-multi-word" active "bg=23,bold,underline"
-FAST_HIGHLIGHT_STYLES[default]="fg=230"
-FAST_HIGHLIGHT_STYLES[unknown-token]="fg=160,bold,bg=248"
-FAST_HIGHLIGHT_STYLES[reserved-word]="fg=37,bold"
-FAST_HIGHLIGHT_STYLES[alias]="fg=34,standout,bold"
-FAST_HIGHLIGHT_STYLES[suffix-alias]="fg=64"
-FAST_HIGHLIGHT_STYLES[builtin]="fg=148,standout,bold"
-FAST_HIGHLIGHT_STYLES[function]="fg=82,standout,bold"
-FAST_HIGHLIGHT_STYLES[command]="fg=46,standout,bold"
-FAST_HIGHLIGHT_STYLES[precommand]="fg=50"
-FAST_HIGHLIGHT_STYLES[commandseparator]="fg=90,bold"
-FAST_HIGHLIGHT_STYLES[hashed-command]="fg=70,standout,bold"
-FAST_HIGHLIGHT_STYLES[path]="fg=177"
-FAST_HIGHLIGHT_STYLES[path_pathseparator]="fg=243"
-FAST_HIGHLIGHT_STYLES[globbing]="fg=16,bold"
-FAST_HIGHLIGHT_STYLES[history-expansion]="fg=20,bold"
-FAST_HIGHLIGHT_STYLES[single-hyphen-option]="fg=3,underline"
-FAST_HIGHLIGHT_STYLES[double-hyphen-option]="fg=202,underline"
-FAST_HIGHLIGHT_STYLES[back-quoted-argument]="fg=247,underline"
-FAST_HIGHLIGHT_STYLES[single-quoted-argument]="fg=255,underline"
-FAST_HIGHLIGHT_STYLES[double-quoted-argument]="fg=249,underline"
-FAST_HIGHLIGHT_STYLES[dollar-quoted-argument]="fg=230,underline"
-FAST_HIGHLIGHT_STYLES[back-or-dollar-double-quoted-argument]="fg=228,underline"
-FAST_HIGHLIGHT_STYLES[back-dollar-quoted-argument]="fg=226,underline"
-FAST_HIGHLIGHT_STYLES[assign]="fg=30,bg=244"
-FAST_HIGHLIGHT_STYLES[redirection]="fg=29,bold,bg=252"
-FAST_HIGHLIGHT_STYLES[comment]="fg=232,bold,bg=252"
-FAST_HIGHLIGHT_STYLES[variable]="fg=220"
-FAST_HIGHLIGHT_STYLES[mathvar]="fg=214,bold"
-FAST_HIGHLIGHT_STYLES[mathnum]="fg=203"
-FAST_HIGHLIGHT_STYLES[matherr]="fg=196,bold,underline"
-set -A HSMW_HIGHLIGHT_STYLES ${(kv)FAST_HIGHLIGHT_STYLES}
-source ${ZPREZD}/init.zsh
-snippets-add
-key_bind
-source $ZPREZD/modules/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
-#tf=$(date +%S%N)
-#echo $(( ${tf[1,5]} - ${tinit[1,5]} ))
+# [[ -f ${HOME}/.terminfo/${TERM[1]}/${TERM} ]] || infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
+# function zshrcload(){
+zmodload zsh/complist
+zmodload zsh/deltochar
+unalias run-help
+autoload -Uw $ZRCD/funcs/myfuncs /usr/share/zsh/functions/{Completion/Completion.zwc,Misc/Misc.zwc,Prompts/Prompt.zwc}
+print -n '\033]12;#ff5f5f\007''\033[3 q' # cursor color style
+zstyle ':prezto:*:*' color 'yes'
+chpwd_functions+=(git-status l)
+myaliases
+local cmnd=pacman
+[[ ${${cmnd}:c} = ${cmnd} ]] || source ${ZPREZD}/modules/pacman/init.zsh
+cmnd=tag
+if [[ ${${cmnd}:c} != ${cmnd} ]]; then
+  export TAG_SEARCH_PROG=ag  # replace with rg for ripgrep
+  tag() { command tag "$@"; source ${TAG_ALIAS_FILE:=$TMPPREFIX/tag_aliases} }
+  # alias ag=tag  # replace with rg for ripgrep
+fi
+local re_initialize=0
+if [[ -n ${ZDOTDIR:-${HOME}}/${ZSH_COMPDUMP:-.zcompdump}(#qN.mh+24) ]]; then
+    re_initialize=1
+fi
+if [ "$re_initialize" -eq "1" ]; then
+    compinit -d ${ZDOTDIR:-${HOME}}/${ZSH_COMPDUMP:-.zcompdump}
+    compdump
+else
+    compinit -d ${ZDOTDIR:-${HOME}}/${ZSH_COMPDUMP:-.zcompdump} -C
+fi
+source ${ZPREZD}/modules/fasd/fasd.zsh
+# }
+# autoload -U zshrcload && zshrcload
+# function zshintload(){
+if [[ "$TERM" == 'dumb' ]]; then
+    zstyle ':prezto:*:*' color 'no'
+    zstyle ':prezto:module:prompt' theme 'off'
+fi
+if [[ $- == *i* ]]; then
+    zstyle ':completion:*' menu select
+    zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==34=16}:${(s.:.)LS_COLORS}")';
+    promptinit
+    prompt "paradox"
+    add-zsh-hook preexec alias-tips-preexec
+    # source "$ZPREZD/modules/fzf/shell/completion.zsh"
+    source $ZPREZD/modules/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
+    source ${ZPREZD}/modules/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+    ZSH_AUTOSUGGEST_EXECUTE_WIDGETS+=(accept-and-infer-next-history accept-and-run)
+    # }
+    # autoload -U zshintload && zshintload
+    # function zshfinload(){
+    key_bind
+    unambigandmenu() {
+        zle zic-completion
+        zle magic-space
+        zle backward-delete-char
+    }
+    zle -N unambigandmenu
+    source "${ZPREZD}/modules/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+    FAST_HIGHLIGHT_STYLES[default]="fg=230"
+    FAST_HIGHLIGHT_STYLES[unknown-token]="fg=196,bold,bg=231"
+    FAST_HIGHLIGHT_STYLES[reserved-word]="fg=37,bold"
+    FAST_HIGHLIGHT_STYLES[suffix-alias]="fg=64"
+    FAST_HIGHLIGHT_STYLES[alias]="fg=24,bg=34,bold"
+    FAST_HIGHLIGHT_STYLES[builtin]="fg=24,bg=148,bold"
+    FAST_HIGHLIGHT_STYLES[function]="fg=24,bg=82,bold"
+    FAST_HIGHLIGHT_STYLES[command]="fg=24,bg=46,bold"
+    FAST_HIGHLIGHT_STYLES[hashed-command]="bg=70,fg=24,bold"
+    FAST_HIGHLIGHT_STYLES[precommand]="fg=50"
+    FAST_HIGHLIGHT_STYLES[commandseparator]="fg=90,bold"
+    FAST_HIGHLIGHT_STYLES[path]="fg=177"
+    FAST_HIGHLIGHT_STYLES[path_pathseparator]="fg=243"
+    FAST_HIGHLIGHT_STYLES[globbing]="fg=21,bold"
+    FAST_HIGHLIGHT_STYLES[history-expansion]="fg=20,bold"
+    FAST_HIGHLIGHT_STYLES[single-hyphen-option]="fg=3,underline"
+    FAST_HIGHLIGHT_STYLES[double-hyphen-option]="fg=202,underline"
+    FAST_HIGHLIGHT_STYLES[back-quoted-argument]="fg=247,underline"
+    FAST_HIGHLIGHT_STYLES[single-quoted-argument]="fg=255,underline"
+    FAST_HIGHLIGHT_STYLES[double-quoted-argument]="fg=249,underline"
+    FAST_HIGHLIGHT_STYLES[dollar-quoted-argument]="fg=230,underline"
+    FAST_HIGHLIGHT_STYLES[back-or-dollar-double-quoted-argument]="fg=228,underline"
+    FAST_HIGHLIGHT_STYLES[back-dollar-quoted-argument]="fg=226,underline"
+    FAST_HIGHLIGHT_STYLES[assign]="fg=30,bg=244"
+    FAST_HIGHLIGHT_STYLES[redirection]="fg=29,bold,bg=252"
+    FAST_HIGHLIGHT_STYLES[comment]="fg=52,bold,bg=252"
+    FAST_HIGHLIGHT_STYLES[variable]="fg=220"
+    FAST_HIGHLIGHT_STYLES[mathvar]="fg=214,bold"
+    FAST_HIGHLIGHT_STYLES[mathnum]="fg=203"
+    FAST_HIGHLIGHT_STYLES[matherr]="fg=196,bold,underline"
+    set -A HSMW_HIGHLIGHT_STYLES ${(kv)FAST_HIGHLIGHT_STYLES}
+    source "${ZPREZD}/modules/history-substring-search/external/zsh-history-substring-search.zsh"
+    HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
+    HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
+    HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
+    bindkey -M viins "\C-P" history-substring-search-up
+    bindkey -M viins "\C-N" history-substring-search-down
+    bindkey -M viins "\C-I" zic-completion
+fi
+# }
+# autoload -U zshfinload && zshfinload
+# zprof &>${HOME}/profiled

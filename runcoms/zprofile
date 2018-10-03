@@ -1,72 +1,18 @@
-#
-# Executes commands at login pre-zshrc.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
-
-[[ $TERM = "xterm" ]] && export TERM='xterm-256color'
-export EDITOR='nvim'
-export VISUAL='nvim'
-export PAGER='less'
-export PERLDOC_SRC_PAGER='nvim'
-
-export HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"       # The path to the history file.
+# vim: set ft=bash:
+export PATH="${PATH}:$HOME/.local/bin:${HOME}/.gem/ruby/2.5.0/bin"
+export LESS='b-1 -F -J -M -n -q -R -W -X -z-4'
 export HISTSIZE=10000                   # The maximum number of events to save in the internal history.
 export SAVEHIST=10000                   # The maximum number of events to save in the history file.
-[[ -z $LANG ]] && export LANG='en_US.UTF-8'
-
-# Ensure path arrays do not contain duplicates.
-typeset -gU fpath path
-
-# Set the the list of directories that cd searches.
-# cdpath=(
-#   $cdpath
-# )
-
-# Set the list of directories that Zsh searches for programs.
-path=(
-  $path
-  $HOME/bin
-  $HOME/.local/bin
-  $HOME/.gem/ruby/2.3.0/bin
-  ${HOME}/.fzf/bin
-  ${HOME}/golang/bin
-  ${HOME}/gcc-arm-none/gcc-arm-none-eabi-7-2017-q4-major/bin
-  ${HOME}/.cargo/bin
-  )
-
-# Set the default Less options.
-# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
-# Remove -X and -F (exit if the content fits on one screen) to enable it.
-export LESS='-F -g -i -M -R -S -w -X -z-4'
-
-# Set the Less input preprocessor.
-# Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
-(( $#commands[(i)lesspipe(|.sh)] )) && export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
-
-#
-# Temporary Files
-#
-
-export TMPDIR=/tmp/$LOGNAME
-[[ -d $TMPDIR ]]|| mkdir -p -m 700 $TMPDIR
-export NVIM_LISTEN_ADDRESS=$TMPDIR/nvim_omni
-
-TMPPREFIX=${TMPDIR%/}/zsh
-
-typeset -g FZF_DEFAULT_OPTS='--reverse --cycle --select-1 --exit-0 --color=fg:102,bg:233,hl:65,fg+:15,bg+:234,hl+:108,info:108,prompt:109,spinner:108,pointer:168,marker:168'
-FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --tiebreak=begin --filepath-word --height=90% --ansi --tabstop=4"
-FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --bind \"ctrl-s:backward-char,ctrl-w:backward-kill-word,ctrl-d:backward-word,ctrl-b:beginning-of-line,ctrl-k:delete-char,ctrl-f:end-of-line\""
-FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --bind \"ctrl-e:forward-char,ctrl-u:forward-word,ctrl-space:jump,ctrl-q:kill-line,ctrl-x:kill-word\""
-FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --bind \"ctrl-o:half-page-up,ctrl-l:half-page-down,ctrl-g:top,[:preview-page-up,]:preview-page-down,alt-/:execute(cat {})\""
+export EDITOR='nvim'
+export VISUAL='bat --color always'
+export PAGER='less'
+export MOST_EDITOR='nvim %s'
+export PERLDOC_SRC_PAGER='nvim'
+export ZLS_COLORS=""
+# [[ $(which lesspipe) || $(which lesspipe.sh) ]] && export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 export FZF_TMUX_HEIGHT='80%'
 export FZF_COMPLETION_TRIGGER=',,'
 export FZF_COMPLETION_OPTS='+c'
-which pt &> /dev/null && export FZF_DEFAULT_COMMAND='pt --hidden --ignore .git --ignore .snapshot . -g ""'
-which ag &> /dev/null && export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
 export KEYTIMEOUT=3
 export ZPREZD=${HOME}/.zprezto
 export ZDOTD=${ZPREZD}/dotfiles
@@ -74,19 +20,45 @@ export ZBIND=${ZPREZD}/bin
 export ZRCD=${ZPREZD}/runcoms
 export GITAPPSD=${HOME}/apps-git
 export FZFD=${HOME}/.fzf
-# export JAVA_HOME="/usr/lib/jvm/default-jvm"
 export GOPATH=$HOME/golang
-export OMNIVIM_EDITOR=$(which nvim)
 export BYOBU_WINDOWS=me
-export PERL_UNICODE=AS
-# export PERL5OPTS="-Mperl5i -MIO::All"
-export RANGER_LOAD_DEFAULT_RC=FALSE
 export JAVA_TOOL_OPTIONS="-Dgnu.io.rxtx.SerialPorts=/dev/tty96B0"
 export MONITOR_PORT="/dev/tty96B0"
-export BYOBU_CONFIG_DIR="${HOME}/.config/byobu"
-export AUTO_LS_COMMANDS=(${HOME}/.local/bin/l git-status)
-export AUTO_LS_PATH="${PATH}"
-export ZSH_HIGHLIGHT_MAXLENGTH=1000
-export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 export CACA_GEOMETRY=172x56
+export RANGER_LOAD_DEFAULT_RC=FALSE
+export OMNIVIM_EDITOR=$(which nvim)
+[[ $(which pt) ]] && FZF_DEFAULT_COMMAND='pt --hidden --ignore .git --ignore .snapshot . -g ""'
+[[ $(which ag) ]] && FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+[[ $(which fd) ]] && FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
+export FZF_DEFAULT_COMMAND
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+export TMPDIR=/tmp/$LOGNAME
+[[ -d $TMPDIR ]]|| mkdir -p -m 700 $TMPDIR
+export NVIM_LISTEN_ADDRESS=$TMPDIR/nvim_omni
+export TMPPREFIX=${TMPDIR%/}/zsh
+export HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"       # The path to the history file.
+FZF_DEFAULT_OPTS='--reverse --cycle --select-1 --exit-0 --preview "bat --color always {}"'
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} --tiebreak=begin --filepath-word --height=90% --ansi --tabstop=4"
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-}"' --color "dark,hl:33,hl+:70,fg:2,bg+:168,fg+:229,info:254,prompt:37,spinner:108,pointer:235,marker:235"'
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-}"' --bind "ctrl-s:backward-char,ctrl-w:backward-kill-word,ctrl-d:backward-word,ctrl-b:beginning-of-line,ctrl-k:delete-char,ctrl-f:end-of-line"'
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-}"' --bind "ctrl-e:forward-char,ctrl-u:forward-word,ctrl-space:jump,ctrl-q:kill-line,ctrl-x:kill-word"'
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-}"' --bind "ctrl-o:execute(nvim {})"'
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-}"' --bind="ctrl-u:half-page-up,ctrl-d:half-page-down,ctrl-g:top,[:preview-page-up,]:preview-page-down,alt-/:execute(bat {})"'
+export FZF_DEFAULT_OPTS
+[[ -z $XDG_CONFIG_HOME ]] && export XDG_CONFIG_HOME=$HOME/.config
+[[ -z $XDG_DATA_HOME ]] && export XDG_DATA_HOME=$HOME/.local/share
+export BYOBU_CONFIG_DIR="${XDG_CONFIG_HOME}/byobu"
+export AUTO_LS_PATH="true"
+export VIRTUAL_ENV="${HOME}/.local/venv"
+export VIRTUAL_ENV_DISABLE_PROMPT="false"
+if [[ -e "${VIRTUAL_ENV:-/dev/null}/bin/activate" ]]; then
+    source "${VIRTUAL_ENV}/bin/activate"
+fi
+export PERL_UNICODE=AS
+export LD_LIBRARY_PATH="/usr/lib"
+export FZF_COMPLETION_TRIGGER=''
+export ZSH_AUTOSUGGEST_USE_ASYNC="yes"
+export ZSH_AUTOSUGGEST_STRATEGY="default"
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
+export ZSH_HIGHLIGHT_MAXLENGTH=1000

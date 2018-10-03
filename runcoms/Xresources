@@ -5,10 +5,27 @@ Xft.hinting: 1
 Xft.antialias: true
 Xft.rgba     : rgb
 
-XTerm*font:       xft:hack:pixelsize=15:antialias=true:style=Regular
-XTerm*boldFont:       xft:hack:pixelsize=15:bold
-XTerm*italicFont:     xft:hack:pixelsize=15:style=Italic
-XTerm*boldItalicFont: xft:hack:pixelsize=15:style=Bold Italic
+URxvt*background: rgb:be/be/be
+URxvt*foreground: rgb:75/1a/26
+URxvt*color0:     rgb:33/33/33
+URxvt*color1:     rgb:bf/72/76
+URxvt*color2:     rgb:86/af/80
+URxvt*color3:     rgb:96/8a/38
+URxvt*color4:     rgb:36/73/b5
+URxvt*color5:     rgb:9a/70/b2
+URxvt*color6:     rgb:7a/be/cc
+URxvt*color7:     rgb:db/db/db
+URxvt*color8:     rgb:66/92/af
+URxvt*color9:     rgb:e5/50/5f
+URxvt*color10:    rgb:87/bc/87
+URxvt*color11:    rgb:e0/d9/5c
+URxvt*color12:    rgb:1b/85/d6
+URxvt*color13:    rgb:ad/73/ba
+URxvt*color14:       rgb:33/8e/aa
+URxvt*color15:    rgb:f4/f4/f4
+
+XTerm*faceName:  InconsolataGo Nerd Font Mono:style=Medium:pixelsize=14:antialias=true
+XTerm*renderFont: true
 XTerm*jumpScroll:   true
 XTerm*fastScroll:   true
 XTerm*decTerminalID: vt340
@@ -16,15 +33,79 @@ XTerm*numColorRegisters: 256
 XTerm*underlineColor : #e628ba
 XTerm*highlightColor: #a6a6a6
 XTerm*saveLines     :18000
+XTerm*foreground: #d8d8d8
+XTerm*background: #181818
+XTerm*cursorColor:  #d8d8d8
+XTerm*cjkWidth: true
+XTerm*termName:     xterm-256color
+*VT100.veryBoldColors: 6
+*VT100.colorBDMode:     true
+*VT100.colorBD:         red
+*VT100.colorULMode:     true
+*VT100.colorUL:         cyan
 
-dmenu.font      : -*-hack-*-r-*-*-18-*-*-*-*-*-*-*
-dzen2.font      : -*-hack-*-r-*-*-13-*-*-*-*-*-*-*
-dzen2.background: #330033
-dzen2.foreground: #ff5f00
-
-xmessage.buttons: ok
-xmessage.defultButton: ok
-xmessage.center: true
+URxvt*termName:     rxvt-unicode-256color
+URxvt*geometry:                         137x45
+URxvt*scrollTtyKeypress:                true
+URxvt*scrollTtyOutput:                  false
+URxvt*scrollWithBuffer:                 false
+URxvt.secondaryWheel: 1
+!URxvt*fading:                           30
+URxvt*buffered:                         true
+URxvt.skipScroll:   true
+URxvt.jumpScroll:   true
+URxvt.scrollBar     :false
+URxvt.visualBell    :true
+URxvt.internalBorder:0
+URxvt.externalBorder:0
+URxvt.saveLines     :18000
+URxvt.letterSpace   :0
+URxvt*skipBuiltinGlyphs:              true
+URxvt*print-pipe:                       cat > $HOME/$(echo urxvt.dump.$(date +'%Y%M%d%H%m%S'))
+URxvt.secondaryScreen: 1
+URxvt.secondaryScroll: 0
+URxvt*iso14755:                       false
+URxvt*iso14755_52:                    false
+URxvt.font:           xft:FantasqueSansMono Nerd Font Mono:style=Regular:pixelsize=14:antialias=true
+URxvt.italicFont:     xft:FantasqueSansMono Nerd Font Mono:style=Italic:pixelsize=14:antialias=true
+URxvt.boldFont:       xft:FantasqueSansMono Nerd Font Mono:style=Bold:pixelsize=14:antialias=true
+URxvt.boldItalicFont: xft:FantasqueSansMono Nerd Font Mono:style=Bold Italic:pixelsize=14:antialias=true
+URxvt.underlineColor : #FDBEC0
+URxvt.highlightColor: #463b39
+URxvt.cursorColor:  #ff5f00
+URxvt.cursorColor2:  #00004d
+URxvt.modifier             : Mod4
+!URxvt.perl-ext-common      : tabbed,option-popup,background,autocomplete-ALL-the-things,fifo,keyboard-select,readline,selection,searchable-scrollback,clipboard,selection-popup,kuake
+!URxvt.perl-ext-common: tabbed,option-popup,keyboard-select,searchable-scrollback,clipboard,selection-popup,fifo,readline,selection,kuake
+URxvt.perl-ext-common: tabbedex,clipboard,readline,keyboard-select,searchable-scrollback,kuake,selection-popup,fifo,selection-to-clipboard,background,autocomplete-ALL-the-things
+URxvt.keysym.M-Tab   : perl:aAtt:fuzzy-word-complete
+URxvt.keysym.M-apostrophe  : perl:aAtt:surround-complete
+!URxvt.keysym.Mod4-period      : perl:aAtt:fuzzy-word-complete
+!URxvt.keysym.Mod4-comma       : perl:aAtt:fuzzy-WORD-complete
+URxvt.fifo.file            : /tmp/urxvt.fifo
+!URxvt.keysym.Mod4-v        : perl:keyboard-select:activate
+!URxvt.keysym.Mod4-s        : perl:keyboard-select:search
+!URxvt.keysym.Mod4-0x2f:perl:searchable-scrollback:start
+URxvt.kuake.hotkey         : F12
+URxvt.background.expr: rootalign (contrast 0.5,0.5,0.5,0.3, root)
+URxvt.tabbed.tabbar-fg: 3
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg: 0
+URxvt.tabbed.tab-bg: 1
+URxvt.tabbed.autohide:  yes
+URxvt.tabbed.new-button:  no
+URxvt.tabbed.title: no
+URXvt.tabbed.reopen-on-close: yes
+URxvt.keysym.M-o: perl:tabbedex:new_tab
+URxvt.keysym.M-p: perl:tabbedex:prev_tab
+URxvt.keysym.M-n: perl:tabbedex:next_tab
+!!URxvt.keysym.Mod4-e: perl:reactivity:vim
+!!URxvt.keysym.Mod4-0x5d: perl:reactivity:smallerfont
+!!URxvt.keysym.Mod4-0x5b: perl:reactivity:largerfont
+!!URxvt.background.expr      : scale keep { load "/home/ant/bg.jpg" }
+!!URxvt.url-select.launcher  : chromium
+!!URxvt.url-select.underline : true
+!!URxvt.keysym.M-u           : perl:url-select:select_next
 
 rofi.font: mono 18
 rofi.sidebar-mode:true
@@ -47,100 +128,3 @@ rofi.kb-remove-to-eol:
 rofi.kb-remove-to-sol:
 !rofi.m: 0
 rofi.lines: 30
-
-URxvt.skipScroll:   true
-URxvt.jumpScroll:   true
-URxvt.scrollBar     :false
-URxvt.visualBell    :true
-URxvt.internalBorder:0
-URxvt.externalBorder:0
-URxvt.saveLines     :18000
-URxvt.letterSpace   :0
-URxvt.font:           xft:hack:pixelsize=15:style=Regular
-URxvt.boldFont:       xft:hack:pixelsize=15:style=Bold
-URxvt.italicFont:     xft:hack:pixelsize=15:style=Italic
-URxvt.boldItalicFont: xft:hack:pixelsize=15:style=Bold Italic
-URxvt.cursorBlink    : true
-URxvt.cursorUnderline: true
-URxvt.underlineColor : #e628ba
-URxvt.highlightColor: #a6a6a6
-
-URxvt.modifier             : alt
-!URxvt.perl-ext-common      : tabbed,option-popup,background,autocomplete-ALL-the-things,fifo,keyboard-select,readline,selection,searchable-scrollback,clipboard,selection-popup,kuake
-URxvt.perl-ext-common: tabbed,option-popup,background,keyboard-select,searchable-scrollback,clipboard,selection-popup,fifo,readline,selection,kuake
-!URxvt.perl-ext-common:       autocomplete-ALL-the-things
-!URxvt.keysym.Mod4-semicolon   : perl:aAtt:fuzzy-complete
-!URxvt.keysym.Mod4-apostrophe  : perl:aAtt:surround-complete
-!URxvt.keysym.Mod4-period      : perl:aAtt:fuzzy-word-complete
-!URxvt.keysym.Mod4-comma       : perl:aAtt:fuzzy-WORD-complete
-URxvt.fifo.file            : /tmp/urxvt.fifo
-URxvt.keysym.Mod4-v        : perl:keyboard-select:activate
-URxvt.keysym.Mod4-s        : perl:keyboard-select:search
-URxvt.keysym.Mod4-0x2f:perl:searchable-scrollback:start
-URxvt.kuake.hotkey         : F11
-URxvt.tabbed.tabbar-fg: 3
-URxvt.tabbed.tabbar-bg: 0
-URxvt.tabbed.tab-fg: 0
-URxvt.tabbed.tab-bg: 1
-URxvt.tabbed.autohide:  yes
-URxvt.tabbed.new-button:  no
-URxvt.tabbed.title: yes
-!!URxvt.keysym.Mod4-e: perl:reactivity:vim
-!!URxvt.keysym.Mod4-0x5d: perl:reactivity:smallerfont
-!!URxvt.keysym.Mod4-0x5b: perl:reactivity:largerfont
-!!URxvt.background.expr      : scale keep { load "/home/ant/bg.jpg" }
-!!URxvt.url-select.launcher  : chromium
-!!URxvt.url-select.underline : true
-!!URxvt.keysym.M-u           : perl:url-select:select_next
-
-
-! Base16 Default Dark
-! Scheme: Chris Kempson (http://chriskempson.com)
-
-#define base00 #181818
-#define base01 #282828
-#define base02 #383838
-#define base03 #585858
-#define base04 #b8b8b8
-#define base05 #d8d8d8
-#define base06 #e8e8e8
-#define base07 #f8f8f8
-#define base08 #ab4642
-#define base09 #dc9656
-#define base0A #f7ca88
-#define base0B #a1b56c
-#define base0C #86c1b9
-#define base0D #7cafc2
-#define base0E #ba8baf
-#define base0F #a16946
-
-URxvt.foreground:   base05
-URxvt.background:   base00
-URxvt.cursorColor:  base05
-
-URxvt.color0:       base00
-URxvt.color1:       base08
-URxvt.color2:       base0B
-URxvt.color3:       base0A
-URxvt.color4:       base0D
-URxvt.color5:       base0E
-URxvt.color6:       base0C
-URxvt.color7:       base05
-
-URxvt.color8:       base03
-URxvt.color9:       base08
-URxvt.color10:      base0B
-URxvt.color11:      base0A
-URxvt.color12:      base0D
-URxvt.color13:      base0E
-URxvt.color14:      base0C
-URxvt.color15:      base07
-
-! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
-! use 'shell' template to set these if necessary
-URxvt.color16:      base09
-URxvt.color17:      base0F
-URxvt.color18:      base01
-URxvt.color19:      base02
-URxvt.color20:      base04
-URxvt.color21:      base06

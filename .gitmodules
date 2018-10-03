@@ -91,3 +91,6 @@
 [submodule "modules/zce"]
 	path = modules/zce
 	url = https://github.com/hchbaw/zce.zsh.git
+[submodule "modules/marker"]
+	path = modules/marker
+	url = https://github.com/pindexis/marker.git
