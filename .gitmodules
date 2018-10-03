@@ -49,3 +49,45 @@
 [submodule "modules/z"]
 	path = modules/z
 	url = https://github.com/rupa/z.git
+[submodule "fzf-marker"]
+	path = modules/fzf-marker
+	url = https://github.com/liangguohuan/fzf-marker.git
+[submodule "modules/zaw"]
+	path = modules/zaw
+	url = https://github.com/zsh-users/zaw.git
+[submodule "modules/q"]
+	path = modules/q
+	url = https://github.com/cal2195/q.git
+[submodule "modules/qfc"]
+	path = modules/qfc
+	url = https://github.com/pindexis/qfc.git
+[submodule "modules/ansi"]
+	path = modules/ansi
+	url = https://github.com/fidian/ansi.git
+[submodule "modules/crash"]
+	path = modules/crash
+	url = https://github.com/molovo/crash
+[submodule "modules/zsh-256color"]
+	path = modules/zsh-256color
+	url = https://github.com/chrissicool/zsh-256color.git
+[submodule "modules/zsh-abbrev-alias"]
+	path = modules/zsh-abbrev-alias
+	url = https://github.com/momo-lab/zsh-abbrev-alias.git
+[submodule "modules/zsh-autopair"]
+	path = modules/zsh-autopair
+	url = https://github.com/hlissner/zsh-autopair.git
+[submodule "modules/calc"]
+	path = modules/calc
+	url = https://github.com/arzzen/calc.plugin.zsh.git
+[submodule "modules/careful_rm"]
+	path = modules/careful_rm
+	url = https://github.com/MikeDacre/careful_rm.git
+[submodule "modules/zsh-change-case"]
+	path = modules/zsh-change-case
+	url = https://github.com/mtxr/zsh-change-case.git
+[submodule "modules/zsh-manydots-magic"]
+	path = modules/zsh-manydots-magic
+	url = https://github.com/knu/zsh-manydots-magic.git
+[submodule "modules/zce"]
+	path = modules/zce
+	url = https://github.com/hchbaw/zce.zsh.git
