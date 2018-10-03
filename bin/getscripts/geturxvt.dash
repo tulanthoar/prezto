@@ -1,0 +1,3 @@
+#!/usr/bin/env dash
+pacaur -y rxvt-unicode-wcwidthcallback urxvt-autocomplete-all-the-things-git urxvt-color-tester-git urxvt-fifo urxvt-fullscreen urxvt-tabbedex urxvt-vim-scrollback-git urxvt-vtwheel
+sudo pacman -Syu rxvt-unicode-terminfo urxvt-perls
