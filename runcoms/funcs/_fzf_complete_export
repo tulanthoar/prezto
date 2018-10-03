@@ -1,0 +1,7 @@
+# vim: set ft=zsh:
+function _fzf_complete_export() {
+  _fzf_complete '-m' "$@" < <(
+    declare -xp | sed 's/=.*//' | sed 's/.* //'
+  )
+}
+

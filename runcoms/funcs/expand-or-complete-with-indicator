@@ -1,0 +1,9 @@
+# vim: set ft=zsh:
+function expand-or-complete-with-indicator {
+  local indicator
+  zstyle -s ':prezto:module:editor:info:completing' format 'indicator'
+  print -Pn "$indicator"
+  zle expand-or-complete
+  zle redisplay
+}
+

@@ -1,5 +1,8 @@
+# vim: set ft=zsh:
 function z() {
-  local ret_d=$(fasd -e 'printf %s' -Rdl $1)
+ # local ret_d=$(fasd -l -R -d | grep -Ev "/$|/home/ant$|/[a-z]+$|/home/ant/[\.](gem|cargo)/.*$"|fzf --query ${1:-.})
+ local ret_d=$(fasd -l -d -R | fzf --no-sort --query "'"${1:-})
+  # local ret_d=$(fasd -e 'printf %s' -Rdl $1)
   [ -z "$ret_d" ] && return
-  builtin cd $(echo $ret_d | fzf-tmux --no-sort +m || pwd)
+  builtin cd "$ret_d"
 }

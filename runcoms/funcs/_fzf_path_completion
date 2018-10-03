@@ -1,0 +1,6 @@
+# vim: set ft=zsh:
+function _fzf_path_completion() {
+  __fzf_generic_path_completion "$1" "$2" _fzf_compgen_path \
+    "-m" "" " "
+}
+

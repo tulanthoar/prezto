@@ -1,1 +1,2 @@
+# vim: set ft=zsh:
 function copyfile { xsel -i <$1 &> /dev/null }

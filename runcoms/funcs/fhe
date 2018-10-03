@@ -1,1 +1,2 @@
+# vim: set ft=zsh:
 function fhe(){fc -nl 1 | fzf-tmux --no-sort --tac --query=$1 | writecmd -run}

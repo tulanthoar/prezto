@@ -1,1 +1,2 @@
+# vim: set ft=zsh:
 function cm() {cd $(perl <$ZSH_BOOKMARKS -e 'while(<>){s/^hash -d //;s/=/ /; print}'|column -t|fzf --tac --query=$1| awk '{print$2}')}

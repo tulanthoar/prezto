@@ -1,0 +1,17 @@
+# vim: set ft=zsh:
+zic-completion() {
+  setopt localoptions noshwordsplit noksh_arrays noposixbuiltins
+  local tokens cmd
+
+  tokens=(${(z)LBUFFER})
+  cmd=${tokens[1]}
+
+  if [[ "$LBUFFER" =~ "^\ *cd$" ]]; then
+    zle ${__zic_default_completion:-expand-or-complete}
+  elif [ "$cmd" = cd ]; then
+    _zic_complete ${tokens[2,${#tokens}]/#\~/$HOME}
+  else
+    zle ${__zic_default_completion:-expand-or-complete}
+  fi
+}
+

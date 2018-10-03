@@ -1,3 +1,4 @@
+# vim: set ft=zsh:
 function alias-tips-preexec () {
   if hash git 2> /dev/null; then
 

@@ -1,7 +1,7 @@
 function fzf-locate-widget() {
   local selected
   if selected=$(locate -0 / | fzf-tmux --read0); then
-    LBUFFER="$LBUFFER $selected"
+    LBUFFER="${LBUFFER} $selected"
   fi
   zle redisplay
 }

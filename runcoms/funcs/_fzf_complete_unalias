@@ -1,0 +1,7 @@
+# vim: set ft=zsh:
+function _fzf_complete_unalias() {
+  _fzf_complete '+m' "$@" < <(
+    alias | sed 's/=.*//'
+  )
+}
+

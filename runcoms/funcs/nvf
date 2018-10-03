@@ -1,4 +1,3 @@
 function nvf(){
 nvim $(fzf --multi --query="${1:-} " --preview-window="down:70%" --preview "highlight --line-number-length=3 -l --style=solarized-light -O xterm256 --force {}" || echo "+qall")
-
 }

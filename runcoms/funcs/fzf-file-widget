@@ -1,0 +1,10 @@
+# vim: set ft=zsh:
+function fzf-file-widget() {
+    local selected
+    if selected=$(ag -0 --hidden --ignore .git -g "" 2&>/dev/null | fzf-tmux --preview='bat --color always {}' --read0 | tee >(xsel -i)); then
+        LBUFFER="${LBUFFER%%\ ##} $selected"
+        local string=$(xsel -o)
+        print -n ${string#\n} | xsel -i
+    fi
+    zle redisplay
+}

@@ -1,0 +1,6 @@
+# vim: set ft=zsh:
+  _fasd_zsh_word_complete_trigger() {
+    local _fasd_cur="${words[CURRENT]}"
+    eval $(fasd --word-complete-trigger _fasd_zsh_word_complete $_fasd_cur)
+  }
+

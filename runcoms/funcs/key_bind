@@ -1,0 +1,76 @@
+# vim: set ft=zsh:
+function key_bind() {
+    zle -N cdf
+    zle -N fzf-history-widget
+    zle -N fzf-file-widget
+    zle -N accept-and-run
+    zle -N snippet-expand
+    zle -N fzf-locate-widget
+    zle -N fzf-completion
+    zle -N h
+    zle -N p
+    zle -N n
+    zle -N sudo-command-line
+    zle -N paste-primary
+    zle -N expand-dot-to-parent-directory-path
+    zle -N expand-or-complete-with-indicator
+    zle -N zic-completion
+    bindkey -v
+    bindkey -rM viins "^["
+    bindkey -rM viins "^D"
+    bindkey -rM viins "^G"
+    bindkey -rM viins "^X"
+    bindkey -rpM viins "^X"
+    bindkey -rM viins "^H"
+    bindkey -rM viins "^J"
+    bindkey -rM viins "^K"
+    bindkey -rM viins "^L"
+    # bindkey -rM viins "^V"
+    #disable arrow keys!
+    bindkey -rM viins "^[OA"
+    bindkey -rM viins "^[OB"
+    bindkey -rM viins "^[OC"
+    bindkey -rM viins "^[OD"
+    # ^Y is byobu prefix
+    # bindkey -rM viins "^Y"
+    # bindkey -M viins "\e" vi-cmd-mode
+    # ^? is backspace
+    # bindkey ^F delete-to-char
+    bindkey -rM isearch "."
+    bindkey -M viins "^[OA" up-line-or-history
+    bindkey -M viins "^[OB" down-line-or-history
+    bindkey -M viins "." expand-dot-to-parent-directory-path
+    bindkey -M viins "" sudo-command-line
+    bindkey -M viins "^\\\\" accept-and-infer-next-history
+    bindkey -M viins "" vi-forward-char
+    bindkey -M viins "" vi-backward-char
+    bindkey -M viins "" vi-backward-delete-char
+    bindkey -M viins "" vi-delete-char
+    bindkey -M viins "" vi-forward-word
+    bindkey -M viins "" vi-backward-word
+    bindkey -M viins "" vi-beginning-of-line
+    bindkey -M viins "" vi-end-of-line
+    bindkey -M viins "" vi-backward-kill-word
+    bindkey -M viins "" redo
+    bindkey -M viins "\C-@" accept-and-infer-next-history #infer not working. C-Space
+    bindkey -M viins "\C-J" autosuggest-execute
+    bindkey -M viins "" accept-line
+    bindkey -M viins "z" undo
+    bindkey -M viins "d" cdf
+    bindkey -M viins "f" fzf-file-widget
+    bindkey -M viins "l" fzf-locate-widget
+    bindkey -M viins "" copy-prev-shell-word
+    bindkey -M viins "" push-line-or-edit
+    # bindkey -M viins "\C-Q" send-break
+    # bindkey -M viins "\C-Q" history-search-multi-word
+    bindkey -M viins "" fzf-completion
+    bindkey -M viins "^I" zic-completion
+    bindkey -M viins "" vi-put-after
+    bindkey -M viins "" vi-put-before
+    bindkey -M viins "" kill-word
+    bindkey -M viins "^[[3~" fzf-history-widget
+    bindkey -M viins "^[[27;5;13~" autosuggest-execute # C-Enter
+    bindkey -M viins "^[^I" self-insert-unmeta
+    bindkey -M viins "^[^J" self-insert-unmeta
+    bindkey -M viins "^[^M" self-insert-unmeta
+}

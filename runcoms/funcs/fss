@@ -1,1 +1,2 @@
+# vim: set ft=zsh:
 function fss() { tmux switch-client -t $(tmux list-sessions -F "#{session_name}"|fzf-tmux --query="$1") }

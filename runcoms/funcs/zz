@@ -1,0 +1,14 @@
+# vim: set ft=zsh:
+function zz(){
+    local QUER=" "
+    if [ $# -gt 0 ]; then
+        QUER="${@}"
+    fi
+    local target_path=${$(_z -l 2&>/dev/null $({ for d in $(fasd -ldR|head -n50); do find 2&>/dev/null $d -maxdepth 2 -type f -print0 | /bin/grep -Evz '(\s|/\.cache/|^/usr/include/|^/usr/bin/|^/usr/lib/|^/usr/lib32/|^/lost\+found)'; done }) \
+        | fzf --ansi --no-sort --preview-window=down:30% --bind change:top,ctrl-s:jump -q $QUER \
+        --nth='-1' --delimiter='\/' \
+        --preview="exa -haFl --color=always --color-scale --group-directories-first --git-ignore --grid --sort=size {..-2}"):A:h}
+    # local target_path=${target_path:A:h}
+    [[ -d $target_path ]] && cd $target_path && zle reset-prompt&>/dev/null
+}
+

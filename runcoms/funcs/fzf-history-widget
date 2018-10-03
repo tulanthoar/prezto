@@ -1,0 +1,11 @@
+# vim: set ft=zsh:
+function fzf-history-widget() {
+    local selected num
+    setopt localoptions noglobsubst pipefail 2> /dev/null
+    selected=( $(fc -ln 1 | eval "$(__fzfcmd) +s --tac +m -n2..,.. --tiebreak=index --toggle-sort=ctrl-r $FZF_CTRL_R_OPTS") )
+    LBUFFER="${LBUFFER}${selected}"
+    local ret=$?
+    zle redisplay
+    typeset -f zle-line-init >/dev/null && zle zle-line-init
+    return $ret
+}

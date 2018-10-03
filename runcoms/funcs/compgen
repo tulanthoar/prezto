@@ -1,3 +1,4 @@
+# vim: set ft=zsh:
 function gencomp() {
     if [ -z "$1" ]; then
         echo "Usage: gencomp program [--argument-for-help-text]"

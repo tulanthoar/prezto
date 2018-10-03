@@ -1,0 +1,21 @@
+# vim: set ft=zsh:
+function _fzf_complete() {
+  local fifo fzf_opts lbuf fzf matches post
+  fifo="${TMPDIR:-/tmp}/fzf-complete-fifo-$$"
+  fzf_opts=$1
+  lbuf=$2
+  post="${funcstack[2]}_post"
+  type $post > /dev/null 2>&1 || post=cat
+
+  fzf="$(__fzfcmd_complete)"
+
+  _fzf_feed_fifo "$fifo"
+  matches=$(cat "$fifo" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_COMPLETION_OPTS" ${=fzf} ${=fzf_opts} -q "${(Q)prefix}" | $post | tr '\n' ' ')
+  if [ -n "$matches" ]; then
+    LBUFFER="$lbuf$matches"
+  fi
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  command rm -f "$fifo"
+}
+

@@ -1,1 +1,2 @@
+# vim: set ft=zsh:
 function _fzf_compgen_path() { ag -i --hidden -g "" "$1" }

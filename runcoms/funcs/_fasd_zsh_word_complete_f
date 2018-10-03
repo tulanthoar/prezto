@@ -1,0 +1,3 @@
+# vim: set ft=zsh:
+  _fasd_zsh_word_complete_f() { _fasd_zsh_word_complete f ; }
+

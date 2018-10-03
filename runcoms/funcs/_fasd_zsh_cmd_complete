@@ -1,0 +1,8 @@
+# vim: set ft=zsh:
+_fasd_zsh_cmd_complete() {
+  local compl
+  read -c compl
+  (( $+compstate )) && compstate[insert]=menu # no expand if compsys loaded
+  reply=(${(f)"$(fasd --complete "$compl")"})
+}
+

@@ -1,0 +1,5 @@
+# vim: set ft=zsh:
+# vim: set ft=zsh:
+fasd_preexec() {
+    { eval "fasd --proc $(fasd --sanitize $1)"; } &> /dev/null
+}

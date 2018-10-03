@@ -1,0 +1,54 @@
+# vim: set ft=zsh:
+_zic_complete() {
+  setopt localoptions nonomatch
+  local l matches fzf tokens base
+
+  l=$(_zic_list_generator $@)
+
+  if [ -z "$l" ]; then
+    zle ${__zic_default_completion:-expand-or-complete}
+    return
+  fi
+
+  fzf=$(__zic_fzf_prog)
+
+  if [ $(echo $l | wc -l) -eq 1 ]; then
+    matches=${(q)l}
+  else
+    matches=$(echo $l \
+        | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} \
+          --reverse $FZF_DEFAULT_OPTS $FZF_COMPLETION_OPTS \
+          --bind 'shift-tab:up,tab:down'" ${=fzf} \
+        | while read -r item; do
+      echo -n "${(q)item} "
+    done)
+  fi
+
+  matches=${matches% }
+  if [ -n "$matches" ]; then
+    tokens=(${(z)LBUFFER})
+    base="${(Q)@[-1]}"
+    if [[ "$base" != */ ]]; then
+      if [[ "$base" == */* ]]; then
+        base="$(dirname -- "$base")"
+        if [[ ${base[-1]} != / ]]; then
+          base="$base/"
+        fi
+      else
+        base=""
+      fi
+    fi
+    LBUFFER="${tokens[1]} "
+    if [ -n "$base" ]; then
+      base="${(q)base}"
+      if [ "${tokens[2][1]}" = "~" ]; then
+        base="${base/#$HOME/~}"
+      fi
+      LBUFFER="${LBUFFER}${base}"
+    fi
+    LBUFFER="${LBUFFER}${matches}/"
+  fi
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+}
+

@@ -1,0 +1,9 @@
+# vim: set ft=zsh:
+function icmd(){
+    local QUER=" "
+    if [ $# -gt 0 ]; then
+        QUER="${@}"
+    fi
+    xdotool type $(echo -n "$PATH" | xargs -d: -I{} -r -- find -L {} -maxdepth 1 -mindepth 1 -type f -executable -printf '%P\n' 2>/dev/null | sort -u|rofi -dmenu)
+}
+
