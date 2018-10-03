@@ -12,7 +12,7 @@ let s:vundle_readme=s:vundle_path . '/README.md'
 if !filereadable(s:vundle_readme)
     echo 'Installing Vundle..'
     echo ''
-    silent !git clone --depth=1 https://github.com/VundleVim/Vundle.vim ~/.config/nvim/bundle/Vundle.vim
+    silent !git clone --depth=1 --branch=master https://github.com/VundleVim/Vundle.vim ~/.config/nvim/bundle/Vundle.vim
     let s:iCanHazVundle=0
 endif
 let g:loaded_gzip = 1
@@ -26,6 +26,7 @@ let s:bundle_path = substitute(s:vundle_path, '/Vundle\.vim$', '', '')
 call vundle#begin(s:bundle_path)
 Plugin 'VundleVim/Vundle.vim'
 
+Plugin 'tommcdo/vim-exchange'
 " Plugin 'w0rp/ale'
 
 " Plugin 'DoxygenToolkit.vim'
@@ -35,6 +36,11 @@ Plugin 'VundleVim/Vundle.vim'
 " let g:DoxygenToolkit_briefTag_funcName = "yes"
 " let g:DoxygenToolkit_briefTag_post = ": "
 " let g:DoxygenToolkit_briefTag_className = "yes"
+
+Plugin 'lambdalisue/suda.vim'
+Plugin 'kurkale6ka/vim-swap'
+let g:blockinsert_commands = 1
+Plugin 'kurkale6ka/vim-blockinsert'
 
 augroup nerdtree
     autocmd!
@@ -94,8 +100,8 @@ let g:side_search_split_pct = 0.5
 Plugin 'ddrscott/vim-side-search'
 
 " XXX swap
-let g:swap_no_default_key_mappings = 1
-Plugin 'machakann/vim-swap'
+" let g:swap_no_default_key_mappings = 1
+" Plugin 'machakann/vim-swap'
 
 let g:list_of_insert_keys = ['<UP>', '<DOWN>', '<LEFT>', '<RIGHT>',]
 let g:list_of_visual_keys = ['gh', 'gj', 'gk', 'gl',] + g:list_of_insert_keys
@@ -156,21 +162,22 @@ Plugin 'kopischke/vim-stay'
 let g:echodoc_enable_at_startup = 1
 Plugin 'Shougo/echodoc.vim'
 
-let g:indentLine_char = '⁅'
+let g:indentLine_char = 'ǁ'
 " let g:indentLine_char = '├'
-let g:indentLine_setColors = 0
+"let g:indentLine_setColors = 0
 let g:indentLine_color_term=256
+let g:indentLine_bgcolor_term = 53
 let g:indentLine_first_char = '╠'
 let g:indentLine_indentLevel = 10
 let g:indentLine_showFirstIndentLevel = '1'
 let g:indentLine_fileType = ['vim', 'perl', 'python', 'cpp',]
 let g:indentLine_faster = 1
 let g:indentLine_concealcursor='inc'
-let g:indentLine_leadingSpaceChar = '⥎'
+let g:indentLine_leadingSpaceChar = '˔'
 let g:indentLine_leadingSpaceEnabled = 1
 Plugin 'Yggdroot/indentLine'
 
-let g:ctrlp_cmd = 'CtrlPBufTagAll'
+let g:ctrlp_cmd = 'CtrlPMRUFiles'
 let g:ctrlp_match_window = 'order:ttb'
 let g:ctrlp_by_filename = 1
 let g:ctrlp_switch_buffer = 'et'
@@ -190,13 +197,16 @@ Plugin 'ctrlpvim/ctrlp.vim'
 " Plugin 'xolox/vim-misc'
 " Plugin 'xolox/vim-easytags'
 
+augroup denitecmds
+    autocmd!
 for [s:k, s:c] in items({
             \ "\<C-J>" : "\<denite:move_to_next_line>",
             \ "\<C-K>" : "\<denite:move_to_previous_line>",
             \ })
-    exe "au VimEnter * cal
-                \ denite#custom#map('insert','".s:k."','".s:c."','noremap')"
+    exe "au VimEnter * cal denite#custom#map('insert','".s:k."','".s:c."','noremap')"
 endfor
+    au VimEnter * cal denite#custom#var('menu', 'menus', g:denite_menus)
+augroup end
 if !exists('g:denite_menus') | let g:denite_menus = {} | endif
 let g:denite_menus.git = {'description': 'git stuff'}
 let g:denite_menus.git.command_candidates = [
@@ -215,10 +225,6 @@ let g:denite_menus.git.command_candidates = [
             \['▷ git pull     ', 'Git! pull'],
             \['▷ git cd       ', 'Gcd'],
             \]
-augroup denitesettings
-    autocmd!
-    au VimEnter * cal denite#custom#var('menu', 'menus', g:denite_menus)
-augroup END
 Plugin 'osyo-manga/unite-quickfix'
 Plugin 'rhysd/unite-redpen.vim'
 Plugin 'Shougo/unite.vim'
@@ -303,6 +309,7 @@ let g:EasyMotion_startofline = 0
 let g:EasyMotion_use_upper = 1
 Plugin 'easymotion/vim-easymotion'
 
+Plugin 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_camel_case = 1
 let g:deoplete#enable_refresh_always = 1
@@ -347,26 +354,28 @@ let g:deoplete#sources#jedi#worker_threads = 2
 let g:deoplete#sources#jedi#python_path = expand('$VIRTUAL_ENV/bin/python3')
 augroup deopletecommands
     autocmd!
+au VimEnter cal deoplete#enable()
+au VimEnter cal deoplete#custom#option('deoplete-options-auto_complete_delay', 2000)
     au FileType python let g:deoplete#delimiters = ["/", ".", "(",]
     au FileType perl   let g:deoplete#delimiters =
                 \ ["/", "->", "(", "::", "$", "@", "%",]
     au FileType vim    let g:deoplete#delimiters = ["/", ":", "(", "'",]
     au FileType cpp    let g:deoplete#delimiters = ["/", ":", "(", ".",]
-    au FileType * cal deoplete#custom#set("file", "rank", 159)
-    au FileType python  cal deoplete#custom#set("jedi", "rank", 99)
-    au FileType perl    cal deoplete#custom#set("omni", "rank", 99)
-    au FileType vim     cal deoplete#custom#set("vim", "rank", 99)
-    au FileType haskell cal deoplete#custom#set("ghc", "rank", 99)
-    au FileType cpp cal deoplete#custom#set("clang2", "rank", 99)
-    au FileType * cal deoplete#custom#set("member", "rank", 90)
-    au FileType * cal deoplete#custom#set("around", "rank", 89)
-    au FileType * cal deoplete#custom#set("neosnippet", "rank", 84)
-    au FileType * cal deoplete#custom#set("ultisnips", "rank", 83)
-    au FileType * cal deoplete#custom#set("buffer", "rank", 81)
-    au FileType * cal deoplete#custom#set("tag", "rank", 80)
-    au FileType * cal deoplete#custom#set("syntax", "rank", 79)
-    au FileType * cal deoplete#custom#set("include", "rank", 78)
-    au VimEnter * cal deoplete#custom#set("_", "matchers", ["matcher_fuzzy",])
+    " au FileType * cal deoplete#custom#set("file", "rank", 159)
+    " au FileType python  cal deoplete#custom#set("jedi", "rank", 99)
+    " au FileType perl    cal deoplete#custom#set("omni", "rank", 99)
+    " au FileType vim     cal deoplete#custom#set("vim", "rank", 99)
+    " au FileType haskell cal deoplete#custom#set("ghc", "rank", 99)
+    " au FileType cpp cal deoplete#custom#set("clang2", "rank", 99)
+    " au FileType * cal deoplete#custom#set("member", "rank", 90)
+    " au FileType * cal deoplete#custom#set("around", "rank", 89)
+    " au FileType * cal deoplete#custom#set("neosnippet", "rank", 84)
+    " au FileType * cal deoplete#custom#set("ultisnips", "rank", 83)
+    " au FileType * cal deoplete#custom#set("buffer", "rank", 81)
+    " au FileType * cal deoplete#custom#set("tag", "rank", 80)
+    " au FileType * cal deoplete#custom#set("syntax", "rank", 79)
+    " au FileType * cal deoplete#custom#set("include", "rank", 78)
+    " au VimEnter * cal deoplete#custom#set("_", "matchers", ["matcher_fuzzy",])
 augroup end
 Plugin 'Shougo/neco-syntax'
 Plugin 'Shougo/neco-vim'
@@ -375,7 +384,6 @@ Plugin 'SevereOverfl0w/deoplete-github'
 Plugin 'Shougo/context_filetype.vim'
 Plugin 'zchee/deoplete-jedi'
 Plugin 'tweekmonster/deoplete-clang2'
-Plugin 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 
 let g:base16colorspace=256
 Plugin 'chriskempson/base16-vim'
@@ -556,6 +564,7 @@ Plugin 'rhysd/vim-operator-filled-with-blank'
 Plugin 'rhysd/committia.vim'
 Plugin 'lervag/vimtex'
 Plugin 'neomake/neomake'
+let g:vimtex_compiler_progname = 'nvr'
 let g:neomake_tex_enabled_makers = ['chktex', 'lacheck', 'rubberinfo', 'proselint', 'writegood', 'redpen', 'alex']
 function TexWritegoodPostprocess(entry)
             if a:entry.text !~# '".*"'
@@ -696,6 +705,7 @@ let g:impsort_textwidth = g:pymode_options_max_line_length
 let g:impsort_highlight_star_imports = 1
 " nvim's builtin python.vim
 let g:python3_host_prog = expand('$VIRTUAL_ENV/bin/python3')
+let g:python_host_prog = expand('$VIRTUAL_ENV/../venv2/pyenv2/bin/python2')
 let g:python_no_builtin_highlight = 1
 let g:python_no_exception_highlight = 1
 let g:python_no_doctest_highlight = 1
@@ -748,7 +758,7 @@ set helpheight=30
 set ignorecase
 set isfname+={,}
 set list
-set listchars=tab:>┈,trail:┅,nbsp:+,extends:╡,precedes:╞,eol:┊,space:⋅
+set listchars=tab:>┈,trail:┅,nbsp:+,extends:╡,precedes:╞,eol:┊
 set matchpairs=(:),[:],{:}
 set matchtime=2
 set path+=/usr/local/include,mbed-os
@@ -814,8 +824,8 @@ hi StatusLine             ctermbg=234
 hi Search                 ctermbg=30  ctermfg=14 cterm=bold
 hi MatchParen             ctermbg=20  ctermfg=25
 hi Conceal                            ctermfg=27
-hi CursorColumn           cterm=inverse,bold
-hi CursorLine             cterm=standout
+hi CursorColumn           ctermbg=240
+hi CursorLine             ctermbg=240
 hi HighlightedyankRegion  ctermbg=28  ctermfg=none cterm=bold
 hi TermCursorNC           ctermbg=236 ctermfg=none
 hi SyntasticErrorLine     ctermbg=126 cterm=underline
@@ -843,7 +853,7 @@ let g:clipboard = {
             \ }
 
 cnoreabbrev T/  Tabularize //l1c1l0<left><left><left><left><left><left><left><c-h>
-cnoreabbrev w!!  SudoWrite
+cnoreabbrev w!! :w suda://%<CR>
 
 
 for [s:k, s:c] in items({
