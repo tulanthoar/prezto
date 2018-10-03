@@ -1,8 +1,0 @@
-#!/usr/bin/env dash
-[ -e "$(which pip)" ] || sudo pacman --noconfirm -S pip
-sudo pip install pip --upgrade
-[ -e "$(which ptipython)" ] || sudo pip install ptipython --upgrade
-sudo pacman --noconfirm -S libyaml
-for py in logbook pylama_pylint Radon tqdm pylama click colorama httpie matplotlib bs4 sh MechanicalSoup arrow python-magic watchdog requests PyUserInput; do
-  sudo pip install --upgrade $py
-done

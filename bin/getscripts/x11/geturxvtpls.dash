@@ -1,6 +1,0 @@
-#!/usr/bin/env dash
-
-DEST=/usr/lib/urxvt/perl
-sudo mkdir -p ${DEST}
-sudo ln -s ${ZDOTD}/urxvt/autocomplete-ALL-the-things ${DEST}/autocomplete-ALL-the-things
-sudo ln -s ${ZDOTD}/urxvt/fifo ${DEST}/fifo

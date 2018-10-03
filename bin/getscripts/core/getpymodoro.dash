@@ -1,3 +1,0 @@
-#!/usr/bin/env dash
-git clone https://aur.archlinux.org/pymodoro-git.git ${GITAPPSD}/pymodoro-git
-cd ${GITAPPSD}/pymodoro-git && makepkg -si --noconfirm

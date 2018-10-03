@@ -1,9 +1,0 @@
-#!/usr/bin/env dash
-[ -e "$(which cpanm)" ] || sudo pacman --noconfirm -S cpanminus
-for pl in namespace::autoclean Getopt::Long::Descriptive MooseX::Getopt Term::ReadKey Modern::Perl Perl::Tidy Perl::Critic Smart::Comments Time::Tiny Date::Tiny IO::All File::ReadBackwards Term::ReadLine::Gnu Test::More DateTime Proc::InvokeEditor B::Keywords Class::Refresh Reply Proc::Background MIO::SSH Net::SSH::Expect SSH::Command Data::Printer Devel::FastProf Devel::SmallProf Devel::NYTProf Pod::Text::Color Time::HiRes IO::Async::Loop::linux AnyEvent Term::Menus Wx EV AnyEvent::Subprocess Acme::Very::Modern::Perl App::Staticperl; do
-  sudo cpanm $pl
-done
-for pl in ConfigurablePrompt DataDumper Colors ReadLine Hints Packages Editor Interrupt LoadClass LexicalPersistence ResultCache Autocomplete::Packages Autocomplete::Lexicals Autocomplete::Functions Autocomplete::Globals Autocomplete::Methods Autocomplete::Commands Autocomplete::Keywords Timer AutoRefresh TypeTiny; do
-  sudo cpanm "Reply::Plugin::${pl}"
-done
-ln -fs $ZDOTD/reply/replyrc $HOME/.replyrc

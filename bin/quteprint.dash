@@ -1,4 +1,0 @@
-#!/usr/bin/env dash
-xmctl minone
-urxvt -e nvim -RMu ${ZDOTD}/nvim/ro.vim ${QUTE_TEXT}
-xmctl rest

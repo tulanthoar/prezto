@@ -1,3 +1,0 @@
-#!/usr/bin/env dash
-git clone https://aur.archlinux.org/rxvt-unicode-patched.git "${GITAPPSD}/rxvt-unicode-patched"
-cd "${GITAPPSD}/rxvt-unicode-patched" && makepkg -si --noconfirm

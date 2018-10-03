@@ -1,3 +1,0 @@
-#!/usr/bin/env dash
-git clone https://aur.archlinux.org/byobu.git ${GITAPPSD}/byobu
-cd ${GITAPPSD}/byobu && makepkg -si --noconfirm

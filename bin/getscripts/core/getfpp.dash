@@ -1,3 +1,0 @@
-#!/usr/bin/env dash
-git clone https://aur.archlinux.org/fpp-git.git ${GITAPPSD}/fpp-git
-cd ${GITAPPSD}/fpp-git && makepkg -si --noconfirm

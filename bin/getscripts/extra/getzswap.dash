@@ -1,3 +1,0 @@
-#!/usr/bin/env dash
-git clone https://aur.archlinux.org/zswap.git "${GITAPPSD}/zswap"
-cd "${GITAPPSD}/zswap" && makepkg -si --noconfirm

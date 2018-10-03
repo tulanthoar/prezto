@@ -1,2 +1,0 @@
-#!/usr/bin/env dash
-(ps -af --user "$USER" | grep -E "\bclipmenud$") || xmctl clipmenud

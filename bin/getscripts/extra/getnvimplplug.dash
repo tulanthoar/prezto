@@ -1,8 +1,0 @@
-#!/usr/bin/env dash
-
-DEST=${HOME}/.config/nvim/bundle/perl-support
-if [ -d "${DEST}" ]; then
-  [ -f "${DEST}/templates/comments.templates" ] && rm ${DEST}/templates/comments.templates
-  mkdir -p ${DEST}/templates
-  ln -s ${ZDOTD}/nvim/bundle/perl-support/templates/comments.templates ${DEST}/templates/comments.templates
-fi
