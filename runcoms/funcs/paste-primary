@@ -1,4 +1,0 @@
-function paste-primary(){
-  local w=$(xsel -o 0>/dev/null)
-  zle -U "$w"
-}

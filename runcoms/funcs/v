@@ -1,1 +1,0 @@
-function v() { nvim $(fasd -Rfl $1 | fzf-tmux --no-sort +m) }
