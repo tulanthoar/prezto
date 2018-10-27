@@ -34,9 +34,10 @@ export FZF_DEFAULT_COMMAND
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
 export TMPDIR=/tmp/$LOGNAME
-[[ -d $TMPDIR ]]|| mkdir -p -m 700 $TMPDIR
+[[ -d $TMPDIR ]] || mkdir -p -m 700 $TMPDIR
 export NVIM_LISTEN_ADDRESS=$TMPDIR/nvim_omni
-export TMPPREFIX=${TMPDIR%/}/zsh
+export TMPPREFIX=${TMPDIR}/zsh
+[[ -d $TMPPREFIX ]] || mkdir -p -m 700 $TMPPREFIX
 export HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"       # The path to the history file.
 FZF_DEFAULT_OPTS='--reverse --cycle --select-1 --exit-0 --preview "bat --color always {}"'
 FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} --tiebreak=begin --filepath-word --height=90% --ansi --tabstop=4"
@@ -62,3 +63,5 @@ export ZSH_AUTOSUGGEST_USE_ASYNC="yes"
 export ZSH_AUTOSUGGEST_STRATEGY="default"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 export ZSH_HIGHLIGHT_MAXLENGTH=1000
+export TAG_ALIAS_FILE=$TMPPREFIX/tag_aliases
+        export TAG_SEARCH_PROG=ag  # replace with rg for ripgrep

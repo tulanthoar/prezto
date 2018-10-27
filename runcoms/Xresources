@@ -5,26 +5,102 @@ Xft.hinting: 1
 Xft.antialias: true
 Xft.rgba     : rgb
 
-URxvt*background: rgb:be/be/be
-URxvt*foreground: rgb:75/1a/26
-URxvt*color0:     rgb:33/33/33
+URxvt*background: rgb:1c/13/17
+URxvt*foreground: rgb:48/ff/ff
+URxvt*color0:     rgb:04/05/0a
 URxvt*color1:     rgb:bf/72/76
 URxvt*color2:     rgb:86/af/80
 URxvt*color3:     rgb:96/8a/38
 URxvt*color4:     rgb:36/73/b5
 URxvt*color5:     rgb:9a/70/b2
 URxvt*color6:     rgb:7a/be/cc
-URxvt*color7:     rgb:db/db/db
+URxvt*color7:     rgb:dc/b7/b7
 URxvt*color8:     rgb:66/92/af
 URxvt*color9:     rgb:e5/50/5f
 URxvt*color10:    rgb:87/bc/87
 URxvt*color11:    rgb:e0/d9/5c
 URxvt*color12:    rgb:1b/85/d6
 URxvt*color13:    rgb:ad/73/ba
-URxvt*color14:       rgb:33/8e/aa
-URxvt*color15:    rgb:f4/f4/f4
+URxvt*color14:    rgb:33/8e/aa
+URxvt*color15:    rgb:bd/f6/c7
+
+URxvt*termName:     rxvt-unicode-256color
+URxvt*geometry:                         187x65
+URxvt*scrollTtyKeypress:                true
+URxvt*scrollTtyOutput:                  false
+URxvt*scrollWithBuffer:                 false
+URxvt.secondaryWheel: 1
+!URxvt*fading:                           30
+URxvt*buffered:                         true
+URxvt.skipScroll:   true
+URxvt.jumpScroll:   true
+URxvt.scrollBar     :false
+URxvt.visualBell    :true
+URxvt.internalBorder:0
+URxvt.externalBorder:0
+URxvt.saveLines     :10000
+URxvt.letterSpace   :0
+URxvt*skipBuiltinGlyphs:              true
+URxvt*print-pipe:                       cat > $HOME/$(echo urxvt.dump.$(date +'%Y%M%d%H%m%S'))
+URxvt.secondaryScreen: 1
+URxvt.secondaryScroll: 0
+URxvt*iso14755:                       false
+URxvt*iso14755_52:                    false
+!URxvt.font: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-*-*
+!URxvt.italicFont: -xos4-terminus-medium-i-normal-*-14-*-*-*-*-*-*-*
+URxvt.font:           xft:FantasqueSansMono Nerd Font Mono:style=Regular:pixelsize=14:antialias=true
+URxvt.italicFont:     xft:FantasqueSansMono Nerd Font Mono:style=Italic:pixelsize=14:antialias=true
+URxvt.boldFont:       xft:FantasqueSansMono Nerd Font Mono:style=Bold:pixelsize=14:antialias=true
+URxvt.boldItalicFont: xft:FantasqueSansMono Nerd Font Mono:style=Bold Italic:pixelsize=14:antialias=true
+URxvt.underlineColor : #FDBEC0
+URxvt.highlightColor: #463b39
+URxvt.cursorColor:  #ff5f00
+URxvt.cursorColor2:  #00004d
+URxvt.colorBD:          #ffffff
+URxvt.throughColor:     #8080f0
+URxvt.meta8: false
+URxvt.modifier             : Mod1
+!URxvt.perl-ext-common: kuake,tabbedex,autocomplete-ALL-the-things
+!URxvt.perl-ext-common: tabbedex,kuake,background,autocomplete-ALL-the-things
+URxvt.perl-ext-common: tabbedex,kuake,background,autocomplete-ALL-the-things,curplosion,cursortail,vim-scrollback,256colors2
+!URxvt.perl-ext-common: tabbedex,kuake,autocomplete-ALL-the-things,curplosion,cursortail,256colors2
+!URxvt.perl-ext-common: tabbedex,autocomplete-ALL-the-things
+URxvt.cursortail.colorlist:   118 130 119 131 120 132
+URxvt.cursortail.fade_speed: 0.10
+URxvt.curplosion.colors:    214, 220, 226
+URxvt.curplosion.sizes:     3, 7, 9, 7, 3
+URxvt.curplosion.duration:  50
+URxvt.curplosion.show-on-focus: true
+URxvt.fifo.file            : /tmp/urxvt.fifo
+URxvt.background.expr: center keep { load "$HOME/Pictures/future_diary_by_kaylaerinofficial-dakrgfy-scaled-contrast.jpg"}
+urxvt.vim-scrollback-bg: 235
+urxvt.vim-scrollback-fg: 15
+URxvt.tabbed.tabbar-fg: 3
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg: 0
+URxvt.tabbed.tab-bg: 1
+URxvt.tabbed.autohide:  yes
+URxvt.tabbed.title: no
+URXvt.tabbed.reopen-on-close: yes
+URxvt.tabbed.no-tabbedex-keys: true
+urxvt.vim-scrollback: M-s
+urxvt.vim-scrollback-paste: M-v
+URxvt.keysym.M-Tab   : autocomplete-ALL-the-things:fuzzy-WORD-complete
+URxvt.keysym.M-apostrophe  : autocomplete-ALL-the-things:surround-complete
+URxvt.keysym.M-slash   : autocomplete-ALL-the-things:word-complete
+URxvt.keysym.M-o: perl:tabbedex:new_tab
+URxvt.keysym.M-p: perl:tabbedex:prev_tab
+URxvt.keysym.M-n: perl:tabbedex:next_tab
+URxvt.keysym.M-comma:  256colors2:print_colors
+URxvt.keysym.M-Return: perl:jak-run:run
+URxvt.keysym.M-C-Return: perl:jak-run:run_and_exit
+URxvt.kuake.hotkey         : F11
+!!URxvt.keysym.Mod4-e: perl:reactivity:vim
+!!URxvt.keysym.Mod4-0x5d: perl:reactivity:smallerfont
+!!URxvt.keysym.Mod4-0x5b: perl:reactivity:largerfont
 
 XTerm*faceName:  InconsolataGo Nerd Font Mono:style=Medium:pixelsize=14:antialias=true
+XTerm*geometry:                         187x65
 XTerm*renderFont: true
 XTerm*jumpScroll:   true
 XTerm*fastScroll:   true
@@ -44,70 +120,11 @@ XTerm*termName:     xterm-256color
 *VT100.colorULMode:     true
 *VT100.colorUL:         cyan
 
-URxvt*termName:     rxvt-unicode-256color
-URxvt*geometry:                         137x45
-URxvt*scrollTtyKeypress:                true
-URxvt*scrollTtyOutput:                  false
-URxvt*scrollWithBuffer:                 false
-URxvt.secondaryWheel: 1
-!URxvt*fading:                           30
-URxvt*buffered:                         true
-URxvt.skipScroll:   true
-URxvt.jumpScroll:   true
-URxvt.scrollBar     :false
-URxvt.visualBell    :true
-URxvt.internalBorder:0
-URxvt.externalBorder:0
-URxvt.saveLines     :18000
-URxvt.letterSpace   :0
-URxvt*skipBuiltinGlyphs:              true
-URxvt*print-pipe:                       cat > $HOME/$(echo urxvt.dump.$(date +'%Y%M%d%H%m%S'))
-URxvt.secondaryScreen: 1
-URxvt.secondaryScroll: 0
-URxvt*iso14755:                       false
-URxvt*iso14755_52:                    false
-URxvt.font:           xft:FantasqueSansMono Nerd Font Mono:style=Regular:pixelsize=14:antialias=true
-URxvt.italicFont:     xft:FantasqueSansMono Nerd Font Mono:style=Italic:pixelsize=14:antialias=true
-URxvt.boldFont:       xft:FantasqueSansMono Nerd Font Mono:style=Bold:pixelsize=14:antialias=true
-URxvt.boldItalicFont: xft:FantasqueSansMono Nerd Font Mono:style=Bold Italic:pixelsize=14:antialias=true
-URxvt.underlineColor : #FDBEC0
-URxvt.highlightColor: #463b39
-URxvt.cursorColor:  #ff5f00
-URxvt.cursorColor2:  #00004d
-URxvt.modifier             : Mod4
-!URxvt.perl-ext-common      : tabbed,option-popup,background,autocomplete-ALL-the-things,fifo,keyboard-select,readline,selection,searchable-scrollback,clipboard,selection-popup,kuake
-!URxvt.perl-ext-common: tabbed,option-popup,keyboard-select,searchable-scrollback,clipboard,selection-popup,fifo,readline,selection,kuake
-URxvt.perl-ext-common: tabbedex,clipboard,readline,keyboard-select,searchable-scrollback,kuake,selection-popup,fifo,selection-to-clipboard,background,autocomplete-ALL-the-things
-URxvt.keysym.M-Tab   : perl:aAtt:fuzzy-word-complete
-URxvt.keysym.M-apostrophe  : perl:aAtt:surround-complete
-!URxvt.keysym.Mod4-period      : perl:aAtt:fuzzy-word-complete
-!URxvt.keysym.Mod4-comma       : perl:aAtt:fuzzy-WORD-complete
-URxvt.fifo.file            : /tmp/urxvt.fifo
-!URxvt.keysym.Mod4-v        : perl:keyboard-select:activate
-!URxvt.keysym.Mod4-s        : perl:keyboard-select:search
-!URxvt.keysym.Mod4-0x2f:perl:searchable-scrollback:start
-URxvt.kuake.hotkey         : F12
-URxvt.background.expr: rootalign (contrast 0.5,0.5,0.5,0.3, root)
-URxvt.tabbed.tabbar-fg: 3
-URxvt.tabbed.tabbar-bg: 0
-URxvt.tabbed.tab-fg: 0
-URxvt.tabbed.tab-bg: 1
-URxvt.tabbed.autohide:  yes
-URxvt.tabbed.new-button:  no
-URxvt.tabbed.title: no
-URXvt.tabbed.reopen-on-close: yes
-URxvt.keysym.M-o: perl:tabbedex:new_tab
-URxvt.keysym.M-p: perl:tabbedex:prev_tab
-URxvt.keysym.M-n: perl:tabbedex:next_tab
-!!URxvt.keysym.Mod4-e: perl:reactivity:vim
-!!URxvt.keysym.Mod4-0x5d: perl:reactivity:smallerfont
-!!URxvt.keysym.Mod4-0x5b: perl:reactivity:largerfont
-!!URxvt.background.expr      : scale keep { load "/home/ant/bg.jpg" }
-!!URxvt.url-select.launcher  : chromium
-!!URxvt.url-select.underline : true
-!!URxvt.keysym.M-u           : perl:url-select:select_next
-
-rofi.font: mono 18
+rofi.modi: window,run,windowcd,drun,keys
+rofi.show-icons: true
+rofi.sorting-method: fzf
+rofi.theme: /home/ant/.local/share/rofi/themes/}/sidetab
+rofi.font: FantasqueSansMono Nerd Font Mono 18
 rofi.sidebar-mode:true
 rofi.terminal:                       urxvt
 rofi.sort: true

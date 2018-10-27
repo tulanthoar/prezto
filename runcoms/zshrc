@@ -1,100 +1,76 @@
 # vim: set ft=zsh:
 # [[ -f ${HOME}/.terminfo/${TERM[1]}/${TERM} ]] || infocmp ${TERM} | sed 's/kbs=^[hH]/kbs=\\177/' | tic -
 # function zshrcload(){
+autoload -Uw /usr/share/zsh/functions/{Completion/Completion.zwc,Misc/Misc.zwc,Prompts/Prompt.zwc}
+zmodload zsh/zutil
 zmodload zsh/complist
 zmodload zsh/deltochar
-unalias run-help
-autoload -Uw $ZRCD/funcs/myfuncs /usr/share/zsh/functions/{Completion/Completion.zwc,Misc/Misc.zwc,Prompts/Prompt.zwc}
-print -n '\033]12;#ff5f5f\007''\033[3 q' # cursor color style
-zstyle ':prezto:*:*' color 'yes'
-chpwd_functions+=(git-status l)
+zstyle ':prezto:*:*' 'color' 'yes'
+zstyle ':completion:*' 'menu' "select"
+zstyle -e ':completion:*:default' 'list-colors' 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==34=16}:${(s.:.)LS_COLORS}")';
+zstyle ':filter-select' 'case-insensitive' 'yes' # enable case-insensitive search
+zstyle ':filter-select' 'extended-search' 'yes'
+zstyle ':filter-select' 'hist-find-no-dups' 'yes' # ignore duplicates in history source
+__options_env
 myaliases
-local cmnd=pacman
-[[ ${${cmnd}:c} = ${cmnd} ]] || source ${ZPREZD}/modules/pacman/init.zsh
-cmnd=tag
-if [[ ${${cmnd}:c} != ${cmnd} ]]; then
-  export TAG_SEARCH_PROG=ag  # replace with rg for ripgrep
-  tag() { command tag "$@"; source ${TAG_ALIAS_FILE:=$TMPPREFIX/tag_aliases} }
-  # alias ag=tag  # replace with rg for ripgrep
-fi
-local re_initialize=0
-if [[ -n ${ZDOTDIR:-${HOME}}/${ZSH_COMPDUMP:-.zcompdump}(#qN.mh+24) ]]; then
-    re_initialize=1
-fi
-if [ "$re_initialize" -eq "1" ]; then
-    compinit -d ${ZDOTDIR:-${HOME}}/${ZSH_COMPDUMP:-.zcompdump}
-    compdump
-else
-    compinit -d ${ZDOTDIR:-${HOME}}/${ZSH_COMPDUMP:-.zcompdump} -C
-fi
-source ${ZPREZD}/modules/fasd/fasd.zsh
+promptinit
+prompt "paradox"
+add-zsh-hook preexec alias-tips-preexec
+chpwd_functions+=(git-status l)
+fpath+=(${ZPREZD}/modules/zsh-completions/src)
+function (){
+    local cmnd=pacman
+    [[ ${${cmnd}:c} = ${cmnd} ]] || source ${ZPREZD}/modules/pacman/init.zsh
+}
+function (){
+    local cmnd=tag
+    if [[ ${${cmnd}:c} != ${cmnd} ]]; then
+        function tag() {
+            command tag "$@";
+            eval $(perl -ne 's/''vim /''nvim /; print "$_";' < ${TAG_ALIAS_FILE})
+        }
+    fi
+}
+function (){
+    local re_initialize=0
+    if [[ -n ${ZDOTDIR:-${HOME}}/${ZSH_COMPDUMP:-.zcompdump}(#qN.mh+24) ]]; then
+        re_initialize=1
+    fi
+    if [ "$re_initialize" -eq "1" ]; then
+        compinit -d ${ZDOTDIR:-${HOME}}/${ZSH_COMPDUMP:-.zcompdump}
+        compdump
+    else
+        compinit -d ${ZDOTDIR:-${HOME}}/${ZSH_COMPDUMP:-.zcompdump} -C
+    fi
+}
+# fpath+=(${ZPREZD}/modules/zsh-abbrev-alias/src)
+# autoload -Uw $ZPREZD/modules/zsh-abbrev-alias/src/abbrev-alias.zwc
+# abbrev-alias --init
+
+# fpath+=(${ZPREZD}/modules/zsh-manydots-magic)
+# autoload -Uz manydots-magic
 # }
 # autoload -U zshrcload && zshrcload
 # function zshintload(){
-if [[ "$TERM" == 'dumb' ]]; then
-    zstyle ':prezto:*:*' color 'no'
-    zstyle ':prezto:module:prompt' theme 'off'
-fi
-if [[ $- == *i* ]]; then
-    zstyle ':completion:*' menu select
-    zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==34=16}:${(s.:.)LS_COLORS}")';
-    promptinit
-    prompt "paradox"
-    add-zsh-hook preexec alias-tips-preexec
-    # source "$ZPREZD/modules/fzf/shell/completion.zsh"
-    source $ZPREZD/modules/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
-    source ${ZPREZD}/modules/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-    ZSH_AUTOSUGGEST_EXECUTE_WIDGETS+=(accept-and-infer-next-history accept-and-run)
-    # }
-    # autoload -U zshintload && zshintload
-    # function zshfinload(){
-    key_bind
-    unambigandmenu() {
-        zle zic-completion
-        zle magic-space
-        zle backward-delete-char
-    }
-    zle -N unambigandmenu
-    source "${ZPREZD}/modules/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-    FAST_HIGHLIGHT_STYLES[default]="fg=230"
-    FAST_HIGHLIGHT_STYLES[unknown-token]="fg=196,bold,bg=231"
-    FAST_HIGHLIGHT_STYLES[reserved-word]="fg=37,bold"
-    FAST_HIGHLIGHT_STYLES[suffix-alias]="fg=64"
-    FAST_HIGHLIGHT_STYLES[alias]="fg=24,bg=34,bold"
-    FAST_HIGHLIGHT_STYLES[builtin]="fg=24,bg=148,bold"
-    FAST_HIGHLIGHT_STYLES[function]="fg=24,bg=82,bold"
-    FAST_HIGHLIGHT_STYLES[command]="fg=24,bg=46,bold"
-    FAST_HIGHLIGHT_STYLES[hashed-command]="bg=70,fg=24,bold"
-    FAST_HIGHLIGHT_STYLES[precommand]="fg=50"
-    FAST_HIGHLIGHT_STYLES[commandseparator]="fg=90,bold"
-    FAST_HIGHLIGHT_STYLES[path]="fg=177"
-    FAST_HIGHLIGHT_STYLES[path_pathseparator]="fg=243"
-    FAST_HIGHLIGHT_STYLES[globbing]="fg=21,bold"
-    FAST_HIGHLIGHT_STYLES[history-expansion]="fg=20,bold"
-    FAST_HIGHLIGHT_STYLES[single-hyphen-option]="fg=3,underline"
-    FAST_HIGHLIGHT_STYLES[double-hyphen-option]="fg=202,underline"
-    FAST_HIGHLIGHT_STYLES[back-quoted-argument]="fg=247,underline"
-    FAST_HIGHLIGHT_STYLES[single-quoted-argument]="fg=255,underline"
-    FAST_HIGHLIGHT_STYLES[double-quoted-argument]="fg=249,underline"
-    FAST_HIGHLIGHT_STYLES[dollar-quoted-argument]="fg=230,underline"
-    FAST_HIGHLIGHT_STYLES[back-or-dollar-double-quoted-argument]="fg=228,underline"
-    FAST_HIGHLIGHT_STYLES[back-dollar-quoted-argument]="fg=226,underline"
-    FAST_HIGHLIGHT_STYLES[assign]="fg=30,bg=244"
-    FAST_HIGHLIGHT_STYLES[redirection]="fg=29,bold,bg=252"
-    FAST_HIGHLIGHT_STYLES[comment]="fg=52,bold,bg=252"
-    FAST_HIGHLIGHT_STYLES[variable]="fg=220"
-    FAST_HIGHLIGHT_STYLES[mathvar]="fg=214,bold"
-    FAST_HIGHLIGHT_STYLES[mathnum]="fg=203"
-    FAST_HIGHLIGHT_STYLES[matherr]="fg=196,bold,underline"
-    set -A HSMW_HIGHLIGHT_STYLES ${(kv)FAST_HIGHLIGHT_STYLES}
-    source "${ZPREZD}/modules/history-substring-search/external/zsh-history-substring-search.zsh"
-    HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
-    HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
-    HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
-    bindkey -M viins "\C-P" history-substring-search-up
-    bindkey -M viins "\C-N" history-substring-search-down
-    bindkey -M viins "\C-I" zic-completion
-fi
+# [[ -s "$HOME/.local/share/marker/marker.sh" ]] && source "$HOME/.local/share/marker/marker.sh"
+# source "$ZPREZD/modules/fzf/shell/completion.zsh"
+source "${ZPREZD}/modules/fasd/fasd.zsh"
+source "${ZPREZD}/modules/calc/calc.plugin.zsh"
+source "${ZPREZD}/modules/careful_rm/careful_rm.plugin.zsh"
+source "${ZPREZD}/modules/zsh-autopair/autopair.zsh"
+source "${ZPREZD}/modules/zsh-change-case/change-case.zsh"
+source "${ZPREZD}/modules/zce/zce.zsh"
+source "${ZPREZD}/modules/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh"
+source "${ZPREZD}/modules/zaw/zaw.zsh"
+source "${ZPREZD}/modules/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
+zle_widgets
+source "${ZPREZD}/modules/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+source "${ZPREZD}/modules/q/q.plugin.zsh"
+source "${ZPREZD}/modules/history-substring-search/external/zsh-history-substring-search.zsh"
+highlight_styles
+key_bind
 # }
+# autoload -U zshrcload && zshrcload
+# zprof
 # autoload -U zshfinload && zshfinload
 # zprof &>${HOME}/profiled

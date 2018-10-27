@@ -1,63 +1,6 @@
 # vim: set ft=zsh:
 # zmodload zsh/zprof
-# function zshenvload(){
-WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
 typeset -gU fpath path
-fpath+=(${ZRCD}/funcs ${ZPREZD}/modules/zsh-completions/src)
-local printf_template='\033]4;%d;rgb:%s\033\\'
-printf $printf_template 16 db/7b/55
-printf $printf_template 17 8a/55/3f
-printf $printf_template 18 1b/1f/14
-printf $printf_template 19 3B/75/8C
-printf $printf_template 20 43/a5/d5
-printf $printf_template 21 ee/ee/ee
-printf $printf_template 22 17/1f/36
-printf $printf_template 23 19/0a/12
-printf $printf_template 24 0c/0d/0e
-printf $printf_template 25 24/27/29
-printf $printf_template 26 2f/34/37
-printf $printf_template 27 46/63/b9
-printf $printf_template 28 32/20/54
-printf $printf_template 29 3d/0f/3d
-printf $printf_template 30 23/05/46
+fpath+=(${ZRCD}/funcs)
+autoload -Uw $ZRCD/funcs/myfuncs
 export LC_CTYPE=C
-setopt ALWAYS_TO_END        # Move cursor to the end of a completed word.
-setopt AUTO_CD              # Auto changes to a directory without typing cd.
-setopt AUTO_NAME_DIRS       # Auto add variable-stored paths to ~ list.
-setopt AUTO_PUSHD           # Push the old directory onto the stack on cd.
-setopt AUTO_LIST            # list menu complete on first <Tab>
-setopt AUTO_PARAM_KEYS      #automaically delete spaces before a } or ,
-setopt AUTO_PARAM_SLASH     # If completed parameter is a directory, add a trailing slash.
-setopt AUTO_REMOVE_SLASH    #remove trailing / if not needed
-setopt BANG_HIST            # Treat the '!' character specially during expansion.
-setopt CDABLE_VARS          #add a ~ to bare directory commands
-setopt COMPLETEINWORD
-setopt CORRECT              # correct command spelling
-setopt CSH_NULL_GLOB        # remove unused glob patters without report errors
-setopt BEEP
-setopt EXTENDED_GLOB        # Use extended globbing syntax.
-unsetopt FLOW_CONTROL       # Disable start/stop characters in shell editor.
-setopt HIST_BEEP            # Beep when accessing non-existent history.
-setopt HIST_NO_STORE        # don\'t include the history "fc -l" command
-setopt HIST_REDUCE_BLANKS   # let zsh trim blanks automagically
-setopt HIST_VERIFY          # first substitute history before allowing execution
-setopt INC_APPEND_HISTORY   # Write to the history file immediately, not when the shell exits.
-setopt INTERACTIVECOMMENTS
-setopt LIST_AMBIGUOUS       # automatically inset ambiguous compeltions
-setopt LIST_PACKED          # use variable length width completion columns
-setopt LIST_TYPES           # include file types when autocompletin
-setopt LONGLISTJOBS         # include PID in jobs listing
-setopt MARK_DIRS            # add trailing / to filename (directory) generation
-setopt MULTIOS              # Write to multiple descriptors.
-unsetopt NOMATCH
-setopt NOTIFY
-setopt NUMERIC_GLOB_SORT    # sort by numbers when prefixed
-setopt PRINT_EXIT_VALUE     # print exit values
-setopt PATH_DIRS            # Perform path search even on command names with slashes.
-setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
-setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
-setopt PUSHD_TO_HOME        # Push to home directory when no argument is given.
-setopt RC_QUOTES            # use `''` for single quotes in single quotes
-setopt SHARE_HISTORY        # Share history between all sessions.
-# }
-# autoload -U zshenvload && zshenvload
