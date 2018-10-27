@@ -94,3 +94,9 @@
 [submodule "modules/marker"]
 	path = modules/marker
 	url = https://github.com/pindexis/marker.git
+[submodule "modules/urxvt-tabbedex"]
+	path = modules/urxvt-tabbedex
+	url = https://github.com/mina86/urxvt-tabbedex.git
+[submodule "modules/urxvt-vim-scrollback"]
+	path = modules/urxvt-vim-scrollback
+	url = https://github.com/bechampion/urxvt-vim-scrollback.git

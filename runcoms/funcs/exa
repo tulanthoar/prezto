@@ -1,0 +1,5 @@
+# vim: ft=zsh:
+function exa(){
+    command exa --header --group --time=mod --time-style=iso --grid --long --classify --color=always --color-scale --group-directories-first --git-ignore --ignore-glob=".git|tags" --sort=Ext --git "$@"
+}
+

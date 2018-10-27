@@ -1,0 +1,25 @@
+#compdef nightshift
+
+_opts=(
+    '(-h --help)'{-h,--help}"["'Display this help message'"]"
+    '(-V --version)'{-V,--version}"["'Show program version'"]"
+    '(-C --copyright)'{-C,--copyright}"["'Show program copyright information'"]"
+    '(-W --warranty)'{-W,--warranty}"["'Show program warrantly disclaimer'"]"
+    '(-d --daemon)'{-d,--daemon}"["'Start as daemon'"]"
+    '(-x --kill)'{-x,--kill}"["'Remove adjustment from screen'"]"
+    '(+x --toggle)'{+x,--toggle}"["'Temporarily disable or enable adjustments'"]"
+    '(+d --disable)'{+d,--disable}"["'Temporarily disable adjustments'"]"
+    '(+e --enable)'{+e,--enable}"["'Re-enable adjustments'"]"
+    '(+f --freeze)'{+f,--freeze}"["'Freeze the redshift process'"]"
+    '(+t --thaw)'{+t,--thaw}"["'Thaw the redshift process'"]"
+    '(-s --status)'{-s,--status}"["'Print status information'"]"
+    '(-r --no-transition)'{-r,--no-transition}"["'Disable temperature transitions'"]"
+    '(+c --script)'{+c,--script}"["'Load nightshift configuration script from specified file'"]"":FILE"
+    '(-c --config)'{-c,--config}"["'Load redshift settings from specified file'"]"":FILE"
+    '(-b --brightness)'{-b,--brightness}"["'Screen brightness to set at daytime/night'"]"":DAY:NIGHT"
+    '(-l --location)'{-l,--location}"["'Your current location or location provider'"]"":'LAT:LON|PROVIDER'"
+    '(-m --method)'{-m,--method}"["'Method to use to set colour temperature'"]"":METHOD"
+    )
+
+_arguments "$_opts[@]"
+

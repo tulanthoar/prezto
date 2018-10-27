@@ -1,0 +1,61 @@
+# vim: set ft=zsh:
+function highlight_styles() {
+    local printf_template='\033]4;%d;rgb:%s\033\\'
+    printf $printf_template 16 b6/e0/ff
+    printf $printf_template 17 8a/55/3f
+    printf $printf_template 18 1b/1f/14
+    printf $printf_template 19 3B/75/8C
+    printf $printf_template 20 43/a5/d5
+    printf $printf_template 21 ce/be/ee
+    printf $printf_template 22 17/1f/36
+    printf $printf_template 23 19/0a/12
+    printf $printf_template 24 24/27/29
+    printf $printf_template 25 0c/0d/0e
+    # printf $printf_template 26 2f/34/37
+    printf $printf_template 26 16/21/26
+    printf $printf_template 27 46/63/b9
+    printf $printf_template 28 32/20/54
+    printf $printf_template 29 3d/0f/3d
+    printf $printf_template 30 23/05/46
+    printf $printf_template 232 01/01/05
+    printf $printf_template 233 08/0a/01
+    printf $printf_template 234 0d/01/0f
+    printf $printf_template 235 14/0b/09
+    printf $printf_template 236 16/21/26
+    printf $printf_template 237 2a/25/31
+    printf $printf_template 238 12/16/31
+    FAST_HIGHLIGHT_STYLES[default]="fg=230"
+    FAST_HIGHLIGHT_STYLES[unknown-token]="fg=196,bold,bg=231"
+    FAST_HIGHLIGHT_STYLES[reserved-word]="fg=37,bold"
+    FAST_HIGHLIGHT_STYLES[alias]="fg=233,bg=34,bold"
+    FAST_HIGHLIGHT_STYLES[suffix-alias]="fg=64"
+    FAST_HIGHLIGHT_STYLES[builtin]="fg=233,bg=148,bold"
+    FAST_HIGHLIGHT_STYLES[function]="fg=233,bg=82,bold"
+    FAST_HIGHLIGHT_STYLES[command]="fg=233,bg=46,bold"
+    FAST_HIGHLIGHT_STYLES[precommand]="fg=50"
+    FAST_HIGHLIGHT_STYLES[commandseparator]="fg=90,bold"
+    FAST_HIGHLIGHT_STYLES[hashed-command]="bg=70,fg=233,bold"
+    FAST_HIGHLIGHT_STYLES[path]="fg=177"
+    FAST_HIGHLIGHT_STYLES[path_pathseparator]="fg=243"
+    FAST_HIGHLIGHT_STYLES[globbing]="fg=254,bold"
+    FAST_HIGHLIGHT_STYLES[history-expansion]="fg=74,bold"
+    FAST_HIGHLIGHT_STYLES[single-hyphen-option]="fg=3,underline"
+    FAST_HIGHLIGHT_STYLES[double-hyphen-option]="fg=202,underline"
+    FAST_HIGHLIGHT_STYLES[back-quoted-argument]="fg=247,underline"
+    FAST_HIGHLIGHT_STYLES[single-quoted-argument]="fg=255,underline"
+    FAST_HIGHLIGHT_STYLES[double-quoted-argument]="fg=249,underline"
+    FAST_HIGHLIGHT_STYLES[dollar-quoted-argument]="fg=230,underline"
+    FAST_HIGHLIGHT_STYLES[back-or-dollar-double-quoted-argument]="fg=228,underline"
+    FAST_HIGHLIGHT_STYLES[back-dollar-quoted-argument]="fg=226,underline"
+    FAST_HIGHLIGHT_STYLES[assign]="fg=54,bg=244"
+    FAST_HIGHLIGHT_STYLES[redirection]="fg=53,bold,bg=252"
+    FAST_HIGHLIGHT_STYLES[comment]="fg=52,bold,bg=252"
+    FAST_HIGHLIGHT_STYLES[variable]="fg=220"
+    FAST_HIGHLIGHT_STYLES[mathvar]="fg=214,bold"
+    FAST_HIGHLIGHT_STYLES[mathnum]="fg=203"
+    FAST_HIGHLIGHT_STYLES[matherr]="fg=196,bold,underline"
+    set -A HSMW_HIGHLIGHT_STYLES ${(kv)FAST_HIGHLIGHT_STYLES}
+    HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'; export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND;
+    HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=52,fg=white,bold'; export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND;
+    HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'; export HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS;
+}

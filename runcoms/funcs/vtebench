@@ -1,0 +1,34 @@
+# vim: set ft=zsh:
+function vtebench(){
+    local wid=$(tput cols)
+    local heig=$(tput lines)
+    [[ -s $TMPDIR/100mb-uniw.vte ]] || command vtebench -w $wid -h $heig  -b 2000000 unicode-random-write > $TMPDIR/100mb-uniw.vte
+    [[ -s $TMPDIR/100mb-scroll.vte ]] || command vtebench -w $wid -h $heig -b 20000000 scrolling > $TMPDIR/100mb-scroll.vte
+    [[ -s $TMPDIR/100mb-alt.vte ]] || command vtebench -w $wid -h $heig -b 200000000 alt-screen-random-write > $TMPDIR/100mb-alt.vte
+    zmodload zsh/zprof
+    zprof -c
+    function alt-screen (){
+    zprof -c
+    function(){    command cat $TMPDIR/100mb-alt.vte}
+    zprof &> $TMPDIR/altprof
+    }
+    function scroll (){
+    zprof -c
+        function(){command cat $TMPDIR/100mb-scroll.vte}
+    zprof &> $TMPDIR/scrollprof
+    }
+    function uni (){
+    zprof -c
+        function(){command cat $TMPDIR/100mb-uniw.vte}
+    zprof &> $TMPDIR/uniprof
+    }
+    function print_results(){
+         cat $TMPDIR/uniprof|grep "anon.$"|head -n1
+         print "^^ unicode profile ^^\n\n"
+         cat $TMPDIR/altprof|grep "anon.$"|head -n1
+         print "^^ alt-screen profile ^^\n\n"
+         cat $TMPDIR/scrollprof|grep "anon.$"|head -n1
+         print "^^ scroll profile ^^\n\n"
+
+    }
+}

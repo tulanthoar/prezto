@@ -1,0 +1,18 @@
+# vim: set ft=zsh:
+function zle_widgets() {
+    zle -N cdf
+    zle -N fzf-history-widget
+    zle -N fzf-file-widget
+    zle -N accept-and-run
+    zle -N snippet-expand
+    zle -N fzf-locate-widget
+    zle -N fzf-completion
+    zle -N h
+    zle -N p
+    zle -N n
+    zle -N sudo-command-line
+    zle -N paste-primary
+    zle -N expand-dot-to-parent-directory-path
+    zle -N expand-or-complete-with-indicator
+    zle -N zic-completion
+}
