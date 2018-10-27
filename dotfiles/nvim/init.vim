@@ -823,13 +823,13 @@ hi WildMenu               ctermbg=236 cterm=bold
 hi StatusLine             ctermbg=234
 hi Search                 ctermbg=30  ctermfg=14 cterm=bold
 hi MatchParen             ctermbg=20  ctermfg=25
-hi Conceal                            ctermfg=27
-hi CursorColumn           ctermbg=240
-hi CursorLine             ctermbg=240
-hi HighlightedyankRegion  ctermbg=28  ctermfg=none cterm=bold
+hi Conceal                            ctermfg=16
+hi CursorColumn           ctermbg=237
+hi CursorLine             ctermbg=237
+hi HighlightedyankRegion  ctermbg=238  ctermfg=none cterm=bold
 hi TermCursorNC           ctermbg=236 ctermfg=none
 hi SyntasticErrorLine     ctermbg=126 cterm=underline
-hi SyntasticWarningLine     ctermbg=136 cterm=underline
+hi SyntasticWarningLine   ctermbg=136 cterm=underline
 hi SpellBad               cterm=standout
 hi SpellCap               cterm=bold,underline
 
