@@ -1,5 +1,5 @@
 # vim: ft=zsh:
-function -options_env(){
+function __options_env(){
     WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
     setopt ALWAYS_TO_END        # Move cursor to the end of a completed word.
     setopt AUTO_CD              # Auto changes to a directory without typing cd.
