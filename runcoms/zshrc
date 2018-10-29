@@ -12,7 +12,7 @@ zstyle ':filter-select' 'case-insensitive' 'yes' # enable case-insensitive searc
 zstyle ':filter-select' 'extended-search' 'yes'
 zstyle ':filter-select' 'hist-find-no-dups' 'yes' # ignore duplicates in history source
 __options_env
-myaliases
+__myaliases
 promptinit
 prompt "paradox"
 add-zsh-hook preexec alias-tips-preexec

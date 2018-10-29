@@ -1,5 +1,5 @@
 # vim: set ft=zsh:
-function myaliases(){
+function __myaliases(){
     unalias run-help
     alias dfu-bitsy='sudo dfu-util -d 0483:df11 -c 1 -a 0 -s 0x08000000:leave -D ';
     alias swappone='tmux swap-window -t:+';
@@ -19,7 +19,7 @@ function myaliases(){
     alias cpf='copyfile'
     alias cpd='echo -n ${PWD}|xsel -i &> /dev/null && echo -n ${PWD}|xsel -ib &>/dev/null'
     alias ln='ln -i'
-    alias rm='rm -I'
+    alias rm='careful_rm -c -I'
     alias cp='cp -i'
     alias mv='mv -i'
     alias mkdir='mkdir -p'
