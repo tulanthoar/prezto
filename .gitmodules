@@ -73,9 +73,6 @@
 [submodule "modules/calc"]
 	path = modules/calc
 	url = https://github.com/arzzen/calc.plugin.zsh.git
-[submodule "modules/careful_rm"]
-	path = modules/careful_rm
-	url = https://github.com/MikeDacre/careful_rm.git
 [submodule "modules/zsh-change-case"]
 	path = modules/zsh-change-case
 	url = https://github.com/mtxr/zsh-change-case.git

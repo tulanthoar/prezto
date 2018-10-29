@@ -56,7 +56,7 @@ function (){
 # source "$ZPREZD/modules/fzf/shell/completion.zsh"
 source "${ZPREZD}/modules/fasd.zsh"
 source "${ZPREZD}/modules/calc/calc.plugin.zsh"
-source "${ZPREZD}/modules/careful_rm/careful_rm.plugin.zsh"
+# source "${ZPREZD}/modules/careful_rm/careful_rm.plugin.zsh"
 source "${ZPREZD}/modules/zsh-autopair/autopair.zsh"
 source "${ZPREZD}/modules/zsh-change-case/change-case.zsh"
 source "${ZPREZD}/modules/zce/zce.zsh"

@@ -1,0 +1,24 @@
+diff --git a/q.plugin.zsh b/q.plugin.zsh
+index 195f0c8..1588279 100644
+--- a/q.plugin.zsh
++++ b/q.plugin.zsh
+@@ -37,7 +37,7 @@ mkdir -p $HOME/.q
+ 
+ print-regs() {
+     # If the dir is not empty, print out each register and it's contents
+-    if [[ ! -z `ls $HOME/.q` ]]; then
++    if [[ -d $HOME/.q ]]; then
+         echo "\nRegisters:"
+         for reg in $HOME/.q/*; do
+             echo -n " ${reg##*/}: "
+@@ -97,8 +97,8 @@ EOF
+             # If there's no argument
+             if [[ "$ARGS" == "" ]]; then
+                 # Set the register to the current directory
+-                echo "cd `pwd`" > "$HOME/.q/$REG"
+-                echo "\nRegister $REG set to `pwd`"
++                echo "cd ${PWD:A}" > "$HOME/.q/$REG"
++                echo "\nRegister $REG set to cd ${PWD:A}"
+                 BUFFER=""
+             else
+                 # Otherwise, set the register to the given command

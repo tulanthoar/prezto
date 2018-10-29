@@ -1,0 +1,23 @@
+diff --git a/zsh-autosuggestions.zsh b/zsh-autosuggestions.zsh
+index 0d389ec..7fa6323 100644
+--- a/zsh-autosuggestions.zsh
++++ b/zsh-autosuggestions.zsh
+@@ -64,9 +64,7 @@ ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(
+ 
+ # Widgets that accept the entire suggestion
+ ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
+-	forward-char
+ 	end-of-line
+-	vi-forward-char
+ 	vi-end-of-line
+ 	vi-add-eol
+ )
+@@ -77,6 +75,8 @@ ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=(
+ 
+ # Widgets that accept the suggestion as far as the cursor moves
+ ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(
++	vi-forward-char
++	forward-char
+ 	forward-word
+ 	vi-forward-word
+ 	vi-forward-word-end
