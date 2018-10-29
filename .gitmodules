@@ -10,9 +10,6 @@
 [submodule "modules/zsh-completions"]
 	path = modules/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions.git
-[submodule "modules/base16-shell"]
-	path = modules/base16-shell
-	url = https://github.com/tulanthoar/base16-shell.git
 [submodule "modules/fzf"]
 	path = modules/fzf
 	url = https://github.com/junegunn/fzf.git
@@ -31,9 +28,6 @@
 [submodule "modules/highlight"]
 	path = modules/highlight
 	url = https://github.com/andre-simon/highlight
-[submodule "modules/auto-ls"]
-	path = modules/auto-ls
-	url = https://github.com/desyncr/auto-ls.git
 [submodule "modules/auto-fu"]
 	path = modules/auto-fu
 	url = https://github.com/hchbaw/auto-fu.zsh.git
