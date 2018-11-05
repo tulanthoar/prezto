@@ -62,7 +62,7 @@ URxvt.meta8: false
 URxvt.modifier             : Mod1
 !URxvt.perl-ext-common: kuake,tabbedex,autocomplete-ALL-the-things
 !URxvt.perl-ext-common: tabbedex,kuake,background,autocomplete-ALL-the-things
-URxvt.perl-ext-common: tabbedex,kuake,background,autocomplete-ALL-the-things,curplosion,cursortail,vim-scrollback,256colors2
+URxvt.perl-ext-common: tabbedex,background,autocomplete-ALL-the-things,curplosion,cursortail,vim-scrollback
 !URxvt.perl-ext-common: tabbedex,kuake,autocomplete-ALL-the-things,curplosion,cursortail,256colors2
 !URxvt.perl-ext-common: tabbedex,autocomplete-ALL-the-things
 URxvt.cursortail.colorlist:   118 130 119 131 120 132
@@ -71,7 +71,6 @@ URxvt.curplosion.colors:    214, 220, 226
 URxvt.curplosion.sizes:     3, 7, 9, 7, 3
 URxvt.curplosion.duration:  50
 URxvt.curplosion.show-on-focus: true
-URxvt.fifo.file            : /tmp/urxvt.fifo
 URxvt.background.expr: center keep { load "$HOME/Pictures/future_diary_by_kaylaerinofficial-dakrgfy-scaled-contrast.jpg"}
 urxvt.vim-scrollback-bg: 235
 urxvt.vim-scrollback-fg: 15
@@ -91,10 +90,10 @@ URxvt.keysym.M-slash   : autocomplete-ALL-the-things:word-complete
 URxvt.keysym.M-o: perl:tabbedex:new_tab
 URxvt.keysym.M-p: perl:tabbedex:prev_tab
 URxvt.keysym.M-n: perl:tabbedex:next_tab
-URxvt.keysym.M-comma:  256colors2:print_colors
-URxvt.keysym.M-Return: perl:jak-run:run
-URxvt.keysym.M-C-Return: perl:jak-run:run_and_exit
-URxvt.kuake.hotkey         : F11
+!URxvt.keysym.M-comma:  256colors2:print_colors
+!URxvt.keysym.M-Return: perl:jak-run:run
+!URxvt.keysym.M-C-Return: perl:jak-run:run_and_exit
+!URxvt.kuake.hotkey         : F11
 !!URxvt.keysym.Mod4-e: perl:reactivity:vim
 !!URxvt.keysym.Mod4-0x5d: perl:reactivity:smallerfont
 !!URxvt.keysym.Mod4-0x5b: perl:reactivity:largerfont
@@ -123,7 +122,7 @@ XTerm*termName:     xterm-256color
 rofi.modi: window,run,windowcd,drun,keys
 rofi.show-icons: true
 rofi.sorting-method: fzf
-rofi.theme: /home/ant/.local/share/rofi/themes/}/sidetab
+rofi.theme: /home/ant/.local/share/rofi/themes/sidetab
 rofi.font: FantasqueSansMono Nerd Font Mono 18
 rofi.sidebar-mode:true
 rofi.terminal:                       urxvt
