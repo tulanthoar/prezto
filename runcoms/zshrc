@@ -15,7 +15,7 @@ __options_env
 __myaliases
 promptinit
 prompt "paradox"
-add-zsh-hook preexec alias-tips-preexec
+#add-zsh-hook preexec alias-tips-preexec
 chpwd_functions+=(git-status l)
 fpath+=(${ZPREZD}/modules/zsh-completions/src)
 function (){
@@ -69,6 +69,9 @@ source "${ZPREZD}/modules/q/q.plugin.zsh"
 source "${ZPREZD}/modules/history-substring-search/external/zsh-history-substring-search.zsh"
 highlight_styles
 key_bind
+_zsh_autosuggest_start
+_zsh_autosuggest_bind_widgets
+add-zsh-hook -d precmd _zsh_autosuggest_bind_widgets
 # }
 # autoload -U zshrcload && zshrcload
 # zprof
