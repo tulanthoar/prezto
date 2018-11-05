@@ -165,8 +165,8 @@ Plugin 'Shougo/echodoc.vim'
 let g:indentLine_char = 'ǁ'
 " let g:indentLine_char = '├'
 "let g:indentLine_setColors = 0
-let g:indentLine_color_term=256
-let g:indentLine_bgcolor_term = 53
+let g:indentLine_color_term = 135
+let g:indentLine_bgcolor_term = 233
 let g:indentLine_first_char = '╠'
 let g:indentLine_indentLevel = 10
 let g:indentLine_showFirstIndentLevel = '1'
