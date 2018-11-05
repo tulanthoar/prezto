@@ -1,5 +1,8 @@
 # vim: set ft=zsh:
 _fasd_preexec() {
-  { eval "fasd --proc $(fasd --sanitize $1)"; } >> "/dev/null" 2>&1
+	local sanitized=$(print "$1\n" | sed 's/\([^\]\)$( *[^ ]* *\([^)]*\)))*/\1\2/g
+	s/\([^\]\)[|&;<>$`{}]\{1,\}/\1 /g')
+  #{ eval "fasd --proc $(fasd --sanitize $1)"; } >> "/dev/null" 2>&1
+  fasd --add "${${(z)sanitized}:1}";
 }
 
