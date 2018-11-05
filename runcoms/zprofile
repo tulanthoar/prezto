@@ -27,14 +27,15 @@ export MONITOR_PORT="/dev/tty96B0"
 export CACA_GEOMETRY=172x56
 export RANGER_LOAD_DEFAULT_RC=FALSE
 export OMNIVIM_EDITOR=$(which nvim)
-[[ $(which pt) ]] && FZF_DEFAULT_COMMAND='pt --hidden --ignore .git --ignore .snapshot . -g ""'
-[[ $(which ag) ]] && FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
-[[ $(which fd) ]] && FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
+which pt &>/dev/null && FZF_DEFAULT_COMMAND='pt --hidden --ignore .git --ignore .snapshot . -g ""'
+which ag &>/dev/null && FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+which fd &>/dev/null && FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
 export FZF_DEFAULT_COMMAND
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
 export TMPDIR=/tmp/$LOGNAME
 [[ -d $TMPDIR ]] || mkdir -p -m 700 $TMPDIR
+ln -s $HOME/.local/share/trash /tmp/ant_trash
 export NVIM_LISTEN_ADDRESS=$TMPDIR/nvim_omni
 export TMPPREFIX=${TMPDIR}/zsh
 [[ -d $TMPPREFIX ]] || mkdir -p -m 700 $TMPPREFIX
@@ -64,4 +65,4 @@ export ZSH_AUTOSUGGEST_STRATEGY="default"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 export ZSH_HIGHLIGHT_MAXLENGTH=1000
 export TAG_ALIAS_FILE=$TMPPREFIX/tag_aliases
-        export TAG_SEARCH_PROG=ag  # replace with rg for ripgrep
+export TAG_SEARCH_PROG=ag  # replace with rg for ripgrep

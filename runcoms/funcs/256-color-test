@@ -1,11 +1,7 @@
 # vim: set ft=zsh:
 function 256-color-test (){
-    local x=$(tput op)
-    local y=$(printf %$((${COLUMNS}-6))s)
-    : ${y// /=}
-  for c in {0..255}; do
-    # local o=00$i
-    printf "%3.i %s%s%s\n" $c $(tput setaf $c;tput setab $c) ${y} $x
-    # echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x
-  done
-  }
+    local y=$(printf "%$((${COLUMNS}-4))s%s" "=" "$(tput op)")
+    for c in {0..255}; do
+        printf "%03d %s%s\n" $c $(tput setaf $c;tput setab $c) ${y}
+    done
+}

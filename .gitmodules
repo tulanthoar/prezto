@@ -88,3 +88,12 @@
 [submodule "modules/urxvt-vim-scrollback"]
 	path = modules/urxvt-vim-scrollback
 	url = https://github.com/bechampion/urxvt-vim-scrollback.git
+[submodule "modules/autocomplete-ALL-the-things"]
+	path = modules/autocomplete-ALL-the-things
+	url = https://github.com/Vifon/autocomplete-ALL-the-things.git
+[submodule "modules/urxvt-curplosion"]
+	path = modules/urxvt-curplosion
+	url = https://github.com/tgorochowik/urxvt-curplosion.git
+[submodule "modules/urxvt-cursortail"]
+	path = modules/urxvt-cursortail
+	url = https://github.com/awwaiid/urxvt-cursortail.git
