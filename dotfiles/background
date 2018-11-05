@@ -278,24 +278,6 @@ interval with this switch.
 
 =cut
 
-our %_IMG_CACHE;
-our $HOME;
-our ($self, $frame);
-our ($x, $y, $w, $h, $focus);
-
-# enforce at least this interval between updates
-our $MIN_INTERVAL = 6/59.951;
-
-{
-   package urxvt::bgdsl; # background language
-
-   sub FR_PARENT() { 0 } # parent frame, if any - must be #0
-   sub FR_CACHE () { 1 } # cached values
-   sub FR_AGAIN () { 2 } # what this expr is sensitive to
-   sub FR_STATE () { 3 } # watchers etc.
-
-   use List::Util qw(min max sum shuffle);
-
 =head2 PROVIDERS/GENERATORS
 
 These functions provide an image, by loading it from disk, grabbing it
@@ -320,12 +302,30 @@ is in memory at the time.
 
 =cut
 
+our %_IMG_CACHE;
+our ($self, $frame);
+our ($x, $y, $w, $h, $focus);
+
+# enforce at least this interval between updates
+
+package urxvt::bgdsl
+{
+   use List::Util qw(min max);
+
+   sub FR_AGAIN () { return 2; } # what this expr is sensitive to
+
+   sub FR_PARENT() { return 0; } # parent frame, if any - must be #0
+
+   sub FR_CACHE () { return 1; } # cached values
+
    sub load_uc($) {
       $self->new_img_from_file ($_[0])
    }
 
+   sub FR_STATE () { return 3; } # watchers etc.
+
    sub load($) {
-      my ($path) = @_;
+      my $path = shift;
 
       $_IMG_CACHE{$path} || do {
          my $img = load_uc $path;
@@ -363,8 +363,12 @@ useful for solid backgrounds or for use in filtering effects.
 
    sub solid($;$$) {
       my $colour = pop;
+      my ($wid, $heig) = @_;
+      $wid //= 1;
+      $heig //= 1;
 
-      my $img = $self->new_img (urxvt::PictStandardARGB32, 0, 0, $_[0] || 1, $_[1] || 1);
+      my $img = $self->new_img (urxvt::PictStandardARGB32, 0, 0, $wid, $heig);
+      # my $img = $self->new_img (urxvt::PictStandardARGB32, 0, 0, $_[0] || 1, $_[1] || 1);
       $img->fill ($colour);
       $img
    }
@@ -377,7 +381,7 @@ multiple copies of the same image to apply different effects to.
 =cut
 
    sub clone($) {
-      $_[0]->clone
+      shift->clone
    }
 
 =item merge $img ...
@@ -483,25 +487,25 @@ Example: just for curiosity, how does this pixel extension stuff work?
 =cut
 
    sub pad($) {
-      my $img = $_[0]->clone;
+      my $img = shift->clone;
       $img->repeat_mode (urxvt::RepeatNone);
       $img
    }
 
    sub tile($) {
-      my $img = $_[0]->clone;
+      my $img = shift->clone;
       $img->repeat_mode (urxvt::RepeatNormal);
       $img
    }
 
    sub mirror($) {
-      my $img = $_[0]->clone;
+      my $img = shift->clone;
       $img->repeat_mode (urxvt::RepeatReflect);
       $img
    }
 
    sub extend($) {
-      my $img = $_[0]->clone;
+      my $img = shift->clone;
       $img->repeat_mode (urxvt::RepeatPad);
       $img
    }
@@ -605,12 +609,12 @@ Like C<again>, but also returns an increasing counter value, starting at
    sub now() { urxvt::NOW }
 
    sub again($) {
-      $frame->[FR_AGAIN]{time} = $_[0];
+      $frame->[FR_AGAIN]{time} = shift;
    }
 
    sub counter($) {
-      $frame->[FR_AGAIN]{time} = $_[0];
-      $frame->[FR_STATE]{counter} + 0
+      $frame->[FR_AGAIN]{time} = shift;
+      $frame->[FR_STATE]{counter} + 0;
    }
 
 =back
@@ -646,9 +650,14 @@ memory.
 
    sub clip($;$$;$$) {
       my $img = pop;
-      my $h = pop || TH;
-      my $w = pop || TW;
-      $img->sub_rect ($_[0], $_[1], $w, $h)
+      my $h = pop;
+      $h //= TH;
+      my $w = pop;
+      $w //= TW;
+      my ($xx, $yy) = @_;
+      $xx //= 0;
+      $yy //= 0;
+      $img->sub_rect ($xx, $yy, $w, $h)
    }
 
 =item scale $img
@@ -787,7 +796,7 @@ transparency as long as the window isn't in front of other windows.
    }
 
    sub rootalign($) {
-      move -TX, -TY, $_[0]
+      move -TX, -TY, shift;
    }
 
 =item rotate $center_x, $center_y, $degrees, $img
@@ -833,7 +842,7 @@ Example: the same, but specify the colour by component.
 =cut
 
    sub tint($$) {
-      $_[1]->tint ($_[0])
+      pop->tint ($_[0])
    }
 
 =item shade $factor, $img
@@ -843,7 +852,7 @@ Shade the image by the given factor.
 =cut
 
    sub shade($$) {
-      $_[1]->shade ($_[0])
+      pop->shade ($_[0])
    }
 
 =item contrast $factor, $img
@@ -929,7 +938,7 @@ brightness too much.
 =cut
 
    sub muladd($$$) {
-      $_[2]->muladd ($_[0], $_[1])
+      pop->muladd ($_[0], $_[1])
    }
 
 =item blur $radius, $img
@@ -947,8 +956,7 @@ low values for radius (<5).
 =cut
 
    sub blur($$;$) {
-      my $img = pop;
-      $img->blur ($_[0], @_ >= 2 ? $_[1] : $_[0])
+      pop->blur ($_[0], @_ >= 2 ? $_[1] : $_[0])
    }
 
 =item focus_fade $img
@@ -1065,13 +1073,15 @@ changes), then it will be reevaluated automatically as needed.
 }
 
 sub parse_expr {
+    $_[0] =~s/[\$]HOME/$ENV{HOME}/;
+    $_[0] =~s/~/$ENV{HOME}/;
    my $expr = eval
       "sub {\n"
     . "package urxvt::bgdsl;\n"
     . "#line 0 'background expression'\n"
     . "$_[0]\n"
     . "}";
-   die if $@;
+   warn $@ if $@;
    $expr
 }
 
@@ -1080,7 +1090,7 @@ sub set_expr {
    my ($self, $expr) = @_;
 
    $self->{root} = []; # the outermost frame
-   $self->{expr} = $expr;
+   $self->{expr} = parse_expr $expr;
    $self->recalculate;
 }
 
@@ -1140,7 +1150,7 @@ sub compile_frame {
 
 # evaluate the current bg expression
 sub recalculate {
-   my ($arg_self) = @_;
+   my ($arg_self) = shift;
 
    # rate limit evaluation
 
@@ -1151,12 +1161,11 @@ sub recalculate {
       return;
    }
 
-   $arg_self->{next_refresh} = urxvt::NOW + $MIN_INTERVAL;
+   $arg_self->{next_refresh} = urxvt::NOW + $arg_self->{min_interval};
 
    # set environment to evaluate user expression
 
    local $self  = $arg_self;
-   local $HOME  = $ENV{HOME};
    local $frame = $self->{root};
 
    ($x, $y, $w, $h) = $self->background_geometry ($self->{border});
@@ -1165,9 +1174,9 @@ sub recalculate {
    # evaluate user expression
 
    my @img = eval { $self->{expr}->() };
-   die $@ if $@;
-   die "background-expr did not return anything.\n" unless @img;
-   die "background-expr: expected image(s), got something else.\n"
+   warn $@ if $@;
+   warn "background-expr did not return anything.\n" unless @img;
+   warn "background-expr: expected image(s), got something else.\n"
       if grep { !UNIVERSAL::isa $_, "urxvt::img" } @img;
 
    my $img = urxvt::bgdsl::merge @img;
@@ -1193,18 +1202,18 @@ sub recalculate {
 }
 
 sub on_start {
-   my ($self) = @_;
+   my $self = shift;
 
    my $expr = $self->x_resource ("%.expr")
       or return;
 
    $self->has_render
-      or die "background extension needs RENDER extension 0.10 or higher, ignoring background-expr.\n";
+      or warn "background extension needs RENDER extension 0.10 or higher, ignoring background-expr.\n";
 
-   $self->set_expr (parse_expr $expr);
+   $self->set_expr ($expr);
    $self->{border} = $self->x_resource_boolean ("%.border");
 
-   $MIN_INTERVAL = $self->x_resource ("%.interval");
+   $self->{min_interval} = $self->x_resource ("%.interval") // (6/59.951);
 
    ()
 }

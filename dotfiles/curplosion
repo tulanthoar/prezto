@@ -1,0 +1,161 @@
+#!/bin/perl
+
+# Copyright (C) 2016 Tomasz Gorochowik <tgorochowik@gmail.com>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+=head1 NAME
+
+curplosion - don't know where your cursor is? explode it!
+
+=head1 DESCRIPTION
+
+Makes it easier to spot the cursor. The default trigger is  C-slash. To
+change it, adjust the following setting:
+
+  urxvt.curplosion.trigger:  C-slash
+
+Play with the following settings to adjust the looks of the curplosion:
+
+  urxvt.curplosion.colors:   5, 7, 5
+  urxvt.curplosion.sizes:    3, 7
+
+Additionally, the duration of the curplosion can be adjusted:
+
+  urxvt.curplosion.duration: 50
+
+The unit of the duration is a millisecond. Also please note, that if
+the duration is set to a very small value, then the terminal might not
+be able to process it fast enough, and it will last much longer. The
+curplosion does NOT block the terminal, so setting it to a very large
+value will not prevent any other usage of the terminal.
+
+To automatically trigger a curplosion on window focus, set the
+following variable to true:
+
+  urxvt.curplosion.show-on-focus: true
+
+=cut
+
+sub on_start {
+  my ($self) = @_;
+
+  # parse settings
+  my $colors   = $self->x_resource("%.colors");
+  my $sizes    = $self->x_resource("%.sizes");
+  my $duration = $self->x_resource("%.duration");
+  my $on_focus = $self->x_resource("%.show-on-focus");
+
+  # fallback to defaults
+  $colors   =~ /^\s*\d+(,\s*\d+)*\s*$/ or $colors   = "5, 7, 5";
+  $sizes    =~ /^\s*\d+(,\s*\d+)*\s*$/ or $sizes    = "3, 7";
+  $duration =~ /^\s*\d+\s*$/           or $duration = "50";
+  $on_focus =~ /^true$/i               or undef $on_focus;
+
+  # store other settings
+  @{$self->{colors}} = split ",", $colors;
+  @{$self->{sizes}}  = split ",", $sizes;
+
+  # calculate a single delay based on other settings
+  $self->{delay} = ($duration / 1000.0) / (@{$self->{colors}} * @{$self->{sizes}});
+
+  if (defined $on_focus) {
+    $self->{global_hooks} = $self->on(focus_in => sub {kindle $self});
+  }
+}
+
+sub on_action {
+    my $self = shift;
+    kindle $self;
+    return 1;
+}
+
+sub kindle {
+  my $self = shift;
+
+  # check against nesting
+  if (defined $self->{curplode_hooks}) {
+    return;
+  }
+
+  # get position
+  my ($row, $col) = $self->screen_cur;
+
+  # generate animation steps
+  foreach my $c (@{$self->{colors}}) {
+    foreach my $f (@{$self->{sizes}}) {
+      # check limits
+      my $f_ = $f; # operating on a copy so it's recalculated each time
+      while ($f_ > $self->ncol) {$f_--;}
+      while (($f_ - 1) / 2 > $col) {$col++;}
+      while ($col + (($f_ - 1) / 2) >= $self->ncol) {$col--;}
+      # accept step
+      push @{$self->{curplode_steps}}, {size => $f_, color => $c};
+    }
+  }
+
+  # store position
+  @{$self->{curplode_pos}} = ($row, $col);
+
+  # assign hooks
+  $self->{'curplode_hooks'} = $self->on(refresh_begin => sub {incinerate $self},
+                                        refresh_end   => sub {extinguish $self});
+
+  # trigger animation
+  $self->want_refresh;
+}
+
+sub fire {
+  my ($self, $row, $col, $size, $color) = @_;
+  return $self->ROW_r($row,
+                      [(urxvt::SET_COLOR(urxvt::DEFAULT_RSTYLE, $color, $color)) x $size],
+                      $col - (($size - 1) / 2));
+}
+
+sub incinerate {
+  my ($self) = @_;
+
+  if (@{$self->{curplode_steps}} > 0) {
+    my ($row, $col) = @{$self->{curplode_pos}};
+
+    my $size  = $self->{curplode_steps}[0]{size};
+    my $color = $self->{curplode_steps}[0]{color};
+
+    $self->{curplode_ur} = fire $self, $row - 1, $col, $size, $color;
+    $self->{curplode_cr} = fire $self, $row,     $col, $size, $color;
+    $self->{curplode_lr} = fire $self, $row + 1, $col, $size, $color;
+  } else {
+    delete @{$self}{grep /^curplode_/, keys %$self};
+  }
+}
+
+sub extinguish {
+  my ($self) = @_;
+
+  if (@{$self->{curplode_steps}} > 0) {
+    my ($row, $col) = @{$self->{curplode_pos}};
+
+    my $step = $self->{curplode_steps}[0];
+
+    $self->ROW_r ($row - 1, delete $self->{curplode_ur});
+    $self->ROW_r ($row,     delete $self->{curplode_cr});
+    $self->ROW_r ($row + 1, delete $self->{curplode_lr});
+
+    # schedule next step
+    $self->{curplode_next} = urxvt::timer
+                             ->new
+                             ->cb (sub {shift @{$self->{curplode_steps}}; $self->want_refresh; })
+                             ->after($self->{delay});
+  }
+}
