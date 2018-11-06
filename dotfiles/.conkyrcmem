@@ -1,0 +1,19 @@
+-- vim: set ft=lua:
+conky.config = {
+ background = false,
+ out_to_console = true,
+ out_to_x = false,
+ update_interval = 3.0,
+ total_run_times  = 0,
+    short_units = true,
+ }
+
+conky.text = [[
+Memory and Disk:\
+
+RAM:  $mem / $memmax  $memperc%\
+
+SWAP: $swap / $swapmax  $swapperc%\
+
+FILE: ${fs_used /} / ${fs_size /}   ${fs_used_perc /}%
+]]

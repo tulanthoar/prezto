@@ -1,0 +1,26 @@
+-- vim: set ft=lua:
+conky.config = {
+ background = false,
+ out_to_console = true,
+ update_interval = 1.0,
+ total_run_times  = 0,
+ }
+
+conky.text = [[
+ ^ca(1, cal_popup.sh) ${time %a %b %d %I:%M%P} ^ca()\
+ ^ca(1, cpuinfo_popup.sh) ^i(/home/ant/.local/bin/bitmap2component.xpm) $cpu% ^ca()\
+ ^ca(1, meminfo_popup.sh) ^i(/home/ant/.local/bin/device_mem.xpm) $memperc% ^ca()\
+ ^ca(1, pwrinfo_popup.sh) ^i(/home/ant/.local/bin/battery.xpm) ${battery_percent}% ^ca()\
+${if_up wlp1s0}\
+ ^ca(1, netinfo_popup.sh) ^i(/home/ant/.local/bin/nm-device-wireless.xpm) ${wireless_link_qual_perc wlp1s0}% ^ca()\
+${endif}\
+ ^ca(1, sysinfo_popup.sh) ^i(/home/ant/.local/bin/distributor-logo-archlinux.xpm) ^ca()\
+ ^ca(1, distro_popup.sh) ^i(/home/ant/.local/bin/distributor-logo-antergos.xpm) ^ca()\
+ ^ca(1, shutdown now) ^i(/home/ant/.local/bin/rpm.xpm) ^ca()\
+ ^ca(1, reboot) ^i(/home/ant/.local/bin/btsync-user.xpm) ^ca()\
+ ^ca(1, systemctl suspend) ^i(/home/ant/.local/bin/system-lock-screen.xpm) ^ca()\
+ ^ca(1, xterm) ^i(/home/ant/.local/bin/text-x-source.xpm) ^ca()\
+ ^ca(1, xfce4-screenshooter) ^i(/home/ant/.local/bin/accessories-screenshot.xpm) ^ca()\
+ ^ca(1, xfce4-popup-whiskermenu -p) ^i(/home/ant/.local/bin/distributor-logo-xubuntu.xpm) ^ca()\
+ ^ca(4, wmctrl -o 0,0)^ca(5, wmctrl -o 1920,0)^ca(1, xdotool key XF86AudioMute ) ^i(/home/ant/.local/bin/user-desktop.xpm) ^ca()^ca()^ca()
+]]
