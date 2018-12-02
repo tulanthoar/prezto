@@ -72,14 +72,14 @@
      au FileType nerdtree setl foldlevel=200
      au FileType help setl foldlevel=200
      au FileType startify setlocal foldlevel=200
- au VimEnter *
+     au VimEnter *
              \ nmap <expr><unique> <CR> foldlevel(getcurpos()[1]) ?
              \ "\<Plug>(fold-cycle-open)" : "\<Plug>(AnyfoldJumpprevfoldend)"
- au VimEnter *
+     au VimEnter *
              \ nmap <expr><unique> <S-Tab> foldlevel(getcurpos()[1]) ?
              \"\<Plug>(fold-cycle-close)":"\<Plug>(AnyfoldJumpnextfoldstart)+"
- autocmd Filetype * AnyFoldActivate
- augroup end
+     autocmd Filetype * AnyFoldActivate
+ augroup END
  Plugin 'pseewald/vim-anyfold'
 "}
 "{better-whitespace: highlight trailwhite \s and \t
@@ -137,32 +137,32 @@
  Plugin 'kurkale6ka/vim-swap', {'name': 'vim-swap-pivot'}
 "}
 "{blockinsert: insert text or norm cmd at start/end of line or vblock bounds
- " aug blockins
- "     au!
- "     au VimEnter * vmap <leader>i  <plug>blockinsert-i
- "     au VimEnter * vmap <leader>a  <plug>blockinsert-a
- "     au VimEnter * vmap <leader>qi <plug>blockinsert-qi
- "     au VimEnter * vmap <leader>qa <plug>blockinsert-qa
+ aug blockins
+     au!
+     au VimEnter * xmap <leader>i  <Plug>BlockinsertVInsert
+     au VimEnter * xmap <leader>a  <Plug>BlockinsertVAppend
+     au VimEnter * xmap <leader>qi <Plug>BlockinsertVQ_Insert
+     au VimEnter * xmap <leader>qa <Plug>BlockinsertVQ_Append
 
- "     au VimEnter * nmap <leader>i  <plug>blockinsert-i
- "     au VimEnter * nmap <leader>a  <plug>blockinsert-a
- "     au VimEnter * nmap <leader>qi <plug>blockinsert-qi
- "     au VimEnter * nmap <leader>qa <plug>blockinsert-qa
+     au VimEnter * nmap <leader>i  <Plug>BlockinsertNInsert
+     au VimEnter * nmap <leader>a  <Plug>BlockinsertNAppend
+     au VimEnter * nmap <leader>qi <Plug>BlockinsertNQ_Insert
+     au VimEnter * nmap <leader>qa <Plug>BlockinsertNQ_Append
 
- "     au VimEnter * vmap <leader>[]  <plug>blockinsert-b
- "     au VimEnter * vmap <leader>[[  <plug>blockinsert-ub
- "     au VimEnter * vmap <leader>]]  <plug>blockinsert-ub
- "     au VimEnter * vmap <leader>q[] <plug>blockinsert-qb
- "     au VimEnter * vmap <leader>q[[ <plug>blockinsert-uqb
- "     au VimEnter * vmap <leader>q]] <plug>blockinsert-uqb
+     au VimEnter * xmap <leader>[]  <Plug>BlockinsertVBoth
+     au VimEnter * xmap <leader>[[  <Plug>BlockinsertVBSame
+     au VimEnter * xmap <leader>]]  <Plug>BlockinsertVBSame
+     au VimEnter * xmap <leader>q[] <Plug>BlockinsertVQ_Both
+     au VimEnter * xmap <leader>q[[ <Plug>BlockinsertVQ_BSame
+     au VimEnter * xmap <leader>q]] <Plug>BlockinsertVQ_BSame
 
- "     au VimEnter * nmap <leader>[]  <plug>blockinsert-b
- "     au VimEnter * nmap <leader>[[  <plug>blockinsert-ub
- "     au VimEnter * nmap <leader>]]  <plug>blockinsert-ub
- "     au VimEnter * nmap <leader>q[] <plug>blockinsert-qb
- "     au VimEnter * nmap <leader>q[[ <plug>blockinsert-uqb
- "     au VimEnter * nmap <leader>q]] <plug>blockinsert-uqb
- " aug END
+     au VimEnter * nmap <leader>[]  <Plug>BlockinsertVBoth
+     au VimEnter * nmap <leader>[[  <Plug>BlockinsertVBSame
+     au VimEnter * nmap <leader>]]  <Plug>BlockinsertVBSame
+     au VimEnter * nmap <leader>q[] <Plug>BlockinsertVQ_Both
+     au VimEnter * nmap <leader>q[[ <Plug>BlockinsertVQ_BSame
+     au VimEnter * nmap <leader>q]] <Plug>BlockinsertVQ_BSame
+ aug END
  Plugin 'kurkale6ka/vim-blockinsert'
 "}
 "{NERDTree: tree file browser
@@ -196,13 +196,13 @@
     \ 'Unknown'   : '?'
     \ }
      endif
- Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
  let g:NERDTreeAutoCenter = 1
  let g:NERDTreeAutoCenterThreshold = 10
  let g:NERDTreeCaseSensitiveSort = 0
  let g:NERDTreeSortHiddenFirst = 1
  let g:NERDTreeNaturalSort = 1
  let g:NERDTreeShowHidden = 1
+ Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
  Plugin 'scrooloose/nerdtree'
  Plugin 'Xuyuanp/nerdtree-git-plugin'
 "}
@@ -244,7 +244,6 @@
 "{surround: opperate on surrounding pairs like () {} "" ,, etc
  Plugin 'tpope/vim-surround'
 "}
-
 "{FastFold: speed up folds by updating at select times
  let g:fastfold_skip_filetypes =
              \ [ 'taglist', 'gitcommit', 'startify', 'man', 'rst', ]
@@ -253,7 +252,7 @@
 "{scratch: create a scratch window which can be viewed as preview window
  aug scratch
      au!
-     au VimEnter * nnoremap <leader><unique>s <Cmd>ScratchInsert<CR>
+     au VimEnter * nnoremap <unique><leader>s <Cmd>ScratchInsert<CR>
      au VimEnter * xmap <unique><leader>s <plug>(scratch-selection-reuse)
      au VimEnter * xmap <unique><leader>S <plug>(scratch-selection-clear)
  aug END
@@ -274,11 +273,10 @@
 "{swap{alt}: use \h or \l to swap comma deliminated function args
  let g:swap_no_default_key_mappings = 1
  aug swapargs
- au VimEnter * nmap <unique><leader>l <Plug>(swap-next)
- au VimEnter * nmap <unique><leader>h <Plug>(swap-prev)
+     au VimEnter * nmap <unique><leader>l <Plug>(swap-next)
+     au VimEnter * nmap <unique><leader>h <Plug>(swap-prev)
  aug END
  Plugin 'machakann/vim-swap'
- " Plugin 'machakann/vim-swap', {'name': 'vim-swap-args'}
 "}
 "{ale:asynchronous linting engine
  let g:grammarous#default_comments_only_filetypes = {
@@ -782,12 +780,17 @@
 "}
 "{pythonmode:
  function! Jedi_doc_imp()
-     PythonJedi if jedi_vim.show_documentation() is None: vim.command('retu')
-     call pymode#tempbuffer_open('__doc__')
-     PymodePython pymode.get_documentation()
+     try
+     silent PythonJedi if jedi_vim.show_documentation() is None:
+                 \ vim.command('retu')
+     silent call pymode#tempbuffer_open('__doc__')
+     silent PymodePython pymode.get_documentation()
      silent normal! gg3dd
      setlocal nomodifiable nomodified filetype=rst foldlevel=200
      wincmd p
+ catch
+     silent hide
+ endtry
  endfunction
  aug jedi|exe 'au!'|exe 'au CursorHold *.py call Jedi_doc_imp()'|aug end
  let g:jedi#completions_command = ''
