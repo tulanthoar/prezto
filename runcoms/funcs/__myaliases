@@ -5,6 +5,7 @@ function __myaliases(){
     alias swappone='tmux swap-window -t:+';
     alias drun='docker run -it --rm';
     alias pl='perl5i';
+    alias perl='perl -Mcommon::sense'
     alias pli='sudo cpanm';
     alias pld='perldoc';
     alias py='python';
@@ -48,14 +49,14 @@ function __myaliases(){
     alias llog='/usr/bin/log'
     alias padtext="/usr/bin/map"
     alias cmd-reference="nixar"
-    alias ag='ag --hidden --ignore "\.hg*" --ignore "\.git*"'
-    alias cat='bat'
+    alias ag='ag -f --hidden --ignore "\.hg*" --ignore "\.git*" --ignore "\.cache*"'
+    alias cat='bat --tabs=4 --theme=OneHalfDark --italic-text=always --style=numbers,changes,header'
     alias c='bat'
     alias ncdu='ncdu --color dark -r --exclude .git --exclude .cache -2'
     alias top="glances"
     alias ls="exa";
     alias fullscreen='wmctrl -r :ACTIVE: -b toggle,fullscreen'
-    alias cwd="echo ${PWD}"
+    alias cwd="print \${PWD}"
     local _pacman_frontend='pacman'
     local _pacman_sudo='sudo pacman'
     alias pac="${_pacman_frontend}"
@@ -79,4 +80,5 @@ function __myaliases(){
     alias pnm="feh"
     alias giff="feh"
     alias bmp="feh"
+    alias displayoff="xset dpms force suspend"
 }
