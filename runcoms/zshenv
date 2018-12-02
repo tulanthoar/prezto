@@ -2,5 +2,6 @@
 # zmodload zsh/zprof
 typeset -gU fpath path
 fpath+=(${ZRCD}/funcs)
-autoload -Uw $ZRCD/funcs/myfuncs
-export LC_CTYPE=C
+autoload -Uw $ZRCD/funcs/funcs.zwc
+# export LC_CTYPE=C
+export LC_CTYPE=en_US.UTF-8
