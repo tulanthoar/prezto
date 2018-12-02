@@ -49,7 +49,7 @@ following variable to true:
 =cut
 
 sub on_start {
-  my ($self) = @_;
+  my $self = shift;
 
   # parse settings
   my $colors   = $self->x_resource("%.colors");
@@ -124,7 +124,7 @@ sub fire {
 }
 
 sub incinerate {
-  my ($self) = @_;
+  my $self = shift;
 
   if (@{$self->{curplode_steps}} > 0) {
     my ($row, $col) = @{$self->{curplode_pos}};
@@ -141,7 +141,7 @@ sub incinerate {
 }
 
 sub extinguish {
-  my ($self) = @_;
+  my $self = shift;
 
   if (@{$self->{curplode_steps}} > 0) {
     my ($row, $col) = @{$self->{curplode_pos}};
