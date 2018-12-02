@@ -1,0 +1,3 @@
+function zcomp_func() {
+    zcompile funcs [[:alnum:]-_]#
+}
