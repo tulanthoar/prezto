@@ -1,0 +1,19 @@
+#!/bin/env zsh
+
+local wid=$(xdotool search --name $1|head -1)
+local vwid=$(xdotool search --name --onlyvisible $1|head -1)
+if [[ -z "$wid" ]]; then
+    urxvt -title ${1%$}
+    xdotool windowfocus "$(xdotool search --name $1|head -1)"
+elif [[ -n $vwid && $vwid -eq $(xdotool getactivewindow) ]]; then
+    xdotool windowunmap "$wid"
+else
+    autoload -Uz zmathfunc; zmathfunc;
+    eval "$(xdotool getwindowgeometry --shell $wid getmouselocation --shell | rng 4,5:7,8|\
+        tr '[:upper:]' '[:lower:]'|sed 's/^/float\t/')"
+    : $(( width*=0.5 ))
+    : $(( height*=0.5 ))
+    xdotool set_desktop_for_window $wid "$(xdotool get_desktop)" windowmap --sync $wid\
+        windowmove $wid $(( max(min(x, 1910-width ), width+10)-width )) $(( max(min(y, 1070-height ), height+10)-height ))\
+        windowraise $wid windowfocus "$wid"
+fi
