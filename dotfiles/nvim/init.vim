@@ -2,38 +2,7 @@
  set encoding=utf-8
  scriptencoding utf-8
 "}
-"{Install vundle if it doesn't already exist
- let s:iCanHazVundle=1
- "{check if vundle directory exists or make it
-  let s:vundle_path=expand('$HOME/.config/nvim/bundle/Vundle.vim')
-  if !isdirectory(s:vundle_path)
-     echo 'Making Vundle Path - ' . s:vundle_path
-     echo ''
-     exe 'silent !mkdir -p ' . shellescape(s:vundle_path)
-  endif
- "}
- "{check if Vundle is installed
-  let s:vundle_readme=s:vundle_path . '/README.md'
-  if !filereadable(s:vundle_readme)
-      echo 'Installing Vundle..'
-      echo ''
-      silent !git clone --depth=1 --branch=master
-                  \ https://github.com/VundleVim/Vundle.vim
-                  \ ~/.config/nvim/bundle/Vundle.vim
-      let s:iCanHazVundle=0
-  endif
- "}
- let s:bundle_path = substitute(s:vundle_path, '/Vundle\.vim$', '', '')
-"}
-"{g:clipboard assign xsel as provider
- let g:clipboard = { 'name':'clippy', 'copy':{
-             \  '+':'xsel --nodetach -i -b',
-             \  '*':'xsel --nodetach -i -p',
-             \ }, 'paste': {
-             \  '+':'xsel -o -b',
-             \  '*':'xsel -o -p',
-             \ }, 'cache_enabled':1, }
-"}
+
 "{disable builtin plugins
  let g:loaded_gzip = 1
  let g:loaded_man = 1
@@ -41,11 +10,16 @@
  let g:loaded_2html_plugin = 'vim7.4_v2'
  let g:loaded_zipPlugin = 'v27'
 "}
-"{Vundle plugin
- filetype off
- set runtimepath+=~/.config/nvim/bundle/Vundle.vim
- call vundle#begin(s:bundle_path)
- Plugin 'VundleVim/Vundle.vim'
+
+" git clone https://github.com/VundleVim/Vundle.vim.git ~/vimfiles/bundle/Vundle.vim
+
+filetype off
+set shellslash
+set rtp+=~/vimfiles/bundle/Vundle.vim
+call vundle#begin('~/vimfiles/bundle')
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
 "}
 "{Syntax Folding
  " let g:vimsyn_folding='af'
@@ -175,15 +149,15 @@
                  \ | exe 'NERDTree' argv()[0] | wincmd p | enew | wincmd p
                  \ | endif
  augroup END
- let g:NERDTreeShowIgnoredStatus = 1
+ let g:NERDTreeGitStatusShowIgnored = 1
  let g:NERDTreeFileExtensionHighlightFullName = 1
  let g:NERDTreeExactMatchHighlightFullName = 1
  let g:NERDTreePatternMatchHighlightFullName = 1
  let g:NERDTreeHighlightFolders = 1
  let g:NERDTreeHighlightFoldersFullName = 1
  let g:NERDTreeHighlightCursorline = 0
- if !exists('g:NERDTreeIndicatorMapCustom')
-             let g:NERDTreeIndicatorMapCustom = {
+ if !exists('g:NERDTreeGitStatusIndicatorMapCustom')
+             let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ 'Modified'  : '✎',
     \ 'Staged'    : '✔',
     \ 'Untracked' : '∩',
@@ -500,7 +474,7 @@
 "}
 
 "{startify:
- let g:startify_bookmarks = [ { 'n': '~/.config/nvim/init.vim' }, ]
+ let g:startify_bookmarks = [ { 'n': '~/AppData/Local/nvim/init.vim' }, ]
  let g:startify_commands = [
              \   { 'h':['help', 'Denite -cursor-wrap help'] },
              \   { 'f':['all files', 'CtrlP'] },
@@ -577,10 +551,10 @@
      exe 'au VimEnter * map <expr><unique> '.s:k.' v:count ? "'
                  \ .s:k.'" : "\<Plug>(easymotion-'.s:c.')"'
  endfor
- au VimEnter * nmap <expr><unique> e v:count ? e : "\<Plug>(easymotion-bd-el)"
- au VimEnter * xmap <expr><unique> e v:count ? e : "\<Plug>(easymotion-bd-el)"
- au VimEnter * omap <expr><unique> e v:count ? e :"v\<Plug>(easymotion-bd-el)"
- au VimEnter * map <unique>s <Plug>(easymotion-bd-f2)
+ au VimEnter * nmap <expr><unique> e v:count ? "e" : "\<Plug>(easymotion-bd-el)"
+ au VimEnter * xmap <expr><unique> e v:count ? "e" : "\<Plug>(easymotion-bd-el)"
+ au VimEnter * omap <expr><unique> e v:count ? "e" :"v\<Plug>(easymotion-bd-el)"
+ au VimEnter * map <expr><unique> s v:count ? "s" : "\<Plug>(easymotion-bd-f2)"
  aug END
  let g:EasyMotion_space_jump_first = 1
  let g:EasyMotion_use_smartsign_us = 1
@@ -839,8 +813,8 @@
  let g:impsort_textwidth = g:pymode_options_max_line_length
  let g:impsort_highlight_star_imports = 1
  " nvim's builtin python.vim
- let g:python3_host_prog = expand('$VIRTUAL_ENV/bin/python3')
- let g:python_host_prog = expand('$VIRTUAL_ENV/../venv2/pyenv2/bin/python2')
+ let g:python3_host_prog = 'C:\Users\natha\virtualenvs\nvimpy3\Scripts\python.exe'
+ "let g:python_host_prog = expand('$VIRTUAL_ENV/../venv2/pyenv2/bin/python2')
  let g:python_no_builtin_highlight = 1
  let g:python_no_exception_highlight = 1
  let g:python_no_doctest_highlight = 1
@@ -872,7 +846,7 @@
 "{set options
  set autowrite
  set background=dark
- set backupdir=${HOME}/.config/nvim/files/backup/
+ "set backupdir=~/vimfiles/nvim/files/backup/
  set clipboard+="unnamed,unnamedplus,autoselect"
  set cmdheight=2
  set colorcolumn=+1
@@ -882,10 +856,10 @@
  set cpoptions+=Dt$
  set cursorcolumn
  set cursorline
- set directory=${HOME}/.config/nvim/files/swap/
+ "set directory=~/vimfiles/nvim/files/swap/
  set errorbells
  set expandtab
- set fileformats=unix
+ set fileformats=dos,unix
  set foldcolumn=1
  set foldenable
  set foldlevel=0
@@ -922,13 +896,13 @@
  set tagcase=match
  set tags=
  set timeoutlen=1000
- set undodir=${HOME}/.config/nvim/files/.undo/
+ "set undodir=${HOME}/.config/nvim/files/.undo/
  set undofile
  set updatetime=4000
  set viewoptions=cursor,folds,slash,unix
  set virtualedit=block
  set visualbell
- set shada='100,h,s1000,n${HOME}/.config/nvim/files/info/viminfo
+ set shada='100,h,s1000
  set whichwrap+=<,>,h,l
  set wildignore=*.o,*~,*.pyc
  set wildmode=list:longest,list:full
