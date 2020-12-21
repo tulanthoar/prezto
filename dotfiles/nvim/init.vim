@@ -969,6 +969,9 @@ snoremap <unique><Tab> <C-O>%
 inoremap <unique><C-A> <C-@>
 noremap! <unique><C-Q> <Cmd>YRPush '+'<CR><C-R><C-P>+
 noremap! <unique><MiddleMouse> <Cmd>YRPush '*'<CR><C-R><C-P>*
+vnoremap <C-c> "+y
+nnoremap <C-v> "+p
+inoremap <C-v> <C-r><C-p>+
 noremap! <unique><C-Space> <Esc>gUiw`]a
 
 nnoremap <unique>'[ `[
