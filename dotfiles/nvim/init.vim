@@ -879,7 +879,7 @@ Plugin 'VundleVim/Vundle.vim'
  set sidescrolloff=2
  set smartcase
  set nostartofline
- set shell=bash
+ " set shell=bash
  set softtabstop=4
  set tabstop=4
  set tagcase=match
