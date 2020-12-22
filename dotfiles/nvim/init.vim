@@ -737,19 +737,6 @@ Plugin 'VundleVim/Vundle.vim'
  let g:expand_region_text_objects_python = { 'iA':0, 'iB':0, 'ai':1, }
  Plugin 'terryma/vim-expand-region'
 "}
-"{gutentags:
- let g:gutentags_project_root=['.git', '.gutentagthis', 'Makefile',
-             \ 'develop.json', '.hg']
- let g:gutentags_ctags_exclude = ['TARGET']
- let g:gutentags_generate_on_empty_buffer=1
- let g:gutentags_resolve_symlinks=1
- let g:gutentags_add_default_project_roots=0
- if !exists('g:gutentags_project_info')|let g:gutentags_project_info=[]|endif
- call add(g:gutentags_project_info, {'type': 'python', 'file': 'setup.py'})
- call add(g:gutentags_project_info, {'type': 'cpp', 'file': 'Makefile'})
- call add(g:gutentags_project_info, {'type': 'c', 'file': 'Makefile'})
- Plugin 'ludovicchabant/vim-gutentags'
-"}
 "{latex-live-preview:
  let g:livepreview_previewer = 'tabbed -f -r 2 zathura -e ""'
  let g:livepreview_engine = 'latexmk' . ' -pdf -shell-escape'
