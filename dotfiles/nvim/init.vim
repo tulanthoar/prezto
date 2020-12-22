@@ -11,7 +11,8 @@
  let g:loaded_zipPlugin = 'v27'
 "}
 
-" git clone https://github.com/VundleVim/Vundle.vim.git ~/vimfiles/bundle/Vundle.vim
+" git clone https://github.com/VundleVim/Vundle.vim.git
+"           ~/vimfiles/bundle/Vundle.vim
 
 filetype off
 set shellslash
@@ -547,14 +548,17 @@ Plugin 'VundleVim/Vundle.vim'
              \ 't': 'bd-tl',
              \ 'j': 'bd-jk',
              \ 'k': 'bd-jk',
+             \ 's': 'bd-f2',
              \ })
      exe 'au VimEnter * map <expr><unique> '.s:k.' v:count ? "'
                  \ .s:k.'" : "\<Plug>(easymotion-'.s:c.')"'
  endfor
- au VimEnter * nmap <expr><unique> e v:count ? "e" : "\<Plug>(easymotion-bd-el)"
- au VimEnter * xmap <expr><unique> e v:count ? "e" : "\<Plug>(easymotion-bd-el)"
- au VimEnter * omap <expr><unique> e v:count ? "e" :"v\<Plug>(easymotion-bd-el)"
- au VimEnter * map <expr><unique> s v:count ? "s" : "\<Plug>(easymotion-bd-f2)"
+ au VimEnter * nmap <expr><unique> e v:count ?
+             \ "e" : "\<Plug>(easymotion-bd-el)"
+ au VimEnter * xmap <expr><unique> e v:count ?
+             \ "e" : "\<Plug>(easymotion-bd-el)"
+ au VimEnter * omap <expr><unique> e v:count ?
+             \ "e" : "v\<Plug>(easymotion-bd-el)"
  aug END
  let g:EasyMotion_space_jump_first = 1
  let g:EasyMotion_use_smartsign_us = 1
@@ -603,7 +607,6 @@ Plugin 'VundleVim/Vundle.vim'
  let g:deoplete#sources.cpp = g:deoplete#sources._ + [ 'clang2', ]
  let g:deoplete#sources#jedi#show_docstring = 1
  let g:deoplete#sources#jedi#worker_threads = 2
- let g:deoplete#sources#jedi#python_path = expand('$VIRTUAL_ENV/bin/python3')
  let g:deoplete#omni#input_patterns.perl = ['[a-zA-Z_]\+->',]
  let g:deoplete#omni#functions.perl = 'PerlComplete'
  let g:neoinclude#reverse_exprs.perl =
@@ -813,7 +816,7 @@ Plugin 'VundleVim/Vundle.vim'
  let g:impsort_textwidth = g:pymode_options_max_line_length
  let g:impsort_highlight_star_imports = 1
  " nvim's builtin python.vim
- let g:python3_host_prog = 'C:\Users\natha\virtualenvs\nvimpy3\Scripts\python.exe'
+ let g:python3_host_prog = '~\virtualenvs\nvimpy3\Scripts\python.exe'
  "let g:python_host_prog = expand('$VIRTUAL_ENV/../venv2/pyenv2/bin/python2')
  let g:python_no_builtin_highlight = 1
  let g:python_no_exception_highlight = 1
@@ -846,7 +849,6 @@ Plugin 'VundleVim/Vundle.vim'
 "{set options
  set autowrite
  set background=dark
- "set backupdir=~/vimfiles/nvim/files/backup/
  set clipboard+="unnamed,unnamedplus,autoselect"
  set cmdheight=2
  set colorcolumn=+1
@@ -856,7 +858,6 @@ Plugin 'VundleVim/Vundle.vim'
  set cpoptions+=Dt$
  set cursorcolumn
  set cursorline
- "set directory=~/vimfiles/nvim/files/swap/
  set errorbells
  set expandtab
  set fileformats=dos,unix
@@ -876,6 +877,7 @@ Plugin 'VundleVim/Vundle.vim'
  set matchpairs=(:),[:],{:}
  set matchtime=2
  set mouse=a
+ set number
  set path+=/usr/local/include,mbed-os
  set previewheight=10
  set scrolljump=4
@@ -896,7 +898,6 @@ Plugin 'VundleVim/Vundle.vim'
  set tagcase=match
  set tags=
  set timeoutlen=1000
- "set undodir=${HOME}/.config/nvim/files/.undo/
  set undofile
  set updatetime=4000
  set viewoptions=cursor,folds,slash,unix
@@ -1010,18 +1011,20 @@ nnoremap <unique><leader>.    <Cmd>normal! @:<CR>
 noremap  <unique><expr><leader>q   join( [ "<Cmd>HardTimeOff<CR><Cmd>norm! @",
             \ nr2char(getchar()), "<CR><Cmd>HardTimeOn<CR>" ], "")
 noremap  <unique><leader>d    <Cmd>hide<CR>
-nnoremap <leader><Space>       <Cmd>ScratchPreview<CR>
+" nnoremap <leader><Space>       <Cmd>ScratchPreview<CR>
+nnoremap <leader><Space>       <Cmd>NERDTreeToggle<CR>
 nnoremap <unique><leader>ss   <Cmd>CleverSplit<CR>
 nnoremap <unique><leader>sv   <Cmd>vs<CR>
 nnoremap <unique><leader>sh   <Cmd>sp<CR>
 nnoremap <unique><leader>cd   <Cmd>cd %:p:h<CR>
-nmap <unique><leader>b <Plug>AirlineSelectPrevTab
-nmap <unique><leader>f <Plug>AirlineSelectNextTab
+nmap <unique><leader>b <Cmd>tabprevious<CR>
+nmap <unique><leader>f <Cmd>tabnext<CR>
 nnoremap <unique><leader>t       <Cmd>TagbarOpen<CR>
 nnoremap <unique><leader>ag    :SideSearch ""<Left>
 xnoremap <unique><leader>ag    y<Cmd>SideSearch <C-r><C-r>"|wincmd p<CR>
 nnoremap <silent><unique><leader>N <Cmd>NERDTreeToggle<CR>
 nnoremap <unique><leader><C-Space> <Cmd>Startify<CR>
+nnoremap <unique><leader><CR> <Cmd>tabnew<CR><Cmd>Startify<CR>
 nnoremap <unique><leader>m       <Cmd>CtrlPMRUFiles<CR>
 nnoremap <unique><leader>y       <Cmd>YRShow<CR>
 nnoremap <unique><leader>u       <Cmd>UndotreeToggle<CR>
