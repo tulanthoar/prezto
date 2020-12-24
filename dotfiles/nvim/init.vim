@@ -477,10 +477,10 @@ Plugin 'VundleVim/Vundle.vim'
 "{startify:
  let g:startify_bookmarks = [ { 'n': '~/AppData/Local/nvim/init.vim' }, ]
  let g:startify_commands = [
-             \   { 'h':['help', 'Denite -cursor-wrap help'] },
+             \   { 'h':['help', 'Denite help'] },
              \   { 'f':['all files', 'CtrlP'] },
              \   { 'm':['MRU', 'CtrlPMRUFiles'] },
-             \   { 'c':['cmds', 'Denite -cursor-wrap commands'] },
+             \   { 'c':['cmds', 'Denite commands'] },
              \   { 'P':['Plugins Update', 'PluginUpdate'] }, ]
  let g:startify_session_dir = expand('$HOME/.config/nvim/files/session')
  let g:startify_list_order =
@@ -1015,9 +1015,9 @@ nnoremap <unique><leader>m       <Cmd>CtrlPMRUFiles<CR>
 nnoremap <unique><leader>y       <Cmd>YRShow<CR>
 nnoremap <unique><leader>u       <Cmd>UndotreeToggle<CR>
 nnoremap <unique><leader>'       <Cmd>SignatureListBufferMarks 1|lclose|
-            \Denite -cursor-wrap unite:location_list<CR>
+            \Denite unite:location_list<CR>
 nnoremap <unique><leader>O <Cmd>Denite -vertical-preview
-            \ -auto-preview -cursor-wrap outline<CR>
+            \ outline<CR>
 
 for s:n in range(1,9)
     exe 'nmap <unique>'.g:mapleader.s:n.' <Plug>AirlineSelectTab'.s:n
@@ -1032,7 +1032,7 @@ for [s:k,s:c] in items({
             \ '/' : 'line',
             \ })
     exe 'nnoremap <unique><leader>'.s:k.'
-                \ <Cmd>Denite -cursor-wrap '.s:c.'<CR>'
+                \ <Cmd>Denite '.s:c.'<CR>'
 endfor
 
 let g:mapleader=';'
@@ -1058,3 +1058,25 @@ augroup cppFiletype
     au BufRead,BufNewFile *.h,*.c setlocal filetype=cpp.doxygen
     au FileType cpp setlocal filetype=cpp.doxygen
 augroup END
+
+" Define mappings
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+    nnoremap <silent><buffer><expr> <CR>
+    \ denite#do_map('do_action')
+    nnoremap <silent><buffer><expr> d
+    \ denite#do_map('do_action', 'delete')
+    nnoremap <silent><buffer><expr> p
+    \ denite#do_map('do_action', 'preview')
+    nnoremap <silent><buffer><expr> q
+    \ denite#do_map('quit')
+    nnoremap <silent><buffer><expr> i
+    \ denite#do_map('open_filter_buffer')
+    nnoremap <silent><buffer><expr> <Space>
+    \ denite#do_map('toggle_select').'j'
+endfunction
+
+autocmd FileType denite-filter call s:denite_filter_my_settings()
+function! s:denite_filter_my_settings() abort
+    imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
+endfunction
