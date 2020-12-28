@@ -260,8 +260,13 @@ Plugin 'VundleVim/Vundle.vim'
  let g:grammarous#show_first_error = 1
  let g:ale_perl_perl_options = '-c -Mperl5i::2 -MPerl::Critic'
  let g:ale_perl_perlcritic_showrules = 1
- let g:ale_cursor_detail = 1
- let g:ale_sign_column_always = 1
+ let g:ale_open_list = 'on_save'
+ augroup CloseLoclistWindowGroup
+   autocmd!
+   autocmd QuitPre * if empty(&buftype) | lclose | endif
+ augroup END
+ let g:ale_python_pylint_options = '--extension-pkg-whitelist=PyQt5'
+ let g:ale_cursor_detail = 0
  Plugin 'rhysd/vim-grammarous'
  Plugin 'rhysd/vim-fixjson'
  Plugin 'w0rp/ale'
@@ -756,7 +761,7 @@ Plugin 'VundleVim/Vundle.vim'
      silent hide
  endtry
  endfunction
- aug jedi|exe 'au!'|exe 'au CursorHold *.py call Jedi_doc_imp()'|aug end
+ " aug jedi|exe 'au!'|exe 'au CursorHold *.py call Jedi_doc_imp()'|aug end
  let g:jedi#completions_command = ''
  let g:jedi#auto_vim_configuration = 0
  let g:jedi#popup_on_dot = 0
@@ -777,7 +782,7 @@ Plugin 'VundleVim/Vundle.vim'
  let g:pymode_virtualenv = 0
  let g:pymode_run_bind = "\<leader>pr"
  let g:pymode_breakpoint_bind = "\<leader>pb"
- let g:pymode_lint = 0
+ let g:pymode_lint = 1
  let g:pymode_rope_lookup_project = 0
  let g:pymode_rope_show_doc_bind = "\<leader>rd"
  let g:pymode_rope_completion = 0
@@ -933,7 +938,7 @@ Plugin 'VundleVim/Vundle.vim'
 
  hi SyntasticErrorLine     ctermbg=126 cterm=underline
  hi SyntasticWarningLine   ctermbg=136 cterm=underline
- hi HighlightedyankRegion  ctermbg=238  ctermfg=none cterm=bold
+ hi HighlightedyankRegion  ctermbg=238  ctermfg=none cterm=bold guibg=#075951
  hi pythonFunctionTag      ctermbg=23  cterm=bold ctermfg=9
  hi pythonMethodTag        ctermbg=23  cterm=bold ctermfg=12
  hi pythonClassTag         ctermbg=23  cterm=bold ctermfg=11
@@ -1059,24 +1064,3 @@ augroup cppFiletype
     au FileType cpp setlocal filetype=cpp.doxygen
 augroup END
 
-" Define mappings
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-    nnoremap <silent><buffer><expr> <CR>
-    \ denite#do_map('do_action')
-    nnoremap <silent><buffer><expr> d
-    \ denite#do_map('do_action', 'delete')
-    nnoremap <silent><buffer><expr> p
-    \ denite#do_map('do_action', 'preview')
-    nnoremap <silent><buffer><expr> q
-    \ denite#do_map('quit')
-    nnoremap <silent><buffer><expr> i
-    \ denite#do_map('open_filter_buffer')
-    nnoremap <silent><buffer><expr> <Space>
-    \ denite#do_map('toggle_select').'j'
-endfunction
-
-autocmd FileType denite-filter call s:denite_filter_my_settings()
-function! s:denite_filter_my_settings() abort
-    imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
-endfunction
