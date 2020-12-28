@@ -265,7 +265,7 @@ Plugin 'VundleVim/Vundle.vim'
    autocmd!
    autocmd QuitPre * if empty(&buftype) | lclose | endif
  augroup END
- let g:ale_python_pylint_options = '--extension-pkg-whitelist=PyQt5'
+ let g:ale_python_pylint_options = '--extension-pkg-whitelist=PyQt5,h5py'
  let g:ale_cursor_detail = 0
  Plugin 'rhysd/vim-grammarous'
  Plugin 'rhysd/vim-fixjson'
@@ -773,7 +773,6 @@ Plugin 'VundleVim/Vundle.vim'
  let g:jedi#auto_close_doc = 0
  let g:jedi#use_splits_not_buffers = 'winwidth'
  let g:jedi#completions_enabled = 0
- let g:jedi#force_py_version = 3
  let g:pymode_options = 0
  let g:pymode_options_max_line_length = 90
  let g:pymode_python = 'python3'
@@ -825,9 +824,6 @@ Plugin 'VundleVim/Vundle.vim'
  " Plugin 'tmhedberg/SimpylFold'
  Plugin 'tweekmonster/impsort.vim'
  Plugin 'klen/python-mode'
-"}
-"{devicons: keep this one last
- Plugin 'ryanoasis/vim-devicons'
 "}
 
 "{finish plugins
